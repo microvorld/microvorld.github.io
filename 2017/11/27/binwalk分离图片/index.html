@@ -100,7 +100,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-11-27</span>
-            <span class="time">18:56:17</span>
+            <span class="time">18:59:06</span>
           </span>
           
         </div>
@@ -108,13 +108,12 @@
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>﻿—<br>title: 用binwalk进行图片分离<br>tags: ctf.misc</p>
-<h2 id="grammar-cjkRuby-true"><a href="#grammar-cjkRuby-true" class="headerlink" title="grammar_cjkRuby: true"></a>grammar_cjkRuby: true</h2><p>题目给了一个png图片<br> ￼</p>
-<p>  上linux，用binwalk进行分析得到<br> ￼</p>
+          <p>﻿—<br>title: 用binwalk进行图片分离</p>
+<h2 id="tags-ctf-misc"><a href="#tags-ctf-misc" class="headerlink" title="tags: ctf.misc"></a>tags: ctf.misc</h2><p>题目给了一个png图片</p>
+<p>  上linux，用binwalk进行分析得到</p>
 <p>  发现是有两张图，第二张图是从1967164开始偏离，于是给出命令：</p>
 <pre><code>if=Diary.png of=other.png skip= 1967164 bs=1
 </code></pre><p>得到第二张图</p>
-<p> ￼</p>
 <p>  这里再用stegsolve进行反色，然后扫描就行</p>
 <p>  附：关于图片分离的一篇<a href="https://www.cnblogs.com/jiaxinguoguo/p/7351202.html" target="_blank" rel="noopener">博客</a></p>
 

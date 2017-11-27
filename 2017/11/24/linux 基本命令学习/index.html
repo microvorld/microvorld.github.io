@@ -8,10 +8,10 @@
   <meta name="description" content="">
   <meta name="author" content="Cdog">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="Dodgy的一条咸鱼"/>
+  <meta property="og:title" content="linux 基本命令学习"/>
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="Dodgy的一条咸鱼"/>
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="article" />
   <meta property="og:image" content="http://microvorld.com"/>
   
     <link rel="alternate" href="/atom.xml" title="Dodgy的一条咸鱼" type="application/atom+xml">
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">无标题文章</p>
+          <p class="title">linux 基本命令学习</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -99,24 +99,29 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2017-11-27</span>
+            <span class="date">2017-11-24</span>
             <span class="time">18:56:17</span>
           </span>
           
         </div>
         <!-- Tags -->
         
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/CTF/">#CTF</a>
+
+
+          </div>
+        
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>﻿—<br>title: 用binwalk进行图片分离<br>tags: ctf.misc</p>
-<h2 id="grammar-cjkRuby-true"><a href="#grammar-cjkRuby-true" class="headerlink" title="grammar_cjkRuby: true"></a>grammar_cjkRuby: true</h2><p>题目给了一个png图片<br> ￼</p>
-<p>  上linux，用binwalk进行分析得到<br> ￼</p>
-<p>  发现是有两张图，第二张图是从1967164开始偏离，于是给出命令：</p>
-<pre><code>if=Diary.png of=other.png skip= 1967164 bs=1
-</code></pre><p>得到第二张图</p>
-<p> ￼</p>
-<p>  这里再用stegsolve进行反色，然后扫描就行</p>
-<p>  附：关于图片分离的一篇<a href="https://www.cnblogs.com/jiaxinguoguo/p/7351202.html" target="_blank" rel="noopener">博客</a></p>
+          <h1 id="linux-基本命令学习"><a href="#linux-基本命令学习" class="headerlink" title="linux 基本命令学习"></a>linux 基本命令学习</h1><p>—2017/11/24 </p>
+<p>来源：<a href="http://123.206.31.85/challenges#Linux%E5%9F%BA%E7%A1%801" target="_blank" rel="noopener">http://123.206.31.85/challenges#Linux%E5%9F%BA%E7%A1%801</a><br>一道关于Linux的基础题</p>
+<p>解压文件后发现一个brave的二进制文件，无奈不知怎么找flag，于是看了write up，说直接在Linux下执行<strong>grep -a ‘KEY’ datafile</strong>的命令，也是上网查了有关grep的命令，如下：</p>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>grep（global search regular expression(RE) and print out the line，全面搜索正则表达式并把行打印出来）是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。</p>
+<p>来自: <a href="http://man.linuxde.net/grep" target="_blank" rel="noopener">http://man.linuxde.net/grep</a></p>
+<p><a href="https://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856896.html" target="_blank" rel="noopener">用法</a><br>–直接上链接了</p>
 
         </div>
       </div>

@@ -35,7 +35,8 @@
 </head>
 
   <body>
-    <!-- Page Header -->
+    <!-- Archive Header -->
+<!-- Page Header -->
 
 
 <header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
@@ -43,7 +44,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">无标题文章</p>
+          <p class="title">Blog Archives</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -88,41 +89,34 @@
   </div>
 </header>
 
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By Cdog</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2017-11-27</span>
-            <span class="time">18:56:17</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
-        
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <p>﻿—<br>title: 用binwalk进行图片分离<br>tags: ctf.misc</p>
-<h2 id="grammar-cjkRuby-true"><a href="#grammar-cjkRuby-true" class="headerlink" title="grammar_cjkRuby: true"></a>grammar_cjkRuby: true</h2><p>题目给了一个png图片<br> ￼</p>
-<p>  上linux，用binwalk进行分析得到<br> ￼</p>
-<p>  发现是有两张图，第二张图是从1967164开始偏离，于是给出命令：</p>
-<pre><code>if=Diary.png of=other.png skip= 1967164 bs=1
-</code></pre><p>得到第二张图</p>
-<p> ￼</p>
-<p>  这里再用stegsolve进行反色，然后扫描就行</p>
-<p>  附：关于图片分离的一篇<a href="https://www.cnblogs.com/jiaxinguoguo/p/7351202.html" target="_blank" rel="noopener">博客</a></p>
+<!-- Archive List -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      
+        <div class="archive-item">
+  <a href="/2017/11/24/linux 基本命令学习/" class="post-title">
+    linux 基本命令学习
+  </a>
+  <div class="date text-muted">Posted on 2017-11-24 21:30:15</div>
+</div>
 
-        </div>
-      </div>
+      
+
     </div>
   </div>
-</article>
+</div>
+<!-- Pagination -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-10 col-md-10 col-md-offset-1">
+      <ul class="pagination">
+          
+          
+      </ul>
+    </div>
+  </div>
+</div>
 
 
 

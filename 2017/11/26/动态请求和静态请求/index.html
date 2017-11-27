@@ -8,10 +8,10 @@
   <meta name="description" content="">
   <meta name="author" content="Cdog">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="Dodgy的一条咸鱼"/>
+  <meta property="og:title" content="动态请求和静态请求"/>
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="Dodgy的一条咸鱼"/>
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="article" />
   <meta property="og:image" content="http://microvorld.com"/>
   
     <link rel="alternate" href="/atom.xml" title="Dodgy的一条咸鱼" type="application/atom+xml">
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">无标题文章</p>
+          <p class="title">动态请求和静态请求</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -99,24 +99,32 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2017-11-27</span>
+            <span class="date">2017-11-26</span>
             <span class="time">18:56:17</span>
           </span>
           
         </div>
         <!-- Tags -->
         
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/web/">#web</a>
+
+
+          </div>
+        
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>﻿—<br>title: 用binwalk进行图片分离<br>tags: ctf.misc</p>
-<h2 id="grammar-cjkRuby-true"><a href="#grammar-cjkRuby-true" class="headerlink" title="grammar_cjkRuby: true"></a>grammar_cjkRuby: true</h2><p>题目给了一个png图片<br> ￼</p>
-<p>  上linux，用binwalk进行分析得到<br> ￼</p>
-<p>  发现是有两张图，第二张图是从1967164开始偏离，于是给出命令：</p>
-<pre><code>if=Diary.png of=other.png skip= 1967164 bs=1
-</code></pre><p>得到第二张图</p>
-<p> ￼</p>
-<p>  这里再用stegsolve进行反色，然后扫描就行</p>
-<p>  附：关于图片分离的一篇<a href="https://www.cnblogs.com/jiaxinguoguo/p/7351202.html" target="_blank" rel="noopener">博客</a></p>
+          <p>—2017/11/26</p>
+<p>突然想弄明白服务器和网站页面是如何交互的，下面给出关于这个问题的两个链接：<a href="https://www.cnblogs.com/bluesungz/p/5955170.html" target="_blank" rel="noopener">两者区别</a>，<a href="https://github.com/nimojs/blog/issues/13" target="_blank" rel="noopener">前后端数据交互方式</a></p>
+<p>简而言之：</p>
+<ol>
+<li>静态是死的；动态是活的，即根据用户请求不同的数据返回不同的东西</li>
+<li>静态页面基础是html，动态页面则是php，js，jsp，asp等动态编程语言，通过服务器和数据库进行数据的交互</li>
+<li>动态最终要转换为静态html</li>
+<li>静态交互性差，动态则灵活度大</li>
+</ol>
 
         </div>
       </div>

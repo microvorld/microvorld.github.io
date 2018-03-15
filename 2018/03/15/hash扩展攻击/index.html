@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="Cdog">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="动态请求和静态请求"/>
+  <meta property="og:title" content="实验吧：让我进去"/>
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="Dodgy的一条咸鱼"/>
   <meta property="og:type" content="article" />
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">动态请求和静态请求</p>
+          <p class="title">实验吧：让我进去</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -99,7 +99,7 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2017-11-26</span>
+            <span class="date">2018-03-15</span>
             <span class="time">12:52:46</span>
           </span>
           
@@ -109,22 +109,76 @@
           <div class="post-tags text-muted">
             Tags: 
 
-<a class="tag" href="/tags/web/">#web</a>
+<a class="tag" href="/tags/CTF/">#CTF</a>
 
 
           </div>
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>—2017/11/26</p>
-<p>突然想弄明白服务器和网站页面是如何交互的，下面给出关于这个问题的两个链接：<a href="https://www.cnblogs.com/bluesungz/p/5955170.html" target="_blank" rel="noopener">两者区别</a>，<a href="https://github.com/nimojs/blog/issues/13" target="_blank" rel="noopener">前后端数据交互方式</a></p>
-<p>简而言之：</p>
+          <h1 id="实验吧：让我进去"><a href="#实验吧：让我进去" class="headerlink" title="实验吧：让我进去"></a>实验吧：让我进去</h1><h2 id="明文攻击"><a href="#明文攻击" class="headerlink" title="明文攻击"></a>明文攻击</h2><p>用burpsuit抓包，修改cookie中的source值为1，看的php源码：</p>
+<pre><code>`$flag = &quot;XXXXXXXXXXXXXXXXXXXXXXX&quot;;
+$secret = &quot;XXXXXXXXXXXXXXX&quot;; // This secret is 15 characters long for security!
+
+$username = $_POST[&quot;username&quot;];
+$password = $_POST[&quot;password&quot;];
+
+if (!empty($_COOKIE[&quot;getmein&quot;])) {
+if (urldecode($username) === &quot;admin&quot; &amp;&amp; urldecode($password) != &quot;admin&quot;) {
+    if ($COOKIE[&quot;getmein&quot;] === md5($secret . urldecode($username . $password))) {
+        echo &quot;Congratulations! You are a registered user.\n&quot;;
+        die (&quot;The flag is &quot;. $flag);
+    }
+    else {
+        die (&quot;Your cookies don&apos;t match up! STOP HACKING THIS SITE.&quot;);
+    }
+}
+else {
+    die (&quot;You are not an admin! LEAVE.&quot;);
+}
+}
+
+setcookie(&quot;sample-hash&quot;, md5($secret . urldecode(&quot;admin&quot; . &quot;admin&quot;)), time() + (60 * 60 * 24 * 7));
+
+if (empty($_COOKIE[&quot;source&quot;])) {
+setcookie(&quot;source&quot;, 0, time() + (60 * 60 * 24 * 7));
+}
+else {
+if ($_COOKIE[&quot;source&quot;] != 0) {
+    echo &quot;&quot;; // This source code is outputted here
+}
+}`
+</code></pre><p>可以得到的信息是：</p>
 <ol>
-<li>静态是死的；动态是活的，即根据用户请求不同的数据返回不同的东西</li>
-<li>静态页面基础是html，动态页面则是php，js，jsp，asp等动态编程语言，通过服务器和数据库进行数据的交互</li>
-<li>动态最终要转换为静态html</li>
-<li>静态交互性差，动态则灵活度大</li>
+<li>secret长度为15</li>
+<li>要在cookie中传入getmein的值</li>
+<li>getmein应等于secret加上username和password的总字符再进行md5加密，username为admin且password不能为admin</li>
+<li>sample-hash=571580b26c65f306376d4f64e53cb5c表示的则是md5($secret . urldecode(“admin” . “admin”)</li>
 </ol>
+<p>这里就涉及到hash长度扩展攻击</p>
+<p>附原理讲解：</p>
+<ul>
+<li><a href="http://www.freebuf.com/articles/web/31756.html" title="原理" target="_blank" rel="noopener">http://www.freebuf.com/articles/web/31756.html</a> </li>
+<li><a href="http://blog.csdn.net/chbsrzf/article/details/49047035" target="_blank" rel="noopener">http://blog.csdn.net/chbsrzf/article/details/49047035</a></li>
+</ul>
+<p>对于这种攻击方式，有一个工具就是hashpump</p>
+<p>在Linux上下载： </p>
+<ul>
+<li>git clone <a href="https://github.com/bwall/HashPump" target="_blank" rel="noopener">https://github.com/bwall/HashPump</a></li>
+<li>apt-get install g++ libssl-dev</li>
+<li>cd HashPump</li>
+<li>make</li>
+<li>make install</li>
+</ul>
+<p>使用命令：</p>
+<blockquote>
+<p>hashpump -s 571580b26c65f306376d4f64e53cb5c7 -d admin -k 20 -a ct</p>
+</blockquote>
+<p>生成了：</p>
+<blockquote>
+<p> getmein值：11c69586337cab7b919910735af3f688<br> password：admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xc8\x00\x00\x00\x00\x00\x00\x00ct</p>
+</blockquote>
+<p>将所有\x改为%然后传入，得到flag值</p>
 
         </div>
       </div>

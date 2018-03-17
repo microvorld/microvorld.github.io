@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="Cdog">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="Hello World"/>
+  <meta property="og:title" content="实验吧：让我进去"/>
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="Dodgy的一条咸鱼"/>
   <meta property="og:type" content="article" />
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">Hello World</p>
+          <p class="title">实验吧：让我进去</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -99,24 +99,86 @@
           
           <!-- Date -->
           <span class="date-time info">On
-            <span class="date">2017-11-23</span>
+            <span class="date">2018-03-15</span>
             <span class="time">12:57:34</span>
           </span>
           
         </div>
         <!-- Tags -->
         
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/CTF/">#CTF</a>
+
+
+          </div>
+        
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+          <h1 id="实验吧：让我进去"><a href="#实验吧：让我进去" class="headerlink" title="实验吧：让我进去"></a>实验吧：让我进去</h1><h2 id="明文攻击"><a href="#明文攻击" class="headerlink" title="明文攻击"></a>明文攻击</h2><p>用burpsuit抓包，修改cookie中的source值为1，看的php源码：</p>
+<pre><code>`$flag = &quot;XXXXXXXXXXXXXXXXXXXXXXX&quot;;
+$secret = &quot;XXXXXXXXXXXXXXX&quot;; // This secret is 15 characters long for security!
+
+$username = $_POST[&quot;username&quot;];
+$password = $_POST[&quot;password&quot;];
+
+if (!empty($_COOKIE[&quot;getmein&quot;])) {
+if (urldecode($username) === &quot;admin&quot; &amp;&amp; urldecode($password) != &quot;admin&quot;) {
+    if ($COOKIE[&quot;getmein&quot;] === md5($secret . urldecode($username . $password))) {
+        echo &quot;Congratulations! You are a registered user.\n&quot;;
+        die (&quot;The flag is &quot;. $flag);
+    }
+    else {
+        die (&quot;Your cookies don&apos;t match up! STOP HACKING THIS SITE.&quot;);
+    }
+}
+else {
+    die (&quot;You are not an admin! LEAVE.&quot;);
+}
+}
+
+setcookie(&quot;sample-hash&quot;, md5($secret . urldecode(&quot;admin&quot; . &quot;admin&quot;)), time() + (60 * 60 * 24 * 7));
+
+if (empty($_COOKIE[&quot;source&quot;])) {
+setcookie(&quot;source&quot;, 0, time() + (60 * 60 * 24 * 7));
+}
+else {
+if ($_COOKIE[&quot;source&quot;] != 0) {
+    echo &quot;&quot;; // This source code is outputted here
+}
+}`
+</code></pre><p>可以得到的信息是：</p>
+<ol>
+<li>secret长度为15</li>
+<li>要在cookie中传入getmein的值</li>
+<li>getmein应等于secret加上username和password的总字符再进行md5加密，username为admin且password不能为admin</li>
+<li>sample-hash=571580b26c65f306376d4f64e53cb5c表示的则是md5($secret . urldecode(“admin” . “admin”)</li>
+</ol>
+<p>这里就涉及到hash长度扩展攻击</p>
+<p>附原理讲解：</p>
+<ul>
+<li><a href="http://www.freebuf.com/articles/web/31756.html" title="原理" target="_blank" rel="noopener">http://www.freebuf.com/articles/web/31756.html</a> </li>
+<li><a href="http://blog.csdn.net/chbsrzf/article/details/49047035" target="_blank" rel="noopener">http://blog.csdn.net/chbsrzf/article/details/49047035</a></li>
+</ul>
+<p>对于这种攻击方式，有一个工具就是hashpump</p>
+<p>在Linux上下载： </p>
+<ul>
+<li>git clone <a href="https://github.com/bwall/HashPump" target="_blank" rel="noopener">https://github.com/bwall/HashPump</a></li>
+<li>apt-get install g++ libssl-dev</li>
+<li>cd HashPump</li>
+<li>make</li>
+<li>make install</li>
+</ul>
+<p>使用命令：</p>
+<blockquote>
+<p>hashpump -s 571580b26c65f306376d4f64e53cb5c7 -d admin -k 20 -a ct</p>
+</blockquote>
+<p>生成了：</p>
+<blockquote>
+<p> getmein值：11c69586337cab7b919910735af3f688<br> password：admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xc8\x00\x00\x00\x00\x00\x00\x00ct</p>
+</blockquote>
+<p>将所有\x改为%然后传入，得到flag值</p>
 
         </div>
       </div>

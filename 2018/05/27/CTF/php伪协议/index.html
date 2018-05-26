@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>用binwalk进行图片分离 · Damn World</title>
+    <title>php伪协议 · Damn World</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -207,7 +207,7 @@
                 <a href="/" >damn guys</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">用binwalk进行图片分离</a>
+                <a href="#" class="post-name">php伪协议</a>
             </div>
     </div>
     
@@ -239,7 +239,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            用binwalk进行图片分离
+            php伪协议
             <!-- 404 -->
             
         </h1>
@@ -257,13 +257,13 @@ height:50vh;
             
                 <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf.misc">ctf.misc</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
     
 </div>
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2017/11/27</span>
+                <span class="post-intro-time">2018/05/27</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -389,21 +389,58 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="用binwalk进行图片分离"><a href="#用binwalk进行图片分离" class="headerlink" title="用binwalk进行图片分离"></a>用binwalk进行图片分离</h2><p>题目给了一个png图片</p>
-<p>上linux，用binwalk进行分析得到</p>
-<p>发现是有两张图，第二张图是从1967164开始偏离，于是给出命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if=Diary.png of=other.png skip= 1967164 bs=1</span><br></pre></td></tr></table></figure>
-<p>得到第二张图</p>
-<p>  这里再用stegsolve进行反色，然后扫描就行</p>
-<p>  附：关于图片分离的一篇<a href="https://www.cnblogs.com/jiaxinguoguo/p/7351202.html" target="_blank" rel="noopener">博客</a></p>
+        <h1 id="php伪协议"><a href="#php伪协议" class="headerlink" title="php伪协议"></a>php伪协议</h1><h3 id="什么是伪协议"><a href="#什么是伪协议" class="headerlink" title="什么是伪协议"></a>什么是伪协议</h3><p>也不知道伪协议这个名字是从什么时候开始出现的，但我第一次接触还是在打ctf的时候，与其说伪协议，倒不如直接了解PHP支持的协议和封装的协议<br>官方文档给出了如下的php所支持的协议：</p>
+<blockquote>
+<p>file:// — 访问本地文件系统<br>http:// — 访问 HTTP(s) 网址<br>ftp:// — 访问 FTP(s) URLs<br>php:// — 访问各个输入/输出流（I/O streams）<br>zlib:// — 压缩流<br>data:// — 数据（RFC 2397）<br>glob:// — 查找匹配的文件路径模式<br>phar:// — PHP 归档<br>ssh2:// — Secure Shell 2<br>rar:// — RAR<br>ogg:// — 音频流<br>expect:// — 处理交互式的流</p>
+</blockquote>
+<h2 id="php"><a href="#php" class="headerlink" title="php://"></a>php://</h2><p>定义：</p>
+<blockquote>
+<p>访问各个输入/输出流（I/O streams）</p>
+</blockquote>
+<h4 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h4><p>php://input 是个可以访问请求的原始数据的只读流。 POST 请求的情况下，最好使用 php://input 来代替 $HTTP_RAW_POST_DATA，因为它不依赖于特定的 php.ini 指令。当enctype=”multipart/form-data” 的时候 php://input 是无效的。</p>
+<p><strong>16年华山杯</strong>：</p>
+<p><code>&lt;?php</code><br><code>$user = $_GET[&quot;user&quot;];</code><br><code>$file = $_GET[&quot;file&quot;];</code><br><code>$pass = $_GET[&quot;pass&quot;];</code><br><code>if(isset($user)&amp;&amp;(file_get_contents($user,&#39;r&#39;)===&quot;the</code> <code>user is admin&quot;)){</code><br><code>echo &quot;hello admin!&lt;br&gt;&quot;;</code><br><code>include($file); //class.php</code><br><code>}else{</code><br><code>echo &quot;you are not admin ! &quot;;</code><br><code>}</code><br><code>?&gt;</code></p>
+<p>则可以利用php://input:<br><img src="https://i.imgur.com/zbPgDT6.png" alt=""></p>
+<p>除此自外，还可以进行<strong>代码执行</strong>，但是有一个利用条件：<strong>allow_url_include = On</strong>，开启之后可以post如：<strong>&lt;? phpinfo(); ?&gt;</strong>，可以查看网站配置信息</p>
+<h4 id="php-filter"><a href="#php-filter" class="headerlink" title="php://filter"></a>php://filter</h4><blockquote>
+<p>php://filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。 这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()， 在数据流内容读取之前没有机会应用其他过滤器。</p>
+</blockquote>
+<h4 id="相关参数"><a href="#相关参数" class="headerlink" title="相关参数"></a>相关参数</h4><blockquote>
+<ul>
+<li><strong>resource=&lt;要过滤的数据流&gt;</strong>    这个参数是必须的。它指定了你要筛选过滤的数据流。</li>
+</ul>
+<ul>
+<li><strong>read=&lt;读链的筛选列表&gt;</strong>    该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。</li>
+</ul>
+<ul>
+<li><strong>write=&lt;写链的筛选列表&gt;</strong>    该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。</li>
+</ul>
+<ul>
+<li><strong>&lt;；两个链的筛选列表&gt;</strong>    任何没有以 read= 或 write= 作前缀 的筛选器列表会视情况应用于读或写链。</li>
+</ul>
+</blockquote>
+<p>iscc2018中有两道题考察了文件包含漏洞的相关知识，其中就涉及到该协议<br>第一题较为简单，但是考虑到过滤，所以要对<strong>php</strong>进行处理，在<strong>f</strong>后写payload：</p>
+<pre><code>f=PHP://filter/read=convert.base64-encode/resource=index
+</code></pre><p>就可以解出来<br>第二题，直接给出<a href="https://www.anquanke.com/post/id/146063#h3-16" target="_blank" rel="noopener">解题链接</a></p>
+<h4 id="php-output"><a href="#php-output" class="headerlink" title="php://output"></a>php://output</h4><blockquote>
+<p>php://output 是一个只写的数据流， 允许你以 print 和 echo 一样的方式 写入到输出缓冲区。</p>
+</blockquote>
+<h4 id="php-fd"><a href="#php-fd" class="headerlink" title="php://fd"></a>php://fd</h4><blockquote>
+<p>php://fd 允许直接访问指定的文件描述符。 例如 php://fd/3 引用了文件描述符 3。</p>
+</blockquote>
+<h4 id="php-memory-和-php-temp"><a href="#php-memory-和-php-temp" class="headerlink" title="php://memory 和 php://temp"></a>php://memory 和 php://temp</h4><blockquote>
+<p>php://memory 和 php://temp 是一个类似文件 包装器的数据流，允许读写临时数据。 两者的唯一区别是 php://memory 总是把数据储存在内存中， 而 php://temp 会在内存量达到预定义的限制后（默认是 2MB）存入临时文件中。 临时文件位置的决定和 sys_get_temp_dir() 的方式一致。</p>
+<p>php://temp 的内存限制可通过添加 /maxmemory:NN 来控制，NN 是以字节为单位、保留在内存的最大数据量，超过则使用临时文件。</p>
+</blockquote>
+<p>参考链接：<br><a href="https://www.anquanke.com/post/id/146063#h3-16" target="_blank" rel="noopener">https://www.anquanke.com/post/id/146063#h3-16</a><br><a href="https://mp.weixin.qq.com/s/RaxfIg9x5Rh1qjDgFBr82Q" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/RaxfIg9x5Rh1qjDgFBr82Q</a><br><a href="https://www.jianshu.com/p/237804b9f19b" target="_blank" rel="noopener">https://www.jianshu.com/p/237804b9f19b</a><br><a href="http://www.4o4notfound.org/index.php/archives/31/" target="_blank" rel="noopener">http://www.4o4notfound.org/index.php/archives/31/</a></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="http://microvorld.com">damn1t</a>
-            <p>原文链接: <a href="http://microvorld.com/2017/11/27/CTF/binwalk分离图片/">http://microvorld.com/2017/11/27/CTF/binwalk分离图片/</a>
-            <p>发表日期: <a href="http://microvorld.com/2017/11/27/CTF/binwalk分离图片/">November 27th 2017, 6:26:30</a>
+            <p>原文链接: <a href="http://microvorld.com/2018/05/27/CTF/php伪协议/">http://microvorld.com/2018/05/27/CTF/php伪协议/</a>
+            <p>发表日期: <a href="http://microvorld.com/2018/05/27/CTF/php伪协议/">May 27th 2018, 12:22:14</a>
             <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -411,17 +448,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2017/12/04/随笔/无比芜杂的心绪/" title= 无比芜杂的心绪 >
-                    <div class="nextTitle">无比芜杂的心绪</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2017/11/26/web/动态请求和静态请求/" title= 动态请求和静态请求 >
-                    <div class="prevTitle">动态请求和静态请求</div>
+                <a href= "/2018/03/17/web/aboutproxy/" title= 正向代理与反向代理 >
+                    <div class="prevTitle">正向代理与反向代理</div>
                 </a>
             
         </li>
@@ -524,7 +556,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用binwalk进行图片分离"><span class="toc-number">1.</span> <span class="toc-text">用binwalk进行图片分离</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php伪协议"><span class="toc-number">1.</span> <span class="toc-text">php伪协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是伪协议"><span class="toc-number">1.0.1.</span> <span class="toc-text">什么是伪协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php"><span class="toc-number">1.1.</span> <span class="toc-text">php://</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#php-input"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">php://input</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#php-filter"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">php://filter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#相关参数"><span class="toc-number">1.1.0.3.</span> <span class="toc-text">相关参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#php-output"><span class="toc-number">1.1.0.4.</span> <span class="toc-text">php://output</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#php-fd"><span class="toc-number">1.1.0.5.</span> <span class="toc-text">php://fd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#php-memory-和-php-temp"><span class="toc-number">1.1.0.6.</span> <span class="toc-text">php://memory 和 php://temp</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

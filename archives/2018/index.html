@@ -336,6 +336,39 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/05/27/CTF/cbc/" >
+                
+                    <span>[Untitled Post]</span>
+            </a>
+            <div class="abstract-content">
+                CBC字节翻转攻击什么是CBC相信学过密码学的都知道，cbc属于分组加密中的其中一种模式加密过程如下：
+
+Plaintext：待加密的数据。
+IV：用于随机化加密的比特块，保证即使对相同明文多次加密，也可以得到不同的密文。
+Key：被一些如AES的对称加密算法使用。
+Ciphertext：加密后的数据。
+
+明文都是先与混淆数据（第一组是与IV，之后都是与前一组的密文）进行异或，再执行分组加密的。
+解密过程：
+
+Plaintext-0 = Decrypt(Ciphertext) XOR IV—只用于第一个组块
+
+
+Plaintext-N= Decrypt(Ciphertext) XOR C...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/27</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/05/27/CTF/php伪协议/" >
                 
                     <span>php伪协议</span>
@@ -606,7 +639,12 @@ if (!empty($_COOKIE[&q...
     
     
     
-    <div class="total-archive"> Total : 8 </div>
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 9 </div>
     
     <div class="post-archive">
     
@@ -627,8 +665,27 @@ if (!empty($_COOKIE[&q...
     
         </ul>
     
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/CTF/cbc/" >[Untitled Post]</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -669,20 +726,6 @@ if (!empty($_COOKIE[&q...
             <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2017/11/24/CTF/linux 基本命令学习/" >linux 基本命令学习</a>
         </li>
     
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
-        </li>
-    
     </div>
   </div>
         <div class="sidebar-panel-tags">
@@ -694,9 +737,9 @@ if (!empty($_COOKIE[&q...
     
         <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
     
-        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
-    
         <span class="sidebar-tag-name" data-tags="心绪"><span class="iconfont-archer">&#xe606;</span>心绪</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

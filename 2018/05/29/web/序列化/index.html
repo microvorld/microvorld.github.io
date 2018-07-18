@@ -440,7 +440,7 @@ a{s&quot;key1&quot;;s&quot;value1&quot;;s&quot;value2&quot;;} // array(&quot;key
 </code></pre></blockquote>
 </li>
 </ul>
-<ol>
+<ol start="2">
 <li>应用举例</li>
 </ol>
 <p>给出一个demo1.php</p>
@@ -507,6 +507,8 @@ echo serialize($demo);
 <p>所以漏洞的根源在于unserialize()函数的参数可控。如果反序列化对象中存在魔术方法，而且魔术方法中的代码或变量用户可控，就可能产生反序列化漏洞，根据反序列化后不同的代码可以导致各种攻击，如代码注入、SQL注入、目录遍历等等。</p>
 <h3 id="pop链"><a href="#pop链" class="headerlink" title="pop链"></a>pop链</h3><blockquote>
 <p>POP:面向属性编程<br>面向属性编程（Property-Oriented Programing）常用于上层语言构造特定调用链的方法，与二进制利用中的面向返回编程（Return-Oriented Programing）的原理相似，都是从现有运行环境中寻找一系列的代码或者指令调用，然后根据需求构成一组连续的调用链。在控制代码或者程序的执行流程后就能够使用这一组调用链做一些工作了。</p>
+</blockquote>
+<blockquote>
 <p>在二进制利用时，ROP 链构造中是寻找当前系统环境中或者内存环境里已经存在的、具有固定地址且带有返回操作的指令集，而 POP 链的构造则是寻找程序当前环境中已经定义了或者能够动态加载的对象中的属性（函数方法），将一些可能的调用组合在一起形成一个完整的、具有目的性的操作。二进制中通常是由于内存溢出控制了指令执行流程，而反序列化过程就是控制代码执行流程的方法之一，当然进行反序列化的数据能够被用户输入所控制。</p>
 </blockquote>
 <p>给出一个关于<a href="https://www.cnblogs.com/iamstudy/articles/php_unserialize_pop_2.html" target="_blank" rel="noopener">popchain</a>的讲解</p>
@@ -866,14 +868,6 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-archive"> Total : 10 </div>
     
     <div class="post-archive">
@@ -881,17 +875,12 @@ top:50vh;
     
     
     
-    <div class="archive-year"> 2018 </div>
+    <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/29</span><a class="archive-post-title" href= "/2018/05/29/web/序列化/" >php反序列化漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/CTF/cbc/" >CBC字节翻转攻击</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
         </li>
     
     
@@ -900,12 +889,12 @@ top:50vh;
     
         </ul>
     
-    <div class="archive-year"> Invalid date </div>
+    <div class="archive-year"> 2018 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
+            <span class="archive-post-date">05/29</span><a class="archive-post-title" href= "/2018/05/29/web/序列化/" >php反序列化漏洞</a>
         </li>
     
     
@@ -930,6 +919,11 @@ top:50vh;
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/CTF/cbc/" >CBC字节翻转攻击</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -975,9 +969,9 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="ctf.misc"><span class="iconfont-archer">&#xe606;</span>ctf.misc</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
     

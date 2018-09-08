@@ -336,99 +336,28 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/29/web/序列化/" >
+            <a class="abstract-title" href = "/2018/09/08/pwn/pwnable1/" >
                 
-                    <span>php反序列化漏洞</span>
+                    <span>[Untitled Post]</span>
             </a>
             <div class="abstract-content">
-                php反序列化漏洞php序列化在php中存在两个函数，serialize和unserialize,他们的作用分别是将对象进行序列化和反序列化
-什么是序列化？官方文档给出如下定义：
+                pwnable.kr(1-2)fd第一题ssh连接之后给出如下代码：
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+char buf[32];
+int main(int argc, char* argv[], char* envp[]){
+//argc是命令行参数个数(必为int类型)，char*argv[]是指所有命令行参数，char *envp[]是环境变量
+//argv参数是字符串指针数组，其各元素值为命令行中各字符串的首地址，指针数组的长度即为参数个数
 
-serialize() 返回字符串，此字符串包含了表示 value 的字节流，可以存储于任何地方。
-
-简而言之，他将一个对象返回为字符串的形式unserialize则将其还原
-为什么要进行序列化？
-概念：对象是在内存中存储的数据类型，寿命通常随着生成该对象的程序的终止而终止，但是有些情况下需要将对象的状态保存下来，然后在需要使用的时候将对象恢复，对象状态的保存操作就是对象序列化的过程。对象序列化就是将对象转化...
+    if(ar...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/29</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/08</span>
                 </div>
                 <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "web">web</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/27/CTF/cbc/" >
-                
-                    <span>CBC字节翻转攻击</span>
-            </a>
-            <div class="abstract-content">
-                CBC字节翻转攻击什么是CBC相信学过密码学的都知道，cbc属于分组加密中的其中一种模式加密过程如下：
-
-Plaintext：待加密的数据。
-IV：用于随机化加密的比特块，保证即使对相同明文多次加密，也可以得到不同的密文。
-Key：被一些如AES的对称加密算法使用。
-Ciphertext：加密后的数据。
-
-明文都是先与混淆数据（第一组是与IV，之后都是与前一组的密文）进行异或，再执行分组加密的。
-解密过程：
-
-Plaintext-0 = Decrypt(Ciphertext) XOR IV—只用于第一个组块
-
-
-Plaintext-N= Decrypt(Ciphertext) XOR C...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/27</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/27/CTF/php伪协议/" >
-                
-                    <span>php伪协议</span>
-            </a>
-            <div class="abstract-content">
-                php伪协议什么是伪协议也不知道伪协议这个名字是从什么时候开始出现的，但我第一次接触还是在打ctf的时候，与其说伪协议，倒不如直接了解PHP支持的协议和封装的协议官方文档给出了如下的php所支持的协议：
-
-file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 访问 FTP(s) URLsphp:// — 访问各个输入/输出流（I/O streams）zlib:// — 压缩流data:// — 数据（RFC 2397）glob:// — 查找匹配的文件路径模式phar:// — PHP 归档ssh2:// — Secure Shell 2ra...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/27</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
-    
-</div>
                 
             </div>
         </article>

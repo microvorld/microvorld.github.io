@@ -336,6 +336,40 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/09/11/CTF/jinja2/" >
+                
+                    <span>由Musee de X(强网杯2017)到jinja2模板注入</span>
+            </a>
+            <div class="abstract-content">
+                Musee de X(强网杯2017)学到新姿势
+分析注册admin之后进行登录，然后有一个捐赠页面，，网址随便填，这里有一点要注意，名字必须和登录名一致，否则会弹出：screw you hacker
+然后就成功的报错,查看报错信息:在/var/www/html/museum/view.py in makememe中有以下错误：
+if &quot;http://&quot; in url:
+image = urllib2.urlopen(url)
+  else:
+    url = &quot;http://&quot;+url
+image = urllib2.urlopen(url)
+...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/11</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/09/08/pwn/pwnable1/" >
                 
                     <span>pwnable.kr(1-2)</span>
@@ -781,7 +815,26 @@ if (!empty($_COOKIE[&q...
     
     
     
-    <div class="total-archive"> Total : 12 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 13 </div>
     
     <div class="post-archive">
     
@@ -826,29 +879,6 @@ if (!empty($_COOKIE[&q...
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/19/web/编码与解码/" >关于编码与解码的思考</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2017 </div>
-    <ul class="year-list">
-    
-    
         <li class="archive-post-item">
             <span class="archive-post-date">11/27</span><a class="archive-post-title" href= "/2017/11/27/CTF/binwalk分离图片/" >用binwalk进行图片分离</a>
         </li>
@@ -869,21 +899,7 @@ if (!empty($_COOKIE[&q...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/08/pwn/pwnable1/" >pwnable.kr(1-2)</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/11/CTF/jinja2/" >由Musee de X(强网杯2017)到jinja2模板注入</a>
         </li>
     
     
@@ -911,7 +927,49 @@ if (!empty($_COOKIE[&q...
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/08/pwn/pwnable1/" >pwnable.kr(1-2)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/19/web/编码与解码/" >关于编码与解码的思考</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
         </li>
     
     </div>
@@ -919,13 +977,13 @@ if (!empty($_COOKIE[&q...
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="ctf.misc"><span class="iconfont-archer">&#xe606;</span>ctf.misc</span>
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
     
-        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+        <span class="sidebar-tag-name" data-tags="ctf.misc"><span class="iconfont-archer">&#xe606;</span>ctf.misc</span>
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
     
         <span class="sidebar-tag-name" data-tags="心绪"><span class="iconfont-archer">&#xe606;</span>心绪</span>
     

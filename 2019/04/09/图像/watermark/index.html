@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="damn1t">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="damn1t">
+    <meta name="keywords" content=" | damn1t">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Damn World</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180501 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180501 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+        
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/Spson.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >damn guys</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name"></a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>damn guys</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/page.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            [Untitled Post]
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2019/04/09</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="watermark-resolve"><a href="#watermark-resolve" class="headerlink" title="watermark resolve"></a>watermark resolve</h1><h2 id="水印原理"><a href="#水印原理" class="headerlink" title="水印原理"></a>水印原理</h2><h3 id="一般性水印"><a href="#一般性水印" class="headerlink" title="一般性水印"></a>一般性水印</h3><p>常见于纸币，图片。图片水印标志着图片个人所有权，通常就是将两张图片进行叠加，或向另一张图片写入一些标志信息</p>
+<p>简单使用：</p>
+<ul>
+<li>添加文字：</li>
+</ul>
+<pre><code>from PIL import Image, ImageDraw, ImageFont
+
+# 指定要使用的字体和大小；/Library/Fonts/是macOS字体目录；Linux的字体目录是/usr/share/fonts/; windows是C:/windows/fonts/
+font = ImageFont.truetype(&apos;C:/windows/fonts/Arial.ttf&apos;, 24)
+
+# image: 图片   text：要添加的文本  font：字体
+def add_text_to_image(image, text, font=font):
+    rgba_image = image.convert(&apos;RGBA&apos;)
+    text_overlay = Image.new(&apos;RGBA&apos;, rgba_image.size, (255, 255, 255, 0))
+    image_draw = ImageDraw.Draw(text_overlay)
+
+    text_size_x, text_size_y = image_draw.textsize(text, font=font)
+    # 设置文本文字位置
+    print(rgba_image)
+    text_xy = (rgba_image.size[0] - text_size_x, rgba_image.size[1] - text_size_y)
+    # 设置文本颜色和透明度
+    image_draw.text(text_xy, text, font=font, fill=(76, 234, 124, 180))
+
+    image_with_text = Image.alpha_composite(rgba_image, text_overlay)
+
+    return image_with_text
+
+im_before = Image.open(&quot;1.jpg&quot;)
+im_before.show()
+im_after = add_text_to_image(im_before, &apos;WTF&apos;)
+#im_after.show()
+im_after.save(&apos;im_after.jpg&apos;)
+</code></pre><p><img src="https://i.imgur.com/VtVWRYl.jpg" alt=""></p>
+<ul>
+<li>添加图片：</li>
+</ul>
+<pre><code>from PIL import Image, ImageDraw
+
+def add_watermark_to_image(image, watermark):
+    rgba_image = image.convert(&apos;RGBA&apos;)
+    rgba_watermark = watermark.convert(&apos;RGBA&apos;)
+
+    image_x, image_y = rgba_image.size
+    watermark_x, watermark_y = rgba_watermark.size
+
+    # 缩放图片
+    scale = 10
+    watermark_scale = max(image_x / (scale * watermark_x), image_y / (scale * watermark_y))
+    new_size = (int(watermark_x * watermark_scale), int(watermark_y * watermark_scale))
+    rgba_watermark = rgba_watermark.resize(new_size, resample=Image.ANTIALIAS)
+    # 透明度
+    rgba_watermark_mask = rgba_watermark.convert(&quot;L&quot;).point(lambda x: min(x, 180))
+    rgba_watermark.putalpha(rgba_watermark_mask)
+
+    watermark_x, watermark_y = rgba_watermark.size
+    # 水印位置
+    rgba_image.paste(rgba_watermark, (image_x - watermark_x, image_y - watermark_y), rgba_watermark_mask)
+
+    return rgba_image
+
+im_before = Image.open(&quot;1.jpg&quot;)#目标图
+im_before.show()
+
+im_watermark = Image.open(&quot;timg.jpg&quot;)#选择水印图
+im_after = add_watermark_to_image(im_before, im_watermark)
+im_after.show()
+# im.save(&apos;im_after.jpg&apos;)
+</code></pre><ul>
+<li>使用<a href="https://github.com/SixQuant/nowatermark" target="_blank" rel="noopener">nowatermark</a>去除水印</li>
+</ul>
+<pre><code>from nowatermark import WatermarkRemover
+
+path = &apos;./data/&apos;
+
+watermark_template_filename = path + &apos;anjuke-watermark-template.jpg&apos;
+remover = WatermarkRemover()
+remover.load_watermark_template(watermark_template_filename)
+
+remover.remove_watermark(path + &apos;anjuke3.jpg&apos;, path + &apos;anjuke3-result.jpg&apos;)
+remover.remove_watermark(path + &apos;anjuke4.jpg&apos;, path + &apos;anjuke4-result.jpg&apos;)
+</code></pre><h3 id="数字水印"><a href="#数字水印" class="headerlink" title="数字水印"></a>数字水印</h3><h4 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h4><blockquote>
+<p>数字水印（Digital Watermarking）技术是将一些标识信息（即数字水印）直接嵌入数字载体当中（包括多媒体、文档、软件等）或是间接表示（修改特定区域的结构），且不影响原载体的使用价值，也不容易被探知和再次修改。但可以被生产方识别和辨认。通过这些隐藏在载体中的信息，可以达到确认内容创建者、购买者、传送隐秘信息或者判断载体是否被篡改等目的。数字水印是保护信息安全、实现防伪溯源、版权保护的有效办法，是信息隐藏技术研究领域的重要分支和研究方向</p>
+</blockquote>
+<h4 id="特性："><a href="#特性：" class="headerlink" title="特性："></a>特性：</h4><blockquote>
+<p>(1) 隐蔽性<br>也称不可感知性，即对于不可见水印处理系统，水印嵌入算法不应产生可感知的数据修改，也就是水印在通常的视觉条件下应该是不可见的，水印的存在不会影响作品的视觉效果。<br>(2) 鲁棒性<br>水印必须很难去掉(希望不可能去掉)，当然在理论上任何水印都可以去掉，只要对水印的嵌入过程有足够的了解，但是如果对水印的嵌入只是部分了解的话，任何破坏或消除水印的企图都应导致载体严重的降质而不可用。<br>(3) 抗篡改性<br>与抗毁坏的鲁棒性不同，抗篡改性是指水印一旦嵌入到载体中，攻击者就很难改变或伪造。鲁棒性要求高的应用，通常也需要很强的抗篡改性。在版权保护中，要达到好的抗窜改性是比较困难的。<br>(4) 水印容量<br>嵌入的水印信息必须足以表示多媒体内容的创建者或所有者的标志信息，或是购买者的序列号。这样在发生版权纠纷时，创建者或所有者的信息用于标示数据的版权所有者，而序列号用于标示违反协议而为盗版提供多媒体数据的用户。<br>(5) 安全性<br>应确保嵌入信息的保密性和较低的误检测率。水印可以是任何形式的数据，比如数值、文本、图像等。所有的水印都包含一个水印嵌入系统和水印恢复系统。<br>(6) 低错误率<br>即使在不受攻击或者无信号失真的情况下，也要求不能检测到水印(漏检、false -negative) 以及不存在水印的情况下，检测到水印(虚检、false - positive) 的概率必须非常小。</p>
+</blockquote>
+<h4 id="算法（这个坑以后再填，有点复杂）"><a href="#算法（这个坑以后再填，有点复杂）" class="headerlink" title="算法（这个坑以后再填，有点复杂）"></a>算法（这个坑以后再填，有点复杂）</h4><h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
+<li>按水印的特性<br>鲁棒数字水印：要求嵌入的水印能够经受各种常用的编辑处理<br>脆弱数字水印：需要对信号的改动足够敏感，是人们能够根据脆弱水印的状态判断出数据是否被篡改。</li>
+</ul>
+<ul>
+<li>按水印的检测过程<br>明文水印：检测工程中，需要原始数据。普遍来讲，鲁棒性较之盲水印要好。<br>盲水印：只需要秘钥，不需要原始数据</li>
+</ul>
+<ul>
+<li>按水印的内容<br>有意义水印：水印是商标、音频片段等<br>无意义水印：序列号，仅检测是否含水印</li>
+</ul>
+<ul>
+<li>按水印的隐藏位置<br>空域<br>频域<br>时域<blockquote>
+<p>时（空）域数字水印是直接在信号空间上叠加水印信息，而频域数字水印、时/频域数字水印和时间/尺度域数字水印则分别是在DCT变换域、时/ 频变换域和小波变换域上隐藏水印</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="盲水印"><a href="#盲水印" class="headerlink" title="盲水印"></a>盲水印</h4><ul>
+<li>lsb隐写</li>
+</ul>
+<p>LSB全称leastsignificant bit，最低有效位</p>
+<p>PNG文件中的图像像数一般是由RGB三原色（红绿蓝）组成，每一种颜色占用8位，取值范围为0x00~0xFF，即有256种颜色，一共包含了256的3次方的颜色，即16777216种颜色</p>
+<p>人类的眼睛可以区分约1000万种不同的颜色</p>
+<p>这意味着人类的眼睛无法区分余下的颜色大约有6777216种</p>
+<p>LSB隐写就是修改RGB颜色分量的最低二进制位（LSB），而人类的眼睛不会注意到这前后的变化</p>
+<p>每个像数可以携带3比特的信息</p>
+<p>一些概念：</p>
+<ul>
+<li><p>位深度：位深度是指在记录数字图像的颜色时，计算机实际上是用每个像素需要的位深度来表示的。计算机之所以能够显示颜色，是采用了一种称作“位”( bit ) 的记数单位来记录所表示颜色的数据。当这些数据按照一定的编排方式被记录在计算机中，就构成了一个数字图像的计算机文件。“位”( bit )是计算机存储器里的最小单元，它用来记录每一个像素颜色的值。图像的色彩越丰富，“位”就越多。每一个像素在计算机中所使用的这种位数就是“位深度”。</p>
+</li>
+<li><p>像素点<br>像素点是最小的图像单元，一张图片由好多的像素点组成。<br>图片尺寸是500 <em> 338 的，表示图片是由一个500 </em> 338的像素点矩阵构成的，这张图片的宽度是500个像素点的长度，高度是338个像素点的长度，共有500 * 338 = 149000个像素点。 </p>
+</li>
+</ul>
+<ul>
+<li><p>像素<br>把鼠标放在一个图片上，这个时候会显示尺寸和大小，这里的尺寸就是像素。</p>
+</li>
+<li><p>RGB<br>​因为一个像素点的颜色是由RGB三个值来表现的，所以像素点矩阵对应三个颜色向量矩阵，分别是R矩阵(500 <em>338大小)，G矩阵(500 </em>338大小)，B矩阵(500 *338大小)。如果每个矩阵的第一行第一列的值分别为：R：240，G：223，B：204，所以这个像素点的颜色就是（240,223,204）</p>
+</li>
+</ul>
+<ul>
+<li>灰度<br>灰度是表明图像明暗的数值，即黑白图像中点的颜色深度，范围一般从0到255，白色为255 ，黑色为0，故黑白图片也称灰度图像。灰度值指的是单个像素点的亮度。灰度值越大表示越亮。</li>
+</ul>
+<ul>
+<li>图像的灰度化<br>灰度就是没有色彩，RGB色彩分量全部相等。图像的灰度化就是让像素点矩阵中的每一个像素点都满足关系：R=G=B，此时的这个值叫做灰度值。如RGB(100,100,100)就代表灰度值为100,RGB(50,50,50)代表灰度值为50。</li>
+</ul>
+<ul>
+<li>灰度化处理</li>
+</ul>
+<blockquote>
+<p>一般灰度化处理的方法：在灰度化的图像中灰度值的范围为0~255</p>
+<p>1.浮点算法：Gray=R<em>0.3+G</em>0.59+B*0.11                R=G=B</p>
+<p>2.整数方法：Gray=(R<em>30+G</em>59+B*11)/100              R=G=B</p>
+<p>3.移位方法：Gray =(R<em>28+G</em>151+B*77)&gt;&gt;8            R=G=B</p>
+<p>4.平均值法：Gray=（R+G+B）/3                            R=G=B</p>
+<p>5.仅取绿色：Gray=G                                              R=G=B</p>
+<p>二值化处理的方法：</p>
+<p>二值化就是让图像的像素点矩阵中的每个像素点的灰度值为0（黑色）或者255（白色），也就是让整个图像呈现只有黑和白的效果。在二值化后的图像中的灰度值范围是0或者255。那么一个像素点在灰度化之后的灰度值怎么转化为0或者255呢？比如灰度值为100，那么在二值化后到底是0还是255?这就涉及到取一个阀值的问题。</p>
+<p>1、取阀值为127（相当于0~255的中数，（0+255）/2=127），让灰度值小于等于127的变 为0（黑色），灰度值大于127的变为255（白色），这样做的好处是计算量小速度快，但是 缺点也是很明显的，因为这个阀值在不同的图片中均为127，但是不同的图片，他们的颜色分布差别很大，所以用127做阀值，白菜萝卜一刀切，效果肯定是不好的。</p>
+<p>2、计算像素点矩阵中的所有像素点的灰度值的平均值avg</p>
+<p>（像素点1灰度值+…+像素点n灰度值）/ n = 像素点平均值avg，然后让每一个像素点与avg一 一比较，小于等于avg的像素点就为0（黑色），大于avg的 像 素点为255（白色），这样做比方法1好一些。</p>
+<p>3、使用直方图方法（也叫双峰法）来寻找二值化阀值，直方图是图像的重要特质。直方图方法 认为图像由前景和背景组成，在灰度直方图上，前景和背景都形成高峰，在双峰之间的最低谷处就是阀值所在。取到阀值之后再一 一比较就可以了。</p>
+</blockquote>
+<ul>
+<li>灰度值与像素值的关系<br>如果对于一张本身就是灰度图像（8位灰度图像）来说，他的像素值就是它的灰度值，如果是一张彩色图像，则它的灰度值需要经过函数映射来得到。灰度图像是由纯黑和纯白来过渡得到的，在黑色中加入白色就得到灰色，纯黑和纯白按不同的比例来混合就得到不同的灰度值。R=G=B=255为白色，R=G=B=0为黑色，R=G=B=小于255的某个整数时，此时就为某个灰度值。</li>
+</ul>
+<ul>
+<li>灰度级<br>灰度级表明图像中不同灰度的最大数量。灰度级越大，图像的亮度范围越大。</li>
+</ul>
+<ul>
+<li>图像分辨率<br>图像分辨率是指每英寸图像内的像素点数。图像分辨率是有单位的，叫ppi（像素每英寸）。分辨率越高，像素的点密度越高，图像越逼真（这就是为什么做大幅的喷绘时，要求图片分辨率要高，就是为了保证每英寸的画面上拥有更多的像素点）。</li>
+</ul>
+<ul>
+<li>空间分辨率<br>空间分辨率是指图像可辨认的临界物体空间几何长度的最小极限。如果一幅图像的尺寸为MxN，表明在成像时采集了MxN个样本，空间分辨率是MxN。下图是空间分辨率从1024x1024、512x512、256x256、128x128、64x64、32x32pixels</li>
+</ul>
+<ul>
+<li>幅度分辨率<br>幅度分辨率是指幅度离散，每个像素都有一个强度值，称该像素的灰度，一般量化采用8bit。例如8bit的灰度级为2的八次方即256。0~255</li>
+</ul>
+<ul>
+<li>屏幕分辨率<br>屏幕分辨率是屏幕每行的像素点数*每列的像素点数，每个屏幕有自己的分辨率。屏幕分辨率越高，所呈现的色彩越多，清晰度越高。</li>
+</ul>
+<ul>
+<li>图像所需要的位数b<blockquote>
+<p>b=MxNxK      MxN是空间分辨率 ；K幅度分辨率，单位是bit</p>
+<p>存储1幅32 x 32，16个灰度级的图需要 4,096 bit</p>
+<p>存储1幅512 x 512，256个灰度级的图需要 2,097,152 bit </p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>对比度：指一幅图中灰度反差的大小<br>对比度 =  最大亮度/最小亮度</li>
+</ul>
+<ul>
+<li>与清晰度相关的因素：<blockquote>
+<p>亮度</p>
+<p>对比度</p>
+<p>尺寸大小</p>
+<p>细微层次</p>
+<p>颜色饱和度</p>
+</blockquote>
+</li>
+</ul>
+<p>既然修改最低位不会容易让人察觉，那么于是可以利用最低位进行信息的隐写，容易想到的是，每个像素点可以携带<strong>3bit</strong>的有效信息。</p>
+<p><img src="https://segmentfault.com/img/bVbgeGG?w=865&amp;h=331" alt=""></p>
+<p><img src="https://segmentfault.com/img/bVbgeGI?w=675&amp;h=227" alt=""></p>
+<p><img src="https://segmentfault.com/img/bVbgeGK?w=624&amp;h=332" alt=""></p>
+<p>github上有两个关于lsb的project：<br><a href="https://github.com/RobinDavid/LSB-Steganography" target="_blank" rel="noopener">https://github.com/RobinDavid/LSB-Steganography</a><br><a href="https://github.com/cyberinc/cloacked-pixel" target="_blank" rel="noopener">https://github.com/cyberinc/cloacked-pixel</a></p>
+<p>python2的lsb脚本：</p>
+<pre name="code" class="python">
+# -*- coding: UTF-8 -*-
+from PIL import Image
+
+def plus(str):
+    #Python zfill() 方法返回指定长度的字符串，原字符串右对齐，前面填充0。
+    return str.zfill(8)
+
+def get_key(str):
+    #获取要隐藏的文件内容
+    tmp = str
+    f = file(tmp,"rb")
+    col = ""
+    s = f.read()
+    for i in range(len(s)):
+        #逐个字节将要隐藏的文件内容转换为二进制，并拼接起来
+        #1.先用ord()函数将s的内容逐个转换为ascii码
+        #2.使用bin()函数将十进制的ascii码转换为二进制
+        #3.由于bin()函数转换二进制后，二进制字符串的前面会有"0b"来表示这个字符串是二进制形式，所以用replace()替换为空
+        #4.又由于ascii码转换二进制后是七位，而正常情况下每个字符由8位二进制组成，所以使用自定义函数plus将其填充为8位
+        col = col+plus(bin(ord(s[i])).replace('0b',''))
+
+    f.closed
+    return col
+
+def mod(x,y):
+    return x%y
+
+#str1为载体图片路径，str2为隐写文件，str3为加密图片保存的路径
+def func(str1,str2,str3):
+    im = Image.open(str1)
+    #获取图片的宽和高
+    width = im.size[0]
+    print "width:"+str(width)+"\n"
+    height = im.size[1]
+    print "height:"+str(height)+"\n"
+    count = 0
+    #获取需要隐藏的信息
+    key = get_key(str2)
+    keylen = len(key)
+    for h in range(0,height):
+        for w in range(0,width):
+            pixel = im.getpixel((w,h))
+            a = pixel[0]
+            b = pixel[1]
+            c = pixel[2]
+
+            if count == keylen:
+                break
+            #下面的操作是将信息隐藏进去
+            #分别将每个像素点的RGB值余2，这样可以去掉最低位的值
+            #再从需要隐藏的信息中取出一位，转换为整型
+            #两值相加，就把信息隐藏起来了
+            a = a-mod(a,2)+int(key[count])
+            count+=1
+            if count == keylen:
+                im.putpixel((w,h),(a,b,c))
+                break
+
+            b = b-mod(b,2)+int(key[count])
+            count+=1
+
+            if count == keylen:
+                im.putpixel((w,h),(a,b,c))
+                break
+
+            c = c-mod(c,2)+int(key[count])
+            count+=1
+
+            if count == keylen:
+                im.putpixel((w,h),(a,b,c))
+                break
+
+            if count%3 == 0:
+                im.putpixel((w,h),(a,b,c))
+
+        im.save(str3)
+
+#原图
+old = "1.png"
+#处理后输出的图片路径
+new = "output.png"
+#需要隐藏的信息
+enc = "flag.txt"
+
+func(old,enc,new)
+</pre>
+
+<ul>
+<li>使用脚本</li>
+</ul>
+<h4 id="盲水印-1"><a href="#盲水印-1" class="headerlink" title="盲水印"></a>盲水印</h4><p><a href="https://github.com/chishaxie/BlindWaterMark" target="_blank" rel="noopener">项目地址</a></p>
+<pre name="code" class="python">
+if cmd == 'encode':
+    print 'image<%s> + watermark<%s> -> image(encoded)<%s>' % (fn1, fn2, fn3)
+    img = cv2.imread(fn1)
+    wm = cv2.imread(fn2)
+
+    if debug:
+        plt.subplot(231), plt.imshow(bgr_to_rgb(img)), plt.title('image')
+        plt.xticks([]), plt.yticks([])
+        plt.subplot(234), plt.imshow(bgr_to_rgb(wm)), plt.title('watermark')
+        plt.xticks([]), plt.yticks([])
+
+    # print img.shape # 高, 宽, 通道
+    h, w = img.shape[0], img.shape[1]
+    hwm = np.zeros((int(h * 0.5), w, img.shape[2]))
+    assert hwm.shape[0] > wm.shape[0]
+    assert hwm.shape[1] > wm.shape[1]
+    hwm2 = np.copy(hwm)
+    for i in xrange(wm.shape[0]):
+        for j in xrange(wm.shape[1]):
+            hwm2[i][j] = wm[i][j]
+
+    random.seed(seed)
+    m, n = range(hwm.shape[0]), range(hwm.shape[1])
+    random.shuffle(m)
+    random.shuffle(n)
+    for i in xrange(hwm.shape[0]):
+        for j in xrange(hwm.shape[1]):
+            hwm[i][j] = hwm2[m[i]][n[j]]
+
+    rwm = np.zeros(img.shape)
+    for i in xrange(hwm.shape[0]):
+        for j in xrange(hwm.shape[1]):
+            rwm[i][j] = hwm[i][j]
+            rwm[rwm.shape[0] - i - 1][rwm.shape[1] - j - 1] = hwm[i][j]
+
+    if debug:
+        plt.subplot(235), plt.imshow(bgr_to_rgb(rwm)), \
+            plt.title('encrypted(watermark)')
+        plt.xticks([]), plt.yticks([])
+
+    f1 = np.fft.fft2(img)
+    f2 = f1 + alpha * rwm
+    _img = np.fft.ifft2(f2)
+
+    if debug:
+        plt.subplot(232), plt.imshow(bgr_to_rgb(np.real(f1))), \
+            plt.title('fft(image)')
+        plt.xticks([]), plt.yticks([])
+
+    img_wm = np.real(_img)
+
+    assert cv2.imwrite(fn3, img_wm, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+
+    # 这里计算下保存前后的(溢出)误差
+    img_wm2 = cv2.imread(fn3)
+    sum = 0
+    for i in xrange(img_wm.shape[0]):
+        for j in xrange(img_wm.shape[1]):
+            for k in xrange(img_wm.shape[2]):
+                sum += np.power(img_wm[i][j][k] - img_wm2[i][j][k], 2)
+    miss = np.sqrt(sum) / (img_wm.shape[0] * img_wm.shape[1] * img_wm.shape[2]) * 100
+    print 'Miss %s%% in save' % miss
+
+    if debug:
+        plt.subplot(233), plt.imshow(bgr_to_rgb(np.uint8(img_wm))), \
+            plt.title('image(encoded)')
+        plt.xticks([]), plt.yticks([])
+
+    f2 = np.fft.fft2(img_wm)
+    rwm = (f2 - f1) / alpha
+    rwm = np.real(rwm)
+
+    wm = np.zeros(rwm.shape)
+    for i in xrange(int(rwm.shape[0] * 0.5)):
+        for j in xrange(rwm.shape[1]):
+            wm[m[i]][n[j]] = np.uint8(rwm[i][j])
+    for i in xrange(int(rwm.shape[0] * 0.5)):
+        for j in xrange(rwm.shape[1]):
+            wm[rwm.shape[0] - i - 1][rwm.shape[1] - j - 1] = wm[i][j]
+
+    if debug:
+        assert cv2.imwrite('_bwm.debug.wm.jpg', wm)
+        plt.subplot(236), plt.imshow(bgr_to_rgb(wm)), plt.title(u'watermark')
+        plt.xticks([]), plt.yticks([])
+
+    if debug:
+        plt.show()
+</%s></%s></%s></pre>
+
+<p>这是添加水印的代码</p>
+<p>添加盲水印的方法简单可以分为频域方法和空域方法，这两种方法添加了冗余信息，但在编码和压缩情况不变的情况下，不会使原始图像大小产生变化（原来是10MB添加盲水印之后还是10MB）</p>
+<p>空域是指空间域，我们日常所见的图像就是空域。空域添加数字水印的方法是在空间域直接对图像操作（之所以说的这么绕，是因为不仅仅原图是空域，原图的差分等等也是空域），比如将水印直接叠加在图像上。</p>
+<p>我们常说一个音有多高，这个音高是指频率；同样，图像灰度变化强烈的情况，也可以视为图像的频率。频域添加数字水印的方法，是指通过某种变换手段（傅里叶变换，离散余弦变换，小波变换等）将图像变换到频域（小波域），在频域对图像添加水印，再通过逆变换，将图像转换为空间域。相对于空域手段，频域手段隐匿性更强，抗攻击性更高。</p>
+<p>reference：<br><a href="https://www.jianshu.com/p/08041bcf0f23" target="_blank" rel="noopener">https://www.jianshu.com/p/08041bcf0f23</a><br><a href="https://blog.csdn.net/Strive_0902/article/details/78023080" target="_blank" rel="noopener">https://blog.csdn.net/Strive_0902/article/details/78023080</a><br><a href="https://segmentfault.com/a/1190000016223897?utm_source=tag-newest" target="_blank" rel="noopener">https://segmentfault.com/a/1190000016223897?utm_source=tag-newest</a><br><a href="https://blog.csdn.net/qq_26090065/article/details/82469266" target="_blank" rel="noopener">https://blog.csdn.net/qq_26090065/article/details/82469266</a><br><a href="https://peterpan980927.cn/2017/11/24/%E7%9B%B2%E6%B0%B4%E5%8D%B0%E6%8A%80%E6%9C%AF/" target="_blank" rel="noopener">https://peterpan980927.cn/2017/11/24/%E7%9B%B2%E6%B0%B4%E5%8D%B0%E6%8A%80%E6%9C%AF/</a><br><a href="https://blog.csdn.net/u011983997/article/details/80420339" target="_blank" rel="noopener">https://blog.csdn.net/u011983997/article/details/80420339</a></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者: <a href="http://microvorld.com">damn1t</a>
+            <p>原文链接: <a href="http://microvorld.com/2019/04/09/图像/watermark/">http://microvorld.com/2019/04/09/图像/watermark/</a>
+            <p>发表日期: <a href="http://microvorld.com/2019/04/09/图像/watermark/">四月 9日 2019, 5:38:52</a>
+            <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/04/09/algorithm/傅里叶/" title=  >
+                    <div class="nextTitle">[Untitled Post]</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/04/08/CTF/MidnightSun CTF 2019/" title= MidnightSun CTF 2019 >
+                    <div class="prevTitle">MidnightSun CTF 2019</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:870059622@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/microvorld" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/flatline" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#watermark-resolve"><span class="toc-number">1.</span> <span class="toc-text">watermark resolve</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#水印原理"><span class="toc-number">1.1.</span> <span class="toc-text">水印原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一般性水印"><span class="toc-number">1.1.1.</span> <span class="toc-text">一般性水印</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字水印"><span class="toc-number">1.1.2.</span> <span class="toc-text">数字水印</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义："><span class="toc-number">1.1.2.1.</span> <span class="toc-text">定义：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特性："><span class="toc-number">1.1.2.2.</span> <span class="toc-text">特性：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法（这个坑以后再填，有点复杂）"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">算法（这个坑以后再填，有点复杂）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分类"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#盲水印"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">盲水印</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#盲水印-1"><span class="toc-number">1.1.2.6.</span> <span class="toc-text">盲水印</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 26 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2019/04/11/cve/CVE-2018-17057/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2019/04/10/misc/png隐写/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/algorithm/傅里叶/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/08/pwn/pwnable1/" >pwnable.kr(1-2)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/图像/watermark/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2019/04/08/CTF/MidnightSun CTF 2019/" >MidnightSun CTF 2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2019/04/01/CTF/fireshell ctf(vice)/" >fireshell ctf2019 vice</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2019/03/30/CTF/Securinets Prequals CTF 2019/" >Securinets Prequals CTF 2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2019/03/26/CTF/hackim ctf/" >hackim web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href= "/2019/03/25/vulnerable/xxe/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/18</span><a class="archive-post-title" href= "/2019/03/18/system/linux/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/29</span><a class="archive-post-title" href= "/2018/05/29/web/序列化/" >php反序列化漏洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/CTF/cbc/" >CBC字节翻转攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/CTF/php伪协议/" >php伪协议</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/command/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/17</span><a class="archive-post-title" href= "/2018/03/17/web/aboutproxy/" >正向代理与反向代理</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/11/CTF/jinja2/" >由Musee de X(强网杯2017)到jinja2模板注入</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2017/12/04/随笔/无比芜杂的心绪/" >无比芜杂的心绪</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/03/CTF/VolgaCTF 2019(web)/" >VolgaCTF 2019 Quals</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/19/web/编码与解码/" >关于编码与解码的思考</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/27</span><a class="archive-post-title" href= "/2017/11/27/CTF/binwalk分离图片/" >用binwalk进行图片分离</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2017/11/26/web/动态请求和静态请求/" >动态请求和静态请求</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2017/11/24/CTF/linux 基本命令学习/" >linux 基本命令学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/proc/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf.misc"><span class="iconfont-archer">&#xe606;</span>ctf.misc</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="心绪"><span class="iconfont-archer">&#xe606;</span>心绪</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'damn1t'
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

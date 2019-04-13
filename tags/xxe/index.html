@@ -336,94 +336,30 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2017/11/27/CTF/binwalk分离图片/" >
+            <a class="abstract-title" href = "/2019/03/25/vulnerable/xxe/" >
                 
-                    <span>用binwalk进行图片分离</span>
+                    <span>xxe</span>
             </a>
             <div class="abstract-content">
-                用binwalk进行图片分离题目给了一个png图片
-上linux，用binwalk进行分析得到
-发现是有两张图，第二张图是从1967164开始偏离，于是给出命令：
-1if=Diary.png of=other.png skip= 1967164 bs=1
-得到第二张图
-  这里再用stegsolve进行反色，然后扫描就行
-  附：关于图片分离的一篇博客
+                xxexml基础什么是 XML?
 
+XML 指可扩展标记语言（EXtensible Markup Language）XML 是一种标记语言，很类似 HTMLXML 的设计宗旨是传输数据，而非显示数据XML 标签没有被预定义。您需要自行定义标签。XML 被设计为具有自我描述性。XML 是 W3C 的推荐标准
+
+结构
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE note [
+      &lt;!ELEMENT note (to,from,heading,body)&gt...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/11/27</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/25</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf.misc">ctf.misc</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/11/26/web/动态请求和静态请求/" >
-                
-                    <span>动态请求和静态请求</span>
-            </a>
-            <div class="abstract-content">
-                —2017/11/26
-突然想弄明白服务器和网站页面是如何交互的，下面给出关于这个问题的两个链接：两者区别，前后端数据交互方式
-简而言之：
-
-静态是死的；动态是活的，即根据用户请求不同的数据返回不同的东西
-静态页面基础是html，动态页面则是php，js，jsp，asp等动态编程语言，通过服务器和数据库进行数据的交互
-动态最终要转换为静态html
-静态交互性差，动态则灵活度大
-
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/11/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "web">web</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2017/11/24/CTF/linux 基本命令学习/" >
-                
-                    <span>linux 基本命令学习</span>
-            </a>
-            <div class="abstract-content">
-                linux 基本命令学习—2017/11/24 
-来源：http://123.206.31.85/challenges#Linux%E5%9F%BA%E7%A1%801一道关于Linux的基础题
-解压文件后发现一个brave的二进制文件，无奈不知怎么找flag，于是看了write up，说直接在Linux下执行grep -a ‘KEY’ datafile的命令，也是上网查了有关grep的命令，如下：
-作用grep（global search regular expression(RE) and print out the line，全面搜索正则表达式并把行打印出来）是一种强大的文本搜索工...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/11/24</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "xxe">xxe</a>
     
 </div>
                 

@@ -336,31 +336,24 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/26/CTF/hackim ctf/" >
+            <a class="abstract-title" href = "/2019/04/21/CTF/plaidctf2019/" >
                 
-                    <span>hackim web</span>
+                    <span>plaidctf2019</span>
             </a>
             <div class="abstract-content">
-                hackim webescaperfv查看响应信息发现字段X-Powered-By，其对应的为express可知为后端为nodejs
-mime checkr只能上传.jpeg格式图片，有一个类型检查的功能这里有很重要的一点，一个getmime.bak的备份源码文件（不看writeup我是肯定不知道的，orz）
-&lt;?php
-//error_reporting(-1);
-//ini_set(&apos;display_errors&apos;, &apos;On&apos;);
-
-class CurlClass{
-public function httpGet($url) {
-$ch ...
+                plaidctf2019Triggered（web）首页的一段话提示了一点，要试图登录admin角色，页面功能分为登录，注册，先注册随意账号并登陆：有查询和添加主题两个功能，尝试了一下，new note没法xss，所以可能就是查询了，以admin的身份进行flag查询分析代码，服了，存sql写的，pl/pgsql(以postgresql支持)
+关注登录过程：用户：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960---...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/21</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
 </div>
                 
@@ -370,30 +363,25 @@ $ch ...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/25/vulnerable/xxe/" >
+            <a class="abstract-title" href = "/2019/04/21/CTF/ddctf2019/" >
                 
-                    <span>xxe</span>
+                    <span>DDCTF2019</span>
             </a>
             <div class="abstract-content">
-                xxexml基础什么是 XML?
-
-XML 指可扩展标记语言（EXtensible Markup Language）XML 是一种标记语言，很类似 HTMLXML 的设计宗旨是传输数据，而非显示数据XML 标签没有被预定义。您需要自行定义标签。XML 被设计为具有自我描述性。XML 是 W3C 的推荐标准
-
-结构
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
-&lt;!DOCTYPE note [
-      &lt;!ELEMENT note (to,from,heading,body)&gt...
+                DDCTF2019web滴~还是要有耐心啊，这次做题由于感觉像吃了屎一样，所以索性就没做了，并且精力有限。
+这题打开链接，给出了一张图片（这图成功成为了又一个表情包）注意地址栏，参数jpg后面跟了一串字符串，猜测base64，经过一番尝试，发现编码规则是将源文件名转为hex，再进行两次base64编码，于是尝试读取源码
+利用python进行编码：1str(base64.b64encode(base64.b64encode((&apos;index.php&apos;.encode(&apos;ascii&apos;)).hex().encode(&apos;utf-8&apos;))),...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/25</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/21</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "xxe">xxe</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
 </div>
                 
@@ -403,28 +391,35 @@ XML 指可扩展标记语言（EXtensible Markup Language）XML 是一种标记�
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/18/system/linux/" >
+            <a class="abstract-title" href = "/2019/04/20/python/upgrade python3/" >
                 
-                    <span>Linux常见错误</span>
+                    <span>Ubuntu升级python3.7</span>
             </a>
             <div class="abstract-content">
-                ubuntu常见错误Package has no installation candidate解决：
-# apt-get update
-# apt-get upgrade
-# apt-get install &lt;packagename&gt;
-
-E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)E: Unable to lock the administration directory (/var/lib/dpkg/), is another process us...
+                Ubuntu升级python3.7步骤下载源码
+wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz
+解压源码
+tar -xvzf Python-3.7.3.tgz
+进入目录
+cd Python-3.7.3
+配置安装路径
+./configure --with-ssl --prefix=/usr/local/python3
+安装python3.7.1依赖
+#sudo apt-get update
+#sudo apt-get upgrade
+#sudo apt-get dist-upgrade
+sudo apt-get i...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/18</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/20</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "tutorial">tutorial</a>
     
 </div>
                 
@@ -434,31 +429,27 @@ E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavai
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/11/CTF/jinja2/" >
+            <a class="abstract-title" href = "/2019/04/17/靶机/acid/" >
                 
-                    <span>由Musee de X(强网杯2017)到jinja2模板注入</span>
+                    <span>acid server靶机渗透</span>
             </a>
             <div class="abstract-content">
-                Musee de X(强网杯2017)学到新姿势
-分析注册admin之后进行登录，然后有一个捐赠页面，，网址随便填，这里有一点要注意，名字必须和登录名一致，否则会弹出：screw you hacker
-然后就成功的报错,查看报错信息:在/var/www/html/museum/view.py in makememe中有以下错误：
-if &quot;http://&quot; in url:
-image = urllib2.urlopen(url)
-  else:
-    url = &quot;http://&quot;+url
-image = urllib2.urlopen(url)
-...
+                acid server靶机渗透虚拟机地址：https://download.vulnhub.com/acid/Acid.rar
+信息搜集开启acid，不用登陆，已启用服务
+靶机描述：
+
+The named of the Virtual machine is “Acid Server”. This Virtual Machine is completely web based. I have added little new concept here and hope people will enjoy solving this.You need to extract the rar an...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/11</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/17</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "靶机">靶机</a>
     
 </div>
                 
@@ -468,32 +459,24 @@ image = urllib2.urlopen(url)
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/08/pwn/pwnable1/" >
+            <a class="abstract-title" href = "/2019/04/15/vulnerable/ssrf/" >
                 
-                    <span>pwnable.kr(1-2)</span>
+                    <span>ssrf</span>
             </a>
             <div class="abstract-content">
-                pwnable.kr(1-2)fd第一题ssh连接之后给出如下代码：
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-char buf[32];
-int main(int argc, char* argv[], char* envp[]){
-//argc是命令行参数个数(必为int类型)，char*argv[]是指所有命令行参数，char *envp[]是环境变量
-//argv参数是字符串指针数组，其各元素值为命令行中各字符串的首地址，指针数组的长度即为参数个数
+                ssrf常见绕过方式八进制、十进制、十六进制：利用nip.io:302跳转：dns重绑定：利用网站：https://qiita.com/shimoju/items/81ed5055d2fec5bb9c1e自定义：
 
-    if(ar...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/08</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/15</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pwn">pwn</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ssrf">ssrf</a>
     
 </div>
                 
@@ -503,27 +486,23 @@ int main(int argc, char* argv[], char* envp[]){
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/07/19/web/编码与解码/" >
+            <a class="abstract-title" href = "/2019/04/13/转载/国外安全网站/" >
                 
-                    <span>关于编码与解码的思考</span>
+                    <span>分享一些国外著名的黑客技术学习网站</span>
             </a>
             <div class="abstract-content">
-                关于编码与解码的思考最近做了SCTF，看了官方wp，其中看到了在进行xss测试的使用了
-{{'a'.constructor.prototype.charAt=[].join;$eval('x=1} }
-    };\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029//');}}
-这时不禁想到了一个问题，为什么要进行js编码？什么时候才应该进行编码绕过？浏览器与服务器之间是如何处理编码与解码的？
-常用编码URL编码：一个百分号和该字符的ASCII编码所对应的2位十六进制数字，例如“/”的URL编码为%2F(一般大写，但不强求)HTML实体编码：...
+                分享一些国外著名的黑客技术学习网站本来呢，我的初衷是想要寻找一些国外新进的技术的论坛或者网站，或者一些新的电子书，后来找了一圈，发现就我目前已知的内容很难找到那些新进的东西，但是我找到了一些国外的论坛，仅供大家参考。http://www.milw0rm.com/http://www.web-hack.ru/俄罗斯的站 http://www.securitydot.net/http://www.addict3d.org/Security http://www.frsirt.com/ http://www.securiteam.com/ http://neworder.box.sk/ htt...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/19</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/13</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "web">web</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "收集">收集</a>
     
 </div>
                 
@@ -533,30 +512,23 @@ int main(int argc, char* argv[], char* envp[]){
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/29/web/序列化/" >
+            <a class="abstract-title" href = "/2019/04/11/cve/CVE-2018-17057/" >
                 
-                    <span>php反序列化漏洞</span>
+                    <span>CVE-2018-17057</span>
             </a>
             <div class="abstract-content">
-                php反序列化漏洞php序列化在php中存在两个函数，serialize和unserialize,他们的作用分别是将对象进行序列化和反序列化
-什么是序列化？官方文档给出如下定义：
-
-serialize() 返回字符串，此字符串包含了表示 value 的字节流，可以存储于任何地方。
-
-简而言之，他将一个对象返回为字符串的形式unserialize则将其还原
-为什么要进行序列化？
-概念：对象是在内存中存储的数据类型，寿命通常随着生成该对象的程序的终止而终止，但是有些情况下需要将对象的状态保存下来，然后在需要使用的时候将对象恢复，对象状态的保存操作就是对象序列化的过程。对象序列化就是将对象转化...
+                CVE-2018-17057
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/29</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/11</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "web">web</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "cve">cve</a>
     
 </div>
                 
@@ -566,36 +538,24 @@ serialize() 返回字符串，此字符串包含了表示 value 的字节流，�
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/27/CTF/cbc/" >
+            <a class="abstract-title" href = "/2019/04/10/misc/png隐写/" >
                 
-                    <span>CBC字节翻转攻击</span>
+                    <span>png文件结构与信息隐藏</span>
             </a>
             <div class="abstract-content">
-                CBC字节翻转攻击什么是CBC相信学过密码学的都知道，cbc属于分组加密中的其中一种模式加密过程如下：
-
-Plaintext：待加密的数据。
-IV：用于随机化加密的比特块，保证即使对相同明文多次加密，也可以得到不同的密文。
-Key：被一些如AES的对称加密算法使用。
-Ciphertext：加密后的数据。
-
-明文都是先与混淆数据（第一组是与IV，之后都是与前一组的密文）进行异或，再执行分组加密的。
-解密过程：
-
-Plaintext-0 = Decrypt(Ciphertext) XOR IV—只用于第一个组块
-
-
-Plaintext-N= Decrypt(Ciphertext) XOR C...
+                png文件结构与信息隐藏PNG(Portable Network Graphics)，PNG supports palette-based images (with palettes of 24-bit RGB or 32-bit RGBA colors), grayscale images (with or without alpha channel for transparency), and full-color non-palette-based RGB/RGBA images (with or without alpha channel).
+文件格式file header固定的...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/27</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/10</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "隐写">隐写</a>
     
 </div>
                 
@@ -605,25 +565,28 @@ Plaintext-N= Decrypt(Ciphertext) XOR C...
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/05/27/CTF/php伪协议/" >
+            <a class="abstract-title" href = "/2019/04/09/algorithm/傅里叶/" >
                 
-                    <span>php伪协议</span>
+                    <span>傅里叶变换</span>
             </a>
             <div class="abstract-content">
-                php伪协议什么是伪协议也不知道伪协议这个名字是从什么时候开始出现的，但我第一次接触还是在打ctf的时候，与其说伪协议，倒不如直接了解PHP支持的协议和封装的协议官方文档给出了如下的php所支持的协议：
-
-file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 访问 FTP(s) URLsphp:// — 访问各个输入/输出流（I/O streams）zlib:// — 压缩流data:// — 数据（RFC 2397）glob:// — 查找匹配的文件路径模式phar:// — PHP 归档ssh2:// — Secure Shell 2ra...
+                傅里叶变换傅里叶同学告诉我们，任何周期函数，都可以看作是不同振幅，不同相位正弦波的叠加
+而贯穿时域与频域的方法之一，就是传中说的傅里叶分析。傅里叶分析可分为傅里叶级数（Fourier Serie）和傅里叶变换(Fourier Transformation)
+如果我们把第一个频率最低的频率分量看作“1”，我们就有了构建频域的最基本单元。
+对于我们最常见的有理数轴，数字“1”就是有理数轴的基本单元。
+时域的基本单元就是“1秒”，如果我们将一个角频率为\omega_{0} 的正弦波cos（\omega_{0} t）看作基础，那么频域的基本单元就是\omega_{0} 。
+有了“1”，还要有“0...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/27</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/09</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "傅里叶">傅里叶</a>
     
 </div>
                 
@@ -633,33 +596,31 @@ file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/17/web/aboutproxy/" >
+            <a class="abstract-title" href = "/2019/04/09/图像/watermark/" >
                 
-                    <span>正向代理与反向代理</span>
+                    <span>watermark resolve</span>
             </a>
             <div class="abstract-content">
-                #正向代理与反向代理 #何为代理，代理服务器（proxy sever），即代替网络用户去获得网络信息，一般情况下，client会直接向sever发送request信息，而代理服务器相当于起到一个中转站的作用，他会代替储存sever的响应信息，然后经由他传送到client端，大部分代理服务器都具有很大的存储空间。
-代理功能：
-1.突破ip封锁
-2.隐藏真实ip
-3.访问某些内部资源
-4.提高访问速度
+                watermark resolve水印原理一般性水印常见于纸币，图片。图片水印标志着图片个人所有权，通常就是将两张图片进行叠加，或向另一张图片写入一些标志信息
+简单使用：
 
-正向代理-正向代理类似一个跳板，代理访问外部资源，譬如熟知的vpn
+添加文字：
 
+from PIL import Image, ImageDraw, ImageFont
 
-正向代理 是一个位于客户端和原始服务器(origin server)之间的服务器，为了从原始服务器取得内容，客户端向代...
+# 指定要使用的字体和大小；/Library/Fonts/是macOS字体目录；Linux的字体目录是/usr/share/fonts/; windows是C:/windows/fonts/
+font = ImageFont.truetype(&apos;C:/windows/fonts/Arial.ttf&apo...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/17</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/09</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "web">web</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "watermark">watermark</a>
     
 </div>
                 
@@ -669,7 +630,7 @@ file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">NEXT &#62;</a>
+        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/3/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1146,7 +1107,396 @@ file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 
     
     
     
-    <div class="total-archive"> Total : 26 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 41 </div>
     
     <div class="post-archive">
     
@@ -1158,8 +1508,131 @@ file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">05/04</span><a class="archive-post-title" href= "/2019/05/04/vulnerable/padding oracle attack/" >padding oracle</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2019/05/03/靶机/hack the box邀请码获取和web challenge/" >hack the box邀请码获取和web challenge</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2019/04/24/vulnerable/race condition/" >web条件竞争</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2019/04/23/图像/py_gif/" >python gif图的拆解和合成</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/CTF/ddctf2019/" >DDCTF2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/CTF/plaidctf2019/" >plaidctf2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2019/04/17/靶机/acid/" >acid server靶机渗透</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/08/pwn/pwnable1/" >pwnable.kr(1-2)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/03/CTF/VolgaCTF 2019(web)/" >VolgaCTF 2019 Quals</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2019/04/15/vulnerable/ssrf/" >ssrf</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2019/04/11/cve/CVE-2018-17057/" >CVE-2018-17057</a>
         </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/04/cve/CNVD-C-2019-48814/" >CNVD-C-2019-48814</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -1241,40 +1714,12 @@ file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 
     
         </ul>
     
-    <div class="archive-year"> 2017 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2017/12/04/随笔/无比芜杂的心绪/" >无比芜杂的心绪</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
     <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/command/" >Linux常用指令及其含义</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2017 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/27</span><a class="archive-post-title" href= "/2017/11/27/CTF/binwalk分离图片/" >用binwalk进行图片分离</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/20/python/upgrade python3/" >Ubuntu升级python3.7</a>
         </li>
     
     
@@ -1302,7 +1747,26 @@ file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/27/cpp/单双冒号区别/" >c++中冒号（:）和双冒号（::）的用法</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2017/12/04/随笔/无比芜杂的心绪/" >无比芜杂的心绪</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/27</span><a class="archive-post-title" href= "/2017/11/27/CTF/binwalk分离图片/" >用binwalk进行图片分离</a>
         </li>
     
     
@@ -1317,6 +1781,48 @@ file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/proc/" >linux /proc目录</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/command/" >Linux常用指令及其含义</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/01/靶机/leopold/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/03/靶机/xss-quiz/" >XSS Challenges</a>
         </li>
     
     
@@ -1344,63 +1850,63 @@ file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/03/CTF/VolgaCTF 2019(web)/" >VolgaCTF 2019 Quals</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/08/pwn/pwnable1/" >pwnable.kr(1-2)</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2017 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2017/11/24/CTF/linux 基本命令学习/" >linux 基本命令学习</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/11/CTF/jinja2/" >由Musee de X(强网杯2017)到jinja2模板注入</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/13/转载/国外安全网站/" >分享一些国外著名的黑客技术学习网站</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/29/python/python常见问题/" >python常见问题</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/24/git相关/git使用/" >git基本使用</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
         </li>
     
     </div>
@@ -1410,31 +1916,57 @@ file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 
     
         <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
+        <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
+    
         <span class="sidebar-tag-name" data-tags="傅里叶"><span class="iconfont-archer">&#xe606;</span>傅里叶</span>
-    
-        <span class="sidebar-tag-name" data-tags="cve"><span class="iconfont-archer">&#xe606;</span>cve</span>
-    
-        <span class="sidebar-tag-name" data-tags="隐写"><span class="iconfont-archer">&#xe606;</span>隐写</span>
     
         <span class="sidebar-tag-name" data-tags="ctf.misc"><span class="iconfont-archer">&#xe606;</span>ctf.misc</span>
     
-        <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
+        <span class="sidebar-tag-name" data-tags="cve"><span class="iconfont-archer">&#xe606;</span>cve</span>
     
-        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+        <span class="sidebar-tag-name" data-tags="cpp"><span class="iconfont-archer">&#xe606;</span>cpp</span>
     
-        <span class="sidebar-tag-name" data-tags="watermark"><span class="iconfont-archer">&#xe606;</span>watermark</span>
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
-        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+        <span class="sidebar-tag-name" data-tags="隐写"><span class="iconfont-archer">&#xe606;</span>隐写</span>
     
-        <span class="sidebar-tag-name" data-tags="xxe"><span class="iconfont-archer">&#xe606;</span>xxe</span>
+        <span class="sidebar-tag-name" data-tags="error"><span class="iconfont-archer">&#xe606;</span>error</span>
+    
+        <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
     
         <span class="sidebar-tag-name" data-tags="command"><span class="iconfont-archer">&#xe606;</span>command</span>
     
         <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
     
+        <span class="sidebar-tag-name" data-tags="side attack"><span class="iconfont-archer">&#xe606;</span>side attack</span>
+    
+        <span class="sidebar-tag-name" data-tags="race condition"><span class="iconfont-archer">&#xe606;</span>race condition</span>
+    
+        <span class="sidebar-tag-name" data-tags="xxe"><span class="iconfont-archer">&#xe606;</span>xxe</span>
+    
+        <span class="sidebar-tag-name" data-tags="ssrf"><span class="iconfont-archer">&#xe606;</span>ssrf</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="gif"><span class="iconfont-archer">&#xe606;</span>gif</span>
+    
+        <span class="sidebar-tag-name" data-tags="收集"><span class="iconfont-archer">&#xe606;</span>收集</span>
+    
         <span class="sidebar-tag-name" data-tags="/proc"><span class="iconfont-archer">&#xe606;</span>/proc</span>
     
+        <span class="sidebar-tag-name" data-tags="watermark"><span class="iconfont-archer">&#xe606;</span>watermark</span>
+    
         <span class="sidebar-tag-name" data-tags="心绪"><span class="iconfont-archer">&#xe606;</span>心绪</span>
+    
+        <span class="sidebar-tag-name" data-tags="tutorial ctf"><span class="iconfont-archer">&#xe606;</span>tutorial ctf</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+    
+        <span class="sidebar-tag-name" data-tags="xss practice"><span class="iconfont-archer">&#xe606;</span>xss practice</span>
+    
+        <span class="sidebar-tag-name" data-tags="靶机"><span class="iconfont-archer">&#xe606;</span>靶机</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

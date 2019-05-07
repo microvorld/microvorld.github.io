@@ -351,6 +351,40 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2019/04/09/图像/watermark/" >
+                
+                    <span>watermark resolve</span>
+            </a>
+            <div class="abstract-content">
+                watermark resolve水印原理一般性水印常见于纸币，图片。图片水印标志着图片个人所有权，通常就是将两张图片进行叠加，或向另一张图片写入一些标志信息
+简单使用：
+
+添加文字：
+
+from PIL import Image, ImageDraw, ImageFont
+
+# 指定要使用的字体和大小；/Library/Fonts/是macOS字体目录；Linux的字体目录是/usr/share/fonts/; windows是C:/windows/fonts/
+font = ImageFont.truetype(&apos;C:/windows/fonts/Arial.ttf&apo...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/09</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "watermark">watermark</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2019/04/08/CTF/MidnightSun CTF 2019/" >
                 
                     <span>MidnightSun CTF 2019</span>
@@ -613,7 +647,7 @@ XML 指可扩展标记语言（EXtensible Markup Language）XML 是一种标记�
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/18/system/linux/" >
+            <a class="abstract-title" href = "/2019/03/18/system/linux常见问题/" >
                 
                     <span>Linux常见错误</span>
             </a>
@@ -634,40 +668,6 @@ E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavai
                 <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "linux">linux</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/09/11/CTF/jinja2/" >
-                
-                    <span>由Musee de X(强网杯2017)到jinja2模板注入</span>
-            </a>
-            <div class="abstract-content">
-                Musee de X(强网杯2017)学到新姿势
-分析注册admin之后进行登录，然后有一个捐赠页面，，网址随便填，这里有一点要注意，名字必须和登录名一致，否则会弹出：screw you hacker
-然后就成功的报错,查看报错信息:在/var/www/html/museum/view.py in makememe中有以下错误：
-if &quot;http://&quot; in url:
-image = urllib2.urlopen(url)
-  else:
-    url = &quot;http://&quot;+url
-image = urllib2.urlopen(url)
-...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
     
 </div>
                 
@@ -1521,108 +1521,6 @@ image = urllib2.urlopen(url)
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-archive"> Total : 41 </div>
     
     <div class="post-archive">
@@ -1630,8 +1528,41 @@ image = urllib2.urlopen(url)
     
     
     
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/29/python/python常见问题/" >python常见问题</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/19/web/编码与解码/" >关于编码与解码的思考</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2019/05/07/靶机/FristiLeak/" >vulnhub--FristiLeaks v1.3</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1669,6 +1600,31 @@ image = urllib2.urlopen(url)
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2019/04/15/vulnerable/ssrf/" >ssrf</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2019/04/11/cve/CVE-2018-17057/" >CVE-2018-17057</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2019/04/10/misc/png隐写/" >png文件结构与信息隐藏</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/algorithm/傅里叶/" >傅里叶变换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/图像/watermark/" >watermark resolve</a>
+        </li>
+    
+    
     
     
     
@@ -1688,93 +1644,8 @@ image = urllib2.urlopen(url)
     
         </ul>
     
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/03/CTF/VolgaCTF 2019(web)/" >VolgaCTF 2019 Quals</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2019/04/15/vulnerable/ssrf/" >ssrf</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2019/04/11/cve/CVE-2018-17057/" >CVE-2018-17057</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/04/cve/CNVD-C-2019-48814/" >CNVD-C-2019-48814</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2019/04/10/misc/png隐写/" >png文件结构与信息隐藏</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/algorithm/傅里叶/" >傅里叶变换</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/图像/watermark/" >watermark resolve</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -1803,7 +1674,7 @@ image = urllib2.urlopen(url)
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/18</span><a class="archive-post-title" href= "/2019/03/18/system/linux/" >Linux常见错误</a>
+            <span class="archive-post-date">03/18</span><a class="archive-post-title" href= "/2019/03/18/system/linux常见问题/" >Linux常见错误</a>
         </li>
     
     
@@ -1841,26 +1712,12 @@ image = urllib2.urlopen(url)
     
         </ul>
     
-    <div class="archive-year"> Invalid date </div>
+    <div class="archive-year"> 2017 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/20/python/upgrade python3/" >Ubuntu升级python3.7</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/19/web/编码与解码/" >关于编码与解码的思考</a>
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2017/12/04/随笔/无比芜杂的心绪/" >无比芜杂的心绪</a>
         </li>
     
     
@@ -1883,129 +1740,40 @@ image = urllib2.urlopen(url)
     
         </ul>
     
-    <div class="archive-year"> 2017 </div>
+    <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2017/12/04/随笔/无比芜杂的心绪/" >无比芜杂的心绪</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/04/cve/CNVD-C-2019-48814/" >CNVD-C-2019-48814</a>
         </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/01/靶机/leopold/" >leopold 靶机渗透</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/27</span><a class="archive-post-title" href= "/2017/11/27/CTF/binwalk分离图片/" >用binwalk进行图片分离</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/proc/" >linux /proc目录</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/command/" >Linux常用指令及其含义</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/01/靶机/leopold/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/03/靶机/xss-quiz/" >XSS Challenges</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2017 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/26</span><a class="archive-post-title" href= "/2017/11/26/web/动态请求和静态请求/" >动态请求和静态请求</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/11/CTF/jinja2/" >由Musee de X(强网杯2017)到jinja2模板注入</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/13/转载/国外安全网站/" >分享一些国外著名的黑客技术学习网站</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/29/python/python常见问题/" >python常见问题</a>
         </li>
     
     
@@ -2033,7 +1801,119 @@ image = urllib2.urlopen(url)
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/03/靶机/xss-quiz/" >XSS Challenges</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/20/python/upgrade python3/" >Ubuntu升级python3.7</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/03/CTF/VolgaCTF 2019(web)/" >VolgaCTF 2019 Quals</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/command/" >Linux常用指令及其含义</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/system/proc/" >linux /proc目录</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/CTF/hash扩展攻击/" >实验吧：让我进去</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/13/转载/国外安全网站/" >分享一些国外著名的黑客技术学习网站</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/11/CTF/jinja2/" >由Musee de X(强网杯2017)到jinja2模板注入</a>
         </li>
     
     </div>
@@ -2045,55 +1925,55 @@ image = urllib2.urlopen(url)
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="傅里叶"><span class="iconfont-archer">&#xe606;</span>傅里叶</span>
-    
         <span class="sidebar-tag-name" data-tags="ctf.misc"><span class="iconfont-archer">&#xe606;</span>ctf.misc</span>
+    
+        <span class="sidebar-tag-name" data-tags="傅里叶"><span class="iconfont-archer">&#xe606;</span>傅里叶</span>
     
         <span class="sidebar-tag-name" data-tags="cve"><span class="iconfont-archer">&#xe606;</span>cve</span>
     
-        <span class="sidebar-tag-name" data-tags="cpp"><span class="iconfont-archer">&#xe606;</span>cpp</span>
+        <span class="sidebar-tag-name" data-tags="command"><span class="iconfont-archer">&#xe606;</span>command</span>
     
-        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+        <span class="sidebar-tag-name" data-tags="cpp"><span class="iconfont-archer">&#xe606;</span>cpp</span>
     
         <span class="sidebar-tag-name" data-tags="隐写"><span class="iconfont-archer">&#xe606;</span>隐写</span>
     
-        <span class="sidebar-tag-name" data-tags="error"><span class="iconfont-archer">&#xe606;</span>error</span>
-    
-        <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
-    
-        <span class="sidebar-tag-name" data-tags="command"><span class="iconfont-archer">&#xe606;</span>command</span>
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
     
         <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
     
-        <span class="sidebar-tag-name" data-tags="side attack"><span class="iconfont-archer">&#xe606;</span>side attack</span>
-    
-        <span class="sidebar-tag-name" data-tags="race condition"><span class="iconfont-archer">&#xe606;</span>race condition</span>
-    
-        <span class="sidebar-tag-name" data-tags="xxe"><span class="iconfont-archer">&#xe606;</span>xxe</span>
-    
-        <span class="sidebar-tag-name" data-tags="ssrf"><span class="iconfont-archer">&#xe606;</span>ssrf</span>
+        <span class="sidebar-tag-name" data-tags="error"><span class="iconfont-archer">&#xe606;</span>error</span>
     
         <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
     
-        <span class="sidebar-tag-name" data-tags="gif"><span class="iconfont-archer">&#xe606;</span>gif</span>
+        <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
     
-        <span class="sidebar-tag-name" data-tags="收集"><span class="iconfont-archer">&#xe606;</span>收集</span>
+        <span class="sidebar-tag-name" data-tags="race condition"><span class="iconfont-archer">&#xe606;</span>race condition</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="ssrf"><span class="iconfont-archer">&#xe606;</span>ssrf</span>
     
         <span class="sidebar-tag-name" data-tags="/proc"><span class="iconfont-archer">&#xe606;</span>/proc</span>
     
         <span class="sidebar-tag-name" data-tags="watermark"><span class="iconfont-archer">&#xe606;</span>watermark</span>
     
-        <span class="sidebar-tag-name" data-tags="心绪"><span class="iconfont-archer">&#xe606;</span>心绪</span>
-    
-        <span class="sidebar-tag-name" data-tags="tutorial ctf"><span class="iconfont-archer">&#xe606;</span>tutorial ctf</span>
-    
-        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+        <span class="sidebar-tag-name" data-tags="xxe"><span class="iconfont-archer">&#xe606;</span>xxe</span>
     
         <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
     
-        <span class="sidebar-tag-name" data-tags="xss practice"><span class="iconfont-archer">&#xe606;</span>xss practice</span>
-    
         <span class="sidebar-tag-name" data-tags="靶机"><span class="iconfont-archer">&#xe606;</span>靶机</span>
+    
+        <span class="sidebar-tag-name" data-tags="side attack"><span class="iconfont-archer">&#xe606;</span>side attack</span>
+    
+        <span class="sidebar-tag-name" data-tags="收集"><span class="iconfont-archer">&#xe606;</span>收集</span>
+    
+        <span class="sidebar-tag-name" data-tags="tutorial ctf"><span class="iconfont-archer">&#xe606;</span>tutorial ctf</span>
+    
+        <span class="sidebar-tag-name" data-tags="gif"><span class="iconfont-archer">&#xe606;</span>gif</span>
+    
+        <span class="sidebar-tag-name" data-tags="心绪"><span class="iconfont-archer">&#xe606;</span>心绪</span>
+    
+        <span class="sidebar-tag-name" data-tags="xss practice"><span class="iconfont-archer">&#xe606;</span>xss practice</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

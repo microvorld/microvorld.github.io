@@ -1,5 +1,90 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>hackim web · null</title><meta name="description" content="hackim webescaperfv查看响应信息发现字段X-Powered-By，其对应的为express可知为后端为nodejs
-mime checkr只能上传.jpeg格式图片，有一个类型检查的功能这里有很重要的一点，一个getmime.bak的备份源码文件（不看writeup我是肯定不知道的"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/"></a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/www.baidu.com"><i class="fa fa-twitter"></i></a></li><li><a href="http://weibo.com/www.baidu.com"><i class="fa fa-weibo"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>hackim web</a></h3></div><div class="post-content"><h1 id="hackim-web"><a href="#hackim-web" class="headerlink" title="hackim web"></a>hackim web</h1><h2 id="escape"><a href="#escape" class="headerlink" title="escape"></a>escape</h2><h2 id="rfv"><a href="#rfv" class="headerlink" title="rfv"></a>rfv</h2><p>查看响应信息发现字段<code>X-Powered-By</code>，其对应的为<code>express</code><br>可知为后端为nodejs</p>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>hackim web | </title>
+
+  
+  <meta name="author" content="damn1t">
+  
+
+  
+  <meta name="description" content="hackim webescaperfv查看响应信息发现字段X-Powered-By，其对应的为express可知为后端为nodejs
+mime checkr只能上传.jpeg格式图片，有一个类型检查的功能这里有很重要的一点，一个getmime.bak的备份源码文件（不看writeup我是肯定不知道的">
+  
+
+  
+  
+  <meta name="keywords" content="CTF">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="hackim web"/>
+
+  <meta property="og:site_name" content=""/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/"></a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>hackim web</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/03/26/CTF/hackim ctf/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-03-26T14:59:10.103Z">
+          2019-03-26
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="hackim-web"><a href="#hackim-web" class="headerlink" title="hackim web"></a>hackim web</h1><h2 id="escape"><a href="#escape" class="headerlink" title="escape"></a>escape</h2><h2 id="rfv"><a href="#rfv" class="headerlink" title="rfv"></a>rfv</h2><p>查看响应信息发现字段<code>X-Powered-By</code>，其对应的为<code>express</code><br>可知为后端为nodejs</p>
 <h2 id="mime-checkr"><a href="#mime-checkr" class="headerlink" title="mime checkr"></a>mime checkr</h2><p>只能上传<code>.jpeg</code>格式图片，有一个类型检查的功能<br>这里有很重要的一点，一个<code>getmime.bak</code>的备份源码文件（不看writeup我是肯定不知道的，orz）</p>
 <pre><code>&lt;?php
 //error_reporting(-1);
@@ -106,4 +191,47 @@ print(blob.decode(&quot;cp1047&quot;))
 <p>Hello /fetch~%[]^@)( me</p>
 </blockquote>
 <p>于是再构造<code>http://172.21.0.3/fetch~%[]^@)(</code>,再次得到一个类似的编码，将其解密，则得到flag</p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-26</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/03/26/CTF/hackim ctf/,null,hackim web,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/03/29/OS/proc/" title="linux /proc目录">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/03/25/vulnerable/xxe/" title="xxe">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/CTF/">CTF</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 damn1t
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

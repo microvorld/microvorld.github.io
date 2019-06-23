@@ -1,5 +1,133 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>python gif图的拆解和合成 · null</title><meta name="description" content="python gif图的拆解和合成拆解方法11234567891011121314151617from PIL import Imageimport osgifFileName = &amp;apos;test.gif&amp;apos;#使用Image模块的open()方法打开gif动态图像时，默认是第一帧im "><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/"></a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/www.baidu.com"><i class="fa fa-twitter"></i></a></li><li><a href="http://weibo.com/www.baidu.com"><i class="fa fa-weibo"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>python gif图的拆解和合成</a></h3></div><div class="post-content"><h1 id="python-gif图的拆解和合成"><a href="#python-gif图的拆解和合成" class="headerlink" title="python gif图的拆解和合成"></a>python gif图的拆解和合成</h1><h2 id="拆解"><a href="#拆解" class="headerlink" title="拆解"></a>拆解</h2><h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from PIL import Image</span><br><span class="line">import os</span><br><span class="line">gifFileName = &apos;test.gif&apos;</span><br><span class="line">#使用Image模块的open()方法打开gif动态图像时，默认是第一帧</span><br><span class="line">im = Image.open(gifFileName)</span><br><span class="line">pngDir = gifFileName[:-4]</span><br><span class="line">#创建存放每帧图片的文件夹</span><br><span class="line">os.mkdir(pngDir)</span><br><span class="line">try:</span><br><span class="line">  while True:</span><br><span class="line">    #保存当前帧图片</span><br><span class="line">    current = im.tell()</span><br><span class="line">    im.save(pngDir+&apos;/&apos;+str(current)+&apos;.png&apos;)</span><br><span class="line">    #获取下一帧图片</span><br><span class="line">    im.seek(current+1)</span><br><span class="line">except EOFError:</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python gif图的拆解和合成 | </title>
+
+  
+  <meta name="author" content="damn1t">
+  
+
+  
+  <meta name="description" content="python gif图的拆解和合成拆解方法11234567891011121314151617from PIL import Imageimport osgifFileName = &amp;apos;test.gif&amp;apos;#使用Image模块的open()方法打开gif动态图像时，默认是第一帧im ">
+  
+
+  
+  
+  <meta name="keywords" content="gif">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="python gif图的拆解和合成"/>
+
+  <meta property="og:site_name" content=""/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/"></a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>python gif图的拆解和合成</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2019/04/23/图像/py_gif/" rel="bookmark">
+        <time class="entry-date published" datetime="2019-04-23T05:44:38.456Z">
+          2019-04-23
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h1 id="python-gif图的拆解和合成"><a href="#python-gif图的拆解和合成" class="headerlink" title="python gif图的拆解和合成"></a>python gif图的拆解和合成</h1><h2 id="拆解"><a href="#拆解" class="headerlink" title="拆解"></a>拆解</h2><h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from PIL import Image</span><br><span class="line">import os</span><br><span class="line">gifFileName = &apos;test.gif&apos;</span><br><span class="line">#使用Image模块的open()方法打开gif动态图像时，默认是第一帧</span><br><span class="line">im = Image.open(gifFileName)</span><br><span class="line">pngDir = gifFileName[:-4]</span><br><span class="line">#创建存放每帧图片的文件夹</span><br><span class="line">os.mkdir(pngDir)</span><br><span class="line">try:</span><br><span class="line">  while True:</span><br><span class="line">    #保存当前帧图片</span><br><span class="line">    current = im.tell()</span><br><span class="line">    im.save(pngDir+&apos;/&apos;+str(current)+&apos;.png&apos;)</span><br><span class="line">    #获取下一帧图片</span><br><span class="line">    im.seek(current+1)</span><br><span class="line">except EOFError:</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
 <h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">#-*- coding: UTF-8 -*-  </span><br><span class="line"> </span><br><span class="line">import os</span><br><span class="line">from PIL import Image</span><br><span class="line"> </span><br><span class="line">def analyseImage(path):</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    Pre-process pass over the image to determine the mode (full or additive).</span><br><span class="line">    Necessary as assessing single frames isn&apos;t reliable. Need to know the mode </span><br><span class="line">    before processing all frames.</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    im = Image.open(path)</span><br><span class="line">    results = &#123;</span><br><span class="line">        &apos;size&apos;: im.size,</span><br><span class="line">        &apos;mode&apos;: &apos;full&apos;,</span><br><span class="line">    &#125;</span><br><span class="line">    try:</span><br><span class="line">        while True:</span><br><span class="line">            if im.tile:</span><br><span class="line">                tile = im.tile[0]</span><br><span class="line">                update_region = tile[1]</span><br><span class="line">                update_region_dimensions = update_region[2:]</span><br><span class="line">                if update_region_dimensions != im.size:</span><br><span class="line">                    results[&apos;mode&apos;] = &apos;partial&apos;</span><br><span class="line">                    break</span><br><span class="line">            im.seek(im.tell() + 1)</span><br><span class="line">    except EOFError:</span><br><span class="line">        pass</span><br><span class="line">    return results</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def processImage(path):</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    Iterate the GIF, extracting each frame.</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    mode = analyseImage(path)[&apos;mode&apos;]</span><br><span class="line">    </span><br><span class="line">    im = Image.open(path)</span><br><span class="line"> </span><br><span class="line">    i = 0</span><br><span class="line">    p = im.getpalette()</span><br><span class="line">    last_frame = im.convert(&apos;RGBA&apos;)</span><br><span class="line">    </span><br><span class="line">    try:</span><br><span class="line">        while True:</span><br><span class="line">            print (&quot;saving %s (%s) frame %d, %s %s&quot; % (path, mode, i, im.size, im.tile))</span><br><span class="line">            </span><br><span class="line">            &apos;&apos;&apos;</span><br><span class="line">            If the GIF uses local colour tables, each frame will have its own palette.</span><br><span class="line">            If not, we need to apply the global palette to the new frame.</span><br><span class="line">            &apos;&apos;&apos;</span><br><span class="line">            if not im.getpalette():</span><br><span class="line">                im.putpalette(p)</span><br><span class="line">            </span><br><span class="line">            new_frame = Image.new(&apos;RGBA&apos;, im.size)</span><br><span class="line">            </span><br><span class="line">            &apos;&apos;&apos;</span><br><span class="line">            Is this file a &quot;partial&quot;-mode GIF where frames update a region of a different size to the entire image?</span><br><span class="line">            If so, we need to construct the new frame by pasting it on top of the preceding frames.</span><br><span class="line">            &apos;&apos;&apos;</span><br><span class="line">            if mode == &apos;partial&apos;:</span><br><span class="line">                new_frame.paste(last_frame)</span><br><span class="line">            </span><br><span class="line">            new_frame.paste(im, (0,0), im.convert(&apos;RGBA&apos;))</span><br><span class="line">            new_frame.save(&apos;%s-%d.png&apos; % (&apos;&apos;.join(os.path.basename(path).split(&apos;.&apos;)[:-1]), i), &apos;PNG&apos;)</span><br><span class="line"> </span><br><span class="line">            i += 1</span><br><span class="line">            last_frame = new_frame</span><br><span class="line">            im.seek(im.tell() + 1)</span><br><span class="line">    except EOFError:</span><br><span class="line">        pass</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def main():</span><br><span class="line">    processImage(&apos;1.gif&apos;)</span><br><span class="line">    </span><br><span class="line"> </span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 <h2 id="合成"><a href="#合成" class="headerlink" title="合成"></a>合成</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import imageio</span><br><span class="line">import os</span><br><span class="line"> </span><br><span class="line">def create_gif(image_list, gif_name):</span><br><span class="line"> </span><br><span class="line">    frames = []</span><br><span class="line">    for image_name in image_list:</span><br><span class="line">        path = &apos;C:\\Users\\admin\\Desktop\\1\\&apos;</span><br><span class="line">        frames.append(imageio.imread(path+image_name))</span><br><span class="line">    # Save them as frames into a gif </span><br><span class="line">    imageio.mimsave(gif_name, frames, &apos;GIF&apos;, duration = 0.1)</span><br><span class="line"> </span><br><span class="line">    return</span><br><span class="line"> </span><br><span class="line">def main():</span><br><span class="line">    path = &apos;C:\\Users\\admin\\Desktop\\1\\&apos;</span><br><span class="line">    files = os.listdir(path)</span><br><span class="line">    files.sort(key=lambda x:int(x[:-4]))</span><br><span class="line">    gif_name = &apos;created_gif.gif&apos;</span><br><span class="line">    create_gif(files, gif_name)</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 <h2 id="倒放"><a href="#倒放" class="headerlink" title="倒放"></a>倒放</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#   _*_ coding:utf-8 _*_</span><br><span class="line"> </span><br><span class="line">from PIL import Image, ImageSequence</span><br><span class="line"> </span><br><span class="line">__author__ = &apos;admin&apos;</span><br><span class="line"> </span><br><span class="line">im = Image.open(r&apos;C:\\Users\\admin\\Desktop\\1.gif&apos;)</span><br><span class="line">#   初始化列表</span><br><span class="line">sequence = []</span><br><span class="line">for f in ImageSequence.Iterator(im):</span><br><span class="line">    #   获取图像序列病存储</span><br><span class="line">    sequence.append(f.copy())</span><br><span class="line">#   将图像序列逆转</span><br><span class="line">sequence.reverse()</span><br><span class="line">sequence[0].save(r&apos;C:\\Users\\admin\\Desktop\\out.gif&apos;, save_all=True, append_images=sequence[1:])</span><br></pre></td></tr></table></figure>
-<h2 id="随机排列"><a href="#随机排列" class="headerlink" title="随机排列"></a>随机排列</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#   _*_ coding:utf-8 _*_</span><br><span class="line">import random</span><br><span class="line">from PIL import Image, ImageSequence</span><br><span class="line"> </span><br><span class="line">__author__ = &apos;admin&apos;</span><br><span class="line"> </span><br><span class="line">im = Image.open(r&apos;C:\\Users\\admin\\Desktop\\1.gif&apos;)</span><br><span class="line">#   初始化列表</span><br><span class="line">sequence = []</span><br><span class="line">for f in ImageSequence.Iterator(im):</span><br><span class="line">    #   获取图像序列病存储</span><br><span class="line">    sequence.append(f.copy())</span><br><span class="line">#   随机打乱图像序列</span><br><span class="line">random.shuffle(sequence)</span><br><span class="line">#   将图像序列逆转</span><br><span class="line"># sequence.reverse()</span><br><span class="line">sequence[0].save(r&apos;C:\\Users\\admin\\Desktop\\d.gif&apos;, save_all=True, append_images=sequence[1:])</span><br></pre></td></tr></table></figure></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-23</span><i class="fa fa-tag"></i><a class="tag" href="/tags/gif/" title="gif">gif </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/04/23/图像/py_gif/,null,python gif图的拆解和合成,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/04/24/git相关/git使用/" title="git基本使用">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/04/21/CTF/plaidctf2019/" title="plaidctf2019">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+<h2 id="随机排列"><a href="#随机排列" class="headerlink" title="随机排列"></a>随机排列</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#   _*_ coding:utf-8 _*_</span><br><span class="line">import random</span><br><span class="line">from PIL import Image, ImageSequence</span><br><span class="line"> </span><br><span class="line">__author__ = &apos;admin&apos;</span><br><span class="line"> </span><br><span class="line">im = Image.open(r&apos;C:\\Users\\admin\\Desktop\\1.gif&apos;)</span><br><span class="line">#   初始化列表</span><br><span class="line">sequence = []</span><br><span class="line">for f in ImageSequence.Iterator(im):</span><br><span class="line">    #   获取图像序列病存储</span><br><span class="line">    sequence.append(f.copy())</span><br><span class="line">#   随机打乱图像序列</span><br><span class="line">random.shuffle(sequence)</span><br><span class="line">#   将图像序列逆转</span><br><span class="line"># sequence.reverse()</span><br><span class="line">sequence[0].save(r&apos;C:\\Users\\admin\\Desktop\\d.gif&apos;, save_all=True, append_images=sequence[1:])</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/gif/">gif</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2019 damn1t
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="damn1t">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="MyBB &lt;= 1.8.20--(From Stored XSS to RCE)"/>
+  <meta property="og:description" content="404" />
+  <meta property="og:site_name" content="damn1t"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://microvorld.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>damn1t</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">MyBB &lt;= 1.8.20--(From Stored XSS to RCE)</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/microvorld">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<bubbl3@foxmail.com>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By damn1t</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2019-06-15</span>
+            <span class="time">15:24:21</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/vulnerable/">#vulnerable</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h1 id="MyBB-lt-1-8-20–-From-Stored-XSS-to-RCE"><a href="#MyBB-lt-1-8-20–-From-Stored-XSS-to-RCE" class="headerlink" title="MyBB &lt;= 1.8.20–(From Stored XSS to RCE)"></a>MyBB &lt;= 1.8.20–(From Stored XSS to RCE)</h1><p><strong>本文首发先知</strong></p>
+<p>这篇文章展示了在<code>MyBB 1.8.21</code> 版本之前，攻击者能够通过向管理员发送恶意私信或者创建一个恶意帖子来接管任意托管主机</p>
+<blockquote>
+<p>MyBB是一个开源论坛软件，软件地址：<a href="https://mybb.com/" target="_blank" rel="noopener">https://mybb.com/</a></p>
+</blockquote>
+<h2 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h2><p>我们发现，由于在<code>1.8.20及其之前版本</code>对于所发帖子和私信的解析错误而产生的一个存储性XSS，同时还有一个绕过身份认证的RCE漏洞能够被论坛管理员利用</p>
+<p>攻击者仅需一个目标论坛的账号，然后向管理员发送一封包含恶意<strong>JS代码</strong>（用于利用RCE漏洞）的私信。只要同时一名后端管理员打开恶意的私信，这使得攻击者可以完全接管目标主机。无需在进行进一步的用户交互。</p>
+<p>这使攻击者能够完全访问存储在主机数据库中的所有用户帐户、私有主题和消息。</p>
+<h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><p>下面，我们分析了使用RIPS代码分析检测到的安全漏洞。</p>
+<h2 id="bbcode的存储性xss"><a href="#bbcode的存储性xss" class="headerlink" title="bbcode的存储性xss"></a>bbcode的存储性xss</h2><p>MyBB利用3个步骤解析和渲染主题，帖子和私信。这一过程的目的是消除用户输入的恶意代码并呈现所谓的<code>mycodes</code>或<code>bbcodes</code>。<code>Bbcodes</code>方便论坛用户在帖子中去嵌入图片，链接和视频</p>
+<p>下面的图像表明了<code>MyBB</code>渲染过程的常规执行流程<br><img src="https://blog.ripstech.com/img/2019/mybb-stored-xss-to-rce/mybb-post-rendering-process.png" alt=""></p>
+<p>该过程首先简单地转义所有HTML标记和双引号。然后，它会将所有<code>[video]</code> mycodes转换为嵌入视频的<code>&lt;iframe&gt;</code>标签。 例如，YouTube上。视频bbcodes在一个步骤中呈现的原因是管理员可以禁用它们（默认情况下启用它们）。<br>最后，它会将所有其他mycode（例如<code>[url]</code>，<code>[quote]</code>和<code>[email]</code>）转换为HTML标记。</p>
+<p>事实上，与其他bbcodes转换方式不同，<code>[video]</code>bbcodes被转换为html标记的方式引导我们产生了一个想法：即可能可以制作一个<code>[video]</code>bbcode，其结果是html标记在其属性中包含其他短代码，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&quot;youtube.com/xyz[url]http://onload=evilCode()[/url]&quot;&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+<p>其想法是MyBB随后将用更多包含双引号（“）的HTML标记替换iframe的src中的<code>[url]</code>bbcode，从而损坏HTML并导致属性注入。</p>
+<p>上述例子在第三步处理后将会导致产生以下的html标记：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&quot;youtube.com/xyz&lt;a href=&quot;http://onload=evilCode()&quot;&gt;..&quot;&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，<code>iframe</code>的<code>src</code>属性随后由injected href属性和它的引号关闭。这将导致<code>onload</code>事件处理程序被注入到<code>&lt;iframe&gt;</code>html标记中。</p>
+<p>通常，不可能在其他bbcode中注入bbcode，因为regex过滤器已经到位，可以防止此类攻击。但是，负责呈现<code>[video]</code>bbcodes的回调方法调用应嵌入视频（例如<code>youtube.com/xyz</code>）的URL上的<code>urlcode（）</code>。这在以下代码段中显示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#inc/class_parser.php</span><br><span class="line"></span><br><span class="line">     function mycode_parse_video($video, $url)</span><br><span class="line">     </span><br><span class="line">1385 &#123;</span><br><span class="line">1386	global $templates;</span><br><span class="line">1387</span><br><span class="line">1388	if(empty($video) || empty($url))</span><br><span class="line">1389		return &quot;[video=&#123;$video&#125;]&#123;$url&#125;[/video]&quot;;</span><br><span class="line">1390</span><br><span class="line">1391	$parsed_url = @parse_url(urldecode($url));</span><br><span class="line">1392</span><br><span class="line">1393	// [...]</span><br><span class="line">1394</span><br></pre></td></tr></table></figure>
+<p>事实上被<code>urldecode</code>的视频URL允许绕过正则保护并通过URL编码注入<code>[url]</code>bbcode，如上所述。然后，这会导致将<code>onload</code>事件处理程序注入<code>&lt;iframe&gt;</code>标记。一旦iframe中的页面被加载，该事件处理程序就会触发，因此不需要用户交互来触发恶意JavaScript代码。</p>
+<h2 id="通过文件写入利用管理面板中的RCE"><a href="#通过文件写入利用管理面板中的RCE" class="headerlink" title="通过文件写入利用管理面板中的RCE"></a>通过文件写入利用管理面板中的RCE</h2><p>MyBB论坛的管理员可以在管理面板中管理其安装的活动主题的样式表。他们还可以在服务器上创建新的样式表文件并选择文件名。</p>
+<p>如果管理员帐户角色的攻击者可以简单地创建新的样式表文件并将其称为<code>shell.php</code>，则会出现明显的文件写入漏洞。<br>但是，对此功能背后的源代码进行快速调查后发现，只允许使用<code>.css</code>文件扩展名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#admin/inc/functions_themes.php</span><br><span class="line"></span><br><span class="line">		foreach($theme[&apos;stylesheets&apos;][&apos;stylesheet&apos;] as $stylesheet) &#123;</span><br><span class="line">263		    if(substr($stylesheet[&apos;attributes&apos;][&apos;name&apos;], -4) != &quot;.css&quot;)&#123;</span><br><span class="line">264		        continue;</span><br><span class="line">265</span><br></pre></td></tr></table></figure></p>
+<p>引起我们注意的是扩展检查后发生的事情。MyBB不是简单地在文件系统中创建样式表文件，而是首先存储样式表文件的名称，以及为启动MySQL的数据库中的内容。当我们查看<code>mybb_themestylesheets</code>表及其结构时，我们注意到一些有趣的事情：存储新导入样式表文件名的<code>name</code>列被定义为<code>varchar</code>列，最多包含30个字符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [mybb]&gt; DESC mybb_themestylesheets;</span><br><span class="line">+--------------+----------------------+------+-----+---------+----------------+</span><br><span class="line">| Field        | Type                 | Null | Key | Default | Extra          |</span><br><span class="line">+--------------+----------------------+------+-----+---------+----------------+</span><br><span class="line">| sid          | int(10) unsigned     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| name         | varchar(30)          | NO   |     |         |                |</span><br><span class="line">  [...]</span><br><span class="line">| stylesheet   | longtext             | NO   |     | NULL    |                |</span><br><span class="line">  [...]</span><br><span class="line">+--------------+----------------------+------+-----+---------+----------------+</span><br></pre></td></tr></table></figure>
+<p>然后我们注意到，当通过XML文件导入时，样式表文件名的长度不会被检查，从而导致攻击者能够欺骗MyBB插入超过允许30个字符的文件名。MySQL在许多系统上的默认行为是将文件名截断为30个字符。</p>
+<p>攻击者可以通过将文件名设置为例如<code>aaaaaaaaaaaaaaaaaaaaa.php.css</code>来滥用此行为。这个文件名有34个字符。因为它以<code>.css</code>扩展名结尾，所以它通过了mybb的安全检查。但是，当该字符串插入数据库时，它将被截断为30个字符，并且只有<code>aaaaaaaaaaaaaaaaaaaa.php</code>保留在数据库中。</p>
+<p>然后，攻击者可以使用管理面板生成新导入的样式表文件并将其写入文件系统。这将在缓存目录中创建一个<code>php shell</code>。</p>
+<h2 id="时间线"><a href="#时间线" class="headerlink" title="时间线"></a>时间线</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2019/04/29</td>
+<td style="text-align:center">向MyBB团队私下报告了多个漏洞。</td>
+</tr>
+<tr>
+<td style="text-align:center">2019/04/29</td>
+<td style="text-align:center">MyBB承认这些漏洞。</td>
+</tr>
+<tr>
+<td style="text-align:center">2019/06/10</td>
+<td style="text-align:center">MyBB发布1.8.21版，其中包含针对漏洞的补丁。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇博客文章详细描述了一个漏洞链，它可以被滥用来接管在1.8.21版本之前运行mybb的任何论坛。攻击者可能滥用了XSS漏洞来接管目标论坛上的任何论坛帐户，或者通过文件写入漏洞直接尝试在目标系统上创建shell，方法是向管理员发送包含恶意javascript代码的目标论坛上的私有消息。虽然mybb的前端和后端会话有两个独立的会话，并且管理员在读取私有消息时可能不总是有活动的后端会话，但攻击者可以多次尝试，因为除了目标管理员之外，不需要任何用户交互来打开恶意的私有消息。</p>
+<p>reference：<br>利用视频：<a href="https://blog.ripstech.com/videos/mybb-stored-xss-to-rce.mp4" target="_blank" rel="noopener">https://blog.ripstech.com/videos/mybb-stored-xss-to-rce.mp4</a><br>原文：<a href="https://blog.ripstech.com/2019/mybb-stored-xss-to-rce/" target="_blank" rel="noopener">https://blog.ripstech.com/2019/mybb-stored-xss-to-rce/</a></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

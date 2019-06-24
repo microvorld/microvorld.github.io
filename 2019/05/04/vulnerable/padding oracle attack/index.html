@@ -1,89 +1,122 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>padding oracle | damn1t | faint star</title>
-
-  
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
   <meta name="author" content="damn1t">
-  
-
-  
-  <meta name="description" content="404">
-  
-
-  
-  
-  <meta name="keywords" content="side attack">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+  <!-- Open Graph Data -->
   <meta property="og:title" content="padding oracle"/>
-
+  <meta property="og:description" content="404" />
   <meta property="og:site_name" content="damn1t"/>
-
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://microvorld.com"/>
   
-  <meta property="og:image" content="/favicon.ico"/>
+    <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
   
 
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!-- Site Title -->
+  <title>damn1t</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
 </head>
 
+  <body>
+    <!-- Page Header -->
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">damn1t</a>
-    </h1>
-    <p class="site-description">faint star</p>
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">padding oracle</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/microvorld">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<bubbl3@foxmail.com>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives">Archives</a></li>
-      
-    </ul>
-  </nav>
 </header>
 
-    <main class="site-main posts-loop">
-    <article>
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By damn1t</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2019-05-04</span>
+            <span class="time">15:05:06</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
 
-  
-    
-    <h3 class="article-title"><span>padding oracle</span></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2019/05/04/vulnerable/padding oracle attack/" rel="bookmark">
-        <time class="entry-date published" datetime="2019-05-04T07:32:49.409Z">
-          2019-05-04
-        </time>
-      </a>
-    </span>
-  </div>
+<a class="tag" href="/tags/side-attack/">#side attack</a>
 
 
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="padding-oracle"><a href="#padding-oracle" class="headerlink" title="padding oracle"></a>padding oracle</h1><h2 id="什么是padding"><a href="#什么是padding" class="headerlink" title="什么是padding"></a>什么是padding</h2><p>在<a href="https://www.jianshu.com/p/b63095c59361" target="_blank" rel="noopener">分组加密</a>模式下，通常会将明文进行固定分组划分，如一组8bytes，通常会有一种情况就是明文长度非8的整数倍，那么这里就需要进行填充，这个时候，普遍的做法是在最后一个分组后填充一个固定的值，这个值的大小为填充的字节总数。即假如最后还差3个字符，则填充0x03。</p>
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h1 id="padding-oracle"><a href="#padding-oracle" class="headerlink" title="padding oracle"></a>padding oracle</h1><h2 id="什么是padding"><a href="#什么是padding" class="headerlink" title="什么是padding"></a>什么是padding</h2><p>在<a href="https://www.jianshu.com/p/b63095c59361" target="_blank" rel="noopener">分组加密</a>模式下，通常会将明文进行固定分组划分，如一组8bytes，通常会有一种情况就是明文长度非8的整数倍，那么这里就需要进行填充，这个时候，普遍的做法是在最后一个分组后填充一个固定的值，这个值的大小为填充的字节总数。即假如最后还差3个字符，则填充0x03。</p>
 <p>分组长度：<br><img src="https://images0.cnblogs.com/blog/532548/201310/27190710-09a64c1721a54d0a929fbcb16700f087.png" alt=""></p>
 <p>填充规则：<br><img src="https://images0.cnblogs.com/blog/532548/201310/27203056-6ebc195bd8624a3f84c547570ef1027e.png" alt=""></p>
 <p>遵循规则为（常见为）<strong>PKCS#5标准</strong>：<a href="http://www.di-mgt.com.au/cryptopad.html#PKCS5" target="_blank" rel="noopener">http://www.di-mgt.com.au/cryptopad.html#PKCS5</a></p>
@@ -122,46 +155,42 @@
 <p>分组加解密实现demo：<br><a href="http://pan.baidu.com/s/1eitwK" target="_blank" rel="noopener">http://pan.baidu.com/s/1eitwK</a></p>
 <p>参考：<br><a href="https://www.cnblogs.com/LittleHann/p/3391393.html" target="_blank" rel="noopener">https://www.cnblogs.com/LittleHann/p/3391393.html</a><br><a href="http://www.cnblogs.com/yanzi-meng/p/9640578.html" target="_blank" rel="noopener">http://www.cnblogs.com/yanzi-meng/p/9640578.html</a><br><a href="http://www.blogsir.com.cn/safe/498.html" target="_blank" rel="noopener">http://www.blogsir.com.cn/safe/498.html</a></p>
 
-      
+        </div>
+      </div>
     </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/side-attack/">side attack</a>
-    </span>
-    
-
-    </div>
-
-    
   </div>
 </article>
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2019 damn1t
-    
-  </p>
-</footer>
-    
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
   </div>
-</div>
-</body>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
 </html>
+

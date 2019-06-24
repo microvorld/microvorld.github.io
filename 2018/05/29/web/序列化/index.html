@@ -1,89 +1,122 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>php反序列化漏洞 | damn1t | faint star</title>
-
-  
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
   <meta name="author" content="damn1t">
-  
-
-  
-  <meta name="description" content="404">
-  
-
-  
-  
-  <meta name="keywords" content="web">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+  <!-- Open Graph Data -->
   <meta property="og:title" content="php反序列化漏洞"/>
-
+  <meta property="og:description" content="404" />
   <meta property="og:site_name" content="damn1t"/>
-
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://microvorld.com"/>
   
-  <meta property="og:image" content="/favicon.ico"/>
+    <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
   
 
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!-- Site Title -->
+  <title>damn1t</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
 </head>
 
+  <body>
+    <!-- Page Header -->
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">damn1t</a>
-    </h1>
-    <p class="site-description">faint star</p>
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">php反序列化漏洞</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/microvorld">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<bubbl3@foxmail.com>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives">Archives</a></li>
-      
-    </ul>
-  </nav>
 </header>
 
-    <main class="site-main posts-loop">
-    <article>
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By damn1t</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2018-05-29</span>
+            <span class="time">15:05:06</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
 
-  
-    
-    <h3 class="article-title"><span>php反序列化漏洞</span></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/05/29/web/序列化/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-05-29T10:50:46.015Z">
-          2018-05-29
-        </time>
-      </a>
-    </span>
-  </div>
+<a class="tag" href="/tags/web/">#web</a>
 
 
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="php反序列化漏洞"><a href="#php反序列化漏洞" class="headerlink" title="php反序列化漏洞"></a>php反序列化漏洞</h1><h2 id="php序列化"><a href="#php序列化" class="headerlink" title="php序列化"></a>php序列化</h2><p>在php中存在两个函数，<strong>serialize</strong>和<strong>unserialize</strong>,他们的作用分别是将<strong>对象</strong>进行<strong>序列化</strong>和<strong>反序列化</strong></p>
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h1 id="php反序列化漏洞"><a href="#php反序列化漏洞" class="headerlink" title="php反序列化漏洞"></a>php反序列化漏洞</h1><h2 id="php序列化"><a href="#php序列化" class="headerlink" title="php序列化"></a>php序列化</h2><p>在php中存在两个函数，<strong>serialize</strong>和<strong>unserialize</strong>,他们的作用分别是将<strong>对象</strong>进行<strong>序列化</strong>和<strong>反序列化</strong></p>
 <h3 id="什么是序列化？"><a href="#什么是序列化？" class="headerlink" title="什么是序列化？"></a>什么是序列化？</h3><p>官方文档给出如下定义：</p>
 <blockquote>
 <p>serialize() 返回字符串，此字符串包含了表示 value 的字节流，可以存储于任何地方。</p>
@@ -307,46 +340,42 @@ echo &quot;you are not the number of bugku ! &quot;;
 </code></pre><p>最终得到flag</p>
 <p>参考链接：<br><a href="https://www.anquanke.com/post/id/86452" target="_blank" rel="noopener">https://www.anquanke.com/post/id/86452</a><br><a href="http://k1n9.me/2016/11/06/php-obi/" target="_blank" rel="noopener">http://k1n9.me/2016/11/06/php-obi/</a><br><a href="http://www.freebuf.com/column/151447.html" target="_blank" rel="noopener">http://www.freebuf.com/column/151447.html</a></p>
 
-      
+        </div>
+      </div>
     </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/web/">web</a>
-    </span>
-    
-
-    </div>
-
-    
   </div>
 </article>
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2019 damn1t
-    
-  </p>
-</footer>
-    
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
   </div>
-</div>
-</body>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
 </html>
+

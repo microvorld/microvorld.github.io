@@ -1,89 +1,122 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>XSS Challenges | damn1t | faint star</title>
-
-  
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
   <meta name="author" content="damn1t">
-  
-
-  
-  <meta name="description" content="404">
-  
-
-  
-  
-  <meta name="keywords" content="xss practice">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+  <!-- Open Graph Data -->
   <meta property="og:title" content="XSS Challenges"/>
-
+  <meta property="og:description" content="404" />
   <meta property="og:site_name" content="damn1t"/>
-
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://microvorld.com"/>
   
-  <meta property="og:image" content="/favicon.ico"/>
+    <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
   
 
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!-- Site Title -->
+  <title>damn1t</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
 </head>
 
+  <body>
+    <!-- Page Header -->
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">damn1t</a>
-    </h1>
-    <p class="site-description">faint star</p>
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">XSS Challenges</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/microvorld">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<bubbl3@foxmail.com>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives">Archives</a></li>
-      
-    </ul>
-  </nav>
 </header>
 
-    <main class="site-main posts-loop">
-    <article>
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By damn1t</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2019-05-03</span>
+            <span class="time">15:05:06</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
 
-  
-    
-    <h3 class="article-title"><span>XSS Challenges</span></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2019/05/03/靶机/xss-quiz/" rel="bookmark">
-        <time class="entry-date published" datetime="2019-05-02T16:26:31.857Z">
-          2019-05-03
-        </time>
-      </a>
-    </span>
-  </div>
+<a class="tag" href="/tags/xss-practice/">#xss practice</a>
 
 
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="XSS-Challenges"><a href="#XSS-Challenges" class="headerlink" title="XSS Challenges"></a>XSS Challenges</h1><p>平台地址： <a href="https://xss-quiz.int21h.jp" target="_blank" rel="noopener">https://xss-quiz.int21h.jp</a></p>
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h1 id="XSS-Challenges"><a href="#XSS-Challenges" class="headerlink" title="XSS Challenges"></a>XSS Challenges</h1><p>平台地址： <a href="https://xss-quiz.int21h.jp" target="_blank" rel="noopener">https://xss-quiz.int21h.jp</a></p>
 <h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(document.domain)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert(document.domain)&lt;/script&gt;&lt;</span><br></pre></td></tr></table></figure>
 <h2 id="3"><a href="#3" class="headerlink" title="3"></a>3</h2><p>当在search框输入的时候，发现对<code>&lt;</code>和<code>&gt;</code>进行了编码，所以将注意点转入到右边选择框，利用右键检查元素，将<strong>japan</strong>改为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(document.domain)&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
@@ -135,46 +168,42 @@
 <p>多半是这个：<a href="https://news.softpedia.com/news/Twitter-Messes-Up-XSS-Bug-Fix-Three-Times-157969.shtml" target="_blank" rel="noopener">https://news.softpedia.com/news/Twitter-Messes-Up-XSS-Bug-Fix-Three-Times-157969.shtml</a><br>不过内核问题解决不了<br>预计解决方案：<code>/#!javascript:alert(document.domain);&quot;</code></p>
 <p>reference：<br><a href="https://www.codercto.com/a/33998.html" target="_blank" rel="noopener">https://www.codercto.com/a/33998.html</a><br><a href="https://www.cnblogs.com/go2bed/p/4131222.html" target="_blank" rel="noopener">https://www.cnblogs.com/go2bed/p/4131222.html</a></p>
 
-      
+        </div>
+      </div>
     </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/xss-practice/">xss practice</a>
-    </span>
-    
-
-    </div>
-
-    
   </div>
 </article>
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2019 damn1t
-    
-  </p>
-</footer>
-    
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
   </div>
-</div>
-</body>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
 </html>
+

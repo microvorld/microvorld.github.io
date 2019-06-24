@@ -1,89 +1,122 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>Intigriti XSS Challenge - Solution and problem solving approach | damn1t | faint star</title>
-
-  
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
   <meta name="author" content="damn1t">
-  
-
-  
-  <meta name="description" content="404">
-  
-
-  
-  
-  <meta name="keywords" content="xss">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+  <!-- Open Graph Data -->
   <meta property="og:title" content="Intigriti XSS Challenge - Solution and problem solving approach"/>
-
+  <meta property="og:description" content="404" />
   <meta property="og:site_name" content="damn1t"/>
-
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://microvorld.com"/>
   
-  <meta property="og:image" content="/favicon.ico"/>
+    <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
   
 
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="damn1t" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!-- Site Title -->
+  <title>damn1t</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
 </head>
 
+  <body>
+    <!-- Page Header -->
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">damn1t</a>
-    </h1>
-    <p class="site-description">faint star</p>
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Intigriti XSS Challenge - Solution and problem solving approach</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/microvorld">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<bubbl3@foxmail.com>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives">Archives</a></li>
-      
-    </ul>
-  </nav>
 </header>
 
-    <main class="site-main posts-loop">
-    <article>
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By damn1t</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2019-05-09</span>
+            <span class="time">15:05:06</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
 
-  
-    
-    <h3 class="article-title"><span>Intigriti XSS Challenge - Solution and problem solving approach</span></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2019/05/09/vulnerable/intigriti xss challenge/" rel="bookmark">
-        <time class="entry-date published" datetime="2019-05-09T08:26:05.142Z">
-          2019-05-09
-        </time>
-      </a>
-    </span>
-  </div>
+<a class="tag" href="/tags/xss/">#xss</a>
 
 
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <h1 id="Intigriti-XSS-Challenge-Solution-and-problem-solving-approach"><a href="#Intigriti-XSS-Challenge-Solution-and-problem-solving-approach" class="headerlink" title="Intigriti XSS Challenge - Solution and problem solving approach"></a>Intigriti XSS Challenge - Solution and problem solving approach</h1><p><strong>原文链接：</strong><a href="https://dee-see.github.io/intigriti/xss/2019/05/02/intigriti-xss-challenge-writeup.html" target="_blank" rel="noopener">https://dee-see.github.io/intigriti/xss/2019/05/02/intigriti-xss-challenge-writeup.html</a></p>
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <h1 id="Intigriti-XSS-Challenge-Solution-and-problem-solving-approach"><a href="#Intigriti-XSS-Challenge-Solution-and-problem-solving-approach" class="headerlink" title="Intigriti XSS Challenge - Solution and problem solving approach"></a>Intigriti XSS Challenge - Solution and problem solving approach</h1><p><strong>原文链接：</strong><a href="https://dee-see.github.io/intigriti/xss/2019/05/02/intigriti-xss-challenge-writeup.html" target="_blank" rel="noopener">https://dee-see.github.io/intigriti/xss/2019/05/02/intigriti-xss-challenge-writeup.html</a></p>
 <p>这是基于chrome的漏洞，但是google确实🐮🍺，反应速度极快，我准备复现的时候已经修复了，不过我在ipad上的Google浏览器实验时成功了</p>
 <p>Intigriti发布了一个有趣的小XSS挑战，它要求创建一个特殊的URL，既可以用来分配iframe的SRC，也可以发送到一个eval调用来弹出一个警报（document.domain），这是挑战的目标。但是我们如何实现？让我们回到开始，一步步分析。</p>
 <p>注意：最终漏洞仅适用于Chrome，因此如果您想要跟进，我建议您使用chrome。</p>
@@ -164,46 +197,42 @@
 <p>目前，Data URI scheme支持的类型有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">data:,                            文本数据</span><br><span class="line">data:text/plain,                    文本数据</span><br><span class="line">data:text/html,                  HTML代码</span><br><span class="line">data:text/html;base64,            base64编码的HTML代码</span><br><span class="line">data:text/css,                    CSS代码</span><br><span class="line">data:text/css;base64,              base64编码的CSS代码</span><br><span class="line">data:text/javascript,              Javascript代码</span><br><span class="line">data:text/javascript;base64,        base64编码的Javascript代码</span><br><span class="line">data:image/gif;base64,            base64编码的gif图片数据</span><br><span class="line">data:image/png;base64,            base64编码的png图片数据</span><br><span class="line">data:image/jpeg;base64,          base64编码的jpeg图片数据</span><br><span class="line">data:image/x-icon;base64,          base64编码的icon图片数据</span><br></pre></td></tr></table></figure></p>
 <p>参考链接：<a href="https://www.jianshu.com/p/ea49397fcd13" target="_blank" rel="noopener">https://www.jianshu.com/p/ea49397fcd13</a></p>
 
-      
+        </div>
+      </div>
     </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/xss/">xss</a>
-    </span>
-    
-
-    </div>
-
-    
   </div>
 </article>
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2019 damn1t
-    
-  </p>
-</footer>
-    
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
   </div>
-</div>
-</body>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
 </html>
+

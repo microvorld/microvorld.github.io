@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>selenium学习笔记 · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>selenium学习笔记 · Damn1t's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.png"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
   "use strict";
   // rel=preload support test
   if( !w.loadCSS ){
@@ -95,144 +95,22 @@
   else {
     w.loadCSS = loadCSS;
   }
-}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/logo.png"></div><!--.profile-saying
   i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">selenium学习笔记</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-06-22</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="selenium"> selenium</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="selenium学习笔记"><a href="#selenium学习笔记" class="headerlink" title="selenium学习笔记"></a>selenium学习笔记</h1><p>selenium可以模拟浏览器登录，且提供了很多api方便用户调用</p>
-<h2 id="常用api"><a href="#常用api" class="headerlink" title="常用api"></a>常用api</h2><h3 id="浏览器操作"><a href="#浏览器操作" class="headerlink" title="浏览器操作"></a>浏览器操作</h3><pre><code># 刷新
-driver.refresh()
-
-# 前进
-driver.forward()
-
-# 后退
-driver.back()
-</code></pre><h3 id="获取标签元素"><a href="#获取标签元素" class="headerlink" title="获取标签元素"></a>获取标签元素</h3><pre><code># 通过ID定位目标元素
-driver.find_element_by_id(&#39;i1&#39;)
-
-# 通过className定位目标元素
-driver.find_element_by_class_name(&#39;c1&#39;)
-
-# 通过name属性定位目标元素
-driver.find_element_by_name(&#39;n1&#39;)
-
-# 通过Xpath定位目标元素
-driver.find_element_by_xpath(&#39;//*[@id=&quot;i1&quot;]&#39;)
-
-# 通过css Selector定位目标元素
-driver.find_element_by_css_selector(&#39;#i1&#39;)
-
-# 通过标签名称定位(注：在一个页面中，标签一定会重复，所以不用这个来进行定位)
-driver.find_element_by_tag_name(&#39;input&#39;)
-
-# 通过标签中的文本查找元素
-driver.find_element_by_link_text(&#39;登录&#39;)
-
-# 通过标签中文本的模糊匹配查找
-driver.find_elements_by_partial_link_text(&#39;录&#39;)
-</code></pre><blockquote>
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">Damn1t</div><div class="profile-signature">for you I bleed myself dry</div><div class="friends"><div>FRIENDS</div><span><a href="//www.baidu.com" target="_black">baidu</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Damn1t's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">selenium学习笔记</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-06-22</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="selenium"> selenium</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="selenium学习笔记"><a href="#selenium学习笔记" class="headerlink" title="selenium学习笔记"></a>selenium学习笔记</h1><p>selenium可以模拟浏览器登录，且提供了很多api方便用户调用</p>
+<h2 id="常用api"><a href="#常用api" class="headerlink" title="常用api"></a>常用api</h2><h3 id="浏览器操作"><a href="#浏览器操作" class="headerlink" title="浏览器操作"></a>浏览器操作</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 刷新</span></span><br><span class="line">driver.refresh()</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 前进</span></span><br><span class="line">driver.forward()</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 后退</span></span><br><span class="line">driver.back()</span><br></pre></td></tr></table></figure>
+<h3 id="获取标签元素"><a href="#获取标签元素" class="headerlink" title="获取标签元素"></a>获取标签元素</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 通过ID定位目标元素</span></span><br><span class="line">driver.find_element_by_id(<span class="string">'i1'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 通过className定位目标元素</span></span><br><span class="line">driver.find_element_by_class_name(<span class="string">'c1'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 通过name属性定位目标元素</span></span><br><span class="line">driver.find_element_by_name(<span class="string">'n1'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 通过Xpath定位目标元素</span></span><br><span class="line">driver.find_element_by_xpath(<span class="string">'//*[@id="i1"]'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 通过css Selector定位目标元素</span></span><br><span class="line">driver.find_element_by_css_selector(<span class="string">'#i1'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 通过标签名称定位(注：在一个页面中，标签一定会重复，所以不用这个来进行定位)</span></span><br><span class="line">driver.find_element_by_tag_name(<span class="string">'input'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 通过标签中的文本查找元素</span></span><br><span class="line">driver.find_element_by_link_text(<span class="string">'登录'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 通过标签中文本的模糊匹配查找</span></span><br><span class="line">driver.find_elements_by_partial_link_text(<span class="string">'录'</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
 <p>获取标签元素常用的一共有8种定位方式，而Selenium实际提供了18种定位方式，还有8种是上面的复数形式，这里就不一一介绍了，实际运用中并不常用，还有2种实际上是这上面所说16种的底层封装。参数化的一种调用方式而已。</p>
 </blockquote>
-<h3 id="Cookie操作"><a href="#Cookie操作" class="headerlink" title="Cookie操作"></a>Cookie操作</h3><pre><code># 根据cookieKey，获取cookie信息
-cookie = driver.get_cookie(&#39;cookieKey&#39;)
-
-# 获取所有cookie信息
-cookies = driver.get_cookies()
-
-# 添加cookie，严格按照格式添加，cookie的key为name，value为value
-driver.add_cookie({&#39;name&#39;:&#39;tmp&#39;,&#39;value&#39;:&#39;123123123&#39;})
-
-# 删除所有cookie信息
-driver.delete_all_cookies()
-
-# 根据cookieKey删除对应cookie
-driver.delete_cookie(&#39;UiCode&#39;)
-</code></pre><h3 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h3><pre><code># 获取当前浏览器的大小
-driver.get_window_size()
-
-# 通过像素设置浏览器的大小
-driver.set_window_size(&#39;width&#39;,&#39;height&#39;)
-
-# 获取当前窗口针对于Windows的位置的坐标x,y
-driver.get_window_position()
-
-# 设置当前窗口针对Windows的位置，x,y
-driver.set_window_position(20,20)
-
-# 最大化当前窗口,不需要传参
-driver.maximize_window()
-
-# 返回当前操作的浏览器句柄
-driver.current_window_handle
-
-# 返回所有打开server的浏览器句柄
-driver.window_handles
-</code></pre><h3 id="截取当前页面"><a href="#截取当前页面" class="headerlink" title="截取当前页面"></a>截取当前页面</h3><pre><code># 获取当前页面的二进制图片数据，需要自己去写入文件
-driver.get_screenshot_as_png()
-
-# as_png的上层封装，只需要传入图片名称自动写成图片
-driver.get_screenshot_as_file(&#39;fileName.png&#39;)
-</code></pre><h3 id="执行JavaScript语句"><a href="#执行JavaScript语句" class="headerlink" title="执行JavaScript语句"></a>执行JavaScript语句</h3><pre><code># 执行JavaScript语句
-driver.execute_script(&#39;JavaScript Commond&#39;)
-
-# 例：
-# 通过js来操作滚动条
-# 参数1：x  参数2： y
-window.scrollTo(100,400);
-</code></pre><h3 id="关闭与退出"><a href="#关闭与退出" class="headerlink" title="关闭与退出"></a>关闭与退出</h3><pre><code># 当开启多个时，关闭当前页面
-driver.close()
-
-# 退出并关闭所有页面驱动
-driver.quit()
-</code></pre><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><pre><code># 返回页面源码
-driver.page_source
-
-# 返回tag标题
-driver.title
-
-# 返回当前Url
-driver.current_url
-
-# 获取浏览器名称 如：chrome
-driver.name
-</code></pre><h3 id="ElementApi接口"><a href="#ElementApi接口" class="headerlink" title="ElementApi接口"></a>ElementApi接口</h3><pre><code># 根据标签属性名称,获取属性value
-element.get_attribute(&#39;style&#39;)
-
-# 向输入框输入字符串 如果input的type为file类型 可以输入文件绝对路径上传文件
-element.send_keys()
-
-# 清除文本内容
-element.clear()
-
-# 鼠标左键点击操作
-element.click()
-
-# 通过属性名称获取属性
-element.get_property(&#39;id&#39;)
-
-# 返回元素是否可见 True or False
-element.is_displayed()
-
-# 返回元素是否被选中 True or False
-element.is_selected()
-
-# 返回标签元素的名字
-element.tag_name
-
-# 获取当前标签的宽和高
-element.size
-
-# 获取元素的文本内容
-element.text
-
-# 模仿回车按钮 提交数据
-element.submit()
-
-# 获取当前元素的坐标
-element.location
-
-# 截取图片
-element.screenshot()
-</code></pre><h3 id="常见异常"><a href="#常见异常" class="headerlink" title="常见异常"></a>常见异常</h3><blockquote>
+<h3 id="Cookie操作"><a href="#Cookie操作" class="headerlink" title="Cookie操作"></a>Cookie操作</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 根据cookieKey，获取cookie信息</span></span><br><span class="line">cookie = driver.get_cookie(<span class="string">'cookieKey'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 获取所有cookie信息</span></span><br><span class="line">cookies = driver.get_cookies()</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 添加cookie，严格按照格式添加，cookie的key为name，value为value</span></span><br><span class="line">driver.add_cookie(&#123;<span class="string">'name'</span>:<span class="string">'tmp'</span>,<span class="string">'value'</span>:<span class="string">'123123123'</span>&#125;)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 删除所有cookie信息</span></span><br><span class="line">driver.delete_all_cookies()</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 根据cookieKey删除对应cookie</span></span><br><span class="line">driver.delete_cookie(<span class="string">'UiCode'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 获取当前浏览器的大小</span></span><br><span class="line">driver.get_window_size()</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 通过像素设置浏览器的大小</span></span><br><span class="line">driver.set_window_size(<span class="string">'width'</span>,<span class="string">'height'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 获取当前窗口针对于Windows的位置的坐标x,y</span></span><br><span class="line">driver.get_window_position()</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 设置当前窗口针对Windows的位置，x,y</span></span><br><span class="line">driver.set_window_position(<span class="number">20</span>,<span class="number">20</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 最大化当前窗口,不需要传参</span></span><br><span class="line">driver.maximize_window()</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 返回当前操作的浏览器句柄</span></span><br><span class="line">driver.current_window_handle</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 返回所有打开server的浏览器句柄</span></span><br><span class="line">driver.window_handles</span><br></pre></td></tr></table></figure>
+<h3 id="截取当前页面"><a href="#截取当前页面" class="headerlink" title="截取当前页面"></a>截取当前页面</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 获取当前页面的二进制图片数据，需要自己去写入文件</span></span><br><span class="line">driver.get_screenshot_as_png()</span><br><span class="line"> </span><br><span class="line"><span class="meta"># as_png的上层封装，只需要传入图片名称自动写成图片</span></span><br><span class="line">driver.get_screenshot_as_file(<span class="string">'fileName.png'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="执行JavaScript语句"><a href="#执行JavaScript语句" class="headerlink" title="执行JavaScript语句"></a>执行JavaScript语句</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 执行JavaScript语句</span></span><br><span class="line">driver.execute_script(<span class="string">'JavaScript Commond'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="meta"># 例：</span></span><br><span class="line"><span class="meta"># 通过js来操作滚动条</span></span><br><span class="line"><span class="meta"># 参数1：x  参数2： y</span></span><br><span class="line">window.scrollTo(<span class="number">100</span>,<span class="number">400</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="关闭与退出"><a href="#关闭与退出" class="headerlink" title="关闭与退出"></a>关闭与退出</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 当开启多个时，关闭当前页面</span></span><br><span class="line">driver.close()</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 退出并关闭所有页面驱动</span></span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 返回页面源码</span></span><br><span class="line">driver.page_source</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 返回tag标题</span></span><br><span class="line">driver.title</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 返回当前Url</span></span><br><span class="line">driver.current_url</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 获取浏览器名称 如：chrome</span></span><br><span class="line">driver.name</span><br></pre></td></tr></table></figure>
+<h3 id="ElementApi接口"><a href="#ElementApi接口" class="headerlink" title="ElementApi接口"></a>ElementApi接口</h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据标签属性名称,获取属性value</span></span><br><span class="line"><span class="keyword">element</span>.get_attribute(<span class="string">'style'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 向输入框输入字符串 如果input的type为file类型 可以输入文件绝对路径上传文件</span></span><br><span class="line"><span class="keyword">element</span>.send_keys()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 清除文本内容</span></span><br><span class="line"><span class="keyword">element</span>.<span class="built_in">clear</span>()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 鼠标左键点击操作</span></span><br><span class="line"><span class="keyword">element</span>.click()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 通过属性名称获取属性</span></span><br><span class="line"><span class="keyword">element</span>.get_property(<span class="string">'id'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 返回元素是否可见 True or False</span></span><br><span class="line"><span class="keyword">element</span>.is_displayed()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 返回元素是否被选中 True or False</span></span><br><span class="line"><span class="keyword">element</span>.is_selected()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 返回标签元素的名字</span></span><br><span class="line"><span class="keyword">element</span>.tag_name</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 获取当前标签的宽和高</span></span><br><span class="line"><span class="keyword">element</span>.size</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 获取元素的文本内容</span></span><br><span class="line"><span class="keyword">element</span>.<span class="keyword">text</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 模仿回车按钮 提交数据</span></span><br><span class="line"><span class="keyword">element</span>.submit()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 获取当前元素的坐标</span></span><br><span class="line"><span class="keyword">element</span>.location</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 截取图片</span></span><br><span class="line"><span class="keyword">element</span>.screenshot()</span><br></pre></td></tr></table></figure>
+<h3 id="常见异常"><a href="#常见异常" class="headerlink" title="常见异常"></a>常见异常</h3><blockquote>
 <p>　　NoSuchElementException：没有找到元素</p>
 <p>　　NoSuchFrameException：没有找到iframe</p>
 <p>　　NoSuchWindowException:没找到窗口句柄handle</p>
@@ -243,33 +121,5 @@ element.screenshot()
 <p>　　TimeoutException：查找元素超时</p>
 </blockquote>
 <p>api: <a href="https://selenium-python.readthedocs.io/api.html" target="_blank" rel="noopener">https://selenium-python.readthedocs.io/api.html</a></p>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="1-headless下的截屏"><a href="#1-headless下的截屏" class="headerlink" title="1.headless下的截屏"></a>1.headless下的截屏</h3><pre><code>import os
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.firefox.options import Options
-import time
-
-chrome_options = Options()
-chrome_options.add_argument(&quot;--headless&quot;)
-
-url = &quot;https://bbs.pediy.com/thread-251690.htm&quot;
-#对应的chromedriver的放置目录
-driver = webdriver.Chrome(chrome_options=chrome_options)
-
-driver.get(url)
-
-
-start_time=time.time()
-print(&#39;this is start_time &#39;,start_time)
-
-driver.find_element_by_id(&quot;kw&quot;).send_keys(&quot;selenium webdriver&quot;)
-driver.find_element_by_id(&quot;su&quot;).click()
-time.sleep(3)
-driver.save_screenshot(&#39;screen.png&#39;)
-
-driver.close()
-
-end_time=time.time()
-print(&#39;this is end_time &#39;,end_time)
-</code></pre><h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2></article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/06/22/python/selenium学习笔记/">http://microvorld.com/2019/06/22/python/selenium学习笔记/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/06/27/CTF/SCTF 2019/" title=""><span>< PreviousPost</span><br><span class="prevTitle">[Untitled Post]</span></a><a class="nextSlogan" href="/2019/06/21/python/Pyppeteer学习笔记/" title="Pyppeteer学习笔记"><span>NextPost ></span><br><span class="nextTitle">Pyppeteer学习笔记</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#selenium学习笔记"><span class="toc-number">1.</span> <span class="toc-text">selenium学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常用api"><span class="toc-number">1.1.</span> <span class="toc-text">常用api</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器操作"><span class="toc-number">1.1.1.</span> <span class="toc-text">浏览器操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取标签元素"><span class="toc-number">1.1.2.</span> <span class="toc-text">获取标签元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cookie操作"><span class="toc-number">1.1.3.</span> <span class="toc-text">Cookie操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#窗口操作"><span class="toc-number">1.1.4.</span> <span class="toc-text">窗口操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#截取当前页面"><span class="toc-number">1.1.5.</span> <span class="toc-text">截取当前页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行JavaScript语句"><span class="toc-number">1.1.6.</span> <span class="toc-text">执行JavaScript语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭与退出"><span class="toc-number">1.1.7.</span> <span class="toc-text">关闭与退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">1.1.8.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ElementApi接口"><span class="toc-number">1.1.9.</span> <span class="toc-text">ElementApi接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见异常"><span class="toc-number">1.1.10.</span> <span class="toc-text">常见异常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">1.2.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-headless下的截屏"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.headless下的截屏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2"><span class="toc-number">1.3.</span> <span class="toc-text">2.</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="1-headless下的截屏"><a href="#1-headless下的截屏" class="headerlink" title="1.headless下的截屏"></a>1.headless下的截屏</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">from selenium import webdriver</span><br><span class="line">from selenium<span class="selector-class">.webdriver</span><span class="selector-class">.common</span><span class="selector-class">.keys</span> import Keys</span><br><span class="line">from selenium<span class="selector-class">.webdriver</span><span class="selector-class">.chrome</span><span class="selector-class">.options</span> import Options</span><br><span class="line">from selenium<span class="selector-class">.webdriver</span><span class="selector-class">.firefox</span><span class="selector-class">.options</span> import Options</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">chrome_options = Options()</span><br><span class="line">chrome_options.add_argument(<span class="string">"--headless"</span>)</span><br><span class="line"></span><br><span class="line">url = <span class="string">"https://bbs.pediy.com/thread-251690.htm"</span></span><br><span class="line">#对应的chromedriver的放置目录</span><br><span class="line">driver = webdriver.Chrome(chrome_options=chrome_options)</span><br><span class="line"></span><br><span class="line">driver.get(url)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start_time=<span class="selector-tag">time</span>.time()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">'this is start_time '</span>,start_time)</span></span></span><br><span class="line"></span><br><span class="line">driver.find_element_by_id(<span class="string">"kw"</span>).send_keys(<span class="string">"selenium webdriver"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"su"</span>).click()</span><br><span class="line"><span class="selector-tag">time</span>.sleep(<span class="number">3</span>)</span><br><span class="line">driver.save_screenshot(<span class="string">'screen.png'</span>)</span><br><span class="line"></span><br><span class="line">driver.close()</span><br><span class="line"></span><br><span class="line">end_time=<span class="selector-tag">time</span>.time()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">'this is end_time '</span>,end_time)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2></article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/06/22/python/selenium学习笔记/">http://microvorld.com/2019/06/22/python/selenium学习笔记/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/06/27/CTF/SCTF 2019/" title="SCTF 2019"><span>< PreviousPost</span><br><span class="prevTitle">SCTF 2019</span></a><a class="nextSlogan" href="/2019/06/21/python/Pyppeteer学习笔记/" title="Pyppeteer学习笔记"><span>NextPost ></span><br><span class="nextTitle">Pyppeteer学习笔记</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#selenium学习笔记"><span class="toc-number">1.</span> <span class="toc-text">selenium学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常用api"><span class="toc-number">1.1.</span> <span class="toc-text">常用api</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器操作"><span class="toc-number">1.1.1.</span> <span class="toc-text">浏览器操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取标签元素"><span class="toc-number">1.1.2.</span> <span class="toc-text">获取标签元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cookie操作"><span class="toc-number">1.1.3.</span> <span class="toc-text">Cookie操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#窗口操作"><span class="toc-number">1.1.4.</span> <span class="toc-text">窗口操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#截取当前页面"><span class="toc-number">1.1.5.</span> <span class="toc-text">截取当前页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行JavaScript语句"><span class="toc-number">1.1.6.</span> <span class="toc-text">执行JavaScript语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭与退出"><span class="toc-number">1.1.7.</span> <span class="toc-text">关闭与退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">1.1.8.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ElementApi接口"><span class="toc-number">1.1.9.</span> <span class="toc-text">ElementApi接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见异常"><span class="toc-number">1.1.10.</span> <span class="toc-text">常见异常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">1.2.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-headless下的截屏"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.headless下的截屏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2"><span class="toc-number">1.3.</span> <span class="toc-text">2.</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

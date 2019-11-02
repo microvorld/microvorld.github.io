@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title"></h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-10-22</span></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="http异步攻击：请求走私"><a href="#http异步攻击：请求走私" class="headerlink" title="http异步攻击：请求走私"></a>http异步攻击：请求走私</h1><p>从<code>HTTP / 1.1</code>开始，广泛支持通过单个基础<code>TCP</code>或<code>SSL / TLS</code>套接字发送多个<code>HTTP</code>请求。该协议非常简单–<code>HTTP</code>请求简单地端对端放置，服务器解析标头以计算出每个结束的位置以及下一个开始的位置。</p>
+<p>在<code>HTTP1.1</code>中，增加了<code>Keep-Alive</code>和<code>Pipeline</code>这两个特性</p>
+<p>所谓<code>Keep-Alive</code>，就是在<code>HTTP</code>请求中增加一个特殊的请求头<code>Connection: Keep-Alive</code>，告诉服务器，接收完这次HTTP请求后，不要关闭TCP链接，后面对相同目标服务器的HTTP请求，重用这一个TCP链接，这样只需要进行一次TCP握手的过程，可以减少服务器的开销，节约资源，还能加快访问速度。当然，这个特性在HTTP1.1中是默认开启的。</p>
+<p>有了<code>Keep-Alive</code>之后，后续就有了<code>Pipeline</code>，在这里呢，客户端可以像流水线一样发送自己的HTTP请求，而不需要等待服务器的响应，服务器那边接收到请求后，需要遵循先入先出机制，将请求和响应严格对应起来，再将响应发送给客户端</p>
+<p>就其本身而言，这是无害的。但是，现代网站由系统链组成，所有系统都通过HTTP进行通信。这种多层体系结构接收来自多个不同用户的HTTP请求，并通过单个<code>TCP / TLS</code>连接路由它们：<br><img src="https://portswigger.net/cms/images/3b/af/c28234336ee3-article-revproxy.svg" alt=""></p>
+<p>这意味着突然之间，后端与前端就每个消息的结束位置达成一致至关重要。否则，攻击者可能能够发送模糊的消息，该消息被后端解释为两个不同的HTTP请求：<br><img src="https://portswigger.net/cms/images/17/3d/95dfcd7b151f-article-revproxy-desynced.svg" alt=""></p>
+<p>先说两个概念：</p>
+<blockquote>
+<p>CL:<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Length" target="_blank" rel="noopener">Content-Length</a><br>TE:<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Transfer-Encoding" target="_blank" rel="noopener">Transfer-Encoding</a></p>
+</blockquote>
+<p>想象一下，当前端以第一个CL为准，后端以第二个CL为准，从后端而言，接收到的请求如下：</p>
+<blockquote>
+<font color="4169E1"><br>POST / HTTP/1.1<br>Host: example.com<br>Content-Length: 6<br>Content-Length: 5<br><br>12345<font color="EE0000">G</font>POST / HTTP/1.1<br>Host: example.com<br>…<br></font>
+
+
+</blockquote>
+<p>前端发送的是两个请求，但后端由于以第二个CL为准，所以会造成前端的第二个请求被解析为<code>GPOST...</code>，从而可能造成后端响应为<code>&quot;Unknown method GPOST&quot;.</code></p>
+<h2 id="CL不为0的GET请求"><a href="#CL不为0的GET请求" class="headerlink" title="CL不为0的GET请求"></a>CL不为0的GET请求</h2><p>其实在这里，影响到的并不仅仅是GET请求，所有不携带请求体的HTTP请求都有可能受此影响，只因为GET比较典型，我们把它作为一个例子。</p>
+<p>假设前端代理服务器允许GET请求携带请求体，而后端服务器不允许GET请求携带请求体，它会直接忽略掉GET请求中的<code>Content-Length</code>头，不进行处理。这就有可能导致请求走私。</p>
+<p>比如我们构造请求</p>
+<pre><code>GET / HTTP/1.1\r\n
+Host: example.com\r\n
+Content-Length: 44\r\n
+
+GET / secret HTTP/1.1\r\n
+Host: example.com\r\n
+\r\n
+</code></pre><p>前端服务器收到该请求，通过读取<code>Content-Length</code>，判断这是一个完整的请求，然后转发给后端服务器，而后端服务器收到后，因为它不对<code>Content-Length</code>进行处理，由于<code>Pipeline</code>的存在，它就认为这是收到了两个请求，分别是</p>
+<pre><code>第一个
+GET / HTTP/1.1\r\n
+Host: example.com\r\n
+
+第二个
+GET / secret HTTP/1.1\r\n
+Host: example.com\r\n
+</code></pre><p>这就导致了请求走私</p>
+<h2 id="CL-CL"><a href="#CL-CL" class="headerlink" title="CL-CL"></a>CL-CL</h2><p>在<code>RFC7230</code>的第<code>3.3.3</code>节中的第四条中，规定当服务器收到的请求中包含两个<code>Content-Length</code>，而且两者的值不同时，需要返回<strong>400</strong>错误。</p>
+<blockquote>
+<p><a href="https://tools.ietf.org/html/rfc7230#section-3.3.3" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc7230#section-3.3.3</a></p>
+</blockquote>
+<p>但是总有服务器不会严格的实现该规范，假设中间的代理服务器和后端的源站服务器在收到类似的请求时，都不会返回400错误，但是中间代理服务器按照第一个<code>Content-Length</code>的值对请求进行处理，而后端源站服务器按照第二个<code>Content-Length</code>的值进行处理。</p>
+<p>例子就正如开篇所谈到的</p>
+<p>两个<code>Content-Length</code>这种请求包还是太过于理想化了，一般的服务器都不会接受这种存在两个请求头的请求包。但是在<code>RFC2616</code>的第<code>4.4</code>节中，规定:如果收到同时存在<code>Content-Length</code>和<code>Transfer-Encoding</code>这两个请求头的请求包时，在处理的时候必须忽略<code>Content-Length</code>，这其实也就意味着请求包中同时包含这两个请求头并不算违规，服务器也不需要返回<strong>400</strong>错误。服务器在这里的实现更容易出问题。</p>
+<h2 id="CL-TE"><a href="#CL-TE" class="headerlink" title="CL-TE"></a>CL-TE</h2><p>所谓<code>CL-TE</code>，就是当收到存在两个请求头的请求包时，前端代理服务器只处理<code>Content-Length</code>这一请求头，而后端服务器会遵守<code>RFC2616</code>的规定，忽略掉<code>Content-Length</code>，处理<code>Transfer-Encoding</code>这一请求头。</p>
+<p>chunk传输数据格式如下，其中size的值由16进制表示。</p>
+<pre><code>[chunk size][\r\n][chunk data][\r\n][chunk size][\r\n][chunk data][\r\n][chunk size = 0][\r\n][\r\n]
+</code></pre></article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/10/22/vulnerable/http smuggle/">http://microvorld.com/2019/10/22/vulnerable/http smuggle/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/10/28/JS挖坑/js(1)/" title=""><span>< PreviousPost</span><br><span class="prevTitle">[Untitled Post]</span></a><a class="nextSlogan" href="/2019/10/12/cve/Joomla 3.4.6 RCE/" title=""><span>NextPost ></span><br><span class="nextTitle">[Untitled Post]</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#http异步攻击：请求走私"><span class="toc-number">1.</span> <span class="toc-text">http异步攻击：请求走私</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CL不为0的GET请求"><span class="toc-number">1.1.</span> <span class="toc-text">CL不为0的GET请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CL-CL"><span class="toc-number">1.2.</span> <span class="toc-text">CL-CL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CL-TE"><span class="toc-number">1.3.</span> <span class="toc-text">CL-TE</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

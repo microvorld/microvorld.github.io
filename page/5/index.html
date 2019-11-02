@@ -1,36 +1,168 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>damn1t</title><meta name="description" content="404"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a class="current" href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/26/CTF/hackim ctf/">hackim web</a></h3></div><div class="post-content"><p>hackim webescaperfv查看响应信息发现字段X-Powered-By，其对应的为express可知为后端为nodejs
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>Mr.Long's Blog</h1><h5>Welcome to my Blog!</h5><div class="intro-social"><a class="fa fa-github" href="//github.com/" target="_blank" title="github"></a><a class="fa fa-weibo" href="//www.weibo.com" target="_blank" title="weibo"></a><a class="fa fa-facebook" href="//www.facebook.com" target="_blank" title="facebook"></a><a class="fa fa-twitter" href="//twitter.com" target="_blank" title="twitter"></a><a class="fa fa-rss" href="/atom.xml" target="_blank" title="rss"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2019/04/09/algorithm/傅里叶/">傅里叶变换</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-09T11:45:48.219Z">2019-04-09</time></div><div class="recent-post-content">傅里叶变换傅里叶同学告诉我们，任何周期函数，都可以看作是不同振幅，不同相位正弦波的叠加
+而贯穿时域与频域的方法之一，就是传中说的傅里叶分析。傅里叶分析可分为傅里叶级数（Fourier Serie）和傅里叶变换(Fourier Transformation)
+如果我们把第一个频率最低的频率分量看作“1”，我们就有了构建频域的最基本单元。
+对于我们最常见的有理数轴，数字“1”就是有理数轴的基本单元。
+时域的基本单元就是“1秒”，如果我们将一个角频率为\omega{0} 的正弦波cos（\omega{0} t）看作基础，那么频域的基本单元就是\omega_{0} 。
+有了“1”，还要有“0”才能构成 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="傅里叶"> 傅里叶</a></div><div class="read-more"><a class="more" href="/2019/04/09/algorithm/傅里叶/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/09/图像/watermark/">watermark resolve</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-09T09:38:52.029Z">2019-04-09</time></div><div class="recent-post-content">watermark resolve水印原理一般性水印常见于纸币，图片。图片水印标志着图片个人所有权，通常就是将两张图片进行叠加，或向另一张图片写入一些标志信息
+简单使用：
+
+添加文字：
+
+from PIL import Image, ImageDraw, ImageFont
+
+# 指定要使用的字体和大小；/Library/Fonts/是macOS字体目录；Linux的字体目录是/usr/share/fonts/; windows是C:/windows/fonts/
+font = ImageFont.truetype(&#39;C:/windows/fonts/Arial.ttf&#39;, 2 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="watermark"> watermark</a></div><div class="read-more"><a class="more" href="/2019/04/09/图像/watermark/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/08/CTF/MidnightSun CTF 2019/">MidnightSun CTF 2019</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-08T10:04:20.524Z">2019-04-08</time></div><div class="recent-post-content">MidnightSun CTF 2019MARCODOWNO点入主页面的链接，查看源码，注意到regexp的规则
+input = decodeURIComponent(location.search.match(/input=([^&amp;#]+)/)[1]);
+
+function markdown(text) {
+text = text.
+replace(/[&lt;]/g, &#39;&#39;).
+replace(/----/g, &#39;&lt;hr&gt;&#39;).
+replace(/&gt; ?([^\n]+)/g, &#39;&lt;blockquote&gt;$1&lt ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></div><div class="read-more"><a class="more" href="/2019/04/08/CTF/MidnightSun CTF 2019/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/03/CTF/VolgaCTF 2019(web)/">VolgaCTF 2019 Quals</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-03T14:48:07.775Z">2019-04-03</time></div><div class="recent-post-content">VolgaCTF 2019 Qualsshoppayload:&amp;balance=2000
+shop2payload:name=ausername&amp;CartItems[0].id=4
+gallery先使用SourceLeakHacker这个脚本爆目录，发现无法得到正常返回结果，看了writeup，发现了dirsearch这个东西
+
+用法：./dirsearch.py -u url
+
+发现了一些js文件main.js
+  $(document).ready(function() {
+year = parseInt(location.pathname.slice(1)) || 201 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></div><div class="read-more"><a class="more" href="/2019/04/03/CTF/VolgaCTF 2019(web)/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/01/CTF/fireshell ctf(vice)/">fireshell ctf2019 vice</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-01T09:02:24.410Z">2019-04-01</time></div><div class="recent-post-content">fireshell ctf2019 vice题目给出源码
+&lt;?php
+//require_once &#39;config.php&#39;;
+
+class SHITS{
+  private $url;
+  private $method;
+  private $addr;
+  private $host;
+  private $name;
+
+  function __construct($method,$url){
+$this-&gt;method = $method;
+$this-&gt;url = $url;
+  }
+
+  function doit(){
+
+$this-&gt;h ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></div><div class="read-more"><a class="more" href="/2019/04/01/CTF/fireshell ctf(vice)/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/03/30/CTF/Securinets Prequals CTF 2019/">Securinets Prequals CTF 2019</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-03-30T13:20:33.260Z">2019-03-30</time></div><div class="recent-post-content">Securinets Prequals CTF 2019custom location在url后追加/robots.txt，报错，出现调试页面，仔细观察url，尝试读取文件
+https://web0.ctfsecurinets.com/_profiler/open?file=public/index.php
+跟入index.php，发现一行require dirname(__DIR__).&#39;/config/bootstrap.php&#39;;于是改payload为file=/config/bootstrap.php，看到：
+&lt;?php
+use Symfony\Component ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></div><div class="read-more"><a class="more" href="/2019/03/30/CTF/Securinets Prequals CTF 2019/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/03/29/OS/command/">常用指令及其含义(linux 和 windows)</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-03-29T12:27:04.807Z">2019-03-29</time></div><div class="recent-post-content">常用指令及其含义linuxcwd意义：get pathname of current working directory
+DescriptionThis module provides functions for determining the pathname of the current working directory. It is recommended that getcwd (or another *cwd() function) be used in all code to ensure portability.
+By default, it exports the funct ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="command"> command</a></div><div class="read-more"><a class="more" href="/2019/03/29/OS/command/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/03/29/OS/proc/">linux /proc目录</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-03-29T07:40:09.893Z">2019-03-29</time></div><div class="recent-post-content">linux /proc目录Linux Filesystem Hierarchy:Prev    Chapter 1. Linux Filesystem Hierarchy    Next1.14. /proc/proc is very special in that it is also a virtual filesystem. It’s sometimes referred to as a process information pseudo-file system. It doesn’t contain ‘real’ files but runtime system informatio ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="/proc"> /proc</a></div><div class="read-more"><a class="more" href="/2019/03/29/OS/proc/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/03/26/CTF/hackim ctf/">hackim web</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-03-26T14:59:10.103Z">2019-03-26</time></div><div class="recent-post-content">hackim webescaperfv查看响应信息发现字段X-Powered-By，其对应的为express可知为后端为nodejs
 mime checkr只能上传.jpeg格式图片，有一个类型检查的功能这里有很重要的一点，一个getmime.bak的备份源码文件（不看writeup我是肯定不知道的，orz）
-&...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-26</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/25/vulnerable/xxe/">xxe</a></h3></div><div class="post-content"><p>xxexml基础什么是 XML?
+&lt;?php
+//error_reporting(-1);
+//ini_set(&#39;display_errors&#39;, &#39;On&#39;);
+
+class CurlClass{
+public function httpGet($url) {
+$ch = curl_ ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></div><div class="read-more"><a class="more" href="/2019/03/26/CTF/hackim ctf/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/03/25/vulnerable/xxe/">xxe</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-03-25T10:48:18.530Z">2019-03-25</time></div><div class="recent-post-content">xxexml基础什么是 XML?
 
 XML 指可扩展标记语言（EXtensible Markup Language）XML 是一种标记语言，很类似 HTMLXML 的设计宗旨是传输数据，而非显示数据XML 标签没有被预定义。您需要自行定义标签。XML 被设计为具有自我描述性。XML 是 W3C 的推荐标准
 
-结构...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-25</span><i class="fa fa-tag"></i><a class="tag" href="/tags/xxe/" title="xxe">xxe </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/18/OS/linux常见问题/">Linux常见错误</a></h3></div><div class="post-content"><p>ubuntu常见错误Package has no installation candidate解决：
-# apt-get update
-# apt-get upgrade
-# apt-get install &lt;packagename&gt;
-E: Could not get lock /var/lib/dp...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-18</span><i class="fa fa-tag"></i><a class="tag" href="/tags/linux/" title="linux">linux </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2018/09/11/vulnerable/jinja2/">由Musee de X(强网杯2017)到jinja2模板注入</a></h3></div><div class="post-content"><p>Musee de X(强网杯2017)学到新姿势
-分析注册admin之后进行登录，然后有一个捐赠页面，，网址随便填，这里有一点要注意，名字必须和登录名一致，否则会弹出：screw you hacker
-然后就成功的报错,查看报错信息:在/var/www/html/museum/view.py in makemem...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-09-11</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2018/09/08/pwn/pwnable1/">pwnable.kr(1-2)</a></h3></div><div class="post-content"><p>pwnable.kr(1-2)fd第一题ssh连接之后给出如下代码：
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-char buf[32];
-int main(int argc, char* argv[]...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-09-08</span><i class="fa fa-tag"></i><a class="tag" href="/tags/pwn/" title="pwn">pwn </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2018/07/19/web/编码与解码/">关于编码与解码的思考</a></h3></div><div class="post-content"><p>关于编码与解码的思考最近做了SCTF，看了官方wp，其中看到了在进行xss测试的使用了
-{{'a'.constructor.prototype.charAt=[].join;$eval('x=1} }
-    };\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029//...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-07-19</span><i class="fa fa-tag"></i><a class="tag" href="/tags/web/" title="web">web </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2018/05/29/web/序列化/">php反序列化漏洞</a></h3></div><div class="post-content"><p>php反序列化漏洞php序列化在php中存在两个函数，serialize和unserialize,他们的作用分别是将对象进行序列化和反序列化
-什么是序列化？官方文档给出如下定义：
-
-serialize() 返回字符串，此字符串包含了表示 value 的字节流，可以存储于任何地方。
-
-简而言之，他将一个对象返回为字...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-05-29</span><i class="fa fa-tag"></i><a class="tag" href="/tags/web/" title="web">web </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2018/05/27/vulnerable/cbc/">CBC字节翻转攻击</a></h3></div><div class="post-content"><p>CBC字节翻转攻击什么是CBC相信学过密码学的都知道，cbc属于分组加密中的其中一种模式加密过程如下：
-
-Plaintext：待加密的数据。
-IV：用于随机化加密的比特块，保证即使对相同明文多次加密，也可以得到不同的密文。
-Key：被一些如AES的对称加密算法使用。
-Ciphertext：加密后的数据。
-
-明文都...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-05-27</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2018/05/27/vulnerable/php伪协议/">php伪协议</a></h3></div><div class="post-content"><p>php伪协议什么是伪协议也不知道伪协议这个名字是从什么时候开始出现的，但我第一次接触还是在打ctf的时候，与其说伪协议，倒不如直接了解PHP支持的协议和封装的协议官方文档给出了如下的php所支持的协议：
-
-file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 访问 F...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-05-27</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2018/03/15/vulnerable/hash扩展攻击/">hash长度扩展攻击</a></h3></div><div class="post-content"><p>hash长度扩展攻击实验吧：让我进去明文攻击用burpsuit抓包，修改cookie中的source值为1，看的php源码：
-`$flag = &quot;XXXXXXXXXXXXXXXXXXXXXXX&quot;;
-$secret = &quot;XXXXXXXXXXXXXXX&quot;; // This s...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-03-15</span><i class="fa fa-tag"></i><a class="tag" href="/tags/hash/" title="hash">hash </a></div></div></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/page/4/">上一页</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/page/6/">下一页</a></li></ul></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+结构
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE note [
+      &lt;!ELEMENT note (to,from,heading,body)&gt;
+  ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="xxe"> xxe</a></div><div class="read-more"><a class="more" href="/2019/03/25/vulnerable/xxe/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><a class="extend prev" rel="prev" href="/page/4/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">NEXT &#62;</a></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

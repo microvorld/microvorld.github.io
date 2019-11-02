@@ -1,24 +1,197 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>damn1t</title><meta name="description" content="404"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a class="current" href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/05/12/cve/CVE-2018-8715/">CVE-2018-8715</a></h3></div><div class="post-content"><p>CVE-2018-8715环境搭建利用vulnhub的环境docker-compose up -d后台运行，端口设置不要改，默认8080
-复现Appweb简介Appweb是一个嵌入式HTTP Web服务器，主要的设计思路是安全。这是直接集成到客户的应用和设备，便于开发和部署基于Web的应用程序和设备。它迅速（ 每...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-12</span><i class="fa fa-tag"></i><a class="tag" href="/tags/cve/" title="cve">cve </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/05/09/vulnerable/intigriti xss challenge/">Intigriti XSS Challenge - Solution and problem solving approach</a></h3></div><div class="post-content"><p>Intigriti XSS Challenge - Solution and problem solving approach原文链接：https://dee-see.github.io/intigriti/xss/2019/05/02/intigriti-xss-challenge-writeup.html
-这...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-09</span><i class="fa fa-tag"></i><a class="tag" href="/tags/xss/" title="xss">xss </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/05/07/靶机/FristiLeak/">vulnhub--FristiLeaks v1.3</a></h3></div><div class="post-content"><p>FristiLeaks v1.3按要求将mac地址改为08:00:27:A5:A6:76
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
 
-主机发现
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
 
-两种方式：
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
 
-nmap -sP 192.168.199.0/24
-netdiscover -r 192.168.199.0/24
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
 
 
-端口扫描
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>Mr.Long's Blog</h1><h5>Welcome to my Blog!</h5><div class="intro-social"><a class="fa fa-github" href="//github.com/" target="_blank" title="github"></a><a class="fa fa-weibo" href="//www.weibo.com" target="_blank" title="weibo"></a><a class="fa fa-facebook" href="//www.facebook.com" target="_blank" title="facebook"></a><a class="fa fa-twitter" href="//twitter.com" target="_blank" title="twitter"></a><a class="fa fa-rss" href="/atom.xml" target="_blank" title="rss"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2019/06/22/python/selenium学习笔记/">selenium学习笔记</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-06-22T14:36:01.039Z">2019-06-22</time></div><div class="recent-post-content">selenium学习笔记selenium可以模拟浏览器登录，且提供了很多api方便用户调用
+常用api浏览器操作# 刷新
+driver.refresh()
+
+# 前进
+driver.forward()
+
+# 后退
+driver.back()
+获取标签元素# 通过ID定位目标元素
+driver.find_element_by_id(&#39;i1&#39;)
+
+# 通过className定位目标元素
+driver.find_element_by_class_name(&#39;c1&#39;)
+
+# 通过name属性定位目标元素
+driver.find_element_by_name(&#39; ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="selenium"> selenium</a></div><div class="read-more"><a class="more" href="/2019/06/22/python/selenium学习笔记/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/06/21/python/Pyppeteer学习笔记/">Pyppeteer学习笔记</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-06-21T13:39:53.029Z">2019-06-21</time></div><div class="recent-post-content">Pyppeteer学习笔记有的没的浏览器处理过程中的每一个步骤：1.处理HTML脚本，生成DOM树2.处理CSS脚本，生成CSSOM树   （DOM和CSSOM是独立的数据结构）3.将DOM树和CSSOM树合并为渲染树4.对渲染树中的内容进行布局，计算每个节点的几何外观5.将渲染树中的每个节点绘制到屏幕中
+Headless Browser实际就是节约了第4,5步的时间。
+安装文档地址：https://miyakogi.github.io/pyppeteer/要求的最佳适配环境：py3.6
+安装方法：
+
+pip install pyppeteer
+安装chromium：
+因为国内的原因，源下载地 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="Pyppeteer"> Pyppeteer</a></div><div class="read-more"><a class="more" href="/2019/06/21/python/Pyppeteer学习笔记/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/06/19/vulnerable/Bypass XSS filters using JavaScript global variables/">Bypass XSS filters using JavaScript global variables（笔记）</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-06-19T13:34:48.497Z">2019-06-19</time></div><div class="recent-post-content">Bypass XSS filters using JavaScript global variables前言很有意思的一篇文章，学到了一些姿势，以下仅作笔记
+你所需要知道的什么是js全局变量？
+A JavaScript global variable is declared outside the function or declared with window object. It can be accessed from any function. https://www.javatpoint.com/javascript-global-variable
+
+关于 “self” 对象
+The ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="xss"> xss</a></div><div class="read-more"><a class="more" href="/2019/06/19/vulnerable/Bypass XSS filters using JavaScript global variables/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/06/15/vulnerable/MyBB  Stored XSS to RCE/">MyBB &lt;= 1.8.20--(From Stored XSS to RCE)</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-06-15T13:08:36.281Z">2019-06-15</time></div><div class="recent-post-content">MyBB &lt;= 1.8.20–(From Stored XSS to RCE)本文首发先知
+这篇文章展示了在MyBB 1.8.21 版本之前，攻击者能够通过向管理员发送恶意私信或者创建一个恶意帖子来接管任意托管主机
+
+MyBB是一个开源论坛软件，软件地址：https://mybb.com/
+
+影响我们发现，由于在1.8.20及其之前版本对于所发帖子和私信的解析错误而产生的一个存储性XSS，同时还有一个绕过身份认证的RCE漏洞能够被论坛管理员利用
+攻击者仅需一个目标论坛的账号，然后向管理员发送一封包含恶意JS代码（用于利用RCE漏洞）的私信。只要同时一名后端管理员打开恶意的私信，这使得攻击 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="vulnerable"> vulnerable</a></div><div class="read-more"><a class="more" href="/2019/06/15/vulnerable/MyBB  Stored XSS to RCE/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/06/12/CTF/fbctf2019/">fbctf2019</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-06-11T17:27:45.567Z">2019-06-12</time></div><div class="recent-post-content">Facebook ctf 2019webrceservice题目描述：
+
+We created this web interface to run commands on our servers, but since we haven’t figured out how to secure it yet we only let you run ‘ls’
+http://challenges.fbctf.com:8085
+(This problem does not require any brute force or scanning.We will ban your team if we de ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="ctf"> ctf</a></div><div class="read-more"><a class="more" href="/2019/06/12/CTF/fbctf2019/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/06/06/CTF/qwb2019/">qwbctf2019</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-06-06T03:02:00.572Z">2019-06-06</time></div><div class="recent-post-content">强网杯webupload0x01 信息搜集
+网站功能：注册和登录，尝试注册一个账号，会出现一个上传页面，尝试上传
+想到上传漏洞，疯狂fuzz，但是没卵用，于是老老实实上传了一个图片
 
 
-nmap -sS -sV -p1-65535 192.168....</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-07</span><i class="fa fa-tag"></i><a class="tag" href="/tags/靶机/" title="靶机">靶机 </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/05/04/vulnerable/padding oracle attack/">padding oracle</a></h3></div><div class="post-content"><p>padding oracle什么是padding在分组加密模式下，通常会将明文进行固定分组划分，如一组8bytes，通常会有一种情况就是明文长度非8的整数倍，那么这里就需要进行填充，这个时候，普遍的做法是在最后一个分组后填充一个固定的值，这个值的大小为填充的字节总数。即假如最后还差3个字符，则填充0x03。
-分组...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-04</span><i class="fa fa-tag"></i><a class="tag" href="/tags/side-attack/" title="side attack">side attack </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/05/04/cve/CNVD-C-2019-48814/">CNVD-C-2019-48814</a></h3></div><div class="post-content"><p>CNVD-C-2019-48814复现docker搭建环境：123456docker pull ismaleiva90/weblogic12docker run -d -p 49163:7001 -p 49164:7002 -p 49165:5556 ismaleiva90/weblogic12:latestht...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-04</span><i class="fa fa-tag"></i><a class="tag" href="/tags/cve/" title="cve">cve </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/05/03/靶机/hack the box邀请码获取和web challenge/">hack the box邀请码获取和web challenge</a></h3></div><div class="post-content"><p>hack the box邀请码获取和web challengehack the box邀请码获取在invite code页面输入，makeInvitecode，显示：1ƒ makeInviteCode()&#123;$.ajax(&#123;type:&quot;POST&quot;,dataType:&quot...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-03</span><i class="fa fa-tag"></i><a class="tag" href="/tags/tutorial-ctf/" title="tutorial ctf">tutorial ctf </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/05/03/靶机/xss-quiz/">XSS Challenges</a></h3></div><div class="post-content"><p>XSS Challenges平台地址： https://xss-quiz.int21h.jp
-11&lt;script&gt;alert(document.domain)&lt;/script&gt;
-21&quot;&gt;&lt;script&gt;alert(document.domain)&lt;/scr...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-03</span><i class="fa fa-tag"></i><a class="tag" href="/tags/xss-practice/" title="xss practice">xss practice </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/05/01/靶机/leopold/">leopold 靶机渗透</a></h3></div><div class="post-content"><p>SP: leopold 靶机渗透描述：
+这个页面似乎没有什么特别之处，当出现未存在页面会跳转回index.php/home.html，这个时候普通扫描器存在弊端那就是他根据状态码来判断页面存在与否，所以我们可以利用dirsearch ，于是找到了一个www.tar.gz，那就是源码泄露了
+另一方面，观察cookie，似乎是base64，将其解码：
+a:5:{s:2:&quot;ID&quot;;i:4;s:8:&quot;username&quot; ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="ctf"> ctf</a></div><div class="read-more"><a class="more" href="/2019/06/06/CTF/qwb2019/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/05/25/OS/shell的重定向/">Linux常用指令及其含义</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-05-25T13:45:08.302Z">2019-05-25</time></div><div class="recent-post-content">shell的重定向文件描述符Linux启动的时候会默认打开三个文件描述符，分别是：
 
-Flags/root/flag.txt/home/leopold/flag.txtTested with VirtualBoxDHCPDifficulty: BeginnerThe machines are in the intermediate difficulty r...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-01</span><i class="fa fa-tag"></i><a class="tag" href="/tags/靶机/" title="靶机">靶机 </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/30/CTF/starctf2019/">startctf2019</a></h3></div><div class="post-content"><p>starctf2019mywebsqladmin admin弱口令登入，网上搜索，关于mywebsql的cve，找到了一个rce，按照他的步骤，生成一个shell，蚁剑连接，将同名目录下的readflag下载下来，实在没啥思路，之后参考了师傅的blog
-运行readflag文件：/readflag,会出现：
 
-S...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-30</span><i class="fa fa-tag"></i><a class="tag" href="/tags/ctf/" title="ctf">ctf </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/29/python/python常见问题/">python常见问题</a></h3></div><div class="post-content"><p>python常见问题Python2和3中 ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)python2Python在进行编码方式之间的转换时，会将 unicode 作为“中间编码”，但 unicode 最大...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-29</span><i class="fa fa-tag"></i><a class="tag" href="/tags/error/" title="error">error </a></div></div></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/">上一页</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/page/3/">下一页</a></li></ul></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+
+文件描述符
+缩写
+描述
+
+
+
+
+0
+STDIN
+标准输入
+
+
+1
+STDOUT
+标准输出
+
+
+2
+STDERR
+标准错误输出
+
+
+
+
+标准输入standard input 0 （默认设备键盘）标准输出standard output 1（默认设备显示器）错误输出：error output 2（默认设备显示器）
+
+
+注意：
+
+（1）以后再打开文件，描述符可以依次增加（2）一条shell命令，都会继承其父进程的文件描述符，因此所有的shell命令，都会默认有三个文件描述符。
+
+文件所有输入输出都是由该进程所有打 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="shell"> shell</a></div><div class="read-more"><a class="more" href="/2019/05/25/OS/shell的重定向/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/05/20/web/Code-Breaking Puzzles/">Code-Breaking Puzzles</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-05-20T14:35:03.799Z">2019-05-20</time></div><div class="recent-post-content">Code-Breaking Puzzlesfunction审计代码：
+ &lt;?php
+$action = $_GET[&#39;action&#39;] ?? &#39;&#39;;
+$arg = $_GET[&#39;arg&#39;] ?? &#39;&#39;;
+
+if(preg_match(&#39;/^[a-z0-9_]*$/isD&#39;, $action)) {
+    show_source(__FILE__);
+} else {
+    $action(&#39;&#39;, $arg);
+}
+
+??是PHP7版本的新特性，它与?:的区别在哪里呢
+？？
+$b = $a? ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="web"> web</a></div><div class="read-more"><a class="more" href="/2019/05/20/web/Code-Breaking Puzzles/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/05/12/cve/CVE-2018-8715/">CVE-2018-8715</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-05-12T07:25:04.606Z">2019-05-12</time></div><div class="recent-post-content">CVE-2018-8715环境搭建利用vulnhub的环境docker-compose up -d后台运行，端口设置不要改，默认8080
+复现Appweb简介Appweb是一个嵌入式HTTP Web服务器，主要的设计思路是安全。这是直接集成到客户的应用和设备，便于开发和部署基于Web的应用程序和设备。它迅速（ 每秒处理3500多要求）而紧凑 ，其中包括支持动态网页制作，服务器端嵌入式脚本过程中的CGI ，可加载模块的SSL ，摘要式身份验证，虚拟主机， Apache样式配置，日志记录，单和多线程应用程序。它提供了大量的文档和示例。
+AppWeb是Embedthis Software LLC公司 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="cve"> cve</a></div><div class="read-more"><a class="more" href="/2019/05/12/cve/CVE-2018-8715/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/05/09/vulnerable/intigriti xss challenge/">Intigriti XSS Challenge - Solution and problem solving approach</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-05-09T08:26:05.142Z">2019-05-09</time></div><div class="recent-post-content">Intigriti XSS Challenge - Solution and problem solving approach原文链接：https://dee-see.github.io/intigriti/xss/2019/05/02/intigriti-xss-challenge-writeup.html
+这是基于chrome的漏洞，但是google确实🐮🍺，反应速度极快，我准备复现的时候已经修复了，不过我在ipad上的Google浏览器实验时成功了
+Intigriti发布了一个有趣的小XSS挑战，它要求创建一个特殊的URL，既可以用来分配iframe的SRC，也可以发送到一个eval ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="xss"> xss</a></div><div class="read-more"><a class="more" href="/2019/05/09/vulnerable/intigriti xss challenge/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><a class="extend prev" rel="prev" href="/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">NEXT &#62;</a></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

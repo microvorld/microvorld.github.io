@@ -1,26 +1,158 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>damn1t</title><meta name="description" content="404"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a class="current" href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/11/cve/CVE-2018-17057/">CVE-2018-17057</a></h3></div><div class="post-content"><p>CVE-2018-1705712345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-11</span><i class="fa fa-tag"></i><a class="tag" href="/tags/cve/" title="cve">cve </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/10/misc/png隐写/">png文件结构与信息隐藏</a></h3></div><div class="post-content"><p>png文件结构与信息隐藏PNG(Portable Network Graphics)，PNG supports palette-based images (with palettes of 24-bit RGB or 32-bit RGBA colors), grayscale images (with or w...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-10</span><i class="fa fa-tag"></i><a class="tag" href="/tags/隐写/" title="隐写">隐写 </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/09/algorithm/傅里叶/">傅里叶变换</a></h3></div><div class="post-content"><p>傅里叶变换傅里叶同学告诉我们，任何周期函数，都可以看作是不同振幅，不同相位正弦波的叠加
-而贯穿时域与频域的方法之一，就是传中说的傅里叶分析。傅里叶分析可分为傅里叶级数（Fourier Serie）和傅里叶变换(Fourier Transformation)
-如果我们把第一个频率最低的频率分量看作“1”，我们就有了...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-09</span><i class="fa fa-tag"></i><a class="tag" href="/tags/傅里叶/" title="傅里叶">傅里叶 </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/09/图像/watermark/">watermark resolve</a></h3></div><div class="post-content"><p>watermark resolve水印原理一般性水印常见于纸币，图片。图片水印标志着图片个人所有权，通常就是将两张图片进行叠加，或向另一张图片写入一些标志信息
-简单使用：
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
 
-添加文字：
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
 
-from PIL import Image, ImageDraw, ImageFont
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
 
-# 指定要使用的字体和大小；/Lib...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-09</span><i class="fa fa-tag"></i><a class="tag" href="/tags/watermark/" title="watermark">watermark </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/08/CTF/MidnightSun CTF 2019/">MidnightSun CTF 2019</a></h3></div><div class="post-content"><p>MidnightSun CTF 2019MARCODOWNO点入主页面的链接，查看源码，注意到regexp的规则
-input = decodeURIComponent(location.search.match(/input=([^&amp;#]+)/)[1]);
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
 
-function markdown(text)...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-08</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/03/CTF/VolgaCTF 2019(web)/">VolgaCTF 2019 Quals</a></h3></div><div class="post-content"><p>VolgaCTF 2019 Qualsshoppayload:&amp;balance=2000
-shop2payload:name=ausername&amp;CartItems[0].id=4
-gallery先使用SourceLeakHacker这个脚本爆目录，发现无法得到正常返回结果，看了writeup，发...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-03</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/04/01/CTF/fireshell ctf(vice)/">fireshell ctf2019 vice</a></h3></div><div class="post-content"><p>fireshell ctf2019 vice题目给出源码
-&lt;?php
-//require_once &apos;config.php&apos;;
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
 
-class SHITS{
-  private $url;
-  private $method;
-  private $addr;
-  private $hos...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-01</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/30/CTF/Securinets Prequals CTF 2019/">Securinets Prequals CTF 2019</a></h3></div><div class="post-content"><p>Securinets Prequals CTF 2019custom location在url后追加/robots.txt，报错，出现调试页面，仔细观察url，尝试读取文件
-https://web0.ctfsecurinets.com/_profiler/open?file=public/index.php
-跟入...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-30</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/29/OS/command/">常用指令及其含义(linux 和 windows)</a></h3></div><div class="post-content"><p>常用指令及其含义linuxcwd意义：get pathname of current working directory
-DescriptionThis module provides functions for determining the pathname of the current working di...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-29</span><i class="fa fa-tag"></i><a class="tag" href="/tags/command/" title="command">command </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2019/03/29/OS/proc/">linux /proc目录</a></h3></div><div class="post-content"><p>linux /proc目录Linux Filesystem Hierarchy:Prev    Chapter 1. Linux Filesystem Hierarchy    Next1.14. /proc/proc is very special in that it is also a virtual fi...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-29</span><i class="fa fa-tag"></i><a class="tag" href="/tags/proc/" title="/proc">/proc </a></div></div></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/page/3/">上一页</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/page/5/">下一页</a></li></ul></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>Mr.Long's Blog</h1><h5>Welcome to my Blog!</h5><div class="intro-social"><a class="fa fa-github" href="//github.com/" target="_blank" title="github"></a><a class="fa fa-weibo" href="//www.weibo.com" target="_blank" title="weibo"></a><a class="fa fa-facebook" href="//www.facebook.com" target="_blank" title="facebook"></a><a class="fa fa-twitter" href="//twitter.com" target="_blank" title="twitter"></a><a class="fa fa-rss" href="/atom.xml" target="_blank" title="rss"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2019/04/24/git相关/git使用/">git基本使用</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-24T11:19:54.842Z">2019-04-24</time></div><div class="recent-post-content">git基本使用利用git上传文件在GitHub上新建respository复制git地址到本地想要上传的项目文件中，将项目文件复制到新建的文件中
+git clone [url]
+将文件添加进respository中：git add .添加分支信息：git commit -m &quot;自定义信息&quot;上传：git push -u origin master
+</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="git"> git</a></div><div class="read-more"><a class="more" href="/2019/04/24/git相关/git使用/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/23/图像/py_gif/">python gif图的拆解和合成</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-23T05:44:38.456Z">2019-04-23</time></div><div class="recent-post-content">python gif图的拆解和合成拆解方法1from PIL import Image
+import os
+gifFileName = &#39;test.gif&#39;
+#使用Image模块的open()方法打开gif动态图像时，默认是第一帧
+im = Image.open(gifFileName)
+pngDir = gifFileName[:-4]
+#创建存放每帧图片的文件夹
+os.mkdir(pngDir)
+try:
+  while True:
+    #保存当前帧图片
+    current = im.tell()
+    im.save(pngDir+&#39;/&#39;+str ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="gif"> gif</a></div><div class="read-more"><a class="more" href="/2019/04/23/图像/py_gif/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/21/CTF/plaidctf2019/">plaidctf2019</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-21T12:18:08.494Z">2019-04-21</time></div><div class="recent-post-content">plaidctf2019Triggered（web）首页的一段话提示了一点，要试图登录admin角色，页面功能分为登录，注册，先注册随意账号并登陆：有查询和添加主题两个功能，尝试了一下，new note没法xss，所以可能就是查询了，以admin的身份进行flag查询分析代码，服了，存sql写的，pl/pgsql(以postgresql支持)
+关注登录过程：用户：
+---------- POST /login
+
+CREATE FUNCTION web.handle_post_login() RETURNS TRIGGER AS $$
+DECLARE
+  form_username text;
+ ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="ctf"> ctf</a></div><div class="read-more"><a class="more" href="/2019/04/21/CTF/plaidctf2019/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/21/CTF/ddctf2019/">DDCTF2019</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-21T12:17:52.512Z">2019-04-21</time></div><div class="recent-post-content">DDCTF2019web滴~还是要有耐心啊，这次做题由于感觉像吃了屎一样，所以索性就没做了，并且精力有限。
+这题打开链接，给出了一张图片（这图成功成为了又一个表情包）注意地址栏，参数jpg后面跟了一串字符串，猜测base64，经过一番尝试，发现编码规则是将源文件名转为hex，再进行两次base64编码，于是尝试读取源码
+利用python进行编码：
+str(base64.b64encode(base64.b64encode((&#39;index.php&#39;.encode(&#39;ascii&#39;)).hex().encode(&#39;utf-8&#39;))),&#39;utf- ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="ctf"> ctf</a></div><div class="read-more"><a class="more" href="/2019/04/21/CTF/ddctf2019/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/20/python/upgrade python3/">Ubuntu升级python3.7</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-20T05:17:47.904Z">2019-04-20</time></div><div class="recent-post-content">Ubuntu升级python3.7步骤下载源码
+wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tgz
+解压源码
+tar -xvzf Python-3.7.3.tgz
+进入目录
+cd Python-3.7.3
+配置安装路径
+./configure --with-ssl --prefix=/usr/local/python3
+安装python3.7.1依赖
+#sudo apt-get update
+#sudo apt-get upgrade
+#sudo apt-get dist-upgrade
+sudo apt-get inst ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="tutorial"> tutorial</a></div><div class="read-more"><a class="more" href="/2019/04/20/python/upgrade python3/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/17/靶机/acid/">acid server靶机渗透</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-17T10:49:14.470Z">2019-04-17</time></div><div class="recent-post-content">acid server靶机渗透虚拟机地址：https://download.vulnhub.com/acid/Acid.rar
+信息搜集开启acid，不用登陆，已启用服务
+靶机描述：
+
+The named of the Virtual machine is “Acid Server”. This Virtual Machine is completely web based. I have added little new concept here and hope people will enjoy solving this.You need to extract the rar and r ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="靶机"> 靶机</a></div><div class="read-more"><a class="more" href="/2019/04/17/靶机/acid/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/15/vulnerable/ssrf/">ssrf</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-15T14:41:35.183Z">2019-04-15</time></div><div class="recent-post-content">ssrf什么是ssrf​ SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种利用漏洞伪造服务器端发起请求。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。
+原理通过控制功能中的发起请求的服务来当作跳板攻击内网中其他服务。比如，通过控制前台的请求远程地址加载的响应，来让请求数据由远程的URL域名修改为请求本地、或者内网的IP地址及服务，来造成对内网系统的攻击。
+危害
+扫描内网开放服务
+
+向内部任意主机的任意端口发送payload来攻击内网服务
+
+
+
+DOS攻击（请求大文件，始终保持连接Keep-Alive Always）
+
+
+攻击内网的web应 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="ssrf"> ssrf</a></div><div class="read-more"><a class="more" href="/2019/04/15/vulnerable/ssrf/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/13/转载/国外安全网站/">分享一些国外著名的黑客技术学习网站</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-13T13:56:30.840Z">2019-04-13</time></div><div class="recent-post-content">分享一些国外著名的黑客技术学习网站本来呢，我的初衷是想要寻找一些国外新进的技术的论坛或者网站，或者一些新的电子书，后来找了一圈，发现就我目前已知的内容很难找到那些新进的东西，但是我找到了一些国外的论坛，仅供大家参考。http://www.milw0rm.com/http://www.web-hack.ru/俄罗斯的站 http://www.securitydot.net/http://www.addict3d.org/Security http://www.frsirt.com/ http://www.securiteam.com/ http://neworder.box.sk/ http:/ ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="收集"> 收集</a></div><div class="read-more"><a class="more" href="/2019/04/13/转载/国外安全网站/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/11/cve/CVE-2018-17057/">CVE-2018-17057</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-11T07:54:53.527Z">2019-04-11</time></div><div class="recent-post-content">CVE-2018-17057#!/usr/bin/python
+
+# Description: LimeSurvey &lt; 3.16 use a old version of &quot;TCPDF&quot; library, this version is vulnerable to a Serialization Attack via the &quot;phar://&quot; wrapper.
+# Date: 29/03/2019
+# Exploit Title: Remote Code Execution in LimeSurvey &lt; 3.16 via Seriali ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="cve"> cve</a></div><div class="read-more"><a class="more" href="/2019/04/11/cve/CVE-2018-17057/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/10/misc/png隐写/">png文件结构与信息隐藏</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-10T07:28:24.487Z">2019-04-10</time></div><div class="recent-post-content">png文件结构与信息隐藏PNG(Portable Network Graphics)，PNG supports palette-based images (with palettes of 24-bit RGB or 32-bit RGBA colors), grayscale images (with or without alpha channel for transparency), and full-color non-palette-based RGB/RGBA images (with or without alpha channel).
+文件格式file header固定的8by ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="隐写"> 隐写</a></div><div class="read-more"><a class="more" href="/2019/04/10/misc/png隐写/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><a class="extend prev" rel="prev" href="/page/3/">&#60; PREV</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">NEXT &#62;</a></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

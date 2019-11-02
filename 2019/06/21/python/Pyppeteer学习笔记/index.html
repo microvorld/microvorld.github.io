@@ -1,4 +1,103 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>Pyppeteer学习笔记 · damn1t</title><meta name="description" content="Pyppeteer学习笔记有的没的浏览器处理过程中的每一个步骤：1.处理HTML脚本，生成DOM树2.处理CSS脚本，生成CSSOM树   （DOM和CSSOM是独立的数据结构）3.将DOM树和CSSOM树合并为渲染树4.对渲染树中的内容进行布局，计算每个节点的几何外观5.将渲染树中的每个节点绘制到"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Pyppeteer学习笔记</a></h3></div><div class="post-content"><h1 id="Pyppeteer学习笔记"><a href="#Pyppeteer学习笔记" class="headerlink" title="Pyppeteer学习笔记"></a>Pyppeteer学习笔记</h1><h2 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h2><p>浏览器处理过程中的每一个步骤：<br>1.处理HTML脚本，生成DOM树<br>2.处理CSS脚本，生成CSSOM树   （DOM和CSSOM是独立的数据结构）<br>3.将DOM树和CSSOM树合并为渲染树<br>4.对渲染树中的内容进行布局，计算每个节点的几何外观<br>5.将渲染树中的每个节点绘制到屏幕中</p>
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Pyppeteer学习笔记 · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Pyppeteer学习笔记</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-06-21</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="Pyppeteer"> Pyppeteer</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Pyppeteer学习笔记"><a href="#Pyppeteer学习笔记" class="headerlink" title="Pyppeteer学习笔记"></a>Pyppeteer学习笔记</h1><h2 id="有的没的"><a href="#有的没的" class="headerlink" title="有的没的"></a>有的没的</h2><p>浏览器处理过程中的每一个步骤：<br>1.处理HTML脚本，生成DOM树<br>2.处理CSS脚本，生成CSSOM树   （DOM和CSSOM是独立的数据结构）<br>3.将DOM树和CSSOM树合并为渲染树<br>4.对渲染树中的内容进行布局，计算每个节点的几何外观<br>5.将渲染树中的每个节点绘制到屏幕中</p>
 <p>Headless Browser实际就是节约了第4,5步的时间。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>文档地址：<a href="https://miyakogi.github.io/pyppeteer/" target="_blank" rel="noopener">https://miyakogi.github.io/pyppeteer/</a><br>要求的最佳适配环境：py3.6</p>
 <p>安装方法：</p>
@@ -15,17 +114,57 @@
 <ol>
 <li>截屏</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import asyncio</span><br><span class="line">from pyppeteer import launch</span><br><span class="line"></span><br><span class="line">async def main():</span><br><span class="line">    browser = await launch()</span><br><span class="line">    page = await browser.newPage()</span><br><span class="line">    await page.goto(&apos;http://example.com&apos;)</span><br><span class="line">    await page.screenshot(&#123;&apos;path&apos;: &apos;example.png&apos;&#125;)</span><br><span class="line">    await browser.close()</span><br><span class="line"></span><br><span class="line">asyncio.get_event_loop().run_until_complete(main())</span><br></pre></td></tr></table></figure>
-<ol>
+<pre><code>import asyncio
+from pyppeteer import launch
+
+async def main():
+    browser = await launch()
+    page = await browser.newPage()
+    await page.goto(&#39;http://example.com&#39;)
+    await page.screenshot({&#39;path&#39;: &#39;example.png&#39;})
+    await browser.close()
+
+asyncio.get_event_loop().run_until_complete(main())
+</code></pre><ol>
 <li>调用JS脚本</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import asyncio</span><br><span class="line">from pyppeteer import launch</span><br><span class="line"></span><br><span class="line">async def main():</span><br><span class="line">    browser = await launch()</span><br><span class="line">    page = await browser.newPage()</span><br><span class="line">    await page.goto(&apos;http://example.com&apos;)</span><br><span class="line">    await page.screenshot(&#123;&apos;path&apos;: &apos;example.png&apos;&#125;)</span><br><span class="line"></span><br><span class="line">    dimensions = await page.evaluate(&apos;&apos;&apos;() =&gt; &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            width: document.documentElement.clientWidth,</span><br><span class="line">            height: document.documentElement.clientHeight,</span><br><span class="line">            deviceScaleFactor: window.devicePixelRatio,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;&apos;&apos;&apos;)</span><br><span class="line"></span><br><span class="line">    print(dimensions)</span><br><span class="line">    # &gt;&gt;&gt; &#123;&apos;width&apos;: 800, &apos;height&apos;: 600, &apos;deviceScaleFactor&apos;: 1&#125;</span><br><span class="line">    await browser.close()</span><br><span class="line"></span><br><span class="line">asyncio.get_event_loop().run_until_complete(main())</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">### 参数 ###</span><br><span class="line">有两种风格：</span><br><span class="line"></span><br><span class="line">- 键值对形式</span><br></pre></td></tr></table></figure>
-<p>browser = await launch({‘headless’: True})</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 关键字形式</span><br></pre></td></tr></table></figure>
-<p>browser = await launch(headless=True)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 元素选择器 ###</span><br><span class="line">在python中，`$`不被用来命名方法，所以改为了`querySelector`</span><br><span class="line"></span><br><span class="line">`Page.$()/Page.$$()/Page.$x()`都改为了`Page.querySelector()/Page.querySelectorAll()/Page.xpath()`，同样也有速记的方式：`Page.J(), Page.JJ(), and Page.Jx()`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### `Page.evaluate()`和`Page.querySelectorEval()`的参数 ###</span><br><span class="line">`Puppeteer`版本采用了js的原生方法和表达式字符串，但`pyppeteer`采用了js的字符串。js的字符串有时能够被作为函数或表达式，`Pyppeteer `尝试自动监测该字符串是否为函数或表达式，但有时他会失败了，所以 当一个表达式无法被识别，你可以使用`force_expr=True`让它生效</span><br><span class="line">例如：</span><br></pre></td></tr></table></figure>
-<p>content = await page.evaluate(‘document.body.textContent’, force_expr=True)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">获取元素内部文本的示例：</span><br></pre></td></tr></table></figure>
-<p>element = await page.querySelector(‘h1’)<br>title = await page.evaluate(‘(element) =&gt; element.textContent’, element)<br>```</p>
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>快一年了，似乎已经停止更新了，orz</p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-06-21</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Pyppeteer/" title="Pyppeteer">Pyppeteer </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/06/21/python/Pyppeteer学习笔记/,damn1t,Pyppeteer学习笔记,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/06/22/python/selenium学习笔记/" title="selenium学习笔记">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/06/19/vulnerable/Bypass XSS filters using JavaScript global variables/" title="Bypass XSS filters using JavaScript global variables（笔记）">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+<pre><code>import asyncio
+from pyppeteer import launch
+
+async def main():
+    browser = await launch()
+    page = await browser.newPage()
+    await page.goto(&#39;http://example.com&#39;)
+    await page.screenshot({&#39;path&#39;: &#39;example.png&#39;})
+
+    dimensions = await page.evaluate(&#39;&#39;&#39;() =&gt; {
+        return {
+            width: document.documentElement.clientWidth,
+            height: document.documentElement.clientHeight,
+            deviceScaleFactor: window.devicePixelRatio,
+        }
+    }&#39;&#39;&#39;)
+
+    print(dimensions)
+    # &gt;&gt;&gt; {&#39;width&#39;: 800, &#39;height&#39;: 600, &#39;deviceScaleFactor&#39;: 1}
+    await browser.close()
+
+asyncio.get_event_loop().run_until_complete(main())
+</code></pre><h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>有两种风格：</p>
+<ul>
+<li>键值对形式</li>
+</ul>
+<pre><code>browser = await launch({&#39;headless&#39;: True})
+</code></pre><ul>
+<li>关键字形式</li>
+</ul>
+<pre><code>browser = await launch(headless=True)
+</code></pre><h3 id="元素选择器"><a href="#元素选择器" class="headerlink" title="元素选择器"></a>元素选择器</h3><p>在python中，<code>$</code>不被用来命名方法，所以改为了<code>querySelector</code></p>
+<p><code>Page.$()/Page.$$()/Page.$x()</code>都改为了<code>Page.querySelector()/Page.querySelectorAll()/Page.xpath()</code>，同样也有速记的方式：<code>Page.J(), Page.JJ(), and Page.Jx()</code></p>
+<h3 id="Page-evaluate-和Page-querySelectorEval-的参数"><a href="#Page-evaluate-和Page-querySelectorEval-的参数" class="headerlink" title="Page.evaluate()和Page.querySelectorEval()的参数"></a><code>Page.evaluate()</code>和<code>Page.querySelectorEval()</code>的参数</h3><p><code>Puppeteer</code>版本采用了js的原生方法和表达式字符串，但<code>pyppeteer</code>采用了js的字符串。js的字符串有时能够被作为函数或表达式，<code>Pyppeteer</code>尝试自动监测该字符串是否为函数或表达式，但有时他会失败了，所以 当一个表达式无法被识别，你可以使用<code>force_expr=True</code>让它生效<br>例如：</p>
+<pre><code>content = await page.evaluate(&#39;document.body.textContent&#39;, force_expr=True)
+</code></pre><p>获取元素内部文本的示例：</p>
+<pre><code>element = await page.querySelector(&#39;h1&#39;)
+title = await page.evaluate(&#39;(element) =&gt; element.textContent&#39;, element)
+</code></pre><h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>快一年了，似乎已经停止更新了，orz</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/06/21/python/Pyppeteer学习笔记/">http://microvorld.com/2019/06/21/python/Pyppeteer学习笔记/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/06/22/python/selenium学习笔记/" title="selenium学习笔记"><span>< PreviousPost</span><br><span class="prevTitle">selenium学习笔记</span></a><a class="nextSlogan" href="/2019/06/19/vulnerable/Bypass XSS filters using JavaScript global variables/" title="Bypass XSS filters using JavaScript global variables（笔记）"><span>NextPost ></span><br><span class="nextTitle">Bypass XSS filters using JavaScript global variables（笔记）</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Pyppeteer学习笔记"><span class="toc-number">1.</span> <span class="toc-text">Pyppeteer学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#有的没的"><span class="toc-number">1.1.</span> <span class="toc-text">有的没的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实际应用"><span class="toc-number">1.3.</span> <span class="toc-text">实际应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实例"><span class="toc-number">1.3.1.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数"><span class="toc-number">1.3.2.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元素选择器"><span class="toc-number">1.3.3.</span> <span class="toc-text">元素选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Page-evaluate-和Page-querySelectorEval-的参数"><span class="toc-number">1.3.4.</span> <span class="toc-text">Page.evaluate()和Page.querySelectorEval()的参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在最后"><span class="toc-number">1.4.</span> <span class="toc-text">写在最后</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

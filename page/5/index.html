@@ -97,7 +97,44 @@
   }
 }( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/logo.jpg"></div><!--.profile-saying
   i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">Damn1t</div><div class="profile-signature">for you I bleed myself dry</div><div class="friends"><div>FRIENDS</div><span><a href="//www.baidu.com" target="_black">baidu</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Damn1t's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>Damn1t's Blog</h1><h5>The success is not &quot;define&quot;!</h5><div class="intro-social"><a class="fa fa-github" href="//github.com/" target="_blank" title="github"></a><a class="fa fa-weibo" href="//www.weibo.com" target="_blank" title="weibo"></a><a class="fa fa-facebook" href="//www.facebook.com" target="_blank" title="facebook"></a><a class="fa fa-twitter" href="//twitter.com" target="_blank" title="twitter"></a><a class="fa fa-rss" href="/atom.xml" target="_blank" title="rss"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2018/05/29/web/序列化/">php反序列化漏洞</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2018-05-29T10:50:46.015Z">2018-05-29</time></div><div class="recent-post-content">php反序列化漏洞php序列化在php中存在两个函数，serialize和unserialize,他们的作用分别是将对象进行序列化和反序列化
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">Damn1t</div><div class="profile-signature">for you I bleed myself dry</div><div class="friends"><div>FRIENDS</div><span><a href="//www.baidu.com" target="_black">baidu</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Damn1t's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>Damn1t's Blog</h1><h5>The success is not &quot;define&quot;!</h5><div class="intro-social"><a class="fa fa-github" href="//github.com/" target="_blank" title="github"></a><a class="fa fa-weibo" href="//www.weibo.com" target="_blank" title="weibo"></a><a class="fa fa-facebook" href="//www.facebook.com" target="_blank" title="facebook"></a><a class="fa fa-twitter" href="//twitter.com" target="_blank" title="twitter"></a><a class="fa fa-rss" href="/atom.xml" target="_blank" title="rss"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2019/03/26/CTF/hackim ctf/">hackim web</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-03-26T14:59:10.103Z">2019-03-26</time></div><div class="recent-post-content">hackim webescaperfv查看响应信息发现字段X-Powered-By，其对应的为express可知为后端为nodejs
+mime checkr只能上传.jpeg格式图片，有一个类型检查的功能这里有很重要的一点，一个getmime.bak的备份源码文件（不看writeup我是肯定不知道的，orz）
+&lt;?php
+//error_reporting(-1);
+//ini_set(&apos;display_errors&apos;, &apos;On&apos;);
+
+class CurlClass{
+public function httpGet($url) {
+$ch = c ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></div><div class="read-more"><a class="more" href="/2019/03/26/CTF/hackim ctf/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/03/25/vulnerable/xxe/">xxe</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-03-25T10:48:18.530Z">2019-03-25</time></div><div class="recent-post-content">xxexml基础什么是 XML?
+
+XML 指可扩展标记语言（EXtensible Markup Language）XML 是一种标记语言，很类似 HTMLXML 的设计宗旨是传输数据，而非显示数据XML 标签没有被预定义。您需要自行定义标签。XML 被设计为具有自我描述性。XML 是 W3C 的推荐标准
+
+结构
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE note [
+      &lt;!ELEMENT note (to,from,heading,body)&gt;
+  ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="xxe"> xxe</a></div><div class="read-more"><a class="more" href="/2019/03/25/vulnerable/xxe/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/03/18/常见问题/linux常见问题/">Linux常见错误</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-03-18T09:48:55.253Z">2019-03-18</time></div><div class="recent-post-content">ubuntu常见错误Package has no installation candidate解决：
+# apt-get update
+# apt-get upgrade
+# apt-get install &lt;packagename&gt;
+E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using  ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="problem"> problem</a></div><div class="read-more"><a class="more" href="/2019/03/18/常见问题/linux常见问题/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2018/09/11/vulnerable/jinja2/">由Musee de X(强网杯2017)到jinja2模板注入</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2018-09-11T07:03:37.788Z">2018-09-11</time></div><div class="recent-post-content">Musee de X(强网杯2017)学到新姿势
+分析注册admin之后进行登录，然后有一个捐赠页面，，网址随便填，这里有一点要注意，名字必须和登录名一致，否则会弹出：screw you hacker
+然后就成功的报错,查看报错信息:在/var/www/html/museum/view.py in makememe中有以下错误：
+if &quot;http://&quot; in url:
+image = urllib2.urlopen(url)
+  else:
+    url = &quot;http://&quot;+url
+image = urllib2.urlopen(url)
+exc ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></div><div class="read-more"><a class="more" href="/2018/09/11/vulnerable/jinja2/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2018/09/08/pwn/pwnable1/">pwnable.kr(1-2)</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2018-09-08T08:43:57.645Z">2018-09-08</time></div><div class="recent-post-content">pwnable.kr(1-2)fd第一题ssh连接之后给出如下代码：
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+char buf[32];
+int main(int argc, char* argv[], char* envp[]){
+//argc是命令行参数个数(必为int类型)，char*argv[]是指所有命令行参数，char *envp[]是环境变量
+//argv参数是字符串指针数组，其各元素值为命令行中各字符串的首地址，指针数组的长度即为参数个数
+
+    if(argc& ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="pwn"> pwn</a></div><div class="read-more"><a class="more" href="/2018/09/08/pwn/pwnable1/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2018/05/29/web/序列化/">php反序列化漏洞</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2018-05-29T10:50:46.015Z">2018-05-29</time></div><div class="recent-post-content">php反序列化漏洞php序列化在php中存在两个函数，serialize和unserialize,他们的作用分别是将对象进行序列化和反序列化
 什么是序列化？官方文档给出如下定义：
 
 serialize() 返回字符串，此字符串包含了表示 value 的字节流，可以存储于任何地方。
@@ -106,32 +143,4 @@ serialize() 返回字符串，此字符串包含了表示 value 的字节流，�
 为什么要进行序列化？
 概念：对象是在内存中存储的数据类型，寿命通常随着生成该对象的程序的终止而终止，但是有些情况下需要将对象的状态保存下来，然后在需要使用的时候将对象恢复，对象状态的保存操作就是对象序列化的过程。对象序列化就是将对象转化为2进 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="web"> web</a></div><div class="read-more"><a class="more" href="/2018/05/29/web/序列化/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2018/05/27/vulnerable/php伪协议/">php伪协议</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2018-05-26T16:22:14.129Z">2018-05-27</time></div><div class="recent-post-content">php伪协议什么是伪协议也不知道伪协议这个名字是从什么时候开始出现的，但我第一次接触还是在打ctf的时候，与其说伪协议，倒不如直接了解PHP支持的协议和封装的协议官方文档给出了如下的php所支持的协议：
 
-file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 访问 FTP(s) URLsphp:// — 访问各个输入/输出流（I/O streams）zlib:// — 压缩流data:// — 数据（RFC 2397）glob:// — 查找匹配的文件路径模式phar:// — PHP 归档ssh2:// — Secure Shell 2rar:/ ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></div><div class="read-more"><a class="more" href="/2018/05/27/vulnerable/php伪协议/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2017/12/31/随笔/Create/">To2018</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2017-12-31T15:27:12.837Z">2017-12-31</time></div><div class="recent-post-content">发生了太多，经历了太多，承受了太多，感觉一切都像是在hell，但又真真切切的存在于我的记忆中。你还好吗？愿你安好，天堂没有病痛，只有快乐。所以，让我来替你经历吧。不在颓废了，我想留学了，至少我想去一个更好的地方。总是在渴望着所谓的恋爱，但是恋爱不是全部呢，所以别被她所羁绊吧。
-
-To be a engineer
-
-
-To be a hacker
-
-
-To be a excellent man
-
-
-To be the best
-
-
-To Sillcon Valley
-
-
-To London
-
-
-To all over the world
-
-
-To be rich
-
-
-To concert
-
-To ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="心绪"> 心绪</a></div><div class="read-more"><a class="more" href="/2017/12/31/随笔/Create/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2017/12/04/随笔/无比芜杂的心绪/">无比芜杂的心绪</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2017-12-04T12:31:25.452Z">2017-12-04</time></div><div class="recent-post-content">—20:00最近突然迷上了太宰治，《人间失格》中近乎颓丧的笔调让我感觉近乎阴郁，但“叶藏”却仿佛让我看到了另一个自己，但尚不及他。字里行间无不显露着一股忧郁混乱的之感，“叶藏”的一生倒也不尽悲哀。每一个喜剧家其实都是一个悲观主义者，我想这句话也是他的人生写照。每一个由“叶藏”所制造的喜剧却仿佛与他毫无关联，似乎此时此刻，他由一个剧作家变为了观众，谈不上欣赏，只是默默观看。“床头金尽，情缘两断”，看似戏谑，可是真的如此吗？他有时是一个人，烟酒，妓女，金钱，也都一一尝尽；有时却与人遥隔两端，他是没有归属感的，“好子”的被侵犯，愤怒似乎从来没出现过在他身上，对死也无所畏惧。其实也很悲哀吧，昏暗的一生 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="随笔"> 随笔</a></div><div class="read-more"><a class="more" href="/2017/12/04/随笔/无比芜杂的心绪/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><a class="extend prev" rel="prev" href="/page/4/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
+file:// — 访问本地文件系统http:// — 访问 HTTP(s) 网址ftp:// — 访问 FTP(s) URLsphp:// — 访问各个输入/输出流（I/O streams）zlib:// — 压缩流data:// — 数据（RFC 2397）glob:// — 查找匹配的文件路径模式phar:// — PHP 归档ssh2:// — Secure Shell 2rar:/ ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="CTF"> CTF</a></div><div class="read-more"><a class="more" href="/2018/05/27/vulnerable/php伪协议/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2017/12/31/随笔/Create/">To2018</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2017-12-31T15:27:12.837Z">2017-12-31</time></div><div class="recent-post-content">有东西被加密了, 请输入密码查看.</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="心绪"> 心绪</a></div><div class="read-more"><a class="more" href="/2017/12/31/随笔/Create/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2017/12/04/随笔/无比芜杂的心绪/">无比芜杂的心绪</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2017-12-04T12:31:25.452Z">2017-12-04</time></div><div class="recent-post-content">有东西被加密了, 请输入密码查看.</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="随笔"> 随笔</a></div><div class="read-more"><a class="more" href="/2017/12/04/随笔/无比芜杂的心绪/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><a class="extend prev" rel="prev" href="/page/4/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

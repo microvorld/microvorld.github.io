@@ -179,14 +179,13 @@ console.log(o1.a, o1.b)
 o3 = {}
 console.log(o3.b)
 </pre>
-![](https://i.loli.net/2019/11/10/atJRC1lTUwEAbBV.jpg)
 
-很明显，并没有改造成功，这里的`__proto__`被视为原型，从而遍历`o2`的所有键名
-实际上第二个键值操作，系统会处理为`o2.__proto__ = {b:2}`
-![](https://i.loli.net/2019/11/10/vkL7yHoTz8SUDxI.jpg)
-
--  尝试二
-
+<p><img src="https://i.loli.net/2019/11/10/atJRC1lTUwEAbBV.jpg" alt=""></p>
+<p>很明显，并没有改造成功，这里的<code>__proto__</code>被视为原型，从而遍历<code>o2</code>的所有键名<br>实际上第二个键值操作，系统会处理为<code>o2.__proto__ = {b:2}</code>。</p>
+<p><img src="https://i.loli.net/2019/11/10/vkL7yHoTz8SUDxI.jpg" alt=""></p>
+<ul>
+<li>尝试二</li>
+</ul>
 <pre>
 let o1 = {}
 let o2 = JSON.parse('{"a": 1, "__proto__": {"b": 2}}')

@@ -97,7 +97,42 @@
   }
 }( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/logo.jpg"></div><!--.profile-saying
   i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">Damn1t</div><div class="profile-signature">for you I bleed myself dry</div><div class="friends"><div>FRIENDS</div><span><a href="//www.baidu.com" target="_black">baidu</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Damn1t's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>Damn1t's Blog</h1><h5>The success is not &quot;define&quot;!</h5><div class="intro-social"><a class="fa fa-github" href="//github.com/" target="_blank" title="github"></a><a class="fa fa-weibo" href="//www.weibo.com" target="_blank" title="weibo"></a><a class="fa fa-facebook" href="//www.facebook.com" target="_blank" title="facebook"></a><a class="fa fa-twitter" href="//twitter.com" target="_blank" title="twitter"></a><a class="fa fa-rss" href="/atom.xml" target="_blank" title="rss"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2019/05/20/web/Code-Breaking Puzzles/">Code-Breaking Puzzles</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-05-20T14:35:03.799Z">2019-05-20</time></div><div class="recent-post-content">Code-Breaking Puzzlesfunction审计代码：123456789 &lt;?php$action = $_GET['action'] ?? '';$arg = $_GET['arg'] ?? '';if(preg_match('/^[a-z0-9_]*$/isD', $action)) &#123;    show_source(__FILE__);&#125; else &#123;    $action('', $arg);&#125;
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">Damn1t</div><div class="profile-signature">for you I bleed myself dry</div><div class="friends"><div>FRIENDS</div><span><a href="//www.baidu.com" target="_black">baidu</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Damn1t's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>Damn1t's Blog</h1><h5>The success is not &quot;define&quot;!</h5><div class="intro-social"><a class="fa fa-github" href="//github.com/" target="_blank" title="github"></a><a class="fa fa-weibo" href="//www.weibo.com" target="_blank" title="weibo"></a><a class="fa fa-facebook" href="//www.facebook.com" target="_blank" title="facebook"></a><a class="fa fa-twitter" href="//twitter.com" target="_blank" title="twitter"></a><a class="fa fa-rss" href="/atom.xml" target="_blank" title="rss"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2019/05/25/OS/shell的重定向/">Linux常用指令及其含义</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-05-25T13:45:08.302Z">2019-05-25</time></div><div class="recent-post-content">shell的重定向文件描述符Linux启动的时候会默认打开三个文件描述符，分别是：
+
+
+
+文件描述符
+缩写
+描述
+
+
+
+
+0
+STDIN
+标准输入
+
+
+1
+STDOUT
+标准输出
+
+
+2
+STDERR
+标准错误输出
+
+
+
+
+标准输入standard input 0 （默认设备键盘）标准输出standard output 1（默认设备显示器）错误输出：error output 2（默认设备显示器）
+
+
+注意：
+
+（1）以后再打开文件，描述符可以依次增加（2）一条shell命令，都会继承其父进程的文件描述符，因此所有的shell命令，都会默认有三个文件描述符。
+
+文件所有输入输出都是由该进程所有打 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="shell"> shell</a></div><div class="read-more"><a class="more" href="/2019/05/25/OS/shell的重定向/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/05/20/web/Code-Breaking Puzzles/">Code-Breaking Puzzles</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-05-20T14:35:03.799Z">2019-05-20</time></div><div class="recent-post-content">Code-Breaking Puzzlesfunction审计代码：123456789 &lt;?php$action = $_GET['action'] ?? '';$arg = $_GET['arg'] ?? '';if(preg_match('/^[a-z0-9_]*$/isD', $action)) &#123;    show_source(__FILE__);&#125; else &#123;    $action('', $arg);&#125;
 
 ??是PHP7版本的新特性，它与?:的区别在哪里呢
 ？？
@@ -134,7 +169,4 @@ Flags/root/flag.txt/home/leopold/flag.txtTested with VirtualBoxDHCPDifficulty: B
 
 Solve the easy challenge first(((((886366)-(-362092))+(188748))-(-638404))-(-286590))input your answer: calculate error!
 
-然后闪退在/backups目录下新建一个sh ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="ctf"> ctf</a></div><div class="read-more"><a class="more" href="/2019/04/30/CTF/starctf2019/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/29/python/python常见问题/">python常见问题</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-29T02:40:27.705Z">2019-04-29</time></div><div class="recent-post-content">python常见问题Python2和3中 ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)python2Python在进行编码方式之间的转换时，会将 unicode 作为“中间编码”，但 unicode 最大只有128那么长，所以这里当尝试将 ascii 编码字符串转换成”中间编码” unicode 时由于超出了其范围，就报出了如上错误。将Python的默认编码方式修改为utf-8即可，在py文件开头加入以下代码：123import sysreload(sys) sys.setdefaul ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="error"> error</a></div><div class="read-more"><a class="more" href="/2019/04/29/python/python常见问题/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/24/git相关/git使用/">git基本使用</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-24T11:19:54.842Z">2019-04-24</time></div><div class="recent-post-content">git基本使用利用git上传文件在GitHub上新建respository复制git地址到本地想要上传的项目文件中，将项目文件复制到新建的文件中
-git clone [url]
-将文件添加进respository中：git add .添加分支信息：git commit -m &quot;自定义信息&quot;上传：git push -u origin master
-</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="git"> git</a></div><div class="read-more"><a class="more" href="/2019/04/24/git相关/git使用/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><a class="extend prev" rel="prev" href="/page/2/">&#60; PREV</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">NEXT &#62;</a></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
+然后闪退在/backups目录下新建一个sh ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="ctf"> ctf</a></div><div class="read-more"><a class="more" href="/2019/04/30/CTF/starctf2019/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2019/04/29/python/python常见问题/">python常见问题</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-04-29T02:40:27.705Z">2019-04-29</time></div><div class="recent-post-content">python常见问题Python2和3中 ‘ascii’ codec can’t decode byte 0xe4 in position 0: ordinal not in range(128)python2Python在进行编码方式之间的转换时，会将 unicode 作为“中间编码”，但 unicode 最大只有128那么长，所以这里当尝试将 ascii 编码字符串转换成”中间编码” unicode 时由于超出了其范围，就报出了如上错误。将Python的默认编码方式修改为utf-8即可，在py文件开头加入以下代码：123import sysreload(sys) sys.setdefaul ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="error"> error</a></div><div class="read-more"><a class="more" href="/2019/04/29/python/python常见问题/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><a class="extend prev" rel="prev" href="/page/2/">&#60; PREV</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">NEXT &#62;</a></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

